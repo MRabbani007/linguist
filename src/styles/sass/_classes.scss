@@ -1,0 +1,96 @@
+.page-container {
+  padding-top: calc(var(--navbar-height) + 20px);
+  padding-bottom: 40px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  min-height: screen;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  padding: .5rem 1.5rem;
+  border-radius: .5rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-yellow {
+  background-color: var(--clr-yellow-400);
+}
+
+.btn-yellow:hover {
+  background-color: var(--clr-yellow-500);
+}
+
+.btn-red {
+  background-color: var(--clr-red-400);
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: var(--clr-red-500);
+}
+
+.btn-blue {
+  background-color: var(--clr-blue-400);
+  color: var(--clr-blue-50);
+}
+
+.icon-sm {
+  width: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline;
+}
+
+.icon {
+  width: 2rem;
+  font-size: 2rem;
+  cursor: pointer;
+  display: inline;
+}
+
+.icon-lg {
+  width: 3rem;
+  font-size: 3rem;
+  cursor: pointer;
+  display: inline;
+}
+
+.icon-xl {
+  width: 4rem;
+  font-size: 3rem;
+  display: inline;
+}
+
+.icon-2xl {
+  width: 64px;
+  font-size: 4rem;
+  display: inline;
+}
+
+.icon-3xl {
+  width: 72px;
+  font-size: 5rem;
+  display: inline;
+}
+
+.card__header {
+  padding: .5rem 1rem;
+  background-color: $clr-slate-400;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.card__body {
+  padding: .5rem;
+  background-color: $clr-slate-200;
+}
+
+.card__footer {
+  padding: .5rem 1rem;
+  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  background-color: $clr-slate-400;
+}
