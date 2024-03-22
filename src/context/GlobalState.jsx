@@ -35,16 +35,29 @@ export const GlobalProvider = ({ children }) => {
 
   const [viewTab, setViewTab] = useState("chapters");
   const [editMode, setEditMode] = useState(false);
+  const [displayMode, setDisplayMode] = useState("block"); // block || list
 
   const handleViewTab = (tab) => {
+    console.log(tab);
     if (tab === "lesson") {
+      console.log(Object.keys(displayBlock));
       if (Object.keys(displayBlock).length === 0) {
-        setViewTab("sections");
+        if (Object.keys(displayChapter).length === 0) {
+          setViewTab("chapters");
+        } else {
+          setViewTab("sections");
+        }
       } else {
         setViewTab("lesson");
       }
+    } else if (tab === "sections") {
+      if (Object.keys(displayChapter).length === 0) {
+        setViewTab("chapters");
+      } else {
+        setViewTab("sections");
+      }
     } else {
-      setViewTab(tab);
+      setViewTab("chapters");
     }
   };
 
@@ -357,6 +370,14 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const handleToggleDisplayMode = () => {
+    if (displayMode === "block") {
+      setDisplayMode("list");
+    } else {
+      setDisplayMode("block");
+    }
+  };
+
   useEffect(() => {
     handleChaptersGet();
     if (auth?.user) {
@@ -377,6 +398,8 @@ export const GlobalProvider = ({ children }) => {
         handleViewTab,
         editMode,
         handleToggleEditMode,
+        displayMode,
+        handleToggleDisplayMode,
 
         handleWordGet,
         handleWordAdd,

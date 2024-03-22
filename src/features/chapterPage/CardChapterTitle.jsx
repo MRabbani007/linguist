@@ -71,9 +71,8 @@ const CardChapterTitle = ({ chapter }) => {
               className="font-semibold cursor-pointer"
               onClick={() => handleChapterOpen(chapter)}
             >
-              {chapter?.title || ""}:
+              {chapter?.title || ""}
             </span>
-            <span>{chapter?.subtitle || ""}</span>
             {editMode && (
               <span>
                 <CiEdit
@@ -87,7 +86,10 @@ const CardChapterTitle = ({ chapter }) => {
               </span>
             )}
           </div>
-          <div className="card__body">{chapter?.detail || ""}</div>
+          <div className="card__body">
+            <p>{chapter?.subtitle || ""}</p>
+            <p>{chapter?.detail || ""}</p>
+          </div>
           <div className="card__footer">
             <span>
               <TimeAgo timestamp={chapter?.createDate} />

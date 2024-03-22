@@ -24,12 +24,17 @@
 }
 
 .btn-red {
-  background-color: var(--clr-red-400);
+  background-color: $clr-red-400;
   color: white;
 }
 
-.btn-red:hover {
-  background-color: var(--clr-red-500);
+.btn-red-dark {
+  background-color: $clr-red-500;
+  color: white;
+}
+
+.btn-red-dark:hover, .btn-red:hover {
+  background-color: $clr-red-500;
 }
 
 .btn-blue {

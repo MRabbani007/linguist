@@ -18,37 +18,29 @@ import {
 
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
-  const { viewSideBar, handleSideBar, handleToggleEditMode } =
-    useContext(GlobalContext);
-  const sideBarRef = useRef();
-  const sideBarButtonRef = useRef();
+  const { handleToggleEditMode } = useContext(GlobalContext);
+  // const sideBarRef = useRef();
+  // const sideBarButtonRef = useRef();
 
-  const closeSideBar = (e) => {
-    if (!sideBarRef.current.contains(e.target)) {
-      if (sideBarButtonRef.current.contains(e.target)) {
-      } else {
-        handleSideBar(false);
-      }
-    }
-  };
+  // const closeSideBar = (e) => {
+  //   if (!sideBarRef.current.contains(e.target)) {
+  //     if (sideBarButtonRef.current.contains(e.target)) {
+  //     } else {
+  //       // handleSideBar(false);
+  //     }
+  //   }
+  // };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", closeSideBar);
-    return () => {
-      document.removeEventListener("mousedown", closeSideBar);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", closeSideBar);
+  //   return () => {
+  //     document.removeEventListener("mousedown", closeSideBar);
+  //   };
+  // }, []);
 
   return (
     <nav className="navbar flex items-center justify-between px-5 duration-500 bg-red-600 text-white">
       <span>
-        <span
-          ref={sideBarButtonRef}
-          onClick={() => handleSideBar()}
-          className="hidden"
-        >
-          <IoMenuSharp className="icon" />
-        </span>
         <Link to="/">
           <IoHomeOutline className="icon mx-3" />
         </Link>
@@ -64,7 +56,7 @@ const Navbar = () => {
       </span>
       <span>
         {/* <MdOutlineDarkMode className="icon mx-3" /> */}
-        <CardThemes />
+        {/* <CardThemes /> */}
         {auth?.user === "" ? (
           <Link to="/login">
             <FiUser className="icon" />
@@ -76,11 +68,11 @@ const Navbar = () => {
           </Link>
         )}
       </span>
-      <Offcanvas
+      {/* <Offcanvas
         viewSideBar={viewSideBar}
         handleSideBar={handleSideBar}
         ref={sideBarRef}
-      />
+      /> */}
     </nav>
   );
 };

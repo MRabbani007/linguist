@@ -4,7 +4,8 @@ import { GlobalContext } from "../../context/GlobalState";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const CardWord = ({ word, index, colSpan, setColSpans, setEditWord }) => {
-  const { words, handleWordDelete, displayBlock } = useContext(GlobalContext);
+  const { words, handleWordDelete, displayBlock, editMode } =
+    useContext(GlobalContext);
 
   const deleteWord = () => {
     handleWordDelete(word.id);
@@ -17,17 +18,21 @@ const CardWord = ({ word, index, colSpan, setColSpans, setEditWord }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center min-w-[200px] group">
-      <div className="flex justify-between items-center bg-slate-300 rounded-t-lg py-2 px-4">
+    <div className="flex flex-col justify-center min-w-[200px] shrink-0 group">
+      <div className="flex justify-between items-center bg-red-500 rounded-t-lg py-2 px-4">
         <span>{index + 1 + " / " + words?.length}</span>
         <span className="invisible group-hover:visible">
-          <CiEdit
-            className="icon mr-1 cursor-pointer"
-            onClick={() => {
-              setEditWord(word);
-            }}
-          />
-          <CiTrash className="icon" onClick={deleteWord} />
+          {editMode && (
+            <>
+              <CiEdit
+                className="icon mr-1 cursor-pointer"
+                onClick={() => {
+                  setEditWord(word);
+                }}
+              />
+              <CiTrash className="icon" onClick={deleteWord} />
+            </>
+          )}
         </span>
       </div>
       <div className="flex flex-col py-2 px-4 gap-3 bg-slate-200">
@@ -52,7 +57,7 @@ const CardWord = ({ word, index, colSpan, setColSpans, setEditWord }) => {
           </div>
         ) : null}
       </div>
-      <div className="flex items-center justify-between px-4 py-2 bg-slate-300 rounded-b-lg">
+      <div className="flex items-center justify-between px-4 py-2 bg-red-500 rounded-b-lg">
         <span></span>
         <span className="cursor-pointer">
           {show ? (

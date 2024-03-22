@@ -7,7 +7,8 @@ import CardWordTable from "./CardWordTable";
 import CardWordAdd from "./CardWordAdd";
 
 const BlockContent = ({ colSpan, setColSpan }) => {
-  const { words, displayBlock, editMode } = useContext(GlobalContext);
+  const { words, displayBlock, editMode, displayMode } =
+    useContext(GlobalContext);
 
   const [editWord, setEditWord] = useState({});
 
@@ -28,17 +29,35 @@ const BlockContent = ({ colSpan, setColSpan }) => {
       {displayBlock?.introduction ? (
         <div className="">Introduction:</div>
       ) : null}
-      <table>
-        <CardTableHeader
-          colSpan={colSpan}
-          setColSpan={setColSpan}
-          displayBlock={displayBlock}
-        />
-        <tbody className="">
+      {displayMode === "list" ? (
+        <table>
+          <CardTableHeader
+            colSpan={colSpan}
+            setColSpan={setColSpan}
+            displayBlock={displayBlock}
+          />
+          <tbody className="">
+            {Array.isArray(blockWords) &&
+              blockWords.map((item, index) => {
+                return (
+                  <CardWordTable
+                    word={item}
+                    key={index}
+                    index={index}
+                    colSpan={colSpan}
+                    setColSpan={setColSpan}
+                    setEditWord={setEditWord}
+                  />
+                );
+              })}
+          </tbody>
+        </table>
+      ) : (
+        <div className="flex flex-row flex-wrap gap-3 items-center justify-center">
           {Array.isArray(blockWords) &&
             blockWords.map((item, index) => {
               return (
-                <CardWordTable
+                <CardWord
                   word={item}
                   key={index}
                   index={index}
@@ -48,8 +67,8 @@ const BlockContent = ({ colSpan, setColSpan }) => {
                 />
               );
             })}
-        </tbody>
-      </table>
+        </div>
+      )}
       {!!editWord?.first && (
         <CardWordEdit
           word={editWord}

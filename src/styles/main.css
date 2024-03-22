@@ -21,8 +21,12 @@
   --clr-amber-950:#431407;
   --clr-brown-dark:#c59c76;
   --clr-red-400: #f87171;
-  --clr-red-500: #af0000;
+  --clr-red-500: #ef4444;
   --clr-red-600: #dc2626;
+  --clr-red-700: #b91c1c;
+  --clr-red-800: #991b1b;
+  --clr-red-900: #7f1d1d;
+  --clr-red-950: #450a0a;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -239,12 +243,17 @@ td {
 }
 
 .btn-red {
-  background-color: var(--clr-red-400);
+  background-color: #f87171;
   color: white;
 }
 
-.btn-red:hover {
-  background-color: var(--clr-red-500);
+.btn-red-dark {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-red-dark:hover, .btn-red:hover {
+  background-color: #ef4444;
 }
 
 .btn-blue {
