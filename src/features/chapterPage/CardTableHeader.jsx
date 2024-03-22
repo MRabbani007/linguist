@@ -9,7 +9,8 @@ import {
 import { IoAdd } from "react-icons/io5";
 
 const CardTableHeader = ({ colSpan, setColSpan, displayBlock }) => {
-  const { handleBlockEditDetail, handleBlockClose } = useContext(GlobalContext);
+  const { handleBlockEditDetail, handleBlockClose, editMode } =
+    useContext(GlobalContext);
 
   const [edit, setEdit] = useState(false);
   const [firstLang, setFirstLang] = useState(() => {
@@ -175,20 +176,22 @@ const CardTableHeader = ({ colSpan, setColSpan, displayBlock }) => {
           <tr>
             <th colSpan={colSpan} className="group">
               <span>{displayBlock.title}</span>
-              <span className="invisible group-hover:visible">
-                <CiEdit
-                  className="icon"
-                  onClick={() => {
-                    setEdit(true);
-                  }}
-                />
-                <CiCircleRemove
-                  className="icon"
-                  onClick={() => {
-                    handleBlockClose(displayBlock.id);
-                  }}
-                />
-              </span>
+              {editMode && (
+                <span className="invisible group-hover:visible">
+                  <CiEdit
+                    className="icon"
+                    onClick={() => {
+                      setEdit(true);
+                    }}
+                  />
+                  <CiCircleRemove
+                    className="icon"
+                    onClick={() => {
+                      handleBlockClose(displayBlock.id);
+                    }}
+                  />
+                </span>
+              )}
             </th>
           </tr>
           <tr>
@@ -215,7 +218,7 @@ const CardTableHeader = ({ colSpan, setColSpan, displayBlock }) => {
               </th>
             ) : (
               <th>
-                <IoAdd className="icon" onClick={addLanguage} />
+                {editMode && <IoAdd className="icon" onClick={addLanguage} />}
               </th>
             )}
           </tr>

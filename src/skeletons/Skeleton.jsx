@@ -1,4 +1,4 @@
-import "./Skeleton.css";
+import "./skeleton.css";
 
 const Skeleton = ({ classes }) => {
   const classNames = `skeleton ${classes} animate-pulse`;

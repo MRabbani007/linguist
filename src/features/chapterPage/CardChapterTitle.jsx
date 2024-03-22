@@ -5,8 +5,12 @@ import { PiDotOutline } from "react-icons/pi";
 import TimeAgo from "../common/TimeAgo";
 
 const CardChapterTitle = ({ chapter }) => {
-  const { handleChapterOpen, handleChapterEdit, handleChapterRemove } =
-    useContext(GlobalContext);
+  const {
+    handleChapterOpen,
+    handleChapterEdit,
+    handleChapterRemove,
+    editMode,
+  } = useContext(GlobalContext);
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState(chapter?.title || "");
   const [subtitle, setSubTitle] = useState(chapter?.subtitle || "");
@@ -70,16 +74,18 @@ const CardChapterTitle = ({ chapter }) => {
               {chapter?.title || ""}:
             </span>
             <span>{chapter?.subtitle || ""}</span>
-            <span>
-              <CiEdit
-                className="icon invisible group-hover:visible"
-                onClick={() => setEdit(true)}
-              />
-              <CiTrash
-                className="icon invisible group-hover:visible"
-                onClick={() => handleChapterRemove(chapter.id)}
-              />
-            </span>
+            {editMode && (
+              <span>
+                <CiEdit
+                  className="icon invisible group-hover:visible"
+                  onClick={() => setEdit(true)}
+                />
+                <CiTrash
+                  className="icon invisible group-hover:visible"
+                  onClick={() => handleChapterRemove(chapter.id)}
+                />
+              </span>
+            )}
           </div>
           <div className="card__body">{chapter?.detail || ""}</div>
           <div className="card__footer">

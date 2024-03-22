@@ -4,7 +4,8 @@ import CardBlockTitle from "./CardBlockTitle";
 import CardBlockAdd from "./CardBlockAdd";
 
 const BlockList = () => {
-  const { displayChapter, displayBlock, blocks } = useContext(GlobalContext);
+  const { displayChapter, displayBlock, blocks, editMode } =
+    useContext(GlobalContext);
 
   return (
     <div className="flex flex-col w-full max-w-[1000px]">
@@ -19,9 +20,11 @@ const BlockList = () => {
             return <CardBlockTitle block={item} key={index} />;
           })}
       </div>
-      <div>
-        <CardBlockAdd />
-      </div>
+      {editMode && (
+        <div>
+          <CardBlockAdd />
+        </div>
+      )}
     </div>
   );
 };

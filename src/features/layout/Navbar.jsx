@@ -18,7 +18,8 @@ import {
 
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
-  const { viewSideBar, handleSideBar } = useContext(GlobalContext);
+  const { viewSideBar, handleSideBar, handleToggleEditMode } =
+    useContext(GlobalContext);
   const sideBarRef = useRef();
   const sideBarButtonRef = useRef();
 
@@ -54,9 +55,9 @@ const Navbar = () => {
         <Link to="/chapters">
           <TbReportAnalytics className="icon" />
         </Link>
-        <Link to="/addContent">
+        <button onClick={handleToggleEditMode}>
           <IoAddCircleOutline className="icon mx-3" />
-        </Link>
+        </button>
         <Link to="/settings">
           <IoSettingsOutline className="icon" />
         </Link>

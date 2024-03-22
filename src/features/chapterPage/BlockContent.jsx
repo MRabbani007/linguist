@@ -7,7 +7,7 @@ import CardWordTable from "./CardWordTable";
 import CardWordAdd from "./CardWordAdd";
 
 const BlockContent = ({ colSpan, setColSpan }) => {
-  const { words, displayBlock } = useContext(GlobalContext);
+  const { words, displayBlock, editMode } = useContext(GlobalContext);
 
   const [editWord, setEditWord] = useState({});
 
@@ -58,9 +58,11 @@ const BlockContent = ({ colSpan, setColSpan }) => {
           setEditWord={setEditWord}
         />
       )}
-      <div className="w-fit mx-auto">
-        <CardWordAdd colSpan={colSpan} setColSpan={setColSpan} />
-      </div>
+      {editMode && (
+        <div className="w-fit mx-auto">
+          <CardWordAdd colSpan={colSpan} setColSpan={setColSpan} />
+        </div>
+      )}
       {displayBlock?.caption ? <div className="">Caption:</div> : null}
       {displayBlock?.text ? <div className="">Text:</div> : null}
       {displayBlock?.notes ? <div className="">Notes:</div> : null}

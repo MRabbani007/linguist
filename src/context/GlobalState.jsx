@@ -34,6 +34,7 @@ export const GlobalProvider = ({ children }) => {
   const [displayBlock, setDisplayBlock] = useState([]);
 
   const [viewTab, setViewTab] = useState("chapters");
+  const [editMode, setEditMode] = useState(false);
 
   const handleViewTab = (tab) => {
     if (tab === "lesson") {
@@ -103,7 +104,7 @@ export const GlobalProvider = ({ children }) => {
 
       if (Array.isArray(response?.data)) {
         dispatch({ type: ACTIONS.GET_CHAPTER, payload: response?.data });
-        handleChapterOpen(response.data[0]);
+        // handleChapterOpen(response.data[0]);
       }
     } catch (error) {
       console.log("Error: get chapters");
@@ -350,6 +351,12 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
+  const handleToggleEditMode = () => {
+    if (auth?.roles && auth.roles.find((item) => item === 5150)) {
+      setEditMode(!editMode);
+    }
+  };
+
   useEffect(() => {
     handleChaptersGet();
     if (auth?.user) {
@@ -368,6 +375,8 @@ export const GlobalProvider = ({ children }) => {
         handleSideBar,
         viewTab,
         handleViewTab,
+        editMode,
+        handleToggleEditMode,
 
         handleWordGet,
         handleWordAdd,

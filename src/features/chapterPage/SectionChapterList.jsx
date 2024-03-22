@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { getChapters } from "../../context/chapterSlice";
 
 const SectionChapterList = () => {
-  const { chapters } = useContext(GlobalContext);
+  const { chapters, editMode } = useContext(GlobalContext);
   // const chapters = useSelector(getChapters);
 
   // const orderedChapters = chapters
@@ -25,7 +25,7 @@ const SectionChapterList = () => {
             return <CardChapterTitle chapter={item} key={index} />;
           })}
       </div>
-      <CardChapterAdd />
+      {editMode && <CardChapterAdd />}
     </div>
   );
 };

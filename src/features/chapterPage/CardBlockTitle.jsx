@@ -3,7 +3,8 @@ import { CiEdit, CiSquareCheck, CiSquareRemove, CiTrash } from "react-icons/ci";
 import { GlobalContext } from "../../context/GlobalState";
 
 const CardBlockTitle = ({ block }) => {
-  const { handleBlockOpen, handleBlockEditHeader } = useContext(GlobalContext);
+  const { handleBlockOpen, handleBlockEditHeader, editMode } =
+    useContext(GlobalContext);
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState(block.title);
   const [subtitle, setSubtitle] = useState(block.subtitle);
@@ -87,13 +88,15 @@ const CardBlockTitle = ({ block }) => {
           {/* Header */}
           <div className="flex justify-between items-center bg-sky-800 text-yellow-100 py-2 px-4 rounded-t-lg">
             <span>{block?.firstLang + " / " + block?.secondLang}</span>
-            <span>
-              <CiEdit
-                className="icon invisible group-hover:visible "
-                onClick={() => setEdit(!edit)}
-              />
-              <CiTrash className="icon invisible group-hover:visible " />
-            </span>
+            {editMode && (
+              <span>
+                <CiEdit
+                  className="icon invisible group-hover:visible "
+                  onClick={() => setEdit(!edit)}
+                />
+                <CiTrash className="icon invisible group-hover:visible " />
+              </span>
+            )}
           </div>
           <div className="flex-1">
             <div

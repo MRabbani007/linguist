@@ -71,7 +71,6 @@ export const appReducer = (state, action) => {
         };
       }
       case ACTIONS.EDIT_BLOCK_DETAILS: {
-        console.log(payload);
         let oldBlockIndex = state.blocks.findIndex(
           (item) => item.id === payload.id
         );
@@ -79,7 +78,6 @@ export const appReducer = (state, action) => {
           ...state.blocks[oldBlockIndex],
           ...payload,
         };
-        console.log(newBlock);
         state.blocks.splice(oldBlockIndex, 1, newBlock);
         return {
           ...state,

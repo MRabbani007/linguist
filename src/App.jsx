@@ -22,7 +22,7 @@ import PersistLogin from "./features/auth/PersistLogin";
 import MissingPage from "./views/MissingPage";
 // Import Error Handler
 import { ErrorBoundary } from "react-error-boundary";
-import { lazyLoad } from "./data/lazyLoad";
+// import { lazyLoad } from "./data/lazyLoad";
 import ErrorFallBack from "./features/auth/ErrorFallBack";
 import SkeletonContentPage from "./skeletons/SkeletonContentPage";
 
