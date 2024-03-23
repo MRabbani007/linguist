@@ -36,10 +36,6 @@ export const appReducer = (state, action) => {
       }
       case ACTIONS.REMOVE_CHAPTER: {
         let { id } = action.payload;
-        console.log(
-          id,
-          state.chapters.filter((chapter) => chapter.id !== id)
-        );
         return {
           ...state,
           chapters: [...state.chapters.filter((chapter) => chapter.id !== id)],
@@ -83,6 +79,19 @@ export const appReducer = (state, action) => {
           ...state,
         };
       }
+      case ACTIONS.EDIT_BLOCK_CONTENT: {
+        let oldBlockIndex = state.blocks.findIndex(
+          (item) => item.id === payload.id
+        );
+        let newBlock = {
+          ...state.blocks[oldBlockIndex],
+          ...payload,
+        };
+        state.blocks.splice(oldBlockIndex, 1, newBlock);
+        return {
+          ...state,
+        };
+      }
       // Remove words from local memory when block is closed
       case ACTIONS.CLOSE_BLOCK: {
         let newWords = state.words.filter(
@@ -100,15 +109,19 @@ export const appReducer = (state, action) => {
         };
       }
       case ACTIONS.GET_WORD: {
-        const temp = state.words.filter(
-          (word) => word.blockID !== payload[0].blockID
-        );
         return {
           ...state,
-          words: [...payload, ...temp],
+          words: payload,
         };
       }
       case ACTIONS.EDIT_WORD: {
+        let wordIndex = state.words.findIndex((item) => item.id === payload.id);
+        state.words.splice(wordIndex, 1, payload);
+        return {
+          ...state,
+        };
+      }
+      case ACTIONS.EDIT_WORD_DETAILS: {
         let wordIndex = state.words.findIndex((item) => item.id === payload.id);
         state.words.splice(wordIndex, 1, payload);
         return {

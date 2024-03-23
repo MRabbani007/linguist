@@ -5,14 +5,23 @@ import CardWord from "./CardWord";
 import CardWordEdit from "./CardWordEdit";
 import CardWordTable from "./CardWordTable";
 import CardWordAdd from "./CardWordAdd";
+import CardWordEditDetails from "./CardWordEditDetails";
+import CardBlockEditDetails from "./CardBlockEditDetails";
+import { CiEdit } from "react-icons/ci";
+import CardBlockEditContent from "./CardBlockEditContent";
 
 const BlockContent = ({ colSpan, setColSpan }) => {
   const { words, displayBlock, editMode, displayMode } =
     useContext(GlobalContext);
 
   const [editWord, setEditWord] = useState({});
+  const [editBlockDetails, setEditBlockDetails] = useState(false);
 
   const [blockWords, setBlockWords] = useState([]);
+
+  const toggleEdit = () => {
+    setEditBlockDetails(!editBlockDetails);
+  };
 
   useEffect(() => {
     let temp = words.filter((item) => item.blockID === displayBlock.id);
@@ -21,13 +30,33 @@ const BlockContent = ({ colSpan, setColSpan }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full p-2">
-      <h2 className="font-bold text-xl text-center my-2 p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400">
-        {displayBlock?.title +
-          (!!displayBlock?.subtitle ? ", " + displayBlock?.subtitle : "") +
-          (!!displayBlock?.detail ? ", " + displayBlock?.detail : "")}
+      <h2 className="font-bold text-xl text-center my-2 p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group">
+        <span>{displayBlock?.title}</span>
+        <span>
+          {!!displayBlock?.subtitle ? ", " + displayBlock?.subtitle : ""}
+        </span>
+        <span>{!!displayBlock?.detail ? ", " + displayBlock?.detail : ""}</span>
+        <span>
+          <CiEdit
+            className="icon invisible group-hover:visible"
+            onClick={toggleEdit}
+          />
+        </span>
       </h2>
+      {editBlockDetails && (
+        <>
+          <CardBlockEditDetails
+            editBlockDetails={editBlockDetails}
+            toggleEdit={toggleEdit}
+          />
+          <CardBlockEditContent
+            editBlockDetails={editBlockDetails}
+            toggleEdit={toggleEdit}
+          />
+        </>
+      )}
       {displayBlock?.introduction ? (
-        <div className="">Introduction:</div>
+        <div className="">{displayBlock.introduction}</div>
       ) : null}
       {displayMode === "list" ? (
         <table>
@@ -70,12 +99,15 @@ const BlockContent = ({ colSpan, setColSpan }) => {
         </div>
       )}
       {!!editWord?.first && (
-        <CardWordEdit
-          word={editWord}
-          colSpan={colSpan}
-          setColSpan={setColSpan}
-          setEditWord={setEditWord}
-        />
+        <>
+          <CardWordEdit
+            word={editWord}
+            colSpan={colSpan}
+            setColSpan={setColSpan}
+            setEditWord={setEditWord}
+          />
+          <CardWordEditDetails word={editWord} setEditWord={setEditWord} />
+        </>
       )}
       {editMode && (
         <div className="w-fit mx-auto">

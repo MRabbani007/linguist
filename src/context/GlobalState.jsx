@@ -33,14 +33,14 @@ export const GlobalProvider = ({ children }) => {
   const [displayChapter, setDisplayChapter] = useState("");
   const [displayBlock, setDisplayBlock] = useState([]);
 
+  const [wordsRandom, setWordsRandom] = useState([]);
+
   const [viewTab, setViewTab] = useState("chapters");
   const [editMode, setEditMode] = useState(false);
   const [displayMode, setDisplayMode] = useState("block"); // block || list
 
   const handleViewTab = (tab) => {
-    console.log(tab);
     if (tab === "lesson") {
-      console.log(Object.keys(displayBlock));
       if (Object.keys(displayBlock).length === 0) {
         if (Object.keys(displayChapter).length === 0) {
           setViewTab("chapters");
@@ -205,20 +205,10 @@ export const GlobalProvider = ({ children }) => {
     });
   };
 
-  const handleBlockEditHeader = async (blockID, title, subtitle, detail) => {
-    let block = {
-      id: blockID,
-      chapterID: displayChapter.id,
-      title,
-      subtitle,
-      detail,
-    };
-
+  const handleBlockEditHeader = async (block) => {
     dispatch({ type: ACTIONS.EDIT_BLOCK_HEADER, payload: block });
     setDisplayBlock((current) => {
-      let blockIndex = current.indexOf((item) => item.id === blockID);
-      current.splice(blockIndex, 1, block);
-      return [...current];
+      return { ...current, ...block };
     });
 
     let data = await axiosPrivate.post(SERVER.EDIT_BLOCK_HEADER, {
@@ -249,15 +239,29 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: ACTIONS.EDIT_BLOCK_DETAILS, payload: block });
 
     setDisplayBlock((current) => {
-      let blockIndex = current.indexOf((item) => item.id === blockID);
-      current.splice(blockIndex, 1, { ...displayBlock[0], ...block });
-      return [...current];
+      return { ...current, ...block };
     });
 
     let data = await axiosPrivate.post(SERVER.EDIT_BLOCK_DETAILS, {
       roles: auth?.roles,
       action: {
         type: ACTIONS.EDIT_BLOCK_DETAILS,
+        payload: { userName: auth?.user, block },
+      },
+    });
+  };
+
+  const handleBlockEditContent = async (block) => {
+    dispatch({ type: ACTIONS.EDIT_BLOCK_CONTENT, payload: block });
+
+    setDisplayBlock((current) => {
+      return { ...current, ...block };
+    });
+
+    let data = await axiosPrivate.post(SERVER.EDIT_BLOCK_CONTENT, {
+      roles: auth?.roles,
+      action: {
+        type: ACTIONS.EDIT_BLOCK_CONTENT,
         payload: { userName: auth?.user, block },
       },
     });
@@ -302,6 +306,22 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const handleWordGetRandom = async () => {
+    let response = await axiosPrivate.post(SERVER.GET_WORD_RANDOM, {
+      roles: auth?.roles,
+      action: {
+        type: ACTIONS.GET_WORD_RANDOM,
+        payload: {
+          userName: auth?.user,
+        },
+      },
+    });
+
+    if (Array.isArray(response?.data)) {
+      setWordsRandom(response.data);
+    }
+  };
+
   const handleWordAdd = async (blockID, newWord) => {
     let word = {
       id: crypto.randomUUID(),
@@ -334,6 +354,24 @@ export const GlobalProvider = ({ children }) => {
       roles: auth?.roles,
       action: {
         type: ACTIONS.EDIT_WORD,
+        payload: {
+          userName: auth?.user,
+          word: newWord,
+        },
+      },
+    });
+  };
+
+  const handleWordEditDetails = async (newWord) => {
+    dispatch({
+      type: ACTIONS.EDIT_WORD_DETAILS,
+      payload: newWord,
+    });
+
+    let data = await axiosPrivate.post(SERVER.EDIT_WORD_DETAILS, {
+      roles: auth?.roles,
+      action: {
+        type: ACTIONS.EDIT_WORD_DETAILS,
         payload: {
           userName: auth?.user,
           word: newWord,
@@ -401,20 +439,26 @@ export const GlobalProvider = ({ children }) => {
         displayMode,
         handleToggleDisplayMode,
 
+        wordsRandom,
+        handleWordGetRandom,
+
         handleWordGet,
         handleWordAdd,
         handleWordEdit,
+        handleWordEditDetails,
         handleWordDelete,
 
         handleChapterAdd,
         handleChapterOpen,
         handleChapterEdit,
         handleChapterRemove,
+
         handleBlockAdd,
         handleBlockOpen,
         handleBlockClose,
         handleBlockEditHeader,
         handleBlockEditDetail,
+        handleBlockEditContent,
       }}
     >
       {children}

@@ -17,7 +17,9 @@ const CardBlockAdd = () => {
     setTitle("");
   };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setAdd(false);
+  };
 
   return (
     <div className="flex flex-col gap-2">
