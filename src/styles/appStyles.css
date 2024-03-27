@@ -1,20 +1,19 @@
-
-.App {
+/* .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
   padding: 1rem 0.5rem;
-}
+} */
 
-.user-section form {
+/* .user-section form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     flex-grow: 1;
     padding-bottom: 1rem;
-}
+} 
 
 .user-section input[type="text"],
 .user-section input[type="password"],
@@ -25,4 +24,4 @@
 
 .user-section label {
   margin-top: 1rem;
-}
+} */

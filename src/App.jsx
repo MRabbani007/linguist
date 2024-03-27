@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 // Imported Styles
 import "./styles/styles.css";
+// generated from SASS
 import "./styles/main.css";
 import "./styles/appStyles.css";
 // Imported Context
@@ -53,63 +54,61 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <GlobalProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route element={<PersistLogin />}>
-                <Route index element={<HomePage />} />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route element={<PersistLogin />}>
+              <Route index element={<HomePage />} />
 
-                {/* Page to display language chapters, visible to all */}
-                <Route path="chapters" element={<ChapterPage />} />
-                <Route path="login" element={<SigninPage />} />
-                <Route path="signup" element={<SignupPage />} />
-                <Route path="unauthorized" element={<Unauthorized />} />
+              {/* Page to display language chapters, visible to all */}
+              <Route path="login" element={<SigninPage />} />
+              <Route path="signup" element={<SignupPage />} />
+              <Route path="chapters" element={<ChapterPage />} />
+              <Route path="unauthorized" element={<Unauthorized />} />
 
-                {/* Settings page available to users */}
-                <Route
-                  element={
-                    <RequireAuth
-                      allowedRoles={[ROLES.User, ROLES.Editor, ROLES.Admin]}
-                    />
-                  }
-                >
-                  <Route path="settings" element={<SettingsPage />} />
-                </Route>
-
-                {/* Admin page available to admin */}
-                <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-                  <Route path="admin" element={<AdminPage />} />
-                </Route>
-
-                <Route
-                  element={
-                    <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
-                  }
-                >
-                  <Route
-                    path="addContent"
-                    index
-                    element={
-                      // <ErrorBoundary
-                      //   fallback={<ErrorFallBack />}
-                      //   onReset={() => {
-                      //     navigate("/");
-                      //   }}
-                      // >
-                      // <Suspense fallback={<SkeletonContentPage />}>
-                      <AddContentPage />
-                      // </Suspense>
-                      // </ErrorBoundary>
-                    }
+              {/* Settings page available to users */}
+              <Route
+                element={
+                  <RequireAuth
+                    allowedRoles={[ROLES.User, ROLES.Editor, ROLES.Admin]}
                   />
-                </Route>
+                }
+              >
+                <Route path="settings" element={<SettingsPage />} />
               </Route>
 
-              {/* catch all */}
-              <Route path="*" element={<MissingPage />} />
+              {/* Admin page available to admin */}
+              <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+                <Route path="admin" element={<AdminPage />} />
+              </Route>
+
+              <Route
+                element={
+                  <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
+                }
+              >
+                <Route
+                  path="addContent"
+                  index
+                  element={
+                    // <ErrorBoundary
+                    //   fallback={<ErrorFallBack />}
+                    //   onReset={() => {
+                    //     navigate("/");
+                    //   }}
+                    // >
+                    // <Suspense fallback={<SkeletonContentPage />}>
+                    <AddContentPage />
+                    // </Suspense>
+                    // </ErrorBoundary>
+                  }
+                />
+              </Route>
             </Route>
-          </Routes>
-        </GlobalProvider>
+
+            {/* catch all */}
+            <Route path="*" element={<MissingPage />} />
+          </Route>
+        </Routes>
       </AuthProvider>
     </>
   );

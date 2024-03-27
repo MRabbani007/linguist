@@ -1,19 +1,29 @@
-import { useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../../context/GlobalState";
-import { CiSquareCheck, CiSquareRemove, CiTrash } from "react-icons/ci";
+import { useEffect, useState } from "react";
+import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
+import { useEditWordDetailsMutation } from "./wordsSlice";
 
-const CardWordEditDetails = ({ word, colSpan, setEditWord }) => {
-  const { handleWordEditDetails, handleWordDelete } = useContext(GlobalContext);
+const CardWordEditDetails = ({ word, colSpan, editWord, setEditWord }) => {
+  const [editWordDetails, { isLoading }] = useEditWordDetailsMutation();
 
   const [image, setImage] = useState(word?.image || "");
   const [sentence, setSentence] = useState(word?.sentence || "");
   const [baseWord, setBaseWord] = useState(word?.baseWord || "");
 
-  const handleSubmit = (e) => {
+  const canSave = !isLoading;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newWord = { ...word, image, sentence, baseWord };
-    handleWordEditDetails(newWord);
-    setEditWord(false);
+    if (canSave) {
+      try {
+        const newWord = { ...word, image, sentence, baseWord };
+
+        await editWordDetails(newWord).unwrap();
+
+        setEditWord(false);
+      } catch (err) {
+        console.error("Failed to save the word", err);
+      }
+    }
   };
 
   const handleReset = () => {

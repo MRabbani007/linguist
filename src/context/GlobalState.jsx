@@ -39,6 +39,7 @@ export const GlobalProvider = ({ children }) => {
   const [editMode, setEditMode] = useState(false);
   const [displayMode, setDisplayMode] = useState("block"); // block || list
 
+  // TODO: Remove
   const handleViewTab = (tab) => {
     if (tab === "lesson") {
       if (Object.keys(displayBlock).length === 0) {
@@ -61,7 +62,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  // Handle Sidebar
+  // Handle Sidebar TODO: remove
   const [viewSideBar, setViewSideBar] = useState(false);
   const handleSideBar = (value = 1) => {
     if (value === true || value === false) {
@@ -80,13 +81,7 @@ export const GlobalProvider = ({ children }) => {
     navigate("/chapters", { replace: true });
   };
 
-  const handleChapterAdd = async (title = "", subtitle = "", detail = "") => {
-    let chapter = {
-      id: crypto.randomUUID(),
-      title,
-      subtitle,
-      detail,
-    };
+  const handleChapterAdd = async (chapter = {}) => {
     dispatch({
       type: ACTIONS.ADD_CHAPTER,
       payload: chapter,
@@ -124,20 +119,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handleChapterEdit = async (
-    id,
-    title,
-    subtitle,
-    detail,
-    state = "private"
-  ) => {
-    let chapter = {
-      id,
-      title,
-      subtitle,
-      detail,
-      state,
-    };
+  const handleChapterEdit = async (chapter = {}) => {
     dispatch({ type: ACTIONS.EDIT_CHAPTER, payload: chapter });
 
     let data = await axiosPrivate.post(SERVER.EDIT_CHAPTER, {
@@ -401,26 +383,6 @@ export const GlobalProvider = ({ children }) => {
       },
     });
   };
-
-  const handleToggleEditMode = () => {
-    if (auth?.roles && auth.roles.find((item) => item === 5150)) {
-      setEditMode(!editMode);
-    }
-  };
-
-  const handleToggleDisplayMode = () => {
-    if (displayMode === "block") {
-      setDisplayMode("list");
-    } else {
-      setDisplayMode("block");
-    }
-  };
-
-  useEffect(() => {
-    handleChaptersGet();
-    if (auth?.user) {
-    }
-  }, [auth]);
 
   return (
     <GlobalContext.Provider

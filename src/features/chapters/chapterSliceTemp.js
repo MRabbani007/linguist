@@ -1,5 +1,5 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
   chapters: [

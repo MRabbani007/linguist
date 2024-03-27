@@ -3,16 +3,31 @@ import { GlobalContext } from "../../context/GlobalState";
 import CardChapterTitle from "./CardChapterTitle";
 import CardChapterAdd from "./CardChapterAdd";
 import { useSelector } from "react-redux";
-
-import { getChapters } from "../../context/chapterSlice";
+import { selectAllChapters, useGetChaptersQuery } from "./chapterSlice";
+import { selectEditMode } from "../globals/globalsSlice";
 
 const SectionChapterList = () => {
-  const { chapters, editMode } = useContext(GlobalContext);
-  // const chapters = useSelector(getChapters);
+  const editMode = useSelector(selectEditMode);
 
-  // const orderedChapters = chapters
-  //   .slice()
-  //   .sort((a, b) => b.date.localeCompare(a.date));
+  const {
+    data: chapters,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetChaptersQuery();
+
+  let content;
+  if (isLoading) {
+    content = <p>"Loading..."</p>;
+  } else if (isSuccess) {
+    const { ids, entities } = chapters;
+    content = ids.map((id) => (
+      <CardChapterTitle key={id} chapter={entities[id]} />
+    ));
+  } else if (isError) {
+    content = <p>{JSON.stringify(error)}</p>;
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -20,10 +35,11 @@ const SectionChapterList = () => {
         Chapters
       </h2>
       <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
-        {Array.isArray(chapters) &&
+        {content}
+        {/* {Array.isArray(chapters) &&
           chapters.map((item, index) => {
             return <CardChapterTitle chapter={item} key={index} />;
-          })}
+          })} */}
       </div>
       {editMode && <CardChapterAdd />}
     </div>

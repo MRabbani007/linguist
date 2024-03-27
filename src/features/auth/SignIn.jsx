@@ -11,12 +11,17 @@ import { ACTIONS } from "../../data/actions";
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from "../../api/axios";
 
-const SignIn = () => {
-  const { setAuth } = useAuth();
+import { useDispatch } from "react-redux";
+import { setCredentials } from "./authSlice";
+import { useLoginMutation } from "./authApiSlice";
 
+const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
 
   // Set focus to username input on load
   const userRef = useRef();
@@ -31,6 +36,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (!success) {
+      // set focus to login username
       userRef.current.focus();
     }
   }, []);
@@ -43,25 +49,20 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post("/user/auth", {
-        type: ACTIONS.USER_SIGNIN,
-        payload: {
-          username: user,
-          password: pwd,
-        },
-      });
+      const response = await login({ username: user, password: pwd }).unwrap();
 
-      if (response?.data?.status === "success") {
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.roles;
-        setAuth({ user, roles, accessToken });
+      if (response?.status === "success") {
+        const userData = {
+          user: response?.user,
+          roles: response?.roles,
+          token: response?.accessToken,
+        };
+
+        dispatch(setCredentials({ ...userData }));
         resetUser();
         setPwd("");
         setSuccess(true);
         navigate(from, { replace: true });
-        navigate("/", { state: { username: user } });
-      } else {
-        alert(response);
       }
     } catch (err) {
       if (!err?.response) {
@@ -74,75 +75,96 @@ const SignIn = () => {
         setErrMsg("Login Failed");
       }
       console.log(err);
+      // set focus to error
       errRef.current.focus();
     }
   };
 
   return (
-    <main className=" border-2 border-red-500">
-      <section>
-        <h1 className="p-3">Sign In</h1>
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
-      </section>
+    <main className="wrapper">
       {success ? (
         <section className="text-slate-950">
           <p>You are now logged in!</p>
           <Link to="/">Go to Home Page</Link>
         </section>
       ) : (
-        <form className="flex flex-col p-5 w-[400px]" onSubmit={handleSubmit}>
-          <FaRegUserCircle className="text-[80px] mx-auto" />
-          <label htmlFor="username" className="my-2">
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            placeholder="UserName"
-            ref={userRef}
-            autoComplete="off"
-            {...userAttribs}
-            required
-          />
-          <label htmlFor="password" className="my-2">
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-          />
-          <button type="submit" className="btn btn-yellow mx-auto my-2">
-            Signin
-          </button>
-          <div className="persistCheck">
-            <input
-              type="checkbox"
-              id="persist"
-              onChange={toggleCheck}
-              checked={check}
-            />
-            <label htmlFor="persist" className="ml-2">
-              Trust This Device
-            </label>
-          </div>
-        </form>
+        <>
+          <form className="login_form" onSubmit={handleSubmit}>
+            <div className="login_header">
+              <span>Sign In</span>
+            </div>
+            <p
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </p>
+            <div className="input_box">
+              <input
+                type="text"
+                id="username"
+                placeholder="UserName"
+                className="input_field"
+                ref={userRef}
+                autoComplete="off"
+                {...userAttribs}
+                required
+              />
+              <label htmlFor="username" className="label">
+                Username
+              </label>
+              <i className="bx bx-user icon"></i>
+            </div>
+            <div className="input_box">
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                className="input_field"
+                onChange={(e) => setPwd(e.target.value)}
+                value={pwd}
+                required
+              />
+              <label htmlFor="password" className="label">
+                Password
+              </label>
+              <i className="bx bx-lock-alt icon"></i>
+            </div>
+            <div className="remember_forgot">
+              <div className="remember_me">
+                {/* <input type="checkbox" name="remember" id="remember" />
+                <label htmlFor="remember">Remember me</label> */}
+              </div>
+              <div className="forgot">
+                <a href="#">Forgot Password</a>
+              </div>
+            </div>
+            <div>
+              <button type="submit" className="input_submit">
+                Signin
+              </button>
+            </div>
+            <div className="persistCheck">
+              <input
+                type="checkbox"
+                id="persist"
+                onChange={toggleCheck}
+                checked={check}
+              />
+              <label htmlFor="persist" className="ml-2">
+                Trust This Device
+              </label>
+            </div>
+            <div className="register">
+              Don't Have an account?
+              <Link to="/signup" className="btn btn-red ml-2">
+                Signup
+              </Link>
+            </div>
+          </form>
+        </>
       )}
-      <p className="my-2 mx-3">
-        Create account
-        <Link to="/signup" className="btn btn-blue ml-2">
-          Signup
-        </Link>
-      </p>
     </main>
   );
 };

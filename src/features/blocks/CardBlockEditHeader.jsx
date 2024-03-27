@@ -1,19 +1,39 @@
-import { useContext, useState } from "react";
-import { CiEdit, CiSquareCheck, CiSquareRemove, CiTrash } from "react-icons/ci";
-import { GlobalContext } from "../../context/GlobalState";
+import { useState } from "react";
+import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
+import { useEditBlockHeaderMutation } from "./blockSlice";
+import { useSelector } from "react-redux";
+import { selectDisplayBlock } from "../globals/globalsSlice";
 
-const CardBlockEdit = ({ block, toggleEdit }) => {
-  const { handleBlockEditHeader } = useContext(GlobalContext);
+const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
+  const displayBlock = useSelector(selectDisplayBlock);
 
-  const [title, setTitle] = useState(block.title);
-  const [subtitle, setSubtitle] = useState(block.subtitle);
-  const [detail, setDetail] = useState(block.detail);
+  const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
 
-  const handleEdit = (e) => {
+  const [title, setTitle] = useState(displayBlock?.title);
+  const [subtitle, setSubtitle] = useState(displayBlock?.subtitle);
+  const [detail, setDetail] = useState(displayBlock?.detail);
+
+  const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
+
+  const handleEdit = async (e) => {
     e.preventDefault();
-    handleBlockEditHeader(block.id, title, subtitle, detail);
-    toggleEdit();
+    if (canSave) {
+      try {
+        let newBlock = {
+          ...displayBlock,
+          title,
+          subtitle,
+          detail,
+        };
+        await editBlockHeader(newBlock).unwrap();
+
+        toggleEdit("");
+      } catch (err) {
+        console.error("Failed to save the chapter", err);
+      }
+    }
   };
+
   const handleReset = () => {
     toggleEdit();
   };
@@ -22,7 +42,11 @@ const CardBlockEdit = ({ block, toggleEdit }) => {
     <form
       onSubmit={handleEdit}
       onReset={handleReset}
-      className="flex sm:flex-nowrap flex-wrap items-center gap-1 px-2 "
+      className={
+        editBlockTab === "header"
+          ? "flex flex-col justify-center items-center gap-2 visible translate-y-0 dur"
+          : "invisible -translate-y-3 h-0"
+      }
     >
       <div className="field">
         <label htmlFor="title" className="field__label">
@@ -79,4 +103,4 @@ const CardBlockEdit = ({ block, toggleEdit }) => {
   );
 };
 
-export default CardBlockEdit;
+export default CardBlockEditHeader;

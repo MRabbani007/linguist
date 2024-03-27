@@ -1,10 +1,13 @@
-import { useContext, useState } from "react";
-import { GlobalContext } from "../../context/GlobalState";
+import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
+import { useEditBlockContentMutation } from "./blockSlice";
+import { useSelector } from "react-redux";
+import { selectDisplayBlock } from "../globals/globalsSlice";
 
-const CardBlockEditContent = ({ editBlockDetails, toggleEdit }) => {
-  const { words, displayBlock, editMode, displayMode, handleBlockEditContent } =
-    useContext(GlobalContext);
+const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
+  const displayBlock = useSelector(selectDisplayBlock);
+
+  const [editBlockContent, { isLoading }] = useEditBlockContentMutation();
 
   const [imagesURL, setImagesURL] = useState(displayBlock?.imagesURL || "");
   const [introduction, setIntroduction] = useState(
@@ -14,18 +17,27 @@ const CardBlockEditContent = ({ editBlockDetails, toggleEdit }) => {
   const [text, setText] = useState(displayBlock?.text || "");
   const [notes, setNotes] = useState(displayBlock?.notes || "");
 
-  const handleSubmit = (e) => {
+  const canSave = !isLoading;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let block = {
-      id: displayBlock.id,
-      imagesURL,
-      introduction,
-      caption,
-      notes,
-      text,
-    };
-    handleBlockEditContent(block);
-    toggleEdit();
+    if (canSave) {
+      try {
+        let newBlock = {
+          id: displayBlock?.id,
+          imagesURL,
+          introduction,
+          caption,
+          notes,
+          text,
+        };
+        const res = await editBlockContent(newBlock).unwrap();
+
+        toggleEdit("");
+      } catch (err) {
+        console.error("Failed to save the section", err);
+      }
+    }
   };
 
   const handleReset = () => {
@@ -37,9 +49,9 @@ const CardBlockEditContent = ({ editBlockDetails, toggleEdit }) => {
       onSubmit={handleSubmit}
       onReset={handleReset}
       className={
-        editBlockDetails
+        editBlockTab === "content"
           ? "flex flex-col justify-center items-center gap-2 visible translate-y-0 dur"
-          : "invisible -translate-y-3"
+          : "invisible -translate-y-3 h-0"
       }
     >
       <h3 className="btn btn-yellow">Edit Content</h3>

@@ -1,14 +1,23 @@
-import { useContext, useState } from "react";
-import { CiEdit, CiSquareCheck, CiTrash } from "react-icons/ci";
-import { GlobalContext } from "../../context/GlobalState";
+import { useState } from "react";
+import { CiEdit, CiTrash } from "react-icons/ci";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { useRemoveWordMutation } from "./wordsSlice";
+import { useSelector } from "react-redux";
+import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
 
 const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
-  const { words, handleWordDelete, displayBlock, editMode } =
-    useContext(GlobalContext);
+  const [removeWord] = useRemoveWordMutation();
+  const displayBlock = useSelector(selectDisplayBlock);
+  const editMode = useSelector(selectEditMode);
 
-  const deleteWord = () => {
-    handleWordDelete(word.id);
+  const handleDelete = async () => {
+    try {
+      if (confirm("Delete this Word? !\nEither OK or Cancel.")) {
+        await removeWord(word.id).unwrap();
+      }
+    } catch (err) {
+      console.error("Failed to delete the word", err);
+    }
   };
 
   const label_1 =
@@ -45,7 +54,7 @@ const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
                   setEditWord(word);
                 }}
               />
-              <CiTrash className="icon" onClick={deleteWord} />
+              <CiTrash className="icon" onClick={handleDelete} />
             </>
           </span>
         </div>

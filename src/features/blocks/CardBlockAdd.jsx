@@ -1,20 +1,51 @@
-import React, { useContext, useState } from "react";
-import { GlobalContext } from "../../context/GlobalState";
+import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 
+import { useAddBlockMutation } from "./blockSlice";
+import { useSelector } from "react-redux";
+import { selectDisplayChapter } from "../globals/globalsSlice";
+
 const CardBlockAdd = () => {
-  const { handleBlockAdd } = useContext(GlobalContext);
+  const displayChapter = useSelector(selectDisplayChapter);
+
+  const [addBlock, { isLoading }] = useAddBlockMutation();
 
   const [add, setAdd] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [subTitle, setSubTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [detail, setDetail] = useState("");
 
-  const handleSubmit = (e) => {
+  const canSave = [title, subtitle, detail].every(Boolean) && !isLoading;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleBlockAdd(title, subTitle);
-    setTitle("");
+    if (canSave) {
+      try {
+        let block = {
+          id: crypto.randomUUID(),
+          chapterID: displayChapter.id,
+          title,
+          subtitle,
+          detail,
+          firstLang: "",
+          secondLang: "",
+          thirdLang: "",
+          fourthLang: "",
+          introduction: "",
+          caption: "",
+          notes: "",
+          text: "",
+          imagesURL: "",
+          createDate: new Date(),
+        };
+        const res = await addBlock(block).unwrap();
+        console.log(res);
+        // setAdd(false);
+      } catch (err) {
+        console.error("Failed to add the section", err);
+      }
+    }
   };
 
   const handleReset = () => {
@@ -60,10 +91,10 @@ const CardBlockAdd = () => {
               type="text"
               id="section_subtitle"
               name="section_subtitle"
-              value={subTitle}
+              value={subtitle}
               placeholder="Section Sub-Title"
               className="field__input"
-              onChange={(e) => setSubTitle(e.target.value)}
+              onChange={(e) => setSubtitle(e.target.value)}
             />
           </div>
         </div>

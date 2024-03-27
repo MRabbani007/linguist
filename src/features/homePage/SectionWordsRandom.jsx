@@ -1,17 +1,35 @@
-import React, { useContext, useEffect } from "react";
-import { GlobalContext } from "../../context/GlobalState";
-import CardWord from "../chapterPage/CardWord";
+import CardWord from "../words/CardWord";
+import { useLazyGetRandomWordsQuery } from "../randomWords/randomWordsSlice";
+import { useEffect } from "react";
 
 const SectionWordsRandom = () => {
-  const { wordsRandom, handleWordGetRandom } = useContext(GlobalContext);
+  const [
+    getRandomWords,
+    { data: wordsRandom, isLoading, isSuccess, isError, error },
+  ] = useLazyGetRandomWordsQuery();
 
   const handleLoad = () => {
-    handleWordGetRandom();
+    getRandomWords();
   };
 
   useEffect(() => {
-    handleWordGetRandom();
+    getRandomWords();
   }, []);
+
+  let content;
+  if (isLoading) {
+    content = <p>"Loading..."</p>;
+  } else if (isError) {
+    content = <p>{JSON.stringify(error)}</p>;
+  } else if (isSuccess) {
+    // destructure words from normalized object
+    const { ids, entities } = wordsRandom;
+    if (ids) {
+      content = ids.map((id, index) => (
+        <CardWord word={entities[id]} key={id} />
+      ));
+    }
+  }
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -22,10 +40,7 @@ const SectionWordsRandom = () => {
         Load
       </button>
       <div className="flex flex-wrap gap-3 items-center justify-center">
-        {Array.isArray(wordsRandom) &&
-          wordsRandom.map((word, index) => {
-            return <CardWord word={word} key={index} />;
-          })}
+        {content}
       </div>
     </div>
   );

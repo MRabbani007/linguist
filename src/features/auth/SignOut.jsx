@@ -1,11 +1,19 @@
+import { useDispatch, useSelector } from "react-redux";
 import { genDate } from "../../data/utils";
-import useAuth from "../../hooks/useAuth";
-import useLogout from "../../hooks/useLogout";
+import { logOut, selectCurrentAuth } from "./authSlice";
+import { useLogoutMutation } from "./authApiSlice";
 
 const SignOut = () => {
-  const { auth } = useAuth();
-  const logout = useLogout();
+  const auth = useSelector(selectCurrentAuth);
+  const [logout] = useLogoutMutation();
+  const dispatch = useDispatch();
+
   const todayDate = genDate();
+
+  const handleLogout = () => {
+    logout();
+    dispatch(logOut());
+  };
 
   return (
     <div>
@@ -17,7 +25,7 @@ const SignOut = () => {
         </p>
       </div>
       <div>
-        <button className="btn btn-blue" onClick={() => logout()}>
+        <button className="btn btn-blue" onClick={handleLogout}>
           Sign Out
         </button>
       </div>

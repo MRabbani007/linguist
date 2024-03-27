@@ -1,40 +1,45 @@
-import { useContext, useState } from "react";
-import { GlobalContext } from "../../context/GlobalState";
+import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
-import { useDispatch } from "react-redux";
-
-import { handleAddChapter } from "../../context/chapterSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { useAddChapterMutation } from "./chapterSlice";
 
 const CardChapterAdd = () => {
-  const { handleChapterAdd } = useContext(GlobalContext);
+  const [addChapter, { isLoading }] = useAddChapterMutation();
 
-  const dispatch = useDispatch();
-
-  const [addChapter, setAddChapter] = useState(false);
+  const [viewAddChapter, setViewAddChapter] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [subTitle, setSubTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [detail, setDetail] = useState("");
 
-  const handleSubmit = (e) => {
+  const canSave = [title, subtitle, detail].every(Boolean) && !isLoading;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleChapterAdd(title, subTitle, detail);
-    // dispatch(handleAddChapter(title, subTitle, detail));
-    setAddChapter(false);
+    if (canSave) {
+      try {
+        let chapter = {
+          id: crypto.randomUUID(),
+          title,
+          subtitle,
+          detail,
+        };
+        await addChapter(chapter).unwrap();
+
+        setViewAddChapter(false);
+      } catch (err) {
+        console.error("Failed to add the chapter", err);
+      }
+    }
   };
 
-  // use to enable/ disable form submit button
-  const canSave = Boolean(title) && Boolean(subTitle);
-
   const handleReset = () => {
-    setAddChapter(false);
+    setViewAddChapter(false);
   };
 
   return (
     <div className="flex flex-col items-center gap-3">
       <button
-        onClick={() => setAddChapter(!addChapter)}
+        onClick={() => setViewAddChapter(!viewAddChapter)}
         className="btn btn-red"
       >
         Add Chapter
@@ -43,7 +48,7 @@ const CardChapterAdd = () => {
         onSubmit={handleSubmit}
         onReset={handleReset}
         className={
-          (addChapter ? "visible " : "invisible -translate-y-4 ") +
+          (viewAddChapter ? "visible " : "invisible -translate-y-4 ") +
           " flex flex-row items-center justify-center gap-3 translate-y-0 duration-200"
         }
       >
@@ -72,8 +77,8 @@ const CardChapterAdd = () => {
             name="chapter_subtitle"
             placeholder="Sub-Title"
             className="field__input"
-            value={subTitle}
-            onChange={(e) => setSubTitle(e.target.value)}
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
           />
         </div>
         <div className="field">

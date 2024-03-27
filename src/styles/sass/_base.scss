@@ -52,16 +52,22 @@ body {
   font-family: var(--font-roboto)
 }
 
-.navbar {
+menu {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: var(--navbar-height);
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 50;
+}
+
+.navbar-red {
+  background-color: $clr-red-600;
+  color: $clr-slate-200;
 }
 
 input {

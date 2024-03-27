@@ -8,6 +8,7 @@ export const ACTIONS = {
 
   ADD_BLOCK: "ADD_BLOCK",
   GET_BLOCK: "GET_BLOCK",
+  EDIT_BLOCK: "EDIT_BLOCK",
   EDIT_BLOCK_HEADER: "EDIT_BLOCK_HEADER",
   EDIT_BLOCK_DETAILS: "EDIT_BLOCK_DETAILS",
   EDIT_BLOCK_CONTENT: "EDIT_BLOCK_CONTENT",
@@ -25,7 +26,7 @@ export const ACTIONS = {
 
 export const SERVER = {
   ADD_WORD: "/word/add",
-  GET_WORD: "/word/get",
+  GET_WORD: "/word/getblock",
   GET_WORD_RANDOM: "/word/getrandom",
   EDIT_WORD: "/word/edit",
   EDIT_WORD_DETAILS: "/word/editdetails",
@@ -33,6 +34,7 @@ export const SERVER = {
 
   ADD_BLOCK: "/block/add",
   GET_BLOCK: "/block/get",
+  EDIT_BLOCK: "/block/editblock",
   EDIT_BLOCK_HEADER: "/block/editheader",
   EDIT_BLOCK_DETAILS: "/block/editdetails",
   EDIT_BLOCK_CONTENT: "/block/editcontent",
@@ -45,4 +47,6 @@ export const SERVER = {
 
   USER_SIGNIN: "/user/auth",
   USER_SIGNUP: "/user/register",
+  USER_REFRESH: "/user/refresh",
+  USER_LOGOUT: "/user/logout",
 };

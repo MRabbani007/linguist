@@ -1,11 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-// Imported Context
-import AuthContext from "../../context/AuthProvider";
-import { GlobalContext } from "../../context/GlobalState";
-// Imported Components
-import CardThemes from "../../components/CardThemes";
-import Offcanvas from "../navigation/Offcanvas";
 // Imported Icons
 import { FiUser } from "react-icons/fi";
 import { TbReportAnalytics } from "react-icons/tb";
@@ -13,12 +6,24 @@ import {
   IoAddCircleOutline,
   IoHomeOutline,
   IoSettingsOutline,
-  IoMenuSharp,
 } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleEditMode } from "../globals/globalsSlice";
+import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 
 const Navbar = () => {
-  const { auth } = useContext(AuthContext);
-  const { handleToggleEditMode } = useContext(GlobalContext);
+  const user = useSelector(selectCurrentUser);
+  const roles = useSelector(selectCurrentRoles);
+
+  const dispatch = useDispatch();
+
+  const isAdmin = !!roles?.find((role) => role === 5150) || true;
+
+  const handleToggleEditMode = () => {
+    if (isAdmin) {
+      dispatch(toggleEditMode());
+    }
+  };
   // const sideBarRef = useRef();
   // const sideBarButtonRef = useRef();
 
@@ -39,31 +44,31 @@ const Navbar = () => {
   // }, []);
 
   return (
-    <nav className="navbar flex items-center justify-between px-5 duration-500 bg-red-600 text-white">
-      <span>
+    <menu className="navbar-red">
+      <span className="flex items-center justify-between gap-3">
         <Link to="/">
-          <IoHomeOutline className="icon mx-3" />
+          <IoHomeOutline className="icon" />
         </Link>
         <Link to="/chapters">
           <TbReportAnalytics className="icon" />
         </Link>
-        <button onClick={handleToggleEditMode}>
-          <IoAddCircleOutline className="icon mx-3" />
-        </button>
+        {isAdmin && (
+          <button onClick={handleToggleEditMode}>
+            <IoAddCircleOutline className="icon" />
+          </button>
+        )}
         <Link to="/settings">
           <IoSettingsOutline className="icon" />
         </Link>
       </span>
       <span>
-        {/* <MdOutlineDarkMode className="icon mx-3" /> */}
-        {/* <CardThemes /> */}
-        {auth?.user === "" ? (
+        {!user ? (
           <Link to="/login">
             <FiUser className="icon" />
           </Link>
         ) : (
           <Link to="/login">
-            {auth?.user === "" ? "" : auth?.user}
+            {user}
             <FiUser className="icon" />
           </Link>
         )}
@@ -73,7 +78,7 @@ const Navbar = () => {
         handleSideBar={handleSideBar}
         ref={sideBarRef}
       /> */}
-    </nav>
+    </menu>
   );
 };
 

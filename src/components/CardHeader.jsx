@@ -1,9 +1,9 @@
-import React from "react";
-import useAuth from "../hooks/useAuth";
 import { genDate } from "../data/utils";
+import { useSelector } from "react-redux";
+import { selectCurrentAuth } from "../features/auth/authSlice";
 
 const CardHeader = () => {
-  const { auth } = useAuth();
+  const auth = useSelector(selectCurrentAuth);
 
   const today = genDate();
 

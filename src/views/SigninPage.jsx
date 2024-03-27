@@ -3,15 +3,13 @@ import useAuth from "../hooks/useAuth";
 // Imported Components
 import SignIn from "../features/auth/SignIn";
 import SignOut from "../features/auth/SignOut";
+import { useSelector } from "react-redux";
+import { selectCurrentAuth } from "../features/auth/authSlice";
 
 const SigninPage = () => {
-  const { auth } = useAuth();
+  const auth = useSelector(selectCurrentAuth);
 
-  return (
-    <div className="flex-center user-section text-slate-950">
-      {auth?.user ? <SignOut /> : <SignIn />}
-    </div>
-  );
+  return <div className="">{auth?.user ? <SignOut /> : <SignIn />}</div>;
 };
 
 export default SigninPage;
