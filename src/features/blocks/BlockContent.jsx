@@ -16,8 +16,10 @@ import {
   selectEditMode,
 } from "../globals/globalsSlice";
 import CardBlockEditHeader from "./CardBlockEditHeader";
+import BlockNavigator from "./BlockNavigator";
+import CardWordList from "../words/CardWordList";
 
-const BlockContent = ({ colSpan, setColSpan }) => {
+const BlockContent = () => {
   const displayBlock = useSelector(selectDisplayBlock);
   const displayMode = useSelector(selectDisplayMode);
   const editMode = useSelector(selectEditMode);
@@ -45,19 +47,24 @@ const BlockContent = ({ colSpan, setColSpan }) => {
           word={entities[id]}
           key={id}
           index={index}
-          colSpan={colSpan}
-          setColSpan={setColSpan}
           setEditWord={setEditWord}
         />
       ));
-    } else if (displayMode === "list") {
+    } else if (displayMode === "table") {
       content = ids.map((id, index) => (
         <CardWordTable
           word={entities[id]}
           key={id}
           index={index}
-          colSpan={colSpan}
-          setColSpan={setColSpan}
+          setEditWord={setEditWord}
+        />
+      ));
+    } else if (displayMode === "list") {
+      content = ids.map((id, index) => (
+        <CardWordList
+          word={entities[id]}
+          key={id}
+          index={index}
           setEditWord={setEditWord}
         />
       ));
@@ -70,22 +77,15 @@ const BlockContent = ({ colSpan, setColSpan }) => {
     setEditBlockTab(tab);
   };
 
-  const toggleEditWord = () => {
-    setEditWord(!editWord);
-  };
-
   return (
     <div className="flex flex-col gap-2 w-full p-2">
-      <h2 className="font-bold text-xl text-center my-2 p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group">
-        <span>{displayBlock?.title}</span>
-        <span>
-          {!!displayBlock?.subtitle ? ", " + displayBlock?.subtitle : ""}
-        </span>
-        <span>{!!displayBlock?.detail ? ", " + displayBlock?.detail : ""}</span>
+      <h2 className=" text-center my-2 p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group relative">
+        <p className="font-bold text-xl">{displayBlock?.title}</p>
+        <p>{!!displayBlock?.subtitle ? displayBlock?.subtitle : ""}</p>
         <span>
           {editMode && (
             <CiEdit
-              className="icon invisible group-hover:visible"
+              className="icon invisible group-hover:visible absolute top-2 right-2"
               onClick={() => toggleEdit()}
             />
           )}
@@ -94,71 +94,68 @@ const BlockContent = ({ colSpan, setColSpan }) => {
       <div
         className={
           editMode
-            ? "flex items-center justify-center gap-3 duration-200 translate-y-0"
+            ? "duration-200 translate-y-0"
             : "invisible translate-y-2 h-0"
         }
       >
-        <button className="btn btn-red" onClick={() => toggleEdit("header")}>
-          Header
-        </button>
-        <button className="btn btn-red" onClick={() => toggleEdit("details")}>
-          Details
-        </button>
-        <button className="btn btn-red" onClick={() => toggleEdit("content")}>
-          Content
-        </button>
+        <div className="flex items-center justify-center gap-3 ">
+          <button className="btn btn-red" onClick={() => toggleEdit("header")}>
+            Header
+          </button>
+          <button className="btn btn-red" onClick={() => toggleEdit("details")}>
+            Details
+          </button>
+          <button className="btn btn-red" onClick={() => toggleEdit("content")}>
+            Content
+          </button>
+        </div>
+        <div>
+          <CardBlockEditHeader
+            editBlockTab={editBlockTab}
+            toggleEdit={toggleEdit}
+          />
+          <CardBlockEditDetails
+            editBlockTab={editBlockTab}
+            toggleEdit={toggleEdit}
+          />
+          <CardBlockEditContent
+            editBlockTab={editBlockTab}
+            toggleEdit={toggleEdit}
+          />
+        </div>
       </div>
-      <CardBlockEditHeader
-        editBlockTab={editBlockTab}
-        toggleEdit={toggleEdit}
-      />
-      <CardBlockEditDetails
-        editBlockTab={editBlockTab}
-        toggleEdit={toggleEdit}
-      />
-      <CardBlockEditContent
-        editBlockTab={editBlockTab}
-        toggleEdit={toggleEdit}
-      />
+      <p>{displayBlock?.detail ? displayBlock?.detail : ""}</p>
       {displayBlock?.introduction ? (
         <div className="">{displayBlock.introduction}</div>
       ) : null}
-      {displayMode === "list" ? (
+      {displayMode === "table" ? (
         <table>
-          <CardTableHeader
-            colSpan={colSpan}
-            setColSpan={setColSpan}
-            toggleEdit={toggleEdit}
-          />
+          <CardTableHeader toggleEdit={toggleEdit} />
           <tbody className="">{content}</tbody>
         </table>
-      ) : (
+      ) : displayMode === "block" ? (
         <div className="flex flex-row flex-wrap gap-3 items-center justify-center">
           {content}
         </div>
+      ) : (
+        <div className="flex flex-col gap-2">{content}</div>
       )}
       {!!editWord?.first && (
         <>
-          <CardWordEdit
-            word={editWord}
-            colSpan={colSpan}
-            setEditWord={setEditWord}
-          />
-          <CardWordEditDetails
-            word={editWord}
-            editWord={editWord}
-            setEditWord={setEditWord}
-          />
+          <CardWordEdit word={editWord} setEditWord={setEditWord} />
+          <CardWordEditDetails word={editWord} setEditWord={setEditWord} />
         </>
       )}
       {editMode && (
         <div className="w-fit mx-auto">
-          <CardWordAdd colSpan={colSpan} setColSpan={setColSpan} />
+          <CardWordAdd />
         </div>
       )}
       {displayBlock?.caption ? <div className="">Caption:</div> : null}
       {displayBlock?.text ? <div className="">Text:</div> : null}
       {displayBlock?.notes ? <div className="">Notes:</div> : null}
+      {/* footer */}
+      <BlockNavigator />
     </div>
   );
 };

@@ -32,14 +32,10 @@ const SectionChapterList = () => {
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-bold text-xl text-center my-2 p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400">
-        Chapters
+        Learn Russian Language
       </h2>
       <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
         {content}
-        {/* {Array.isArray(chapters) &&
-          chapters.map((item, index) => {
-            return <CardChapterTitle chapter={item} key={index} />;
-          })} */}
       </div>
       {editMode && <CardChapterAdd />}
     </div>

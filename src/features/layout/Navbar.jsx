@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
+import { FaUserGear } from "react-icons/fa6";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -17,7 +18,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
-  const isAdmin = !!roles?.find((role) => role === 5150) || true;
+  const isAdmin = !!roles?.find((role) => role === 5150);
 
   const handleToggleEditMode = () => {
     if (isAdmin) {
@@ -59,6 +60,9 @@ const Navbar = () => {
         )}
         <Link to="/settings">
           <IoSettingsOutline className="icon" />
+        </Link>
+        <Link to="/admin">
+          <FaUserGear className="icon" />
         </Link>
       </span>
       <span>

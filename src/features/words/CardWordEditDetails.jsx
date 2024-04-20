@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditWordDetailsMutation } from "./wordsSlice";
 
-const CardWordEditDetails = ({ word, colSpan, editWord, setEditWord }) => {
+const CardWordEditDetails = ({ word, setEditWord }) => {
   const [editWordDetails, { isLoading }] = useEditWordDetailsMutation();
 
   const [image, setImage] = useState(word?.image || "");
@@ -15,7 +15,7 @@ const CardWordEditDetails = ({ word, colSpan, editWord, setEditWord }) => {
     e.preventDefault();
     if (canSave) {
       try {
-        const newWord = { ...word, image, sentence, baseWord };
+        const newWord = { ...word, image, sentence: [sentence], baseWord };
 
         await editWordDetails(newWord).unwrap();
 
@@ -75,7 +75,7 @@ const CardWordEditDetails = ({ word, colSpan, editWord, setEditWord }) => {
             placeholder="Sentence"
             value={sentence}
             onChange={(e) => {
-              setSecond(e.target.value);
+              setSentence(e.target.value);
             }}
           />
         </div>

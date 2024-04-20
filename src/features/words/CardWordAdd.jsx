@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useAddWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import { selectDisplayBlock } from "../globals/globalsSlice";
+import {
+  selectDisplayBlock,
+  selectLanguagesCount,
+} from "../globals/globalsSlice";
 
-const CardWordAdd = ({ colSpan }) => {
+const CardWordAdd = () => {
   const displayBlock = useSelector(selectDisplayBlock);
+  const languagesCount = useSelector(selectLanguagesCount);
 
   const [addWord, { isLoading }] = useAddWordMutation();
 
@@ -88,7 +92,7 @@ const CardWordAdd = ({ colSpan }) => {
             </div>
           </div>
           <div className="flex gap-2">
-            {colSpan > 4 ? (
+            {languagesCount > 2 ? (
               <div className="field">
                 <label htmlFor="thirdLanguage" className="field__label">
                   {displayBlock?.thirdLang || "Third Language"}
@@ -105,7 +109,7 @@ const CardWordAdd = ({ colSpan }) => {
                 />
               </div>
             ) : null}
-            {colSpan > 5 ? (
+            {languagesCount > 3 ? (
               <div className="field">
                 <label htmlFor="fourthLanguage" className="field__label">
                   {displayBlock?.fourthLang || "Fourth Language"}

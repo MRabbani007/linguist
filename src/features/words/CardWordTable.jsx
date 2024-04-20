@@ -1,19 +1,22 @@
-import { useContext, useState } from "react";
-import { CiEdit, CiSquareCheck, CiTrash } from "react-icons/ci";
-import { GlobalContext } from "../../context/GlobalState";
-import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { useState } from "react";
+import { CiEdit, CiTrash } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEditMode, selectLanguagesCount } from "../globals/globalsSlice";
+import { useRemoveWordMutation } from "./wordsSlice";
 
-const CardWordTable = ({ word, index, colSpan, setColSpans, setEditWord }) => {
-  const { words, handleWordDelete, displayBlock } = useContext(GlobalContext);
+const CardWordTable = ({ word, index, setEditWord }) => {
+  const languagesCount = useSelector(selectLanguagesCount);
+  const editMode = useSelector(selectEditMode);
+  const [removeWord, { isLoading }] = useRemoveWordMutation();
+  const dispatch = useDispatch();
+
+  const canSave = !isLoading;
 
   const deleteWord = () => {
-    handleWordDelete(word.id);
-  };
-
-  const [show, setShow] = useState(false);
-
-  const handleShowWord = () => {
-    setShow(!show);
+    confirm("Delete this word?");
+    if (canSave) {
+      dispatch(removeWord(word?.id));
+    }
   };
 
   return (
@@ -21,26 +24,21 @@ const CardWordTable = ({ word, index, colSpan, setColSpans, setEditWord }) => {
       <td>{index + 1}</td>
       <td>{word?.first}</td>
       <td>{word?.second}</td>
-      {colSpan > 4 ? <td>{word?.third}</td> : null}
-      {colSpan > 5 ? <td>{word?.fourth}</td> : null}
-      {/* <td>
-        {show ? (
-          <FaEyeSlash onClick={handleShowWord} />
-        ) : (
-          <FaEye onClick={handleShowWord} />
-        )}
-      </td> */}
-      <td>
-        <span className="invisible group-hover:visible">
-          <CiEdit
-            className="icon mr-1 cursor-pointer"
-            onClick={() => {
-              setEditWord(word);
-            }}
-          />
-          <CiTrash className="icon" onClick={deleteWord} />
-        </span>
-      </td>
+      {languagesCount > 2 ? <td>{word?.third}</td> : null}
+      {languagesCount > 3 ? <td>{word?.fourth}</td> : null}
+      {editMode && (
+        <td>
+          <span className="invisible group-hover:visible">
+            <CiEdit
+              className="icon mr-1 cursor-pointer"
+              onClick={() => {
+                setEditWord(word);
+              }}
+            />
+            <CiTrash className="icon" onClick={deleteWord} />
+          </span>
+        </td>
+      )}
     </tr>
   );
 };

@@ -1,6 +1,6 @@
 .page-container {
   padding-top: calc(var(--navbar-height) + 20px);
-  // padding-bottom: 40px;
+  padding-bottom: 40px;
   padding-left: 1rem;
   padding-right: 1rem;
   min-height: 100vh;
@@ -28,11 +28,11 @@
 }
 
 .btn-yellow {
-  background-color: var(--clr-yellow-400);
+  background-color: $clr-yellow-400;
 }
 
 .btn-yellow:hover {
-  background-color: var(--clr-yellow-500);
+  background-color: $clr-yellow-500;
 }
 
 .btn-red {
@@ -50,8 +50,8 @@
 }
 
 .btn-blue {
-  background-color: var(--clr-blue-400);
-  color: var(--clr-blue-50);
+  background-color: $clr-blue-400;
+  color: $clr-blue-50;
 }
 
 .icon-sm {
@@ -94,20 +94,25 @@
 }
 
 .card__header {
-  padding: .5rem 1rem;
-  background-color: $clr-slate-400;
-  border-top-left-radius: .5rem;
-  border-top-right-radius: .5rem;
+  padding: .5rem .5rem;
+  // background-color: $clr-slate-300;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
 }
 
 .card__body {
   padding: .5rem;
-  background-color: $clr-slate-200;
+  // background-color: $clr-slate-200;
 }
 
 .card__footer {
   padding: .5rem 1rem;
-  border-bottom-left-radius: .5rem;
-  border-bottom-right-radius: .5rem;
-  background-color: $clr-slate-400;
+  border-bottom-left-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+  // background-color: $clr-slate-300;
 }

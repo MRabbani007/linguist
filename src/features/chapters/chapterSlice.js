@@ -1,8 +1,6 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { ACTIONS, SERVER } from "../../data/actions";
-import { selectCurrentUser } from "../auth/authSlice";
-import { useSelector } from "react-redux";
 import { store } from "../../app/store";
 
 const chaptersAdapter = createEntityAdapter({
@@ -12,7 +10,7 @@ const chaptersAdapter = createEntityAdapter({
 
 const initialState = chaptersAdapter.getInitialState();
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const chaptersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getChapters: builder.query({
       query: () => ({
@@ -22,6 +20,26 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.GET_CHAPTER,
+            payload: { userName: store.getState()?.auth?.user }, // auth?.user
+          },
+        },
+      }),
+      transformResponse: (responseData) => {
+        return chaptersAdapter.setAll(initialState, responseData);
+      },
+      providesTags: (result, error, arg) => [
+        { type: "Chapter", id: "LIST" },
+        ...result.ids.map((id) => ({ type: "Chapter", id })),
+      ],
+    }),
+    getAllChapters: builder.query({
+      query: () => ({
+        url: SERVER.EDITOR_GET_CHAPTERS,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.EDITOR_GET_CHAPTERS,
             payload: { userName: store.getState()?.auth?.user }, // auth?.user
           },
         },
@@ -85,14 +103,15 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetChaptersQuery,
+  useGetAllChaptersQuery,
   useAddChapterMutation,
   useEditChapterMutation,
   useRemoveChapterMutation,
-} = extendedApiSlice;
+} = chaptersApiSlice;
 
 // returns the query result object
 export const selectChaptersResult =
-  extendedApiSlice.endpoints.getChapters.select();
+  chaptersApiSlice.endpoints.getChapters.select();
 
 // Creates memoized selector
 const selectChaptersData = createSelector(
@@ -104,8 +123,7 @@ const selectChaptersData = createSelector(
 export const {
   selectAll: selectAllChapters,
   // Pass in a selector that returns the posts slice of state
-} = chaptersAdapter.getSelectors(
-  (state) => selectChaptersData(state) ?? initialState
-);
-
-// ************************** TODO: REMOVE *******************
+} = chaptersAdapter.getSelectors((state) => {
+  // console.log(selectChaptersData(state));
+  return selectChaptersData(state) ?? initialState;
+});

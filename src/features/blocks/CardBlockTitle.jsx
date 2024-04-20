@@ -28,7 +28,7 @@ const CardBlockTitle = ({ block }) => {
 
   const handleDelete = async () => {
     try {
-      if (confirm("Delete this block? !\nEither OK or Cancel.")) {
+      if (confirm("Delete this block?")) {
         await removeBlock(block.id).unwrap();
       }
     } catch (err) {
@@ -41,12 +41,21 @@ const CardBlockTitle = ({ block }) => {
       {edit ? (
         <CardBlockEditHeader toggleEdit={toggleEdit} block={block} />
       ) : (
-        <div className="flex flex-col gap-2 bg-zinc-300 rounded-lg w-[300px] h-full">
+        <div className="flex flex-col gap-2 bg-zinc-300 rounded-md w-[300px] h-full">
           {/* Header */}
-          <div className="flex justify-between items-center bg-sky-800 text-yellow-100 py-2 px-4 rounded-t-lg">
+          <div
+            className="flex flex-col items-center bg-sky-800 text-yellow-100 hover:text-yellow-400 duration-200 py-2 px-4 rounded-t-md cursor-pointer"
+            onClick={blockOpen}
+          >
+            <span className="font-light">{block?.title}</span>
+          </div>
+          {/* Body */}
+          <div className="flex-1 flex flex-col justify-between gap-2 relative py-2 px-4">
+            <span>{block?.subtitle}</span>
+            <span>{block?.detail}</span>
             <span>{block?.firstLang + " / " + block?.secondLang}</span>
             {editMode && (
-              <span>
+              <span className="absolute bottom-2 right-2">
                 <CiEdit
                   className="icon invisible group-hover:visible "
                   onClick={toggleEdit}
@@ -57,25 +66,6 @@ const CardBlockTitle = ({ block }) => {
                 />
               </span>
             )}
-          </div>
-          <div className="flex-1">
-            <div
-              className="flex items-center justify-center gap-2 py-2 px-4 text-zinc-900 cursor-pointer hover:text-yellow-600 duration-200"
-              onClick={blockOpen}
-            >
-              <span className="font-semibold">{block?.title}</span>
-              <span>{block?.subtitle}</span>
-            </div>
-            <div className=" py-2 px-4">
-              <span>{block?.detail}</span>
-            </div>
-          </div>
-          {/* Footer */}
-          <div className="flex justify-between items-center bg-sky-800 text-yellow-100 py-2 px-4 rounded-b-lg">
-            <span>Beginner</span>
-            <span>
-              <CiSquareCheck className="icon" />
-            </span>
           </div>
         </div>
       )}

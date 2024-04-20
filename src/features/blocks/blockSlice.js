@@ -5,14 +5,14 @@ import { store } from "../../app/store";
 
 const blocksAdapter = createEntityAdapter({
   // select id if id is not default entity.id
-  selectId: (block) => block.id,
+  // selectId: (block) => block.id,
   // TODO: change compare value to date or sort option
   sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = blocksAdapter.getInitialState();
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const blocksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlocks: builder.query({
       query: (chapterID) => ({
@@ -22,7 +22,27 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.GET_BLOCK,
-            payload: { userName: store.getState()?.auth?.user, chapterID }, // auth?.user
+            payload: { userName: store.getState()?.auth?.user, chapterID },
+          },
+        },
+      }),
+      transformResponse: (responseData) => {
+        return blocksAdapter.setAll(initialState, responseData);
+      },
+      providesTags: (result, error, arg) => [
+        { type: "Block", id: "LIST" },
+        ...result.ids.map((id) => ({ type: "Block", id })),
+      ],
+    }),
+    getAllBlocks: builder.query({
+      query: () => ({
+        url: SERVER.EDITOR_GET_BLOCKS,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.EDITOR_GET_BLOCKS,
+            payload: { userName: store.getState()?.auth?.user }, // auth?.user
           },
         },
       }),
@@ -117,16 +137,17 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetBlocksQuery,
+  useGetAllBlocksQuery,
   useLazyGetBlocksQuery,
   useAddBlockMutation,
   useEditBlockHeaderMutation,
   useEditBlockDetailsMutation,
   useEditBlockContentMutation,
   useRemoveBlockMutation,
-} = extendedApiSlice;
+} = blocksApiSlice;
 
 // returns the query result object
-export const selectBlocksResult = extendedApiSlice.endpoints.getBlocks.select();
+export const selectBlocksResult = blocksApiSlice.endpoints.getBlocks.select();
 
 // Creates memoized selector
 const selectBlocksData = createSelector(
@@ -137,9 +158,10 @@ const selectBlocksData = createSelector(
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
   selectAll: selectAllBlocks,
-  selectById: selectBlocksByChapterID,
-  selectIds: selectBlockByBlockID,
+  // selectById: selectBlocksByChapterID,
+  // selectIds: selectBlockByBlockID,
   // Pass in a selector that returns the posts slice of state
-} = blocksAdapter.getSelectors(
-  (state) => selectBlocksData(state) ?? initialState
-);
+} = blocksAdapter.getSelectors((state) => {
+  // console.log(selectBlocksData(state));
+  return selectBlocksData(state) ?? initialState;
+});

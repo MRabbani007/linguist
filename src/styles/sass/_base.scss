@@ -6,36 +6,6 @@
 
   --navbar-height: 50px;
 
-  --clr-sky-950: #082f49;
-  --clr-sky-900: #0c4a6e; 
-  --clr-sky-800: #075985;
-
-  --clr-blue-50:#eff6ff;
-  --clr-blue-400:#60a5fa;
-
-  --clr-gray-50: #f9fafb;
-
-  --clr-slate-50: #f7fee7;
-  --clr-slate-100: #f1f5f9;
-  --clr-slate-200: #e2e8f0;
-  --clr-slate-300:#cbd5e1;
-  --clr-slate-400: #94a3b8;
-  --clr-slate-950: #020617;
-  
-  --clr-yellow-400: #fbbf24;
-  --clr-yellow-500: #eab308;
-  
-  --clr-amber-950:#431407;
-  --clr-brown-dark:#c59c76; 
-
-  --clr-red-400: #f87171;
-  --clr-red-500: #ef4444;
-  --clr-red-600: #dc2626;
-  --clr-red-700: #b91c1c;
-  --clr-red-800: #991b1b;
-  --clr-red-900: #7f1d1d;
-  --clr-red-950: #450a0a;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -54,11 +24,12 @@ body {
 
 menu {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: .5rem;
+  left: .5rem;
+  right: .5rem;
   height: var(--navbar-height);
   padding: 0 1rem;
+  border-radius: .5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,7 +38,7 @@ menu {
 
 .navbar-red {
   background-color: $clr-red-600;
-  color: $clr-slate-200;
+  color: $clr-slate-50;
 }
 
 input {

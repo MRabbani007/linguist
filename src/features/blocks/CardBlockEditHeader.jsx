@@ -3,15 +3,18 @@ import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditBlockHeaderMutation } from "./blockSlice";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
+import { selectAllChapters } from "../chapters/chapterSlice";
 
-const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
+const CardBlockEditHeader = ({ editBlockTab = "header", toggleEdit }) => {
   const displayBlock = useSelector(selectDisplayBlock);
+  const chapters = useSelector(selectAllChapters);
 
   const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
 
   const [title, setTitle] = useState(displayBlock?.title);
   const [subtitle, setSubtitle] = useState(displayBlock?.subtitle);
   const [detail, setDetail] = useState(displayBlock?.detail);
+  const [chapterID, setChapterID] = useState(chapters[0]?.id || "");
 
   const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
@@ -24,6 +27,7 @@ const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
           title,
           subtitle,
           detail,
+          chapterID,
         };
         await editBlockHeader(newBlock).unwrap();
 
@@ -33,6 +37,16 @@ const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
       }
     }
   };
+
+  const menuOptions =
+    Array.isArray(chapters) &&
+    chapters.map((item) => {
+      return (
+        <option value={item?.id} key={item?.id}>
+          {item?.title}
+        </option>
+      );
+    });
 
   const handleReset = () => {
     toggleEdit();
@@ -44,7 +58,7 @@ const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
       onReset={handleReset}
       className={
         editBlockTab === "header"
-          ? "flex flex-col justify-center items-center gap-2 visible translate-y-0 dur"
+          ? "flex flex-row sm:flex-nowrap flex-wrap justify-center items-center gap-2 visible translate-y-0 dur"
           : "invisible -translate-y-3 h-0"
       }
     >
@@ -92,6 +106,17 @@ const CardBlockEditHeader = ({ editBlockTab, toggleEdit }) => {
             setDetail(e.target.value);
           }}
         />
+      </div>
+      <div className="field">
+        <select
+          name="chapter_id"
+          id="chapter_id"
+          value={chapterID}
+          onChange={(e) => setChapterID(e.target.value)}
+        >
+          <option value="">Select Chapter</option>
+          {menuOptions}
+        </select>
       </div>
       <button type="submit">
         <CiSquareCheck className="icon" />

@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { useRemoveWordMutation } from "./wordsSlice";
+import { selectAllWords, useRemoveWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
+import {
+  selectDisplayBlock,
+  selectEditMode,
+  selectLanguagesCount,
+} from "../globals/globalsSlice";
 
-const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
+const CardWord = ({ word = {}, index = 0, setEditWord = () => {} }) => {
   const [removeWord] = useRemoveWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
+  const languagesCount = useSelector(selectLanguagesCount);
   const editMode = useSelector(selectEditMode);
+  const words = useSelector(selectAllWords);
 
   const handleDelete = async () => {
     try {
-      if (confirm("Delete this Word? !\nEither OK or Cancel.")) {
-        await removeWord(word.id).unwrap();
+      if (confirm("Delete this Word?")) {
+        await removeWord(word?.id).unwrap();
       }
     } catch (err) {
       console.error("Failed to delete the word", err);
@@ -41,26 +47,20 @@ const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center min-w-[200px] shrink-0 group border-2 rounded-lg border-red-500">
-      {/* Card Header */}
-      {editMode && (
-        <div className="flex justify-between items-center bg-red-500 py-2 px-4">
-          {/* <span>{index + 1 + " / " + words?.length}</span> */}
-          <span className="invisible group-hover:visible">
-            <>
-              <CiEdit
-                className="icon mr-1 cursor-pointer"
-                onClick={() => {
-                  setEditWord(word);
-                }}
-              />
-              <CiTrash className="icon" onClick={handleDelete} />
-            </>
-          </span>
-        </div>
-      )}
+    <div className="min-w-[200px] shrink-0 group border-[1px] rounded-md">
       {/* Card Body */}
-      <div className="flex py-2 px-4 gap-3 items-center justify-center bg-slate-200 rounded-t-lg">
+      <div className="flex flex-row gap-1 p-2 relative">
+        {editMode && (
+          <span className="invisible group-hover:visible absolute top-2 right-2">
+            <CiEdit
+              className="icon mr-1 cursor-pointer"
+              onClick={() => {
+                setEditWord(word);
+              }}
+            />
+            <CiTrash className="icon" onClick={handleDelete} />
+          </span>
+        )}
         {/* Word */}
         <div className="flex flex-col">
           <div className="">
@@ -71,13 +71,13 @@ const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
             <span className="">{label_2}</span>
             <span className="ml-2 font-semibold">{word?.second}</span>
           </div>
-          {colSpan > 4 ? (
+          {languagesCount > 2 ? (
             <div>
               <span className="font-semibold">{displayBlock?.thirdLang}:</span>
               <span className="ml-2">{word?.third}</span>
             </div>
           ) : null}
-          {colSpan > 5 ? (
+          {languagesCount > 3 ? (
             <div>
               <span className="font-semibold">{displayBlock?.fourthLang}:</span>
               <span className="ml-2">{word?.fourth}</span>
@@ -95,7 +95,7 @@ const CardWord = ({ word = {}, colSpan = 4, setEditWord = () => {} }) => {
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between px-4 py-2 bg-red-500">
+      <div className="card__footer bg-red-500 bg-opacity-60">
         <span></span>
         <span className="cursor-pointer text-slate-50">
           {show ? (

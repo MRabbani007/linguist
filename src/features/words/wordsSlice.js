@@ -78,6 +78,48 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],
     }),
+    addWordSentence: builder.mutation({
+      query: (sentenceData) => ({
+        url: SERVER.ADD_SENTENCE,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.ADD_SENTENCE,
+            payload: { userName: store.getState()?.auth?.user, sentenceData }, // auth?.user
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Word", id: "LIST" }],
+    }),
+    editWordSentence: builder.mutation({
+      query: (sentenceData) => ({
+        url: SERVER.EDIT_SENTENCE,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.EDIT_SENTENCE,
+            payload: { userName: store.getState()?.auth?.user, sentenceData }, // auth?.user
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Word", id: "LIST" }],
+    }),
+    deleteWordSentence: builder.mutation({
+      query: (sentenceData) => ({
+        url: SERVER.DELETE_SENTENCE,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.DELETE_SENTENCE,
+            payload: { userName: store.getState()?.auth?.user, sentenceData }, // auth?.user
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Word", id: "LIST" }],
+    }),
     removeWord: builder.mutation({
       query: (id) => ({
         url: SERVER.REMOVE_WORD,
@@ -100,6 +142,9 @@ export const {
   useAddWordMutation,
   useEditWordMutation,
   useEditWordDetailsMutation,
+  useAddWordSentenceMutation,
+  useEditWordSentenceMutation,
+  useDeleteWordSentenceMutation,
   useRemoveWordMutation,
 } = extendedApiSlice;
 
@@ -107,7 +152,7 @@ export const {
 export const selectWordsResult = extendedApiSlice.endpoints.getWords.select();
 
 // Creates memoized selector
-const selectChaptersData = createSelector(
+const selectWordsData = createSelector(
   selectWordsResult,
   (wordResult) => wordResult.data // normalized state object with ids & entities
 );

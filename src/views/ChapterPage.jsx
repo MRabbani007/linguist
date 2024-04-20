@@ -8,7 +8,6 @@ import BlockList from "../features/blocks/BlockList";
 import BlockContent from "../features/blocks/BlockContent";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectDisplayBlock,
   selectDisplayMode,
   selectViewTab,
   setViewTab,
@@ -18,10 +17,7 @@ import {
 const ChapterPage = () => {
   const viewTab = useSelector(selectViewTab);
   const displayMode = useSelector(selectDisplayMode);
-  const displayBlock = useSelector(selectDisplayBlock);
   const dispatch = useDispatch();
-
-  const [colSpan, setColSpan] = useState(4);
 
   const handleToggleDisplayMode = () => {
     dispatch(toggleDisplayMode());
@@ -30,16 +26,6 @@ const ChapterPage = () => {
   const handleViewTab = (tab) => {
     dispatch(setViewTab(tab));
   };
-
-  useEffect(() => {
-    if (displayBlock?.fourthLang !== "") {
-      setColSpan(6);
-    } else if (displayBlock?.thirdLang !== "") {
-      setColSpan(5);
-    } else {
-      setColSpan(4);
-    }
-  }, [displayBlock]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-2">
@@ -74,6 +60,11 @@ const ChapterPage = () => {
               className="icon text-red-500 hover:text-red-600 duration-200"
               onClick={handleToggleDisplayMode}
             />
+          ) : displayMode === "table" ? (
+            <IoMenu
+              className="icon text-red-500 hover:text-red-600 duration-200"
+              onClick={handleToggleDisplayMode}
+            />
           ) : (
             <IoMenu
               className="icon text-red-500 hover:text-red-600 duration-200"
@@ -87,7 +78,7 @@ const ChapterPage = () => {
         {viewTab === "sections" && <BlockList />}
         {viewTab === "lesson" && (
           <div className="flex max-w-[1000px] w-full mx-auto">
-            <BlockContent colSpan={colSpan} setColSpan={setColSpan} />
+            <BlockContent />
           </div>
         )}
       </div>

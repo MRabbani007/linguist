@@ -9,6 +9,7 @@ import {
   setDisplayChapter,
   setViewTab,
 } from "../globals/globalsSlice";
+import { FaStar } from "react-icons/fa6";
 
 const CardChapterTitle = ({ chapter }) => {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -18,6 +19,8 @@ const CardChapterTitle = ({ chapter }) => {
   const [removeChapter] = useRemoveChapterMutation();
 
   const [edit, setEdit] = useState(false);
+
+  const isMounted = useRef(null);
 
   const handleReset = () => {
     setEdit(false);
@@ -36,15 +39,16 @@ const CardChapterTitle = ({ chapter }) => {
   const handleOpen = async () => {
     isMounted.current = true;
     dispatch(setDisplayChapter(chapter));
+    setTemp(!temp);
   };
 
-  const isMounted = useRef(null);
+  const [temp, setTemp] = useState(true);
 
   useEffect(() => {
     if (isMounted.current) {
       dispatch(setViewTab("sections"));
     }
-  }, [displayChapter]);
+  }, [displayChapter, temp]);
 
   return (
     <div className="flex items-center gap-1 group">
@@ -52,30 +56,37 @@ const CardChapterTitle = ({ chapter }) => {
         <CardChapterEdit chapter={chapter} handleReset={handleReset} />
       ) : (
         <div className="min-w-[300px]">
-          <div className="card__header">
-            <span className="font-semibold cursor-pointer" onClick={handleOpen}>
-              {chapter?.title || ""}
+          {/* Card Header */}
+          <div className="card__header bg-zinc-700 text-zinc-200 ">
+            <span>
+              {/* <TimeAgo timestamp={chapter?.createDate} /> */}
+              <FaStar
+                className="text-green-400 cursor-pointer"
+                title="Beginner"
+              />
             </span>
+            <p
+              className="font-extralight cursor-pointer flex flex-col hover:text-yellow-400 duration-200"
+              onClick={handleOpen}
+            >
+              <span className="">{chapter?.title || ""}</span>
+              <span>{chapter?.subtitle || ""}</span>
+            </p>
+            <span>10%</span>
+          </div>
+          <div className="card__body bg-slate-200 relative">
             {editMode && (
-              <span>
-                <CiEdit
-                  className="icon invisible group-hover:visible"
-                  onClick={() => setEdit(true)}
-                />
-                <CiTrash
-                  className="icon invisible group-hover:visible"
-                  onClick={handleDelete}
-                />
+              <span className="absolute bottom-2 right-2 invisible group-hover:visible">
+                <CiEdit className="icon" onClick={() => setEdit(true)} />
+                <CiTrash className="icon" onClick={handleDelete} />
               </span>
             )}
-          </div>
-          <div className="card__body">
-            <p>{chapter?.subtitle || ""}</p>
             <p>{chapter?.detail || ""}</p>
-          </div>
-          <div className="card__footer">
-            <span>{/* <TimeAgo timestamp={chapter?.createDate} /> */}</span>
-            <span>10% Completed</span>
+            <p>5 Lessons</p>
+            <p>
+              <span>Learning Time:</span>
+              <span>5 Hours</span>
+            </p>
           </div>
         </div>
       )}

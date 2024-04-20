@@ -6,6 +6,10 @@ export const ACTIONS = {
   EDIT_WORD_DETAILS: "EDIT_WORD_DETAILS",
   REMOVE_WORD: "REMOVE_WORD",
 
+  ADD_SENTENCE: "ADD_SENTENCE",
+  EDIT_SENTENCE: "EDIT_SENTENCE",
+  DELETE_SENTENCE: "DELETE_SENTENCE",
+
   ADD_BLOCK: "ADD_BLOCK",
   GET_BLOCK: "GET_BLOCK",
   EDIT_BLOCK: "EDIT_BLOCK",
@@ -20,6 +24,9 @@ export const ACTIONS = {
   EDIT_CHAPTER: "EDIT_CHAPTER",
   REMOVE_CHAPTER: "REMOVE_CHAPTER",
 
+  EDITOR_GET_BLOCKS: "EDITOR_GET_BLOCKS",
+  EDITOR_GET_CHAPTERS: "EDITOR_GET_CHAPTERS",
+
   USER_SIGNIN: "USER_SIGNIN",
   USER_SIGNUP: "USER_SIGNUP",
 };
@@ -30,6 +37,9 @@ export const SERVER = {
   GET_WORD_RANDOM: "/word/getrandom",
   EDIT_WORD: "/word/edit",
   EDIT_WORD_DETAILS: "/word/editdetails",
+  ADD_SENTENCE: "/word/sentenceAdd",
+  EDIT_SENTENCE: "/word/sentenceEdit",
+  DELETE_SENTENCE: "/word/sentenceDelete",
   REMOVE_WORD: "/word/remove",
 
   ADD_BLOCK: "/block/add",
@@ -44,6 +54,9 @@ export const SERVER = {
   GET_CHAPTER: "/chapter/get",
   EDIT_CHAPTER: "/chapter/edit",
   REMOVE_CHAPTER: "/chapter/remove",
+
+  EDITOR_GET_BLOCKS: "/block/getall",
+  EDITOR_GET_CHAPTERS: "/chapter/getall",
 
   USER_SIGNIN: "/user/auth",
   USER_SIGNUP: "/user/register",

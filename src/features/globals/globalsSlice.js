@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const globalsSlice = createSlice({
   name: "globals",
   initialState: {
+    languagesCount: 2,
     displayChapter: null,
     displayBlock: null,
     viewTab: "chapters",
@@ -17,8 +18,25 @@ const globalsSlice = createSlice({
     },
     // called to open block
     setDisplayBlock: (state, action) => {
-      state.displayBlock = action.payload;
+      const displayBlock = action.payload;
+      state.displayBlock = displayBlock;
+      if (displayBlock?.fourthLang !== "") {
+        state.languagesCount = 4;
+      } else if (displayBlock?.thirdLang !== "") {
+        state.languagesCount = 3;
+      } else {
+        state.languagesCount = 2;
+      }
       return state;
+    },
+    setLangaugesCount: (state, action) => {
+      if (state.displayBlock?.fourthLang !== "") {
+        state.languagesCount = 4;
+      } else if (state.displayBlock?.thirdLang !== "") {
+        state.languagesCount = 3;
+      } else {
+        state.languagesCount = 2;
+      }
     },
     setViewTab: (state, action) => {
       const tab = action.payload;
@@ -54,6 +72,8 @@ const globalsSlice = createSlice({
     toggleDisplayMode: (state, action) => {
       if (state.displayMode === "block") {
         state.displayMode = "list";
+      } else if (state?.displayMode === "list") {
+        state.displayMode = "table";
       } else {
         state.displayMode = "block";
       }
@@ -66,6 +86,7 @@ const globalsSlice = createSlice({
 
 export const {
   setDisplayBlock,
+  setLangaugesCount,
   setDisplayChapter,
   setViewTab,
   toggleDisplayMode,
@@ -76,6 +97,7 @@ export default globalsSlice.reducer;
 
 export const selectDisplayChapter = (state) => state.globals.displayChapter;
 export const selectDisplayBlock = (state) => state.globals.displayBlock;
+export const selectLanguagesCount = (state) => state.globals.languagesCount;
 export const selectViewTab = (state) => state.globals.viewTab;
 export const selectDisplayMode = (state) => state.globals.displayMode;
 export const selectEditMode = (state) => state.globals.editMode;
