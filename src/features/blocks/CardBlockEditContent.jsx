@@ -26,10 +26,10 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
         let newBlock = {
           id: displayBlock?.id,
           imagesURL,
-          introduction,
-          caption,
-          notes,
-          text,
+          // introduction,
+          // caption,
+          // notes,
+          // text,
         };
         const res = await editBlockContent(newBlock).unwrap();
 
@@ -54,7 +54,6 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
           : "invisible -translate-y-3 h-0"
       }
     >
-      <h3 className="btn btn-yellow">Edit Content</h3>
       <div className="flex gap-2">
         <div className="field">
           <label htmlFor="section_imagesURL" className="field__label">
@@ -70,7 +69,7 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
             onChange={(e) => setImagesURL(e.target.value)}
           />
         </div>
-        <div className="field">
+        {/* <div className="field">
           <label htmlFor="section_introduction" className="field__label">
             Introduction
           </label>
@@ -83,9 +82,9 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
             className="field__input"
             onChange={(e) => setIntroduction(e.target.value)}
           />
-        </div>
+        </div> */}
       </div>
-      <div className="flex gap-2">
+      <div className="hidden gap-2">
         <div className="field">
           <label htmlFor="section_caption" className="field__label">
             Caption

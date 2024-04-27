@@ -7,7 +7,7 @@ const globalsSlice = createSlice({
     displayChapter: null,
     displayBlock: null,
     viewTab: "chapters",
-    displayMode: "block",
+    displayMode: "list",
     editMode: false,
   },
   reducers: {

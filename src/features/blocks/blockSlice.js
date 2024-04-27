@@ -7,7 +7,13 @@ const blocksAdapter = createEntityAdapter({
   // select id if id is not default entity.id
   // selectId: (block) => block.id,
   // TODO: change compare value to date or sort option
-  sortComparer: (a, b) => a.title.localeCompare(b.title),
+  sortComparer: (a, b) => {
+    if (a.lessonNo && b.lessonNo) {
+      return a.lessonNo.toString().localeCompare(b.lessonNo.toString());
+    } else {
+      return a.title.localeCompare(b.title);
+    }
+  },
 });
 
 const initialState = blocksAdapter.getInitialState();
@@ -132,6 +138,48 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
+    addBlockIntro: builder.mutation({
+      query: (introData) => ({
+        url: SERVER.ADD_INTRO,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.ADD_INTRO,
+            payload: { userName: store.getState()?.auth?.user, introData },
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Block", id: "LIST" }],
+    }),
+    editBlockIntro: builder.mutation({
+      query: (introData) => ({
+        url: SERVER.EDIT_INTRO,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.EDIT_INTRO,
+            payload: { userName: store.getState()?.auth?.user, introData },
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Block", id: "LIST" }],
+    }),
+    deleteBlockIntro: builder.mutation({
+      query: (introData) => ({
+        url: SERVER.DELETE_INTRO,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.DELETE_INTRO,
+            payload: { userName: store.getState()?.auth?.user, introData },
+          },
+        },
+      }),
+      invalidatesTags: [{ type: "Block", id: "LIST" }],
+    }),
   }),
 });
 
@@ -144,6 +192,9 @@ export const {
   useEditBlockDetailsMutation,
   useEditBlockContentMutation,
   useRemoveBlockMutation,
+  useAddBlockIntroMutation,
+  useEditBlockIntroMutation,
+  useDeleteBlockIntroMutation,
 } = blocksApiSlice;
 
 // returns the query result object

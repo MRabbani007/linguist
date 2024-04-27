@@ -5,64 +5,74 @@ import { TbReportAnalytics } from "react-icons/tb";
 import {
   IoAddCircleOutline,
   IoHomeOutline,
+  IoMenu,
   IoSettingsOutline,
 } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 import { FaUserGear } from "react-icons/fa6";
+import { useEffect, useRef, useState } from "react";
+import Offcanvas from "../navigation/Offcanvas";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import UserDropDown from "../navigation/UserDropDown";
+import AdminDropDown from "../navigation/AdminDropDown";
+import { BsBook } from "react-icons/bs";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
   const roles = useSelector(selectCurrentRoles);
-
-  const dispatch = useDispatch();
-
   const isAdmin = !!roles?.find((role) => role === 5150);
 
-  const handleToggleEditMode = () => {
-    if (isAdmin) {
-      dispatch(toggleEditMode());
+  const [viewUserDropDown, setViewUserDropDown] = useState(false);
+  const [viewSideBar, setViewSideBar] = useState(false);
+
+  const sideBarRef = useRef();
+  const sideBarButtonRef = useRef();
+  const dropDownRefUser = useRef();
+  const dropDownRefAdmin = useRef();
+
+  const handleSideBar = (val = false) => {
+    setViewSideBar(val);
+  };
+
+  const handleUserDropDown = (val = false) => {
+    setViewUserDropDown(val);
+  };
+
+  const closeSideBar = (e) => {
+    if (!sideBarRef.current?.contains(e.target)) {
+      if (!sideBarButtonRef.current?.contains(e.target)) {
+        handleSideBar(false);
+      } else {
+        handleSideBar(!viewSideBar);
+      }
+    }
+    if (!dropDownRefUser?.current?.contains(e.target)) {
+      handleUserDropDown();
+    }
+    if (!dropDownRefAdmin?.current?.contains(e.target)) {
+      // handleUserDropDown();
     }
   };
-  // const sideBarRef = useRef();
-  // const sideBarButtonRef = useRef();
 
-  // const closeSideBar = (e) => {
-  //   if (!sideBarRef.current.contains(e.target)) {
-  //     if (sideBarButtonRef.current.contains(e.target)) {
-  //     } else {
-  //       // handleSideBar(false);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", closeSideBar);
-  //   return () => {
-  //     document.removeEventListener("mousedown", closeSideBar);
-  //   };
-  // }, []);
+  useEffect(() => {
+    document.addEventListener("mousedown", closeSideBar);
+    return () => {
+      document.removeEventListener("mousedown", closeSideBar);
+    };
+  }, []);
 
   return (
     <menu className="navbar-red">
       <span className="flex items-center justify-between gap-3">
+        <button ref={sideBarButtonRef} onClick={() => handleSideBar(true)}>
+          <IoMenu size={34} />
+        </button>
         <Link to="/">
-          <IoHomeOutline className="icon" />
+          <IoHomeOutline size={34} />
         </Link>
         <Link to="/chapters">
-          <TbReportAnalytics className="icon" />
-        </Link>
-        {isAdmin && (
-          <button onClick={handleToggleEditMode}>
-            <IoAddCircleOutline className="icon" />
-          </button>
-        )}
-        <Link to="/settings">
-          <IoSettingsOutline className="icon" />
-        </Link>
-        <Link to="/admin">
-          <FaUserGear className="icon" />
+          <BsBook size={34} />
         </Link>
       </span>
       <span>
@@ -71,17 +81,29 @@ const Navbar = () => {
             <FiUser className="icon" />
           </Link>
         ) : (
-          <Link to="/login">
-            {user}
-            <FiUser className="icon" />
-          </Link>
+          <div className=" relative">
+            <button
+              className="flex items-center gap-0"
+              onClick={handleUserDropDown}
+            >
+              {user}
+              <FiUser className="icon" />
+              <MdKeyboardArrowRight size={20} />
+            </button>
+            {viewUserDropDown && isAdmin && (
+              <AdminDropDown ref={dropDownRefUser} />
+            )}
+            {viewUserDropDown && !isAdmin && (
+              <UserDropDown ref={dropDownRefAdmin} />
+            )}
+          </div>
         )}
       </span>
-      {/* <Offcanvas
+      <Offcanvas
         viewSideBar={viewSideBar}
         handleSideBar={handleSideBar}
         ref={sideBarRef}
-      /> */}
+      />
     </menu>
   );
 };

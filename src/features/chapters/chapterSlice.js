@@ -5,7 +5,13 @@ import { store } from "../../app/store";
 
 const chaptersAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
-  sortComparer: (a, b) => a.title.localeCompare(b.title),
+  sortComparer: (a, b) => {
+    if (a.chapterNo && b.chapterNo) {
+      return a.chapterNo.toString().localeCompare(b.chapterNo.toString());
+    } else {
+      return a.title.localeCompare(b.title);
+    }
+  },
 });
 
 const initialState = chaptersAdapter.getInitialState();

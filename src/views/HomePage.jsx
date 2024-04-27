@@ -7,7 +7,6 @@ import SectionWordsRandom from "../features/homePage/SectionWordsRandom";
 const HomePage = () => {
   return (
     <div className="flex flex-col gap-3">
-      <CardHeader />
       {/* <CardProgress /> */}
       <SectionWordsRandom />
     </div>

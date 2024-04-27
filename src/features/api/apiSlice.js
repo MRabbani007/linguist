@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../auth/authSlice";
 
-const API_URL = "https://linguistserver.onrender.com";
-// const API_URL = "http://localhost:3000";
+let API_URL = "https://linguistserver.onrender.com";
+// API_URL = "http://localhost:3000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
@@ -47,6 +47,6 @@ export const apiSlice = createApi({
   reducerPath: "api", // optional
   baseQuery: baseQuerywithReauth,
   //fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
-  tagTypes: ["Chapter", "Block", "Word", "User"],
+  tagTypes: ["Chapter", "Block", "Section", "Word", "User"],
   endpoints: (builder) => ({}),
 });

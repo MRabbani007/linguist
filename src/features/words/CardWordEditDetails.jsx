@@ -45,7 +45,7 @@ const CardWordEditDetails = ({ word, setEditWord }) => {
       <h3 className="bg-yellow-500 py-2 px-4 rounded-lg font-semibold">
         Edit Word Details
       </h3>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 sm:flex-row flex-col items-center">
         <div className="field">
           <label htmlFor="edit_firstword" className="field__label">
             Image

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { genDate } from "../../data/utils";
 import { logOut, selectCurrentAuth } from "./authSlice";
 import { useLogoutMutation } from "./authApiSlice";
+import CardHeader from "../../components/CardHeader";
 
 const SignOut = () => {
   const auth = useSelector(selectCurrentAuth);
@@ -16,14 +17,9 @@ const SignOut = () => {
   };
 
   return (
-    <div>
+    <div className="w-fit my-4 mx-auto flex flex-col items-center gap-3">
       {/* Header */}
-      <div className="">
-        <p>Hello {auth.user},</p>
-        <p className="btn btn-yellow my-2">
-          {todayDate.day + ", " + todayDate.date + " " + todayDate.month}
-        </p>
-      </div>
+      <CardHeader />
       <div>
         <button className="btn btn-blue" onClick={handleLogout}>
           Sign Out

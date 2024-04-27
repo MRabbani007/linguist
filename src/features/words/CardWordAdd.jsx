@@ -5,6 +5,7 @@ import {
   selectDisplayBlock,
   selectLanguagesCount,
 } from "../globals/globalsSlice";
+import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 
 const CardWordAdd = () => {
   const displayBlock = useSelector(selectDisplayBlock);
@@ -48,91 +49,93 @@ const CardWordAdd = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-2 my-2">
-      <div className="flex flex-1 justify-center">
-        <button onClick={handleReset} className="btn btn-red">
-          Add Word
+      <button onClick={handleReset} className="btn btn-red">
+        Add Word
+      </button>
+      <form
+        className={
+          (viewAddWord ? "visible" : "invisible -translate-y-2 opacity-0 h-0") +
+          " flex flex-wrap gap-2 items-center duration-200"
+        }
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      >
+        <div className="flex gap-2">
+          <div className="field">
+            <label htmlFor="firstLanguage" className="field__label">
+              {displayBlock?.firstLang || "First Language"}
+            </label>
+            <input
+              type="text"
+              name="firstLanguage"
+              className="field__input"
+              placeholder={displayBlock?.firstLang || "First Language"}
+              value={firstInput}
+              onChange={(e) => {
+                setFirstInput(e.target.value);
+              }}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="secondLanguage" className="field__label">
+              {displayBlock?.secondLang || "Second Language"}
+            </label>
+            <input
+              type="text"
+              name="secondLanguage"
+              placeholder={displayBlock?.secondLang || "Second Language"}
+              className="field__input"
+              value={secondInput}
+              onChange={(e) => {
+                setSecondInput(e.target.value);
+              }}
+            />
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {languagesCount > 2 ? (
+            <div className="field">
+              <label htmlFor="thirdLanguage" className="field__label">
+                {displayBlock?.thirdLang || "Third Language"}
+              </label>
+              <input
+                type="text"
+                name="thirdLanguage"
+                placeholder={displayBlock?.thirdLang || "Third Language"}
+                className="field__input"
+                value={thirdInput}
+                onChange={(e) => {
+                  setThirdInput(e.target.value);
+                }}
+              />
+            </div>
+          ) : null}
+          {languagesCount > 3 ? (
+            <div className="field">
+              <label htmlFor="fourthLanguage" className="field__label">
+                {displayBlock?.fourthLang || "Fourth Language"}
+              </label>
+              <input
+                type="text"
+                name="fourthLanguage"
+                placeholder={displayBlock?.fourthLang || "Fourth Language"}
+                className="field__input"
+                value={fourthInput}
+                onChange={(e) => {
+                  setFourthInput(e.target.value);
+                }}
+              />
+            </div>
+          ) : null}
+        </div>
+        <p>{statusMessage}</p>
+        <button type="submit">
+          <CiSquarePlus size={34} />
         </button>
-      </div>
-      {viewAddWord ? (
-        <form
-          className="flex flex-col gap-2 items-center"
-          onSubmit={handleSubmit}
-          onReset={handleReset}
-        >
-          <div className="flex gap-2">
-            <div className="field">
-              <label htmlFor="firstLanguage" className="field__label">
-                {displayBlock?.firstLang || "First Language"}
-              </label>
-              <input
-                type="text"
-                name="firstLanguage"
-                className="field__input"
-                placeholder={displayBlock?.firstLang || "First Language"}
-                value={firstInput}
-                onChange={(e) => {
-                  setFirstInput(e.target.value);
-                }}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="secondLanguage" className="field__label">
-                {displayBlock?.secondLang || "Second Language"}
-              </label>
-              <input
-                type="text"
-                name="secondLanguage"
-                placeholder={displayBlock?.secondLang || "Second Language"}
-                className="field__input"
-                value={secondInput}
-                onChange={(e) => {
-                  setSecondInput(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="flex gap-2">
-            {languagesCount > 2 ? (
-              <div className="field">
-                <label htmlFor="thirdLanguage" className="field__label">
-                  {displayBlock?.thirdLang || "Third Language"}
-                </label>
-                <input
-                  type="text"
-                  name="thirdLanguage"
-                  placeholder={displayBlock?.thirdLang || "Third Language"}
-                  className="field__input"
-                  value={thirdInput}
-                  onChange={(e) => {
-                    setThirdInput(e.target.value);
-                  }}
-                />
-              </div>
-            ) : null}
-            {languagesCount > 3 ? (
-              <div className="field">
-                <label htmlFor="fourthLanguage" className="field__label">
-                  {displayBlock?.fourthLang || "Fourth Language"}
-                </label>
-                <input
-                  type="text"
-                  name="fourthLanguage"
-                  placeholder={displayBlock?.fourthLang || "Fourth Language"}
-                  className="field__input"
-                  value={fourthInput}
-                  onChange={(e) => {
-                    setFourthInput(e.target.value);
-                  }}
-                />
-              </div>
-            ) : null}
-          </div>
-          <p>{statusMessage}</p>
-          <button type="submit" className="btn btn-red">
-            Add
-          </button>
-        </form>
-      ) : null}
+        <button type="reset">
+          <CiSquareRemove size={34} />
+        </button>
+      </form>
     </div>
   );
 };

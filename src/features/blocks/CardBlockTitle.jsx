@@ -8,12 +8,14 @@ import {
   setViewTab,
 } from "../globals/globalsSlice";
 import CardBlockEditHeader from "./CardBlockEditHeader";
+import { useNavigate } from "react-router-dom";
 
 const CardBlockTitle = ({ block }) => {
   const [removeBlock] = useRemoveBlockMutation();
 
   const dispatch = useDispatch();
   const editMode = useSelector(selectEditMode);
+  const navigate = useNavigate();
 
   const [edit, setEdit] = useState(false);
 
@@ -23,7 +25,7 @@ const CardBlockTitle = ({ block }) => {
 
   const blockOpen = () => {
     dispatch(setDisplayBlock(block));
-    dispatch(setViewTab("lesson"));
+    navigate("/lesson");
   };
 
   const handleDelete = async () => {

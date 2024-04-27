@@ -4,11 +4,23 @@ export const ACTIONS = {
   GET_WORD: "GET_WORD_RANDOM",
   EDIT_WORD: "EDIT_WORD",
   EDIT_WORD_DETAILS: "EDIT_WORD_DETAILS",
+  EDIT_WORD_BLOCKID: "EDIT_WORD_BLOCKID",
+  EDIT_WORD_SECTIONID: "EDIT_WORD_SECTIONID",
   REMOVE_WORD: "REMOVE_WORD",
 
   ADD_SENTENCE: "ADD_SENTENCE",
   EDIT_SENTENCE: "EDIT_SENTENCE",
   DELETE_SENTENCE: "DELETE_SENTENCE",
+
+  ADD_SECTION: "ADD_SECTION",
+  GET_SECTION: "GET_SECTION",
+  EDIT_SECTION_HEADER: "EDIT_SECTION_HEADER",
+  EDIT_SECTION_LESSONID: "EDIT_SECTION_LESSONID",
+  REMOVE_SECTION: "REMOVE_SECTION",
+
+  SECTION_ADD_INTRO: "SECTION_ADD_INTRO",
+  SECTION_EDIT_INTRO: "SECTION_EDIT_INTRO",
+  SECTION_DELETE_INTRO: "SECTION_DELETE_INTRO",
 
   ADD_BLOCK: "ADD_BLOCK",
   GET_BLOCK: "GET_BLOCK",
@@ -18,6 +30,10 @@ export const ACTIONS = {
   EDIT_BLOCK_CONTENT: "EDIT_BLOCK_CONTENT",
   REMOVE_BLOCK: "REMOVE_BLOCK",
   CLOSE_BLOCK: "CLOSE_BLOCK",
+
+  ADD_INTRO: "ADD_INTRO",
+  EDIT_INTRO: "EDIT_INTRO",
+  DELETE_INTRO: "DELETE_INTRO",
 
   ADD_CHAPTER: "ADD_CHAPTER",
   GET_CHAPTER: "GET_CHAPTER",
@@ -37,10 +53,22 @@ export const SERVER = {
   GET_WORD_RANDOM: "/word/getrandom",
   EDIT_WORD: "/word/edit",
   EDIT_WORD_DETAILS: "/word/editdetails",
+  EDIT_WORD_BLOCKID: "/word/editblockID",
+  EDIT_WORD_SECTIONID: "/word/editsectionID",
   ADD_SENTENCE: "/word/sentenceAdd",
   EDIT_SENTENCE: "/word/sentenceEdit",
   DELETE_SENTENCE: "/word/sentenceDelete",
   REMOVE_WORD: "/word/remove",
+
+  ADD_SECTION: "/section/add",
+  GET_SECTION: "/section/get",
+  EDIT_SECTION_HEADER: "/section/editHeader",
+  EDIT_SECTION_LESSONID: "/section/editLessonID",
+  REMOVE_SECTION: "/section/delete",
+
+  SECTION_ADD_INTRO: "/section/addIntro",
+  SECTION_EDIT_INTRO: "/section/editIntro",
+  SECTION_DELETE_INTRO: "/section/deleteIntro",
 
   ADD_BLOCK: "/block/add",
   GET_BLOCK: "/block/get",
@@ -49,6 +77,10 @@ export const SERVER = {
   EDIT_BLOCK_DETAILS: "/block/editdetails",
   EDIT_BLOCK_CONTENT: "/block/editcontent",
   REMOVE_BLOCK: "/block/remove",
+
+  ADD_INTRO: "/block/addIntro",
+  EDIT_INTRO: "/block/editIntro",
+  DELETE_INTRO: "/block/deleteIntro",
 
   ADD_CHAPTER: "/chapter/add",
   GET_CHAPTER: "/chapter/get",

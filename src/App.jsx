@@ -26,6 +26,8 @@ import { ErrorBoundary } from "react-error-boundary";
 // import { lazyLoad } from "./data/lazyLoad";
 import ErrorFallBack from "./features/auth/ErrorFallBack";
 import SkeletonContentPage from "./skeletons/SkeletonContentPage";
+import SectionsPage from "./views/SectionsPage";
+import LessonPage from "./views/LessonPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 const AddContentPage = lazy(() =>
@@ -63,6 +65,8 @@ function App() {
               <Route path="login" element={<SigninPage />} />
               <Route path="signup" element={<SignupPage />} />
               <Route path="chapters" element={<ChapterPage />} />
+              <Route path="sections" element={<SectionsPage />} />
+              <Route path="lesson" element={<LessonPage />} />
               <Route path="unauthorized" element={<Unauthorized />} />
 
               {/* Settings page available to users */}

@@ -3,6 +3,7 @@ import Header from "../../views/Header";
 import { Suspense } from "react";
 import Navbar from "./Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
+import Sidebar from "../navigation/Sidebar";
 
 const Layout = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const Layout = () => {
       <Navbar />
       <div className={onAuthPage ? "page-container-fluid" : "page-container"}>
         {/* <Header /> */}
+        {!onAuthPage && <Sidebar />}
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />
         </Suspense>
