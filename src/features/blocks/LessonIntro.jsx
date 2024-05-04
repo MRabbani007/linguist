@@ -1,13 +1,11 @@
-import React, { useState } from "react";
 import LessonIntroItem from "./LessonIntroItem";
 import LessonIntroAdd from "./LessonIntroAdd";
-import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
 
-export default function LessonIntro({ lesson }) {
-  const editMode = useSelector(selectEditMode);
-  const [add, setAdd] = useState(false);
-
+export default function LessonIntro({
+  lesson,
+  addLessonIntro,
+  setAddLessonIntro,
+}) {
   return (
     <article>
       {Array.isArray(lesson?.introduction)
@@ -22,15 +20,9 @@ export default function LessonIntro({ lesson }) {
             );
           })
         : lesson?.introduction}
-      <div className="flex flex-wrap items-center gap-3">
-        {editMode ? (
-          <button onClick={() => setAdd(true)} className="btn btn-red">
-            <span>Add Lesson Introduction </span>
-            {/* <CiSquarePlus size={34} /> */}
-          </button>
-        ) : null}
-        {add ? <LessonIntroAdd lesson={lesson} setAdd={setAdd} /> : null}
-      </div>
+      {addLessonIntro ? (
+        <LessonIntroAdd lesson={lesson} setAdd={setAddLessonIntro} />
+      ) : null}
     </article>
   );
 }

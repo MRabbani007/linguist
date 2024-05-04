@@ -4,15 +4,15 @@ import { useEditBlockHeaderMutation } from "./blockSlice";
 import { useSelector } from "react-redux";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 
-const SectionHeaderEdit = ({ section, setEditSectionHeader }) => {
+const LessonHeaderEdit = ({ lesson, setEditLessonTitle }) => {
   const chapters = useSelector(selectAllChapters);
   const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
 
-  const [title, setTitle] = useState(section?.title);
-  const [subtitle, setSubtitle] = useState(section?.subtitle);
-  const [detail, setDetail] = useState(section?.detail);
-  const [chapterID, setChapterID] = useState(section?.chapterID);
-  const [lessonNo, setLessonNo] = useState(section?.lessonNo || 0);
+  const [title, setTitle] = useState(lesson?.title);
+  const [subtitle, setSubtitle] = useState(lesson?.subtitle);
+  const [detail, setDetail] = useState(lesson?.detail);
+  const [chapterID, setChapterID] = useState(lesson?.chapterID);
+  const [lessonNo, setLessonNo] = useState(lesson?.lessonNo || 0);
 
   const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
@@ -31,7 +31,7 @@ const SectionHeaderEdit = ({ section, setEditSectionHeader }) => {
           newBlock.chapterID = chapterID;
         }
         await editBlockHeader(newBlock).unwrap();
-        setEditSectionHeader((curr) => !curr);
+        setEditLessonTitle((curr) => !curr);
       } catch (err) {
         console.error("Failed to save the chapter", err);
       }
@@ -39,7 +39,7 @@ const SectionHeaderEdit = ({ section, setEditSectionHeader }) => {
   };
 
   const handleReset = () => {
-    setEditSectionHeader((curr) => !curr);
+    setEditLessonTitle((curr) => !curr);
   };
 
   const menuOptions =
@@ -122,4 +122,4 @@ const SectionHeaderEdit = ({ section, setEditSectionHeader }) => {
   );
 };
 
-export default SectionHeaderEdit;
+export default LessonHeaderEdit;

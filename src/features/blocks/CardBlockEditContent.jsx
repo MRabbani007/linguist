@@ -9,10 +9,6 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
 
   const [editBlockContent, { isLoading }] = useEditBlockContentMutation();
 
-  const [imagesURL, setImagesURL] = useState(displayBlock?.imagesURL || "");
-  const [introduction, setIntroduction] = useState(
-    displayBlock?.introduction || ""
-  );
   const [caption, setCaption] = useState(displayBlock?.caption || "");
   const [text, setText] = useState(displayBlock?.text || "");
   const [notes, setNotes] = useState(displayBlock?.notes || "");
@@ -54,36 +50,6 @@ const CardBlockEditContent = ({ editBlockTab, toggleEdit }) => {
           : "invisible -translate-y-3 h-0"
       }
     >
-      <div className="flex gap-2">
-        <div className="field">
-          <label htmlFor="section_imagesURL" className="field__label">
-            Images URL
-          </label>
-          <input
-            type="text"
-            id="section_imagesURL"
-            name="section_imagesURL"
-            value={imagesURL}
-            placeholder="Images URL"
-            className="field__input"
-            onChange={(e) => setImagesURL(e.target.value)}
-          />
-        </div>
-        {/* <div className="field">
-          <label htmlFor="section_introduction" className="field__label">
-            Introduction
-          </label>
-          <input
-            type="text"
-            id="section_introduction"
-            name="section_introduction"
-            value={introduction}
-            placeholder="Introduction"
-            className="field__input"
-            onChange={(e) => setIntroduction(e.target.value)}
-          />
-        </div> */}
-      </div>
       <div className="hidden gap-2">
         <div className="field">
           <label htmlFor="section_caption" className="field__label">

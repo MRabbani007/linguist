@@ -53,7 +53,24 @@ h1 {
   display: block;
 }
 
+.form_input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1 1 0%;
+}
+
+.input_group, .field_group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex: 1 1 0%;
+}
+
 .field {
+  flex: 1 1 0%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -79,7 +96,7 @@ h1 {
   outline: 0;
   font-weight: 400;
   font-size: 1rem;
-  width: 100%;
+  flex: 1 1 0%;
   -webkit-appearance: none;
   appearance: none;
   background-color: transparent;
@@ -165,16 +182,98 @@ h1 {
   font-size: 1.2em;
 }
 
-table {
-  width: 100%;
+.form-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(63, 63, 70, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 
-tbody tr {
+.form-container form {
+  border-radius: 0.75rem;
+  background-color: #f1f5f9;
+  width: 1000px;
+  max-width: 80vw;
+}
+
+.form-container form h2 {
+  background-color: #ef4444;
+  color: #f7fee7;
+  flex: 1 1 0%;
+  width: 100%;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.form-container form > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.form-container button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.form-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.add {
+  background-color: #075985;
+  color: white;
+}
+
+.cancel {
+  background-color: #fbbf24;
+  color: white;
+}
+
+table caption {
+  background-color: #dc2626;
+  color: #f7fee7;
+  text-align: center;
+}
+
+th {
+  align-items: center;
+  padding: 0.25rem 1rem;
+  font-weight: 400;
+}
+
+td {
+  text-align: center;
+  align-items: center;
+  padding: 0.25rem 1rem;
+}
+
+.lesson-table thead {
+  background-color: #dc2626;
+  color: #f7fee7;
+}
+
+.word-table tbody tr {
   cursor: pointer;
   transition: all 300ms ease;
 }
 
-thead tr {
+.word-table thead tr {
   background-color: #dc2626;
   color: white;
 }
@@ -191,17 +290,6 @@ tbody tr:nth-child(2n+1):hover {
   background-color: rgb(180, 180, 180);
 }
 
-th {
-  align-items: center;
-  padding: 0 0.25rem;
-  font-weight: 400;
-}
-
-td {
-  text-align: center;
-  align-items: center;
-}
-
 .page-container {
   padding-top: calc(var(--navbar-height) + 20px);
   padding-bottom: 40px;
@@ -211,7 +299,7 @@ td {
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   gap: 0.75rem;
 }
 
@@ -318,6 +406,53 @@ td {
   padding: 0.5rem 1rem;
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
+}
+
+.section-dropdown {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  background-color: #f7fee7;
+  border-radius: 0.375rem;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+.section-dropdown li {
+  padding: 0.25rem 1rem 0.25rem 0.5rem;
+}
+
+.section-dropdown li:last-child {
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.section-dropdown li:hover {
+  background-color: #cbd5e1;
+}
+
+.section-dropdown .dropdown-title {
+  background-color: #e2e8f0;
+  font-weight: 500;
+}
+
+.section-dropdown .dropdown-title:first-child {
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.section-dropdown button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.edit_item {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.edit_item:hover {
+  color: #eab308;
 }
 
 :root {

@@ -4,7 +4,7 @@ import { useEditWordDetailsMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import { selectEditMode } from "../globals/globalsSlice";
 
-const WordImage = ({ displayBlock, word }) => {
+const WordImage = ({ displayBlock, word, addImage, setAddImage }) => {
   const editMode = useSelector(selectEditMode);
   const [editWordDetails, { isLoading }] = useEditWordDetailsMutation();
 
@@ -20,6 +20,7 @@ const WordImage = ({ displayBlock, word }) => {
       await editWordDetails(newWord).unwrap();
 
       setEditImage(false);
+      setAddImage(false);
     } catch (err) {
       console.error("Failed to save the word", err);
     }
@@ -27,27 +28,43 @@ const WordImage = ({ displayBlock, word }) => {
 
   const handleReset = () => {
     setEditImage(false);
+    setAddImage(false);
   };
 
   return (
     <div className="flex items-center justify-center">
-      {editImage ? (
-        <form onSubmit={handleSubmit} onReset={handleReset}>
-          <input
-            type="text"
-            title="Image"
-            placeholder="Image"
-            autofocus
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
-          <button type="submit">
-            <CiSquareCheck />
-          </button>
-          <button type="reset">
-            <CiSquareRemove />
-          </button>
-        </form>
+      {editImage || addImage ? (
+        <div className="form-container">
+          <form onSubmit={handleSubmit} onReset={handleReset}>
+            <h2>Edit Word Image</h2>
+            <div>
+              <div className="field">
+                <label htmlFor="image_url" className="field__label">
+                  Image URL
+                </label>
+                <input
+                  type="text"
+                  title="Image"
+                  id="image_url"
+                  name="image_url"
+                  placeholder="Image"
+                  autoFocus
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                  className="field__input"
+                />
+              </div>
+              <div className="form-buttons">
+                <button type="submit" title="Save" className="add">
+                  Save
+                </button>
+                <button type="reset" title="Cancel" className="cancel">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       ) : word?.image ? (
         <div className="relative group">
           <img
@@ -64,8 +81,6 @@ const WordImage = ({ displayBlock, word }) => {
             </button>
           )}
         </div>
-      ) : editMode ? (
-        <button onClick={() => setEditImage(!editImage)}>Add Image</button>
       ) : null}
     </div>
   );

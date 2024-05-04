@@ -35,18 +35,35 @@ const CardSentence = ({ word, sentence, index }) => {
     <div className="group">
       <span>
         {edit ? (
-          <form onSubmit={handleSubmit} onReset={handleReset}>
-            <input
-              value={newSentence}
-              onChange={(e) => setNewSentence(e.target.value)}
-            />
-            <button type="submit">
-              <CiSquareCheck />
-            </button>
-            <button type="reset">
-              <CiSquareRemove />
-            </button>
-          </form>
+          <div className="form-container">
+            <form onSubmit={handleSubmit} onReset={handleReset}>
+              <h2>Edit Sentence</h2>
+              <div>
+                <div className="field">
+                  <label htmlFor="edit_sentence" className="field__label">
+                    Sentence
+                  </label>
+                  <input
+                    id="edit_sentence"
+                    name="edit_sentence"
+                    title="Sentence"
+                    placeholder="Sentence"
+                    value={newSentence}
+                    onChange={(e) => setNewSentence(e.target.value)}
+                    className="field__input"
+                  />
+                </div>
+                <div className="form-buttons">
+                  <button type="submit" title="Save" className="add">
+                    Save
+                  </button>
+                  <button type="reset" title="Cancel" className="cancel">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         ) : (
           sentence
         )}

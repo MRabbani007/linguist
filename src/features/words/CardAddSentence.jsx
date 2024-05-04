@@ -1,21 +1,11 @@
 import { useState } from "react";
-import {
-  CiSquareCheck,
-  CiSquareMinus,
-  CiSquarePlus,
-  CiSquareRemove,
-} from "react-icons/ci";
+import { CiSquareCheck, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddWordSentenceMutation } from "./wordsSlice";
 
-const CardAddSentence = ({ word }) => {
+const CardAddSentence = ({ word, addSentence, setAddSentence }) => {
   const [addWordSentence, { isLoading }] = useAddWordSentenceMutation();
 
   const [newSentence, setNewSentence] = useState("");
-  const [addSentence, setAddSentence] = useState(false);
-
-  const toggleAddSentence = () => {
-    setAddSentence(!addSentence);
-  };
 
   const canSave = !isLoading;
 
@@ -29,6 +19,7 @@ const CardAddSentence = ({ word }) => {
         };
 
         await addWordSentence(sentenceData).unwrap();
+        setAddSentence(false);
       } catch (err) {
         console.error("Failed to save the word", err);
       }
@@ -36,52 +27,40 @@ const CardAddSentence = ({ word }) => {
   };
 
   const handleReset = () => {
-    toggleAddSentence();
+    setAddSentence(false);
   };
 
   return (
-    <div>
-      <button onClick={toggleAddSentence}>
-        {addSentence ? (
-          <CiSquareMinus className="icon" />
-        ) : (
-          <CiSquarePlus className="icon" />
-        )}
-      </button>
-      <form
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-        className={
-          addSentence
-            ? "flex flex-row gap-2 my-2 translate-y-0 duration-200"
-            : "invisible h-0 -translate-y-2"
-        }
-      >
-        <div className="field">
-          <label htmlFor="sentenceInput" className="field__label">
-            Enter Sentence
-          </label>
-          <input
-            type="text"
-            id="sentenceInput"
-            name="sentenceInput"
-            placeholder="Enter Sentence"
-            autoFocus
-            className="field__input"
-            value={newSentence}
-            onChange={(e) => {
-              setNewSentence(e.target.value);
-            }}
-          />
-        </div>
-        {/* Form Buttons */}
-        <div className="flex justify-center items-center my-1">
-          <button type="submit">
-            <CiSquareCheck className="icon" />
-          </button>
-          <button type="reset">
-            <CiSquareRemove className="icon" />
-          </button>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Add Sentence</h2>
+        <div>
+          <div className="field">
+            <label htmlFor="sentenceInput" className="field__label">
+              Enter Sentence
+            </label>
+            <input
+              type="text"
+              id="sentenceInput"
+              name="sentenceInput"
+              placeholder="Enter Sentence"
+              autoFocus
+              className="field__input"
+              value={newSentence}
+              onChange={(e) => {
+                setNewSentence(e.target.value);
+              }}
+            />
+          </div>
+          {/* Form Buttons */}
+          <div className="form-buttons">
+            <button type="submit" title="Add" className="add">
+              Add
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>

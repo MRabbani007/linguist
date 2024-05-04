@@ -27,26 +27,36 @@ export default function SectionIntroItemEdit({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex items-center gap-2"
-    >
-      <input
-        type="text"
-        value={input}
-        autoFocus
-        required
-        title="Introduction"
-        placeholder="Introduction"
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button type="submit">
-        <CiSquarePlus size={34} />
-      </button>
-      <button type="reset">
-        <CiSquareMinus size={34} />
-      </button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <div>
+          <div className="field">
+            <label htmlFor="edit_intro_item" className="field__label">
+              Introduction
+            </label>
+            <input
+              id="edit_intro_item"
+              name="edit_intro_item"
+              type="text"
+              value={input}
+              autoFocus
+              required
+              title="Introduction"
+              placeholder="Introduction"
+              onChange={(e) => setInput(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit" title="Add" className="add">
+              Add
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

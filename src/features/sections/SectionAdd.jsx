@@ -18,7 +18,7 @@ export default function SectionAdd({ setAdd }) {
 
   const canSave = !isLoading && (title !== "" || subtitle !== "");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
       const section = {
@@ -28,7 +28,9 @@ export default function SectionAdd({ setAdd }) {
         title,
         subtitle,
       };
-      addSection(section);
+      await addSection(section);
+      alert("Section Created");
+      setAdd(false);
     }
   };
 
@@ -37,33 +39,42 @@ export default function SectionAdd({ setAdd }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex items-center gap-2"
-    >
-      <input
-        type="text"
-        value={title}
-        autoFocus
-        required
-        title="Section Title"
-        placeholder="Section Title"
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        value={subtitle}
-        title="Section SubTitle"
-        placeholder="Section SubTitle"
-        onChange={(e) => setSubtitle(e.target.value)}
-      />
-      <button type="submit">
-        <CiSquarePlus size={34} />
-      </button>
-      <button type="reset">
-        <CiSquareRemove size={34} />
-      </button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Add New Section</h2>
+        <div>
+          <div className="field">
+            <input
+              type="text"
+              value={title}
+              autoFocus
+              required
+              title="Section Title"
+              placeholder="Section Title"
+              onChange={(e) => setTitle(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              value={subtitle}
+              title="Section SubTitle"
+              placeholder="Section SubTitle"
+              onChange={(e) => setSubtitle(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit">
+              <CiSquarePlus size={34} />
+            </button>
+            <button type="reset">
+              <CiSquareRemove size={34} />
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

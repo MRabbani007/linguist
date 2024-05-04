@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { selectEditMode } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
+import { selectEditMode } from "../globals/globalsSlice";
 import { BsThreeDots } from "react-icons/bs";
-import SectionDropDown from "./SectionDropDown";
+import LessonDropDown from "../dropDowns/LessonDropDown";
 
-export default function SectionTitle({
-  section,
-  setEditTitle,
-  setAddIntro,
-  setAddDef,
-  setAddTable,
-}) {
+const LessonHeader = ({
+  lesson,
+  setAddLessonIntro,
+  setAddSection,
+  setEditLessonTitle,
+  setEditLessonDetails,
+}) => {
   const editMode = useSelector(selectEditMode);
 
   const [showDropDown, setShowDropDown] = useState(false);
@@ -37,33 +37,28 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 group relative w-fit">
-      <div>
-        <h3 className="font-bold text-xl">{section?.title}</h3>
-        {section?.subtitle && (
-          <p>
-            <i>{section?.subtitle}</i>
-          </p>
-        )}
-      </div>
+    <div className="flex flex-1 relative px-3">
+      <h2 className="text-center flex-1">
+        <p className="font-bold">
+          {"Lesson " + lesson?.lessonNo + ": " + lesson?.title}
+        </p>
+        <p>{lesson?.subtitle}</p>
+      </h2>
       {editMode && (
-        <button
-          ref={dropDownButtonRef}
-          title="Edit Section"
-          onClick={() => setShowDropDown(true)}
-        >
+        <button title="Edit Lesson" onClick={() => setShowDropDown(true)}>
           <BsThreeDots size={28} />
         </button>
       )}
-      <SectionDropDown
-        section={section}
+      <LessonDropDown
+        lesson={lesson}
         showDropDown={showDropDown}
-        ref={dropDownRef}
-        setEditTitle={setEditTitle}
-        setAddIntro={setAddIntro}
-        setAddDef={setAddDef}
-        setAddTable={setAddTable}
+        setAddLessonIntro={setAddLessonIntro}
+        setAddSection={setAddSection}
+        setEditLessonTitle={setEditLessonTitle}
+        setEditLessonDetails={setEditLessonDetails}
       />
     </div>
   );
-}
+};
+
+export default LessonHeader;

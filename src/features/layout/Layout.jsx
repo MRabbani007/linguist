@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Navbar from "./Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 import Sidebar from "../navigation/Sidebar";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   const location = useLocation();

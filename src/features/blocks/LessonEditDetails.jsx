@@ -1,55 +1,46 @@
 import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useEditBlockDetailsMutation } from "./blockSlice";
-import { useSelector } from "react-redux";
-import { selectDisplayBlock } from "../globals/globalsSlice";
 
-const CardBlockEditDetails = ({ editBlockTab, toggleEdit }) => {
-  const displayBlock = useSelector(selectDisplayBlock);
+const LessonEditDetails = ({ lesson, setEdit }) => {
   const [editBlockDetails, { isLoading }] = useEditBlockDetailsMutation();
 
-  const [firstLang, setFirstLang] = useState(displayBlock?.firstLang || "");
-  const [secondLang, setSecondLang] = useState(displayBlock?.secondLang || "");
-  const [thirdLang, setThirdLang] = useState(displayBlock?.thirdLang || "");
-  const [fourthLang, setFourthLang] = useState(displayBlock?.fourthLang || "");
+  const [firstLang, setFirstLang] = useState(lesson?.firstLang || "");
+  const [secondLang, setSecondLang] = useState(lesson?.secondLang || "");
+  const [thirdLang, setThirdLang] = useState(lesson?.thirdLang || "");
+  const [fourthLang, setFourthLang] = useState(lesson?.fourthLang || "");
+
+  const [imagesURL, setImagesURL] = useState(lesson?.imagesURL || "");
 
   const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      try {
-        let newBlock = {
-          ...displayBlock,
-          firstLang,
-          secondLang,
-          thirdLang,
-          fourthLang,
-        };
-        await editBlockDetails(newBlock).unwrap();
+      let newBlock = {
+        ...displayBlock,
+        firstLang,
+        secondLang,
+        thirdLang,
+        fourthLang,
+        imagesURL,
+      };
+      await editBlockDetails(newBlock).unwrap();
 
-        toggleEdit("");
-      } catch (err) {
-        console.error("Failed to save the chapter", err);
-      }
+      setEdit(false);
     }
   };
 
   const handleReset = () => {
-    toggleEdit();
+    setEdit(false);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
       onReset={handleReset}
-      className={
-        editBlockTab === "details"
-          ? "flex flex-col justify-center items-center gap-2 visible translate-y-0 dur"
-          : "invisible -translate-y-3 h-0"
-      }
+      className="flex flex-col justify-center items-center gap-2"
     >
-      <h2 className="btn btn-yellow">Edit Header</h2>
       <div className="flex gap-2">
         <div className="field">
           <label htmlFor="section_firstLang" className="field__label">
@@ -111,15 +102,31 @@ const CardBlockEditDetails = ({ editBlockTab, toggleEdit }) => {
         </div>
       </div>
       <div className="flex gap-2">
+        <div className="field">
+          <label htmlFor="lesson_imagesURL" className="field__label">
+            Images URL
+          </label>
+          <input
+            type="text"
+            id="lesson_imagesURL"
+            name="lesson_imagesURL"
+            value={imagesURL}
+            placeholder="Images URL"
+            className="field__input"
+            onChange={(e) => setImagesURL(e.target.value)}
+          />
+        </div>
+      </div>
+      <div className="flex gap-2">
         <button type="submit">
-          <CiSquarePlus className="icon text-green-600" />
+          <CiSquarePlus size={32} className="text-green-600" />
         </button>
         <button type="reset">
-          <CiSquareRemove className="icon text-red-600" />
+          <CiSquareRemove size={32} className="text-red-600" />
         </button>
       </div>
     </form>
   );
 };
 
-export default CardBlockEditDetails;
+export default LessonEditDetails;

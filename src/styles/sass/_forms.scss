@@ -1,4 +1,21 @@
+.form_input {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  flex: 1 1 0%;
+}
+
+.input_group, .field_group {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+  flex: 1 1 0%;
+}
+
 .field {
+  flex: 1 1 0%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -24,7 +41,7 @@
   outline: 0;
   font-weight: 400;
   font-size: 1rem;
-  width: 100%;
+  flex: 1 1 0%;
   -webkit-appearance: none;
   appearance: none;
   background-color: transparent;
@@ -108,4 +125,67 @@
   margin: 5px;
   text-align: center;
   font-size: 1.2em;
+}
+
+.form-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba($color: $clr-zinc-700, $alpha: 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.form-container form{ 
+  border-radius: .75rem;
+  background-color: $clr-slate-100;
+  width: 1000px;
+  max-width: 80vw;
+}
+
+.form-container form h2 {
+  background-color: $clr-red-500;
+  color: $clr-slate-50;
+  flex: 1 1 0%;
+  width: 100%;
+  font-weight: 500;
+  text-align: center;
+  padding: .5rem 1rem;
+  border-radius: .75rem .75rem 0 0;
+}
+
+.form-container form > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.form-container button {
+  padding: .5rem 1rem;
+  border-radius: .375rem;
+}
+
+.form-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+}
+
+.add {
+  background-color: $clr-sky-800;
+  color: white;
+}
+
+.cancel {
+  background-color: $clr-yellow-400;
+  color: white;
 }

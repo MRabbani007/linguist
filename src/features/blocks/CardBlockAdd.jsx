@@ -55,7 +55,7 @@ const CardBlockAdd = () => {
   return (
     <div className="flex flex-col gap-2">
       <button className="btn btn-yellow mx-auto" onClick={() => setAdd(!add)}>
-        Add Section
+        Add Lesson
       </button>
       <form
         onSubmit={handleSubmit}

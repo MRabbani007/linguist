@@ -21,22 +21,16 @@ const initialState = blocksAdapter.getInitialState();
 export const blocksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlocks: builder.query({
-      query: (chapterID) => ({
-        url: SERVER.GET_BLOCK,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.GET_BLOCK,
-            payload: { userName: store.getState()?.auth?.user, chapterID },
-          },
-        },
+      query: (chapterID = "") => ({
+        url: SERVER.LESSON,
+        method: "GET",
+        params: { chapterID },
       }),
       transformResponse: (responseData) => {
         return blocksAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [
-        { type: "Block", id: "LIST" },
+        { type: "Block", id: "BLOCK" },
         ...result.ids.map((id) => ({ type: "Block", id })),
       ],
     }),
@@ -61,64 +55,42 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     addBlock: builder.mutation({
-      query: (block) => ({
-        url: SERVER.ADD_BLOCK,
+      query: (lesson) => ({
+        url: SERVER.LESSON,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.ADD_BLOCK,
-            payload: { userName: store.getState()?.auth?.user, block }, // auth?.user
+            type: ACTIONS.ADD_LESSON,
+            payload: { userName: store.getState()?.auth?.user, lesson },
           },
         },
       }),
-      // transformResponse: (responseData) => {
-      //   console.log(responseData);
-      //   return blocksAdapter.setAll(initialState, responseData.data);
-      // },
-      // providesTags: (result, error, arg) => [
-      //   { type: "Block", id: "LIST" },
-      //   ...result.ids.map((id) => ({ type: "Block", id })),
-      // ],
       invalidatesTags: [{ type: "Block", id: "LIST" }],
     }),
     editBlockHeader: builder.mutation({
-      query: (block) => ({
-        url: SERVER.EDIT_BLOCK_HEADER,
-        method: "POST",
+      query: (lesson) => ({
+        url: SERVER.LESSON,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.EDIT_BLOCK_HEADER,
-            payload: { userName: store.getState()?.auth?.user, block }, //auth?.user
+            type: ACTIONS.EDIT_LESSON_HEADER,
+            payload: { userName: store.getState()?.auth?.user, lesson },
           },
         },
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
     editBlockDetails: builder.mutation({
-      query: (block) => ({
-        url: SERVER.EDIT_BLOCK_DETAILS,
-        method: "POST",
+      query: (lesson) => ({
+        url: SERVER.LESSON,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.EDIT_BLOCK_DETAILS,
-            payload: { userName: store.getState()?.auth?.user, block }, //auth?.user
-          },
-        },
-      }),
-      invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
-    }),
-    editBlockContent: builder.mutation({
-      query: (block) => ({
-        url: SERVER.EDIT_BLOCK_CONTENT,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDIT_BLOCK_CONTENT,
-            payload: { userName: store.getState()?.auth?.user, block }, //auth?.user
+            type: ACTIONS.EDIT_LESSON_DETAILS,
+            payload: { userName: store.getState()?.auth?.user, lesson },
           },
         },
       }),
@@ -126,13 +98,13 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
     }),
     removeBlock: builder.mutation({
       query: (id) => ({
-        url: SERVER.REMOVE_BLOCK,
+        url: SERVER.LESSON,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.REMOVE_BLOCK,
-            payload: { userName: store.getState()?.auth?.user, id }, // auth?.user
+            type: ACTIONS.DELETE_LESSON,
+            payload: { userName: store.getState()?.auth?.user, id },
           },
         },
       }),
@@ -190,7 +162,6 @@ export const {
   useAddBlockMutation,
   useEditBlockHeaderMutation,
   useEditBlockDetailsMutation,
-  useEditBlockContentMutation,
   useRemoveBlockMutation,
   useAddBlockIntroMutation,
   useEditBlockIntroMutation,

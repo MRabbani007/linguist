@@ -63,7 +63,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
         };
 
         await editWord(newWord).unwrap();
-
+        alert("Word Modified");
         setViewEdit(false);
       } catch (err) {
         console.error("Failed to save the word", err);
@@ -85,124 +85,133 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
   }, [word]);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex flex-row gap-3 p-2 relative"
-    >
-      {!!word?.image && (
-        <div className="flex items-center justify-center">
-          <img
-            src={(displayBlock?.imagesURL || "") + word.image}
-            alt=""
-            className="w-[150px]"
-          />
-        </div>
-      )}
-      {/* Word */}
-      <div className="flex flex-col flex-1 gap-3">
-        {/* First Word */}
-        <div className="flex gap-2 items-center">
-          <span className="">{label_1}</span>
-          <input
-            type="text"
-            id="edit_firstWord"
-            name="edit_firstWord"
-            placeholder={displayBlock?.firstLang || "First Language"}
-            autoFocus
-            className=""
-            value={first}
-            onChange={(e) => {
-              setFirst(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            id="edit_firstWord"
-            name="edit_firstWord"
-            placeholder="First Word Caption"
-            autoFocus
-            className=""
-            value={firstCaption}
-            onChange={(e) => {
-              setFirstCaption(e.target.value);
-            }}
-          />
-        </div>
-        {/* Second Word */}
-        <div className="flex gap-2 items-center">
-          <span className="">{label_2}</span>
-          <input
-            type="text"
-            value={second}
-            id="edit_secondWord"
-            name="edit_secondWord"
-            className=""
-            placeholder={displayBlock?.secondLang || "Second Language"}
-            onChange={(e) => {
-              setSecond(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            id="edit_secondWord"
-            name="edit_secondWord"
-            placeholder="Second Word Caption"
-            autoFocus
-            className=""
-            value={secondCaption}
-            onChange={(e) => {
-              setSecondCaption(e.target.value);
-            }}
-          />
-        </div>
-        {/* Third Word */}
-        {languagesCount > 2 ? (
-          <div className="flex gap-2 items-center">
-            <span className="">{label_3}</span>
-            <input
-              type="text"
-              id="edit_thirdWord"
-              name="edit_thirdWord"
-              placeholder={displayBlock?.thirdLang || "Third Language"}
-              className=""
-              value={third}
-              onChange={(e) => {
-                setThird(e.target.value);
-              }}
-            />
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Edit Word</h2>
+        <div>
+          {/* Word */}
+          <div className="field_group">
+            {/* First Word */}
+            <div className="field">
+              <label htmlFor="edit_firstWord" className="field__label">
+                {label_1}
+              </label>
+              <input
+                type="text"
+                id="edit_firstWord"
+                name="edit_firstWord"
+                placeholder={displayBlock?.firstLang || "First Language"}
+                autoFocus
+                value={first}
+                onChange={(e) => {
+                  setFirst(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="edit_firstWord_caption" className="field__label">
+                First Word Caption
+              </label>
+              <input
+                type="text"
+                id="edit_firstWord_caption"
+                name="edit_firstWord_caption"
+                placeholder="First Word Caption"
+                value={firstCaption}
+                onChange={(e) => {
+                  setFirstCaption(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
           </div>
-        ) : null}
-        {/* Fourth Word */}
-        {languagesCount > 3 ? (
-          <div className="flex gap-2 items-center">
-            <span className="font-semibold">{displayBlock?.fourthLang}:</span>
-            <input
-              type="text"
-              id="edit_fourthWord"
-              name="edit_fourthWord"
-              className=""
-              value={fourth}
-              placeholder={displayBlock?.fourthLang || "Fourth Language"}
-              onChange={(e) => {
-                setFourth(e.target.value);
-              }}
-            />
+          <div className="field_group">
+            {/* Second Word */}
+            <div className="field">
+              <label htmlFor="edit_secondWord" className="field__label">
+                {label_2}
+              </label>
+              <input
+                type="text"
+                value={second}
+                id="edit_secondWord"
+                name="edit_secondWord"
+                placeholder={displayBlock?.secondLang || "Second Language"}
+                onChange={(e) => {
+                  setSecond(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="edit_secondWord_caption" className="field__label">
+                Second Word Caption
+              </label>
+              <input
+                type="text"
+                id="edit_secondWord_caption"
+                name="edit_secondWord_caption"
+                placeholder="Second Word Caption"
+                value={secondCaption}
+                onChange={(e) => {
+                  setSecondCaption(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
           </div>
-        ) : null}
-      </div>
-      {/* Form Buttons */}
-      <div className="flex flex-col gap-2 justify-center">
-        <button type="submit" className="btn btn-blue">
-          {/* <CiSquareCheck className="icon" /> */}
-          Save
-        </button>
-        <button type="reset" className="btn btn-yellow">
-          {/* <CiSquareRemove className="icon" /> */}
-          Cancel
-        </button>
-      </div>
-    </form>
+          <div className="field_group">
+            {/* Third Word */}
+            {languagesCount > 2 ? (
+              <div className="field">
+                <label htmlFor="edit_thirdWord" className="field__label">
+                  {label_3}
+                </label>
+                <input
+                  type="text"
+                  id="edit_thirdWord"
+                  name="edit_thirdWord"
+                  placeholder={displayBlock?.thirdLang || "Third Language"}
+                  value={third}
+                  onChange={(e) => {
+                    setThird(e.target.value);
+                  }}
+                  className="field__input"
+                />
+              </div>
+            ) : null}
+            {/* Fourth Word */}
+            {languagesCount > 3 ? (
+              <div className="field">
+                <label htmlFor="edit_fourthWord" className="field__label">
+                  {displayBlock?.fourthLang}:
+                </label>
+                <input
+                  type="text"
+                  id="edit_fourthWord"
+                  name="edit_fourthWord"
+                  value={fourth}
+                  placeholder={displayBlock?.fourthLang || "Fourth Language"}
+                  onChange={(e) => {
+                    setFourth(e.target.value);
+                  }}
+                  className="field__input"
+                />
+              </div>
+            ) : null}
+          </div>
+          <div className="form-buttons">
+            <button type="submit" className="add">
+              Save
+            </button>
+            <button type="reset" className="cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 

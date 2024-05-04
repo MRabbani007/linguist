@@ -47,6 +47,15 @@ export const apiSlice = createApi({
   reducerPath: "api", // optional
   baseQuery: baseQuerywithReauth,
   //fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
-  tagTypes: ["Chapter", "Block", "Section", "Word", "User"],
+  tagTypes: [
+    "Chapter",
+    "Block",
+    "Section",
+    "Word",
+    "Definition",
+    "Table",
+    "TableWord",
+    "User",
+  ],
   endpoints: (builder) => ({}),
 });

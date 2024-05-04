@@ -29,7 +29,7 @@ export default function LessonIntroItem({ lesson, intro, index }) {
   } else {
     return (
       <p className="flex gap-2 group">
-        <span>{intro}</span>
+        <span className="">{intro}</span>
         {editMode && (
           <span className="invisble group-hover:visible w-fit whitespace-nowrap">
             <button onClick={() => setEdit(true)}>

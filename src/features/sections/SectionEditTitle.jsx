@@ -25,41 +25,52 @@ export default function SectionEditTitle({ section, setEdit }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex items-center gap-2"
-    >
-      <input
-        type="text"
-        value={sectionNo}
-        title="Number"
-        placeholder="Number"
-        onChange={(e) => setSectionNo(e.target.value)}
-        className="w-[100px]"
-      />
-      <input
-        type="text"
-        value={title}
-        autoFocus
-        required
-        title="Section Title"
-        placeholder="Section Title"
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        value={subtitle}
-        title="Section SubTitle"
-        placeholder="Section SubTitle"
-        onChange={(e) => setSubtitle(e.target.value)}
-      />
-      <button type="submit">
-        <CiSquareCheck size={34} />
-      </button>
-      <button type="reset">
-        <CiSquareRemove size={34} />
-      </button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Edit Section Title</h2>
+        <div>
+          <div className="field max-w-[25%]">
+            <input
+              type="text"
+              value={sectionNo}
+              title="Number"
+              placeholder="Number"
+              onChange={(e) => setSectionNo(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              value={title}
+              autoFocus
+              required
+              title="Section Title"
+              placeholder="Section Title"
+              onChange={(e) => setTitle(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="field">
+            <input
+              type="text"
+              value={subtitle}
+              title="Section SubTitle"
+              placeholder="Section SubTitle"
+              onChange={(e) => setSubtitle(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit">
+              <CiSquareCheck size={34} />
+            </button>
+            <button type="reset">
+              <CiSquareRemove size={34} />
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

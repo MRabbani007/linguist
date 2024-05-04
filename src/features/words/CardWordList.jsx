@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRemoveWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import {
@@ -15,26 +15,42 @@ import MoveWord from "./MoveWord";
 import WordImage from "./WordImage";
 import MoveWordSection from "./MoveWordSection";
 import { BiMove } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
+import WordDropDown from "../dropDowns/WordDropDown";
 
 const CardWordList = ({ word, sectionsList }) => {
-  const [removeWord] = useRemoveWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
   const languagesCount = useSelector(selectLanguagesCount);
   const editMode = useSelector(selectEditMode);
 
-  const [viewEdit, setViewEdit] = useState(false);
-  const [viewMoveLesson, setViewMoveLesson] = useState(false);
-  const [viewMoveSection, setViewMoveSection] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
 
-  const handleDelete = async () => {
-    try {
-      if (confirm("Delete this Word?")) {
-        await removeWord(word?.id).unwrap();
+  const dropDownRef = useRef();
+  const dropDownButtonRef = useRef();
+
+  const handleDropDown = (e) => {
+    if (!dropDownRef?.current?.contains(e.target)) {
+      setShowDropDown(false);
+      if (dropDownButtonRef.current?.contains(e.target)) {
+        setShowDropDown(true);
+      } else {
+        setShowDropDown(false);
       }
-    } catch (err) {
-      console.error("Failed to delete the word", err);
     }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleDropDown);
+    return () => {
+      document.removeEventListener("mousedown", handleDropDown);
+    };
+  }, []);
+
+  const [viewEditWord, setViewEditWord] = useState(false);
+  const [viewMoveLesson, setViewMoveLesson] = useState(false);
+  const [viewMoveSection, setViewMoveSection] = useState(false);
+  const [addImage, setAddImage] = useState(false);
+  const [addSentence, setAddSentence] = useState(false);
 
   const label_1 =
     displayBlock?.firstLang === "Russian"
@@ -70,32 +86,45 @@ const CardWordList = ({ word, sectionsList }) => {
   };
 
   return (
-    <div className="min-w-[200px] px-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 ">
+    <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex items-stretch">
+      {/* Left Col */}
+      <div className=" px-1">
+        <input type="checkbox" />
+      </div>
       {/* Card Body */}
-      {viewEdit ? (
-        <CardWordListEdit word={word} setViewEdit={setViewEdit} />
+      {viewEditWord ? (
+        <CardWordListEdit word={word} setViewEdit={setViewEditWord} />
       ) : (
-        <div className="flex flex-wrap md:justify-between gap-3 p-2 ">
-          {/* Left Col */}
-          <div className="p-1">
-            <input type="checkbox" />
-          </div>
+        <div className="flex flex-wrap flex-1 md:justify-between gap-3 relative">
+          {editMode && (
+            <button
+              ref={dropDownButtonRef}
+              title="Edit Section"
+              onClick={() => setShowDropDown(true)}
+              className="absolute top-0 right-0"
+            >
+              <BsThreeDots size={28} />
+            </button>
+          )}
+          <WordDropDown
+            word={word}
+            showDropDown={showDropDown}
+            setAddImage={setAddImage}
+            setAddSentence={setAddSentence}
+            setEditWord={setViewEditWord}
+            setViewMoveSection={setViewMoveSection}
+            setViewMoveLesson={setViewMoveLesson}
+          />
           <div className="flex flex-wrap flex-1 gap-3">
             {/* Image */}
-            <WordImage word={word} displayBlock={displayBlock} />
+            <WordImage
+              word={word}
+              displayBlock={displayBlock}
+              addImage={addImage}
+              setAddImage={setAddImage}
+            />
             {/* Word */}
-            <div className="flex flex-col flex-1 gap-0 relative">
-              {editMode && (
-                <span className="invisible group-hover:visible absolute top-2 right-2">
-                  <CiEdit
-                    className="icon mr-1 cursor-pointer"
-                    onClick={() => {
-                      setViewEdit(true);
-                    }}
-                  />
-                  <CiTrash className="icon" onClick={handleDelete} />
-                </span>
-              )}
+            <div className="flex flex-col flex-1 gap-0">
               <div className="">
                 <span className="">{label_1}</span>
                 <span className="text-xl mx-2 font-normal">{word?.first}</span>
@@ -121,33 +150,15 @@ const CardWordList = ({ word, sectionsList }) => {
                 </div>
               ) : null}
               <div>
-                {editMode && (
-                  <button
-                    title="Move to Lesson"
-                    onClick={() => setViewMoveLesson(true)}
-                  >
-                    <BiMove size={34} />
-                  </button>
-                )}
-                {viewMoveLesson && (
-                  <MoveWord word={word} setViewMoveLesson={setViewMoveLesson} />
-                )}
-              </div>
-              <div>
-                {editMode && (
-                  <button
-                    title="Move to Section"
-                    onClick={() => setViewMoveSection(true)}
-                  >
-                    <BiMove size={34} />
-                  </button>
-                )}
                 {viewMoveSection && (
                   <MoveWordSection
                     word={word}
                     sectionsList={sectionsList}
                     setViewMoveSection={setViewMoveSection}
                   />
+                )}
+                {viewMoveLesson && (
+                  <MoveWord word={word} setViewMoveLesson={setViewMoveLesson} />
                 )}
               </div>
             </div>
@@ -166,18 +177,24 @@ const CardWordList = ({ word, sectionsList }) => {
                 })}
               </div>
             )}
-            {editMode && <CardAddSentence word={word} />}
-          </div>
-          <div className="flex flex-col items-center justify-between text-slate-600">
-            <FaPlus className="icon-md hover:scale-150 cursor-pointer duration-200" />
-            <FaCheck className="icon-md hover:scale-150 cursor-pointer duration-200" />
-            <FaEyeSlash
-              className="icon-md hover:scale-150 cursor-pointer duration-200"
-              onClick={handleShowWord}
-            />
+            {addSentence && (
+              <CardAddSentence
+                word={word}
+                addSentence={addSentence}
+                setAddSentence={setAddSentence}
+              />
+            )}
           </div>
         </div>
       )}
+      <div className="flex flex-col justify-between px-1 text-slate-600">
+        <FaPlus className="icon-md hover:scale-150 cursor-pointer duration-200" />
+        <FaCheck className="icon-md hover:scale-150 cursor-pointer duration-200" />
+        <FaEyeSlash
+          className="icon-md hover:scale-150 cursor-pointer duration-200"
+          onClick={handleShowWord}
+        />
+      </div>
     </div>
   );
 };

@@ -62,32 +62,36 @@ export default function MoveWord({ word, setViewMoveLesson }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex flex-col justify-center gap-2"
-    >
-      <label htmlFor="move-word-lesson" className="hidden">
-        Move Word to Lesson
-      </label>
-      <div className="flex items-center">
-        <select
-          name="move-word-lesson"
-          id="move-word-lesson"
-          required
-          value={selected}
-          onChange={(e) => setSelected(e.target.value)}
-        >
-          <option value="">Select Lesson</option>
-          {content}
-        </select>
-        <button type="submit" title="Save">
-          <CiSquareCheck size={34} />
-        </button>
-        <button type="reset" title="Cancel">
-          <CiSquareRemove size={34} />
-        </button>
-      </div>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Move Word to Lesson</h2>
+        <div>
+          <div className="field">
+            <label htmlFor="move-word-lesson" className="field__label">
+              Move Word to Lesson
+            </label>
+            <select
+              name="move-word-lesson"
+              id="move-word-lesson"
+              required
+              value={selected}
+              onChange={(e) => setSelected(e.target.value)}
+              className="field__input"
+            >
+              <option value="">Select Lesson</option>
+              {content}
+            </select>
+          </div>
+          <div className="form-buttons">
+            <button type="submit" title="Save" className="add">
+              Save
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

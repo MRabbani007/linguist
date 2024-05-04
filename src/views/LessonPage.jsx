@@ -4,38 +4,28 @@ import { useSelector } from "react-redux";
 import {
   selectDisplayChapter,
   selectDisplayBlock,
-  selectDisplayMode,
   selectEditMode,
 } from "../features/globals/globalsSlice";
-import { useGetWordsQuery } from "../features/words/wordsSlice";
 // Imported Components
-import CardTableHeader from "../features/words/CardTableHeader";
-import CardWord from "../features/words/CardWord";
-import CardWordEdit from "../features/words/CardWordEdit";
-import CardWordTable from "../features/words/CardWordTable";
 import CardWordAdd from "../features/words/CardWordAdd";
-import CardWordEditDetails from "../features/words/CardWordEditDetails";
-import CardBlockEditDetails from "../features/blocks/CardBlockEditDetails";
-import CardBlockEditContent from "../features/blocks/CardBlockEditContent";
-import CardBlockEditHeader from "../features/blocks/CardBlockEditHeader";
 import BlockNavigator from "../features/blocks/BlockNavigator";
-import CardWordList from "../features/words/CardWordList";
 // Imported Icons
-import { CiEdit } from "react-icons/ci";
-import SectionHeader from "../features/blocks/SectionHeader";
-import SectionHeaderEdit from "../features/blocks/SectionHeaderEdit";
-import SectionDetails from "../features/blocks/SectionDetails";
-import { useGetAllBlocksQuery } from "../features/blocks/blockSlice";
 import LessonIntro from "../features/blocks/LessonIntro";
 import LessonSections from "../features/sections/LessonSections";
+import LessonHeader from "../features/blocks/LessonHeader";
+import LessonHeaderEdit from "../features/blocks/LessonHeaderEdit";
+import LessonEditDetails from "../features/blocks/LessonEditDetails";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
   const editMode = useSelector(selectEditMode);
 
-  const [editSectionHeader, setEditSectionHeader] = useState(false);
-  const [editBlockTab, setEditBlockTab] = useState("");
+  const [viewAddWord, setViewAddWord] = useState(false);
+  const [addLessonIntro, setAddLessonIntro] = useState(false);
+  const [addSection, setAddSection] = useState(false);
+  const [editLessonTitle, setEditLessonTitle] = useState(false);
+  const [editLessonDetails, setEditLessonDetails] = useState(false);
 
   const navigate = useNavigate();
 
@@ -54,56 +44,43 @@ export default function LessonPage() {
 
   isMounted.current = true;
 
-  const toggleEdit = (tab = "") => {
-    setEditBlockTab(tab);
-  };
-
   return (
     <div className="flex flex-col gap-2 w-full">
       <BlockNavigator>
-        {editSectionHeader ? (
-          <SectionHeaderEdit
-            section={displayBlock}
-            setEditSectionHeader={setEditSectionHeader}
+        {editLessonTitle ? (
+          <LessonHeaderEdit
+            lesson={displayBlock}
+            setEditLessonTitle={setEditLessonTitle}
           />
         ) : (
-          <SectionHeader
-            section={displayBlock}
-            setEditSectionHeader={setEditSectionHeader}
+          <LessonHeader
+            lesson={displayBlock}
+            setEditLessonTitle={setEditLessonTitle}
+            setEditLessonDetails={setEditLessonDetails}
+            setAddLessonIntro={setAddLessonIntro}
+            setAddSection={setAddSection}
           />
         )}
       </BlockNavigator>
 
       <div
         className={
-          editMode
+          editLessonDetails
             ? "duration-200 translate-y-0"
             : "invisible translate-y-2 h-0"
         }
       >
-        <div className="flex items-center justify-center gap-3 my-3">
-          <button className="btn btn-red" onClick={() => toggleEdit("details")}>
-            Details
-          </button>
-          <button className="btn btn-red" onClick={() => toggleEdit("content")}>
-            Content
-          </button>
-        </div>
-        <div>
-          <SectionDetails
-            block={displayBlock}
-            editBlockTab={editBlockTab}
-            toggleEdit={toggleEdit}
-          />
-          <CardBlockEditContent
-            block={displayBlock}
-            editBlockTab={editBlockTab}
-            toggleEdit={toggleEdit}
-          />
-        </div>
+        <LessonEditDetails
+          lesson={displayBlock}
+          setEdit={setEditLessonDetails}
+        />
       </div>
 
-      <LessonIntro lesson={displayBlock} />
+      <LessonIntro
+        lesson={displayBlock}
+        addLessonIntro={addLessonIntro}
+        setAddLessonIntro={setAddLessonIntro}
+      />
 
       <article>
         {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
@@ -111,13 +88,21 @@ export default function LessonPage() {
         {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
       </article>
 
-      <LessonSections />
+      <LessonSections
+        lesson={displayBlock}
+        addSection={addSection}
+        setAddSection={setAddSection}
+      />
 
       {editMode && (
-        <div className="w-fit mx-auto">
-          <CardWordAdd />
-        </div>
+        <button
+          className="btn btn-red w-fit mx-auto"
+          onClick={() => setViewAddWord(true)}
+        >
+          Add Word
+        </button>
       )}
+      {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
 
       {displayBlock?.caption ? (
         <div className="">{displayBlock?.caption}</div>

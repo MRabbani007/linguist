@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useEditWordSectionIDMutation } from "./wordsSlice";
-import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 
 export default function MoveWordSection({
   word,
@@ -51,28 +50,36 @@ export default function MoveWordSection({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex items-center gap-2"
-    >
-      <label htmlFor="move-word">Move to Section:</label>
-      <select
-        name="move-word-section"
-        id="move-word-section"
-        required
-        value={selected}
-        onChange={(e) => setSelected(e.target.value)}
-      >
-        <option value="">Select Section</option>
-        {content}
-      </select>
-      <button type="submit" title="Save">
-        <CiSquareCheck size={34} />
-      </button>
-      <button type="reset" title="Cancel">
-        <CiSquareRemove size={34} />
-      </button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Move Word to Section</h2>
+        <div>
+          <div className="field">
+            <label htmlFor="move-word" className="field__label">
+              Move to Section:
+            </label>
+            <select
+              name="move-word-section"
+              id="move-word-section"
+              required
+              value={selected}
+              onChange={(e) => setSelected(e.target.value)}
+              className="field__input"
+            >
+              <option value="">Select Section</option>
+              {content}
+            </select>
+          </div>
+          <div className="form-buttons">
+            <button type="submit" title="Save" className="add">
+              Save
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }

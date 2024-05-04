@@ -22,26 +22,32 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex items-center gap-2"
-    >
-      <input
-        type="text"
-        value={input}
-        autoFocus
-        required
-        title="Introduction"
-        placeholder="Introduction"
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button type="submit">
-        <CiSquarePlus size={34} />
-      </button>
-      <button type="reset">
-        <CiSquareMinus size={34} />
-      </button>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Edit Introduction Item</h2>
+        <div>
+          <div className="field">
+            <input
+              type="text"
+              value={input}
+              autoFocus
+              required
+              title="Introduction"
+              placeholder="Introduction"
+              onChange={(e) => setInput(e.target.value)}
+              className="field__input"
+            />
+          </div>
+          <div className="form-buttons">
+            <button type="submit" title="Save" className="add">
+              Save
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
