@@ -40,74 +40,94 @@ const ChapterHeaderEdit = ({ chapter, setEditChapter }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="text-center flex gap-2"
-    >
-      <div className="">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            id="chapter_number"
-            name="chapter_number"
-            autoFocus
-            placeholder="Number"
-            title="Chapter Number"
-            value={chapterNo}
-            onChange={(e) => {
-              setChapterNo(e.target.value);
-            }}
-            className="w-[100px]"
-          />
-          <input
-            type="text"
-            value={title}
-            id="chapter_title"
-            name="chapter_title"
-            autoFocus
-            placeholder="Title"
-            title="Chapter Title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-            className="flex-1"
-          />
-        </div>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Edit Chapter Title</h2>
         <div>
-          <input
-            type="text"
-            id="chapter_subtitle"
-            name="chapter_subtitle"
-            value={subtitle}
-            placeholder="SubTitle"
-            title="Chapter SubTitle"
-            onChange={(e) => {
-              setSubtitle(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            id="chapter_detail"
-            name="chapter_detail"
-            value={detail}
-            placeholder="Detail"
-            title="Chapter Detail"
-            onChange={(e) => {
-              setDetail(e.target.value);
-            }}
-          />
+          <div className="field_group">
+            <div className="field max-w-[25%]">
+              <label htmlFor="chapter_number" className="field__label">
+                Number
+              </label>
+              <input
+                type="text"
+                id="chapter_number"
+                name="chapter_number"
+                autoFocus
+                placeholder="Number"
+                title="Chapter Number"
+                value={chapterNo}
+                onChange={(e) => {
+                  setChapterNo(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="chapter_title" className="field__label">
+                Chapter Title
+              </label>
+              <input
+                type="text"
+                id="chapter_title"
+                name="chapter_title"
+                placeholder="Title"
+                title="Chapter Title"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+          </div>
+          <div className="field_group">
+            <div className="field">
+              <label htmlFor="chapter_subtitle" className="field__label">
+                Chapter SubTitle
+              </label>
+              <input
+                type="text"
+                id="chapter_subtitle"
+                name="chapter_subtitle"
+                value={subtitle}
+                placeholder="SubTitle"
+                title="Chapter SubTitle"
+                onChange={(e) => {
+                  setSubtitle(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="chapter_detail" className="field__label">
+                Chapter Details
+              </label>
+              <input
+                type="text"
+                id="chapter_detail"
+                name="chapter_detail"
+                value={detail}
+                placeholder="Detail"
+                title="Chapter Detail"
+                onChange={(e) => {
+                  setDetail(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+          </div>
+          <p className="form-buttons">
+            <button type="submit" title="Add" className="add">
+              Add
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </p>
         </div>
-      </div>
-      <span>
-        <button type="submit">
-          <CiSquareCheck className="icon" />
-        </button>
-        <button type="reset">
-          <CiSquareRemove className="icon" />
-        </button>
-      </span>
-    </form>
+      </form>
+    </div>
   );
 };
 

@@ -81,6 +81,7 @@ const BlockNavigator = ({ children }) => {
         dispatch(setDisplayChapter(chapters[chapterIndex + 1]));
       }
     }
+    window.scrollTo(0, 0);
   };
 
   const handlePrevious = () => {
@@ -94,6 +95,7 @@ const BlockNavigator = ({ children }) => {
         dispatch(setDisplayChapter(chapters[chapterIndex - 1]));
       }
     }
+    window.scrollTo(0, 0);
   };
 
   return (

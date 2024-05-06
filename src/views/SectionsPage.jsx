@@ -7,10 +7,10 @@ import {
 } from "../features/globals/globalsSlice";
 import { useGetBlocksQuery } from "../features/blocks/blockSlice";
 import CardBlockTitle from "../features/blocks/CardBlockTitle";
-import CardBlockAdd from "../features/blocks/CardBlockAdd";
 import ChapterNavigator from "../features/navigation/ChapterNavigator";
 import ChapterHeaderEdit from "../features/chapters/ChapterHeaderEdit";
 import ChapterHeader from "../features/chapters/ChapterHeader";
+import LessonAdd from "../features/blocks/LessonAdd";
 
 export default function SectionsPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -76,8 +76,8 @@ export default function SectionsPage() {
       <div className="flex flex-wrap justify-center gap-3 py-2 px-4">
         {content}
       </div>
+      {editMode && <LessonAdd />}
       <ChapterNavigator />
-      {editMode && <CardBlockAdd />}
     </div>
   );
 }

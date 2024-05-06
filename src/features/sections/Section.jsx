@@ -20,6 +20,7 @@ export default function Section({
 }) {
   const editMode = useSelector(selectEditMode);
 
+  const [expand, setExpand] = useState(true);
   const [editTitle, setEditTitle] = useState(false);
 
   const [addIntro, setAddIntro] = useState(false);
@@ -32,22 +33,34 @@ export default function Section({
 
   return (
     <div className="flex flex-col gap-3">
+      <SectionTitle
+        section={section}
+        expand={expand}
+        setExpand={setExpand}
+        setEditTitle={setEditTitle}
+        setAddIntro={setAddIntro}
+        setAddDef={setAddDef}
+        setAddTable={setAddTable}
+      />
       {editTitle ? (
         <SectionEditTitle section={section} setEdit={setEditTitle} />
-      ) : (
-        <SectionTitle
-          section={section}
-          setEditTitle={setEditTitle}
-          setAddIntro={setAddIntro}
-          setAddDef={setAddDef}
-          setAddTable={setAddTable}
-        />
-      )}
-      <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
-      <div className="flex flex-col gap-3">
-        {definitions.map((definition) => {
-          return <Definition definition={definition} key={definition?.id} />;
-        })}
+      ) : null}
+      <div
+        className={
+          (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
+          " flex flex-col gap-3 duration-200"
+        }
+      >
+        <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
+        {Array.isArray(definitions) && definitions.length !== 0 ? (
+          <div className="flex flex-col gap-3">
+            {definitions.map((definition) => {
+              return (
+                <Definition definition={definition} key={definition?.id} />
+              );
+            })}
+          </div>
+        ) : null}
         {editMode && addDef ? (
           <DefinitionAdd
             lessonID={section?.lessonID}
@@ -55,12 +68,18 @@ export default function Section({
             setAdd={setAddDef}
           />
         ) : null}
-      </div>
-      <div className="flex flex-col gap-3">
-        {tables.map((table) => {
-          const words = tableWords.filter((word) => word.tableID === table.id);
-          return <TableCard table={table} key={table?.id} tableWords={words} />;
-        })}
+        {Array.isArray(tables) && tables.length !== 0 ? (
+          <div className="flex flex-col gap-3">
+            {tables.map((table) => {
+              const words = tableWords.filter(
+                (word) => word.tableID === table.id
+              );
+              return (
+                <TableCard table={table} key={table?.id} tableWords={words} />
+              );
+            })}
+          </div>
+        ) : null}
         {editMode && addTable ? (
           <TableAdd
             lessonID={section?.lessonID}
@@ -68,8 +87,8 @@ export default function Section({
             setAdd={setAddTable}
           />
         ) : null}
+        <div className="flex flex-col gap-3">{content}</div>
       </div>
-      <div className="flex flex-col gap-3">{content}</div>
     </div>
   );
 }

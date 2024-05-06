@@ -245,6 +245,11 @@ h1 {
   color: white;
 }
 
+.delete {
+  background-color: #f87171;
+  color: white;
+}
+
 table caption {
   background-color: #dc2626;
   color: #f7fee7;

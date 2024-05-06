@@ -66,11 +66,11 @@ export default function SectionAdd({ setAdd }) {
             />
           </div>
           <div className="form-buttons">
-            <button type="submit">
-              <CiSquarePlus size={34} />
+            <button type="submit" title="Save" className="add">
+              Save
             </button>
-            <button type="reset">
-              <CiSquareRemove size={34} />
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
             </button>
           </div>
         </div>

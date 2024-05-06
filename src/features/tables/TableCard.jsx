@@ -155,7 +155,7 @@ export default function TableCard({ table, tableWords }) {
                       <th
                         key={index}
                         scope="col"
-                        colSpan={table?.colsTitlesColSpan[index] + 2}
+                        colSpan={table?.colsTitlesColSpan[index]}
                         className=""
                       >
                         {colTitle}
@@ -178,8 +178,6 @@ export default function TableCard({ table, tableWords }) {
                     </th>
                   );
                 })}
-                <th></th>
-                <th></th>
               </tr>
             )}
           </thead>
@@ -190,54 +188,43 @@ export default function TableCard({ table, tableWords }) {
                   <th scope="row" className="w-fit whitespace-nowrap">
                     {row}
                   </th>
-                  {Array.isArray(tableWords) && tableWords.length !== 0
-                    ? tableWords.map((word, idx) => {
-                        if (idx === editWordIndex) {
-                          return (
-                            <td key={"col_" + idx} colSpan={2}>
-                              <input
-                                type="text"
-                                title="Word Case"
-                                placeholder="Word Case"
-                                value={editWord?.cases[index]}
-                                onChange={(e) =>
-                                  handleEditWordCase(index, e.target.value)
-                                }
-                              />
-                              <input
-                                type="text"
-                                title="Word Translation"
-                                placeholder="Word Translation"
-                                value={editWord?.translation[index]}
-                                onChange={(e) =>
-                                  handleEditWordTranslation(
-                                    index,
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </td>
-                          );
-                        } else {
-                          return (
-                            <>
-                              <td key={"col_" + idx}>{word?.cases[index]}</td>
-                              <td key={"col_" + idx + "_2"}>
-                                {word?.translation[index]}
-                              </td>
-                            </>
-                          );
-                        }
-                      })
-                    : table?.cols.map((col, idx) => {
+                  {Array.isArray(tableWords) && tableWords.length !== 0 ? (
+                    tableWords.map((word, idx) => {
+                      if (idx === editWordIndex) {
                         return (
-                          <td
-                            colSpan={table?.colsColSpan[idx]}
-                            key={"col_" + idx}
-                          ></td>
+                          <td key={"col_" + idx} colSpan={2}>
+                            <input
+                              type="text"
+                              title="Word Case"
+                              placeholder="Word Case"
+                              value={editWord?.cases[index]}
+                              onChange={(e) =>
+                                handleEditWordCase(index, e.target.value)
+                              }
+                            />
+                            <input
+                              type="text"
+                              title="Word Translation"
+                              placeholder="Word Translation"
+                              value={editWord?.translation[index]}
+                              onChange={(e) =>
+                                handleEditWordTranslation(index, e.target.value)
+                              }
+                            />
+                          </td>
                         );
-                      })}
-                  {addWord ? (
+                      } else {
+                        return (
+                          <>
+                            <td key={"col_" + idx}>{word?.cases[index]}</td>
+                            <td key={"col_" + idx + "_2"}>
+                              {word?.translation[index]}
+                            </td>
+                          </>
+                        );
+                      }
+                    })
+                  ) : addWord ? (
                     <>
                       <td>
                         <input
@@ -265,10 +252,14 @@ export default function TableCard({ table, tableWords }) {
                       </td>
                     </>
                   ) : (
-                    <>
-                      <td></td>
-                      <td></td>
-                    </>
+                    table?.cols.map((col, idx) => {
+                      return (
+                        <td
+                          colSpan={table?.colsColSpan[idx]}
+                          key={"col_" + idx}
+                        ></td>
+                      );
+                    })
                   )}
                 </tr>
               );
@@ -276,61 +267,54 @@ export default function TableCard({ table, tableWords }) {
             {editMode ? (
               <tr>
                 <th scope="row"></th>
-                {Array.isArray(tableWords) && tableWords.length !== 0
-                  ? tableWords.map((word, idx) => {
-                      if (idx === editWordIndex) {
-                        return (
-                          <td key={"edit_col_" + idx} colSpan={2}>
-                            <button title="Save Edit" onClick={handleSaveEdit}>
-                              <CiSquareCheck size={32} />
-                            </button>
-                            <button
-                              title="Cancel Edit"
-                              onClick={handleResetEdit}
-                            >
-                              <CiSquareRemove size={32} />
-                            </button>
-                          </td>
-                        );
-                      } else {
-                        return (
-                          <td key={"edit_col_" + idx} colSpan={2}>
-                            {editMode && (
-                              <button onClick={() => handleSetEditWord(idx)}>
-                                <CiEdit size={32} />
-                              </button>
-                            )}
-                          </td>
-                        );
-                      }
-                    })
-                  : table?.cols.map((col, idx) => {
+                {Array.isArray(tableWords) && tableWords.length !== 0 ? (
+                  tableWords.map((word, idx) => {
+                    if (idx === editWordIndex) {
                       return (
-                        <td
-                          key={"edit_col_" + idx}
-                          colSpan={table?.colsColSpan[idx]}
-                        >
-                          {idx}
+                        <td key={"edit_col_" + idx} colSpan={2}>
+                          <button title="Save Edit" onClick={handleSaveEdit}>
+                            <CiSquareCheck size={32} />
+                          </button>
+                          <button title="Cancel Edit" onClick={handleResetEdit}>
+                            <CiSquareRemove size={32} />
+                          </button>
                         </td>
                       );
-                    })}
-                <td>
-                  {addWord ? (
-                    <>
-                      <button onClick={handleSubmit}>
-                        <CiSquareCheck size={32} />
-                      </button>
-                      <button onClick={handleReset}>
-                        <CiSquareRemove size={32} />
-                      </button>
-                    </>
-                  ) : editMode ? (
-                    <button onClick={() => setAddWord(true)}>
-                      <CiCirclePlus size={32} />
+                    } else {
+                      return (
+                        <td key={"edit_col_" + idx} colSpan={2}>
+                          {editMode && (
+                            <button onClick={() => handleSetEditWord(idx)}>
+                              <CiEdit size={32} />
+                            </button>
+                          )}
+                        </td>
+                      );
+                    }
+                  })
+                ) : addWord ? (
+                  <td colSpan={2}>
+                    <button onClick={handleSubmit}>
+                      <CiSquareCheck size={32} />
                     </button>
-                  ) : null}
-                </td>
-                <td></td>
+                    <button onClick={handleReset}>
+                      <CiSquareRemove size={32} />
+                    </button>
+                  </td>
+                ) : (
+                  table?.cols.map((col, idx) => {
+                    return (
+                      <td
+                        key={"edit_col_" + idx}
+                        colSpan={table?.colsColSpan[idx]}
+                      >
+                        <button onClick={() => setAddWord(true)}>
+                          <CiCirclePlus size={32} />
+                        </button>
+                      </td>
+                    );
+                  })
+                )}
               </tr>
             ) : null}
           </tbody>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAddTableMutation } from "./tablesSlice";
 import { CiCirclePlus, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
+import { tableTemplatePronouns, tableTemplateVerb } from "../../data/templates";
 
 export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
   const [addTable, { isLoading }] = useAddTableMutation();
@@ -13,19 +14,40 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
 
   const canSave = !isLoading;
 
+  const [template, setTemplate] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const table = {
-      id: crypto.randomUUID(),
-      lessonID,
-      sectionID,
-      title,
-      subtitle,
-      text,
-      notes,
-      caption: "",
-      sortIndex,
-    };
+
+    let table;
+    if (template === "Verb") {
+      table = {
+        ...tableTemplateVerb,
+        id: crypto.randomUUID(),
+        lessonID,
+        sectionID,
+      };
+    } else if (template === "Pronoun") {
+      table = {
+        ...tableTemplatePronouns,
+        id: crypto.randomUUID(),
+        lessonID,
+        sectionID,
+      };
+    } else {
+      table = {
+        id: crypto.randomUUID(),
+        lessonID,
+        sectionID,
+        title,
+        subtitle,
+        text,
+        notes,
+        caption: "",
+        sortIndex,
+      };
+    }
+
     if (canSave) {
       await addTable(table);
       alert("Table Created");
@@ -120,6 +142,35 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
                 className="field__input"
               />
             </div>
+          </div>
+          <div className="field_group">
+            <input
+              id="radio_blank"
+              type="radio"
+              name="template"
+              checked={template === ""}
+              value={""}
+              onChange={(e) => setTemplate(e.target.value)}
+            />
+            <label htmlFor="radio_blank">Blank Table</label>
+            <input
+              id="radio_template_verb"
+              type="radio"
+              name="template"
+              value={"Verb"}
+              checked={template === "Verb"}
+              onChange={(e) => setTemplate(e.target.value)}
+            />
+            <label htmlFor="radio_template_verb">Verb</label>
+            <input
+              id="radio_template_pronoun"
+              type="radio"
+              name="template"
+              value={"Pronoun"}
+              checked={template === "Pronoun"}
+              onChange={(e) => setTemplate(e.target.value)}
+            />
+            <label htmlFor="radio_template_pronoun">Pronoun</label>
           </div>
           <p className="form-buttons">
             <button type="submit" title="Add" className="add">

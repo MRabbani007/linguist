@@ -31,12 +31,14 @@ const ChapterNavigator = ({ children }) => {
   const handleNext = () => {
     if (!lastChapter) {
       dispatch(setDisplayChapter(chapters[chapterIndex + 1]));
+      window.scrollTo(0, 0);
     }
   };
 
   const handlePrevious = () => {
     if (chapterIndex > 0) {
       dispatch(setDisplayChapter(chapters[chapterIndex - 1]));
+      window.scrollTo(0, 0);
     }
   };
 

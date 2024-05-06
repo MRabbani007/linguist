@@ -80,18 +80,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.ADD_COLTITLE: {
         setState((curr) => {
+          const newColsTitles = [...curr.colsTitles];
+          newColsTitles.splice(editIndex, 0, payload?.value);
+          const newColsTitleColSpan = [...curr.colsTitlesColSpan];
+          newColsTitleColSpan.splice(editIndex, 0, payload?.colSpan);
           return {
             ...curr,
-            colsTitles: [...curr.colsTitles].splice(
-              editIndex,
-              0,
-              payload?.value
-            ),
-            colsTitlesColSpan: [...curr.colsTitlesColSpan].splice(
-              editIndex,
-              0,
-              payload?.colSpan
-            ),
+            colsTitles: newColsTitles,
+            colsTitlesColSpan: newColsTitleColSpan,
           };
         });
 
@@ -102,14 +98,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.ADD_COL: {
         setState((curr) => {
+          const newCols = [...curr.cols];
+          newCols.splice(editIndex, 0, payload?.value);
+          const newColsColSpan = [...curr.colsColSpan];
+          newColsColSpan.splice(editIndex, 0, payload?.colSpan);
           return {
             ...curr,
-            cols: [...curr.cols].splice(editIndex, 0, payload?.value),
-            colsColSpan: [...curr.colsColSpan].splice(
-              editIndex,
-              0,
-              payload?.colSpan
-            ),
+            cols: newCols,
+            colsColSpan: newColsColSpan,
           };
         });
 
@@ -120,9 +116,11 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.ADD_ROW: {
         setState((curr) => {
+          const newRows = [...curr.rows];
+          newRows.splice(editIndex, 0, payload?.value);
           return {
             ...curr,
-            rows: [...curr.rows].splice(editIndex, 0, payload?.value),
+            rows: newRows,
           };
         });
 
@@ -133,18 +131,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.EDIT_COLTITLE: {
         setState((curr) => {
+          const newColsTitles = [...curr.colsTitles];
+          newColsTitles.splice(editIndex, 1, payload?.value);
+          const newColsTitleColSpan = [...curr.colsTitlesColSpan];
+          newColsTitleColSpan.splice(editIndex, 1, payload?.colSpan);
           return {
             ...curr,
-            colsTitles: [...curr.colsTitles].splice(
-              editIndex,
-              1,
-              payload?.value
-            ),
-            colsTitlesColSpan: [...curr.colsTitlesColSpan].splice(
-              editIndex,
-              1,
-              payload?.colSpan
-            ),
+            colsTitles: newColsTitles,
+            colsTitlesColSpan: newColsTitleColSpan,
           };
         });
 
@@ -155,14 +149,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.EDIT_COL: {
         setState((curr) => {
+          const newCols = [...curr.cols];
+          newCols.splice(editIndex, 1, payload?.value);
+          const newColsColSpan = [...curr.colsColSpan];
+          newColsColSpan.splice(editIndex, 1, payload?.colSpan);
           return {
             ...curr,
-            cols: [...curr.cols].splice(editIndex, 1, payload?.value),
-            colsColSpan: [...curr.colsColSpan].splice(
-              editIndex,
-              1,
-              payload?.colSpan
-            ),
+            cols: newCols,
+            colsColSpan: newColsColSpan,
           };
         });
 
@@ -172,10 +166,13 @@ export default function TableEditHeaders({ table, setEdit }) {
         break;
       }
       case TABLE.EDIT_ROW: {
+        console.log(editIndex, payload);
         setState((curr) => {
+          const newRows = [...curr.rows];
+          newRows.splice(editIndex, 1, payload?.value);
           return {
             ...curr,
-            rows: [...curr.rows].splice(editIndex, 1, payload?.value),
+            rows: newRows,
           };
         });
 
@@ -186,10 +183,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.DELETE_COLTITLE: {
         setState((curr) => {
+          const newColsTitles = [...curr.colsTitles];
+          newColsTitles.splice(editIndex, 1);
+          const newColsTitleColSpan = [...curr.colsTitlesColSpan];
+          newColsTitleColSpan.splice(editIndex, 1);
           return {
             ...curr,
-            colsTitles: [...curr.colsTitles].splice(editIndex, 1),
-            colsTitlesColSpan: [...curr.colsTitlesColSpan].splice(editIndex, 1),
+            colsTitles: newColsTitles,
+            colsTitlesColSpan: newColsTitleColSpan,
           };
         });
 
@@ -200,10 +201,14 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.DELETE_COL: {
         setState((curr) => {
+          const newCols = [...curr.cols];
+          newCols.splice(editIndex, 1);
+          const newColsColSpan = [...curr.colsColSpan];
+          newColsColSpan.splice(editIndex, 1);
           return {
             ...curr,
-            cols: [...curr.cols].splice(editIndex, 1),
-            colsColSpan: [...curr.colsColSpan].splice(editIndex, 1),
+            cols: newCols,
+            colsColSpan: newColsColSpan,
           };
         });
 
@@ -214,9 +219,11 @@ export default function TableEditHeaders({ table, setEdit }) {
       }
       case TABLE.DELETE_ROW: {
         setState((curr) => {
+          const newRows = [...curr.rows];
+          newRows.splice(editIndex, 1);
           return {
             ...curr,
-            rows: [...curr.rows].splice(editIndex, 1),
+            rows: newRows,
           };
         });
 
@@ -238,6 +245,7 @@ export default function TableEditHeaders({ table, setEdit }) {
     e.preventDefault();
 
     if (canSave) {
+      console.log(state);
       await editTableHeaders(state);
       alert("Table Modified");
       setEdit(false);
@@ -261,7 +269,7 @@ export default function TableEditHeaders({ table, setEdit }) {
             <div className="flex flex-1 items-center gap-3 relative px-3">
               <span
                 onClick={() =>
-                  dispatch({ type: TABLE.SET_EDIT_CAPTION, editIndex: null })
+                  dispatch({ type: TABLE.SET_EDIT_CAPTION, payload: null })
                 }
                 className="flex-1"
               >
@@ -296,7 +304,7 @@ export default function TableEditHeaders({ table, setEdit }) {
                       onClick={() =>
                         dispatch({
                           type: TABLE.SET_EDIT_COLTITLE,
-                          editIndex: index,
+                          payload: index,
                         })
                       }
                     >
@@ -315,7 +323,7 @@ export default function TableEditHeaders({ table, setEdit }) {
                       key={index}
                       colSpan={state?.colsColSpan[index]}
                       onClick={() =>
-                        dispatch({ type: TABLE.SET_EDIT_COL, editIndex: index })
+                        dispatch({ type: TABLE.SET_EDIT_COL, payload: index })
                       }
                     >
                       {col}
@@ -331,7 +339,7 @@ export default function TableEditHeaders({ table, setEdit }) {
                 <tr key={"row_" + index}>
                   <th
                     onClick={() =>
-                      dispatch({ type: TABLE.SET_EDIT_ROW, editIndex: index })
+                      dispatch({ type: TABLE.SET_EDIT_ROW, payload: index })
                     }
                   >
                     {row}

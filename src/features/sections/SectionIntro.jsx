@@ -8,9 +8,11 @@ export default function SectionIntro({ section, add, setAdd }) {
   const editMode = useSelector(selectEditMode);
 
   return (
-    <article>
-      {Array.isArray(section?.introduction)
-        ? section.introduction.map((intro, index) => {
+    <>
+      {Array.isArray(section?.introduction) &&
+      section.introduction.length !== 0 ? (
+        <article>
+          {section.introduction.map((intro, index) => {
             return (
               <SectionIntroItem
                 section={section}
@@ -19,9 +21,10 @@ export default function SectionIntro({ section, add, setAdd }) {
                 key={index}
               />
             );
-          })
-        : section?.introduction}
+          })}
+        </article>
+      ) : null}
       {add ? <SectionIntroAdd section={section} setAdd={setAdd} /> : null}
-    </article>
+    </>
   );
 }

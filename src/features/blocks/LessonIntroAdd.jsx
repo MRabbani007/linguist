@@ -9,10 +9,11 @@ export default function LessonIntroAdd({ lesson, setAdd }) {
 
   const canSave = !isLoading && input !== "";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      addBlockIntro({ id: lesson?.id, introduction: input });
+      await addBlockIntro({ id: lesson?.id, introduction: input });
+      alert("Introduction item Added");
     }
   };
 
@@ -37,14 +38,14 @@ export default function LessonIntroAdd({ lesson, setAdd }) {
               className="field__input"
             />
           </div>
-          <div className="form-buttons">
+          <p className="form-buttons">
             <button type="submit" title="Add" className="add">
-              Add
+              Save
             </button>
             <button type="reset" title="Cancel" className="cancel">
               Cancel
             </button>
-          </div>
+          </p>
         </div>
       </form>
     </div>

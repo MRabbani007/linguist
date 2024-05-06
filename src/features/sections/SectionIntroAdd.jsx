@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { useAddSectionIntroMutation } from "./sectionSlice";
 
 export default function SectionIntroAdd({ section, setAdd }) {

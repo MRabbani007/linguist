@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { CiEdit, CiSquareCheck, CiTrash } from "react-icons/ci";
+import { CiEdit, CiTrash } from "react-icons/ci";
 import { useRemoveBlockMutation } from "./blockSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectEditMode,
-  setDisplayBlock,
-  setViewTab,
-} from "../globals/globalsSlice";
-import CardBlockEditHeader from "./CardBlockEditHeader";
+import { selectEditMode, setDisplayBlock } from "../globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
+import LessonHeaderEdit from "./LessonHeaderEdit";
 
 const CardBlockTitle = ({ block }) => {
   const [removeBlock] = useRemoveBlockMutation();
@@ -41,7 +37,7 @@ const CardBlockTitle = ({ block }) => {
   return (
     <div className="group">
       {edit ? (
-        <CardBlockEditHeader toggleEdit={toggleEdit} block={block} />
+        <LessonHeaderEdit lesson={block} setEdit={setEdit} />
       ) : (
         <div className="flex flex-col gap-2 bg-zinc-300 rounded-md w-[300px] h-full">
           {/* Header */}

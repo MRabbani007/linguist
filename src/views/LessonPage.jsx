@@ -47,34 +47,23 @@ export default function LessonPage() {
   return (
     <div className="flex flex-col gap-2 w-full">
       <BlockNavigator>
-        {editLessonTitle ? (
-          <LessonHeaderEdit
-            lesson={displayBlock}
-            setEditLessonTitle={setEditLessonTitle}
-          />
-        ) : (
-          <LessonHeader
-            lesson={displayBlock}
-            setEditLessonTitle={setEditLessonTitle}
-            setEditLessonDetails={setEditLessonDetails}
-            setAddLessonIntro={setAddLessonIntro}
-            setAddSection={setAddSection}
-          />
-        )}
+        <LessonHeader
+          lesson={displayBlock}
+          setEditLessonTitle={setEditLessonTitle}
+          setEditLessonDetails={setEditLessonDetails}
+          setAddLessonIntro={setAddLessonIntro}
+          setAddSection={setAddSection}
+        />
       </BlockNavigator>
 
-      <div
-        className={
-          editLessonDetails
-            ? "duration-200 translate-y-0"
-            : "invisible translate-y-2 h-0"
-        }
-      >
+      {editLessonTitle ? (
+        <LessonHeaderEdit lesson={displayBlock} setEdit={setEditLessonTitle} />
+      ) : editLessonDetails ? (
         <LessonEditDetails
           lesson={displayBlock}
           setEdit={setEditLessonDetails}
         />
-      </div>
+      ) : null}
 
       <LessonIntro
         lesson={displayBlock}
@@ -102,6 +91,7 @@ export default function LessonPage() {
           Add Word
         </button>
       )}
+
       {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
 
       {displayBlock?.caption ? (

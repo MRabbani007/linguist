@@ -7,9 +7,11 @@ export default function LessonIntro({
   setAddLessonIntro,
 }) {
   return (
-    <article>
-      {Array.isArray(lesson?.introduction)
-        ? lesson.introduction.map((intro, index) => {
+    <>
+      {Array.isArray(lesson?.introduction) &&
+      lesson?.introduction?.length !== 0 ? (
+        <article>
+          {lesson.introduction.map((intro, index) => {
             return (
               <LessonIntroItem
                 lesson={lesson}
@@ -18,11 +20,12 @@ export default function LessonIntro({
                 key={index}
               />
             );
-          })
-        : lesson?.introduction}
+          })}
+        </article>
+      ) : null}
       {addLessonIntro ? (
         <LessonIntroAdd lesson={lesson} setAdd={setAddLessonIntro} />
       ) : null}
-    </article>
+    </>
   );
 }

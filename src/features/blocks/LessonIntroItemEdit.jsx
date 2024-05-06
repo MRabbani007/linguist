@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-import { useEditBlockIntroMutation } from "./blockSlice";
+import {
+  useDeleteBlockIntroMutation,
+  useEditBlockIntroMutation,
+} from "./blockSlice";
 
 export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
-  const [editBlockIntro, { isLoading }] = useEditBlockIntroMutation();
+  const [editBlockIntro, { isLoading: isLoadingEdit }] =
+    useEditBlockIntroMutation();
+  const [deleteLessonIntro, { isLoading: isLoadingDelete }] =
+    useDeleteBlockIntroMutation();
 
   const [input, setInput] = useState(intro);
 
-  const canSave = !isLoading && input !== "";
+  const canSaveEdit = !isLoadingEdit && input !== "";
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (canSave) {
+    if (canSaveEdit) {
       editBlockIntro({ id: lesson?.id, introduction: input, index });
     }
     setEdit(false);
@@ -19,6 +25,13 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
 
   const handleReset = () => {
     setEdit(false);
+  };
+
+  const handleDelete = async () => {
+    if (confirm("Delete Intro Item")) {
+      await deleteLessonIntro({ id: lesson.id, index });
+      alert("Intro Item Deleted");
+    }
   };
 
   return (
@@ -44,6 +57,14 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
             </button>
             <button type="reset" title="Cancel" className="cancel">
               Cancel
+            </button>
+            <button
+              type="submit"
+              title="Delete"
+              className="delete"
+              onClick={handleDelete}
+            >
+              Delete
             </button>
           </div>
         </div>

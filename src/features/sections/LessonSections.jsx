@@ -119,7 +119,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       return !sectionIDList.includes(word?.sectionID);
     });
     setLessonWords(temp);
-  }, [words]);
+  }, [words, sectionsList]);
 
   // filter definitions that are not part of a section
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       return !sectionIDList.includes(def?.sectionID);
     });
     setLessonDefinitions(temp);
-  }, [definitions]);
+  }, [definitions, sectionsList]);
 
   // filter tables that are not part of a section
   useEffect(() => {
@@ -137,7 +137,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       return !sectionIDList.includes(table?.sectionID);
     });
     setLessonDefinitions(temp);
-  }, [tables]);
+  }, [tables, sectionsList]);
 
   let defsContent = lessonDefinitions.map((def, index) => (
     <Definition definition={def} key={index} />
@@ -179,22 +179,34 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-3">{defsContent}</div>
+
       {/* Sections */}
       <div className="flex flex-col gap-3">{content}</div>
+
       {/* Lesson Words */}
-      <div className="flex flex-col gap-3">
-        {lessonWords.map((word, index) => {
-          return (
-            <CardWordList word={word} key={index} sectionsList={sectionsList} />
-          );
-        })}
-      </div>
+      {lessonWords.length !== 0 && (
+        <div className="flex flex-col gap-3">
+          {lessonWords.map((word, index) => {
+            return (
+              <CardWordList
+                word={word}
+                key={index}
+                sectionsList={sectionsList}
+              />
+            );
+          })}
+        </div>
+      )}
+
       {/* Lesson Tables */}
-      <div className="flex flex-col gap-3">
-        {lessonTables.map((table, index) => {
-          return <TableCard table={table} key={index} />;
-        })}
-      </div>
+      {lessonTables.length !== 0 && (
+        <div className="flex flex-col gap-3">
+          {lessonTables.map((table, index) => {
+            return <TableCard table={table} key={index} />;
+          })}
+        </div>
+      )}
+
       {addSection ? <SectionAdd setAdd={setAddSection} /> : null}
     </div>
   );

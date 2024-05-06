@@ -9,6 +9,7 @@ import {
 } from "../globals/globalsSlice";
 import { FaStar } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import ChapterHeaderEdit from "./ChapterHeaderEdit";
 
 const ChapterTitleBlock = ({ chapter }) => {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -86,6 +87,7 @@ const ChapterTitleBlock = ({ chapter }) => {
           </p>
         </div>
       </div>
+      {edit && <ChapterHeaderEdit chapter={chapter} setEditChapter={setEdit} />}
     </div>
   );
 };

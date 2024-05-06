@@ -44,66 +44,66 @@ const CardChapterAdd = () => {
       >
         Add Chapter
       </button>
-      <form
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-        className={
-          (viewAddChapter ? "visible " : "invisible -translate-y-4 ") +
-          " flex flex-row items-center justify-center gap-3 translate-y-0 duration-200"
-        }
-      >
-        <h3 className="w-full">Add New Chapter</h3>
-        <div className="field">
-          <label htmlFor="chapter_title" className="field__label">
-            Title
-          </label>
-          <input
-            type="text"
-            id="chapter_title"
-            name="chapter_title"
-            placeholder="Title"
-            className="field__input"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+      {viewAddChapter && (
+        <div className="form-container">
+          <form onSubmit={handleSubmit} onReset={handleReset}>
+            <h2>Add New Chapter</h2>
+            <div>
+              <div className="field">
+                <label htmlFor="chapter_title" className="field__label">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="chapter_title"
+                  name="chapter_title"
+                  placeholder="Title"
+                  className="field__input"
+                  autoFocus
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="chapter_subtitle" className="field__label">
+                  Sub-Title
+                </label>
+                <input
+                  type="text"
+                  id="chapter_subtitle"
+                  name="chapter_subtitle"
+                  placeholder="Sub-Title"
+                  className="field__input"
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="chapter_detail" className="field__label">
+                  detail
+                </label>
+                <input
+                  type="text"
+                  id="chapter_detail"
+                  name="chapter_detail"
+                  placeholder="Detail"
+                  className="field__input"
+                  value={detail}
+                  onChange={(e) => setDetail(e.target.value)}
+                />
+              </div>
+              <p className="form-buttons">
+                <button type="submit" title="Add" className="add">
+                  Save
+                </button>
+                <button type="reset" title="Cancel" className="cancel">
+                  Cancel
+                </button>
+              </p>
+            </div>
+          </form>
         </div>
-        <div className="field">
-          <label htmlFor="chapter_subtitle" className="field__label">
-            Sub-Title
-          </label>
-          <input
-            type="text"
-            id="chapter_subtitle"
-            name="chapter_subtitle"
-            placeholder="Sub-Title"
-            className="field__input"
-            value={subtitle}
-            onChange={(e) => setSubtitle(e.target.value)}
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="chapter_detail" className="field__label">
-            detail
-          </label>
-          <input
-            type="text"
-            id="chapter_detail"
-            name="chapter_detail"
-            placeholder="Detail"
-            className="field__input"
-            value={detail}
-            onChange={(e) => setDetail(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center">
-          <button type="submit" disabled={!canSave}>
-            <CiSquarePlus className="icon" />
-          </button>
-          <button type="reset">
-            <CiSquareRemove className="icon" />
-          </button>
-        </div>
-      </form>
+      )}
     </div>
   );
 };

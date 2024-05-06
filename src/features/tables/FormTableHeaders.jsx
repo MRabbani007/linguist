@@ -26,7 +26,7 @@ export default function FormTableHeaders({ type, dispatch }) {
 
   const canDelete = type !== TABLE.CAPTION && type.split("_")[0] === "EDIT";
 
-  const canSave = value !== "" && !isNaN(colSpan) && colSpan > 0;
+  const canSave = value !== ""; // && !isNaN(colSpan) && colSpan > 0;
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { selectAllChapters } from "../chapters/chapterSlice";
 import { useEditBlockHeaderMutation } from "./blockSlice";
 import { useSelector } from "react-redux";
-import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 
-const LessonHeaderEdit = ({ lesson, setEditLessonTitle }) => {
+const LessonHeaderEdit = ({ lesson, setEdit }) => {
   const chapters = useSelector(selectAllChapters);
   const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
 
@@ -21,7 +20,7 @@ const LessonHeaderEdit = ({ lesson, setEditLessonTitle }) => {
     if (canSave) {
       try {
         let newBlock = {
-          ...section,
+          ...lesson,
           title,
           subtitle,
           detail,
@@ -31,15 +30,16 @@ const LessonHeaderEdit = ({ lesson, setEditLessonTitle }) => {
           newBlock.chapterID = chapterID;
         }
         await editBlockHeader(newBlock).unwrap();
-        setEditLessonTitle((curr) => !curr);
+        setEdit(false);
+        alert("Lesson Saved");
       } catch (err) {
-        console.error("Failed to save the chapter", err);
+        console.error("Failed to save the Lesson", err);
       }
     }
   };
 
   const handleReset = () => {
-    setEditLessonTitle((curr) => !curr);
+    setEdit(false);
   };
 
   const menuOptions =
@@ -53,72 +53,107 @@ const LessonHeaderEdit = ({ lesson, setEditLessonTitle }) => {
     });
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="flex flex-col gap-1"
-    >
-      <div className="flex gap-3 items-stretch">
-        <input
-          name="lessonNo"
-          type="text"
-          placeholder="Number"
-          title="Lesson Number"
-          value={lessonNo}
-          onChange={(e) => {
-            setLessonNo(e.target.value);
-          }}
-          className="w-[100px]"
-        />
-        <input
-          name="title"
-          type="text"
-          placeholder="Lesson Title"
-          title="Lesson Title"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          className="flex-1"
-        />
-        <select
-          name="chapter_id"
-          id="chapter_id"
-          required
-          value={chapterID}
-          onChange={(e) => setChapterID(e.target.value)}
-        >
-          <option value="">Select Chapter</option>
-          {menuOptions}
-        </select>
-      </div>
-      <div className="flex gap-3 items-center">
-        <input
-          name="subtitle"
-          type="text"
-          placeholder="Sub Title"
-          value={subtitle}
-          onChange={(e) => {
-            setSubtitle(e.target.value);
-          }}
-        />
-        <input
-          name="detail"
-          type="text"
-          placeholder="Detail"
-          value={detail}
-          onChange={(e) => {
-            setDetail(e.target.value);
-          }}
-        />
-        <button type="submit">
-          <CiSquareCheck size={34} />
-        </button>
-        <button type="reset">
-          <CiSquareRemove size={34} />
-        </button>
-      </div>
-    </form>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} onReset={handleReset}>
+        <h2>Edit Lesson Title</h2>
+        <div>
+          <div className="field_group">
+            <div className="field max-w-[25%]">
+              <label htmlFor="lessonNo" className="field__label">
+                Number
+              </label>
+              <input
+                type="text"
+                id="lessonNo"
+                name="lessonNo"
+                placeholder="Number"
+                title="Lesson Number"
+                className="field__input"
+                value={lessonNo}
+                onChange={(e) => {
+                  setLessonNo(e.target.value);
+                }}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="title" className="field__label">
+                Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Lesson Title"
+                title="Lesson Title"
+                className="field__input"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="chapter_id" className="field__label">
+                Chapter ID
+              </label>
+              <select
+                id="chapter_id"
+                name="chapter_id"
+                className="field__input"
+                required
+                value={chapterID}
+                onChange={(e) => setChapterID(e.target.value)}
+              >
+                <option value="">Select Chapter</option>
+                {menuOptions}
+              </select>
+            </div>
+          </div>
+          <div className="field_group">
+            <div className="field">
+              <label htmlFor="subtitle" className="field__label">
+                Sub-Title
+              </label>
+              <input
+                type="text"
+                id="subtitle"
+                name="subtitle"
+                placeholder="Sub Title"
+                className="field__input"
+                value={subtitle}
+                onChange={(e) => {
+                  setSubtitle(e.target.value);
+                }}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="detail" className="field__label">
+                Detail
+              </label>
+              <input
+                type="text"
+                id="detail"
+                name="detail"
+                placeholder="Detail"
+                className="field__input"
+                value={detail}
+                onChange={(e) => {
+                  setDetail(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <p className="form-buttons">
+            <button type="submit" title="Add" className="add">
+              Save
+            </button>
+            <button type="reset" title="Cancel" className="cancel">
+              Cancel
+            </button>
+          </p>
+        </div>
+      </form>
+    </div>
   );
 };
 

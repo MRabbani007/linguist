@@ -3,9 +3,13 @@ import { selectEditMode } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import SectionDropDown from "./SectionDropDown";
+import { TbPoint } from "react-icons/tb";
+import { IoIosArrowForward } from "react-icons/io";
 
 export default function SectionTitle({
   section,
+  expand,
+  setExpand,
   setEditTitle,
   setAddIntro,
   setAddDef,
@@ -39,7 +43,16 @@ export default function SectionTitle({
   return (
     <div className="flex items-center gap-2 group relative w-fit">
       <div>
-        <h3 className="font-bold text-xl">{section?.title}</h3>
+        <h3 className="font-bold text-xl text-red-600 flex items-center gap-3">
+          <TbPoint className="inline" size={26} />
+          <span>{section?.title}</span>
+          <button onClick={() => setExpand(!expand)}>
+            <IoIosArrowForward
+              size={24}
+              className={(expand ? "rotate-90" : "") + " duration-200"}
+            />
+          </button>
+        </h3>
         {section?.subtitle && (
           <p>
             <i>{section?.subtitle}</i>
