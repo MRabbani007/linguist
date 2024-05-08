@@ -73,9 +73,7 @@ export default function SectionsPage() {
         )}
       </ChapterNavigator>
       <p>{displayChapter?.detail}</p>
-      <div className="flex flex-wrap justify-center gap-3 py-2 px-4">
-        {content}
-      </div>
+      <div className="flex flex-wrap justify-center gap-3">{content}</div>
       {editMode && <LessonAdd />}
       <ChapterNavigator />
     </div>

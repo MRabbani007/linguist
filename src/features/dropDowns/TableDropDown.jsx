@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
-import { useRemoveWordMutation } from "../words/wordsSlice";
-import { CiEdit, CiTextAlignLeft, CiTrash, CiViewColumn } from "react-icons/ci";
+import { CiEdit, CiTrash, CiViewColumn } from "react-icons/ci";
 import { useRemoveTableMutation } from "../tables/tablesSlice";
 import { BsArrowBarUp } from "react-icons/bs";
 

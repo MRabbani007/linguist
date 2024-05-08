@@ -21,7 +21,7 @@ const initialState = blocksAdapter.getInitialState();
 export const blocksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlocks: builder.query({
-      query: (chapterID = "") => ({
+      query: (chapterID = "Chapter") => ({
         url: SERVER.LESSON,
         method: "GET",
         params: { chapterID },

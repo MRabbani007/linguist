@@ -35,11 +35,11 @@ const CardBlockTitle = ({ block }) => {
   };
 
   return (
-    <div className="group">
+    <div className="group min-w-[300px] max-w-[450px] w-full">
       {edit ? (
         <LessonHeaderEdit lesson={block} setEdit={setEdit} />
       ) : (
-        <div className="flex flex-col gap-2 bg-zinc-300 rounded-md w-[300px] h-full">
+        <div className="flex flex-col gap-2 bg-zinc-300 rounded-md h-full">
           {/* Header */}
           <div
             className="flex flex-col items-center bg-sky-800 text-yellow-100 hover:text-yellow-400 duration-200 py-2 px-4 rounded-t-md cursor-pointer"

@@ -9,12 +9,15 @@ import { useSelector } from "react-redux";
 import { selectEditMode } from "../globals/globalsSlice";
 import TableAdd from "../tables/TableAdd";
 import TableCard from "../tables/TableCard";
+import ListSection from "../sectionList/ListSection";
+import ListAdd from "../sectionList/ListAdd";
 
 export default function Section({
   section = {},
   words = [],
   sectionsList = [],
   definitions = [],
+  sectionLists = [],
   tables = [],
   tableWords = [],
 }) {
@@ -25,6 +28,7 @@ export default function Section({
 
   const [addIntro, setAddIntro] = useState(false);
   const [addDef, setAddDef] = useState(false);
+  const [addList, setAddList] = useState(false);
   const [addTable, setAddTable] = useState(false);
 
   let content = words.map((word, index) => (
@@ -41,10 +45,9 @@ export default function Section({
         setAddIntro={setAddIntro}
         setAddDef={setAddDef}
         setAddTable={setAddTable}
+        setAddList={setAddList}
       />
-      {editTitle ? (
-        <SectionEditTitle section={section} setEdit={setEditTitle} />
-      ) : null}
+
       <div
         className={
           (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
@@ -52,6 +55,7 @@ export default function Section({
         }
       >
         <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
+
         {Array.isArray(definitions) && definitions.length !== 0 ? (
           <div className="flex flex-col gap-3">
             {definitions.map((definition) => {
@@ -61,15 +65,18 @@ export default function Section({
             })}
           </div>
         ) : null}
-        {editMode && addDef ? (
-          <DefinitionAdd
-            lessonID={section?.lessonID}
-            sectionID={section?.id}
-            setAdd={setAddDef}
-          />
+
+        {Array.isArray(sectionLists) && sectionLists.length !== 0 ? (
+          <div className="flex flex-col gap-3">
+            {sectionLists.map((list) => {
+              return <ListSection list={list} key={list?.id} />;
+            })}
+          </div>
         ) : null}
+
         {Array.isArray(tables) && tables.length !== 0 ? (
           <div className="flex flex-col gap-3">
+            {/* Tables */}
             {tables.map((table) => {
               const words = tableWords.filter(
                 (word) => word.tableID === table.id
@@ -80,15 +87,37 @@ export default function Section({
             })}
           </div>
         ) : null}
-        {editMode && addTable ? (
-          <TableAdd
-            lessonID={section?.lessonID}
-            sectionID={section?.id}
-            setAdd={setAddTable}
-          />
-        ) : null}
+
         <div className="flex flex-col gap-3">{content}</div>
       </div>
+
+      {editTitle ? (
+        <SectionEditTitle section={section} setEdit={setEditTitle} />
+      ) : null}
+
+      {editMode && addDef ? (
+        <DefinitionAdd
+          lessonID={section?.lessonID}
+          sectionID={section?.id}
+          setAdd={setAddDef}
+        />
+      ) : null}
+
+      {editMode && addTable ? (
+        <TableAdd
+          lessonID={section?.lessonID}
+          sectionID={section?.id}
+          setAdd={setAddTable}
+        />
+      ) : null}
+
+      {editMode && addList ? (
+        <ListAdd
+          lessonID={section?.lessonID}
+          sectionID={section?.id}
+          setAdd={setAddList}
+        />
+      ) : null}
     </div>
   );
 }

@@ -49,8 +49,8 @@ const ChapterTitleBlock = ({ chapter }) => {
   // }, [displayChapter, temp]);
 
   return (
-    <div className="group">
-      <div className="min-w-[300px]">
+    <>
+      <div className="group w-full min-w-[300px] max-w-[500px]">
         {/* Card Header */}
         <div className="card__header bg-zinc-700 text-zinc-200 ">
           <span>
@@ -88,7 +88,7 @@ const ChapterTitleBlock = ({ chapter }) => {
         </div>
       </div>
       {edit && <ChapterHeaderEdit chapter={chapter} setEditChapter={setEdit} />}
-    </div>
+    </>
   );
 };
 

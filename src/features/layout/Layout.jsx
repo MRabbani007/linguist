@@ -12,12 +12,17 @@ const Layout = () => {
   const onAuthPage =
     location.pathname.includes("login") || location.pathname.includes("signup");
 
+  const onContentPage =
+    location.pathname.includes("chapters") ||
+    location.pathname.includes("sections") ||
+    location.pathname.includes("lesson");
+
   return (
     <>
       <Navbar />
       <div className={onAuthPage ? "page-container-fluid" : "page-container"}>
         {/* <Header /> */}
-        {!onAuthPage && <Sidebar />}
+        {onContentPage && <Sidebar />}
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />
         </Suspense>

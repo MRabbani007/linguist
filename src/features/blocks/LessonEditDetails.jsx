@@ -18,7 +18,7 @@ const LessonEditDetails = ({ lesson, setEdit }) => {
     e.preventDefault();
     if (canSave) {
       let newBlock = {
-        ...displayBlock,
+        id: lesson?.id,
         firstLang,
         secondLang,
         thirdLang,
@@ -57,7 +57,7 @@ const LessonEditDetails = ({ lesson, setEdit }) => {
             </div>
             <div className="field">
               <label htmlFor="section_secondLang" className="field__label">
-                Section Sub-Title
+                Second Language
               </label>
               <input
                 type="text"

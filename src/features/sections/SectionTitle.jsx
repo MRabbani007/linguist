@@ -13,6 +13,7 @@ export default function SectionTitle({
   setEditTitle,
   setAddIntro,
   setAddDef,
+  setAddList,
   setAddTable,
 }) {
   const editMode = useSelector(selectEditMode);
@@ -76,6 +77,7 @@ export default function SectionTitle({
         setAddIntro={setAddIntro}
         setAddDef={setAddDef}
         setAddTable={setAddTable}
+        setAddList={setAddList}
       />
     </div>
   );

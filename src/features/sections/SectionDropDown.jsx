@@ -20,6 +20,7 @@ const SectionDropDown = forwardRef(
       setAddIntro,
       setAddDef,
       setAddTable,
+      setAddList,
     },
     ref
   ) => {
@@ -46,6 +47,9 @@ const SectionDropDown = forwardRef(
 
     const handleAddDefinition = () => {
       setAddDef((curr) => !curr);
+    };
+    const handleAddList = () => {
+      setAddList((curr) => !curr);
     };
 
     const handleDelete = async () => {
@@ -74,6 +78,12 @@ const SectionDropDown = forwardRef(
           <button title="Add Definition" onClick={handleAddDefinition}>
             <CgDetailsMore size={32} />
             <span>Definition</span>
+          </button>
+        </li>
+        <li>
+          <button title="Add List" onClick={handleAddList}>
+            <CgDetailsMore size={32} />
+            <span>List</span>
           </button>
         </li>
         <li>

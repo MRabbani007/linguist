@@ -28,6 +28,7 @@ import ErrorFallBack from "./features/auth/ErrorFallBack";
 import SkeletonContentPage from "./skeletons/SkeletonContentPage";
 import SectionsPage from "./views/SectionsPage";
 import LessonPage from "./views/LessonPage";
+import ExercisesMainPage from "./features/exercises/ExercisesMainPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 const AddContentPage = lazy(() =>
@@ -67,6 +68,7 @@ function App() {
               <Route path="chapters" element={<ChapterPage />} />
               <Route path="sections" element={<SectionsPage />} />
               <Route path="lesson" element={<LessonPage />} />
+              <Route path="exercise" element={<ExercisesMainPage />} />
               <Route path="unauthorized" element={<Unauthorized />} />
 
               {/* Settings page available to users */}

@@ -63,7 +63,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
         };
 
         await editWord(newWord).unwrap();
-        alert("Word Modified");
+        // alert("Word Modified");
         setViewEdit(false);
       } catch (err) {
         console.error("Failed to save the word", err);

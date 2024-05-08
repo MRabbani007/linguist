@@ -20,15 +20,8 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getChapters: builder.query({
       query: () => ({
-        url: SERVER.GET_CHAPTER,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.GET_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user }, // auth?.user
-          },
-        },
+        url: SERVER.CHAPTER,
+        method: "GET",
       }),
       transformResponse: (responseData) => {
         return chaptersAdapter.setAll(initialState, responseData);
@@ -40,15 +33,8 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
     }),
     getAllChapters: builder.query({
       query: () => ({
-        url: SERVER.EDITOR_GET_CHAPTERS,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDITOR_GET_CHAPTERS,
-            payload: { userName: store.getState()?.auth?.user }, // auth?.user
-          },
-        },
+        url: SERVER.CHAPTER,
+        method: "GET",
       }),
       transformResponse: (responseData) => {
         return chaptersAdapter.setAll(initialState, responseData);
@@ -60,7 +46,7 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
     }),
     addChapter: builder.mutation({
       query: (chapter) => ({
-        url: SERVER.ADD_CHAPTER,
+        url: SERVER.CHAPTER,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
@@ -74,13 +60,13 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
     }),
     editChapter: builder.mutation({
       query: (chapter) => ({
-        url: SERVER.EDIT_CHAPTER,
-        method: "POST",
+        url: SERVER.CHAPTER,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user, chapter }, //auth?.user
+            payload: { userName: store.getState()?.auth?.user, chapter },
           },
         },
       }),
@@ -90,13 +76,13 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
     }),
     removeChapter: builder.mutation({
       query: (id) => ({
-        url: SERVER.REMOVE_CHAPTER,
-        method: "POST",
+        url: SERVER.CHAPTER,
+        method: "DELETE",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.REMOVE_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user, id }, // auth?.user
+            payload: { userName: store.getState()?.auth?.user, id },
           },
         },
       }),

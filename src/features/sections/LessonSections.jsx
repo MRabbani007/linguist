@@ -11,6 +11,7 @@ import Definition from "../definitions/Definition";
 import { useGetTablesQuery } from "../tables/tablesSlice";
 import TableCard from "../tables/TableCard";
 import { useGetTableWordsQuery } from "../tableWords/tableWordsSlice";
+import { useGetSectionListsQuery } from "../sectionList/sectionListSlice";
 
 export default function LessonSections({ lesson, addSection, setAddSection }) {
   const editMode = useSelector(selectEditMode);
@@ -23,6 +24,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   const [definitions, setDefinitions] = useState([]);
   const [lessonDefinitions, setLessonDefinitions] = useState([]);
+
+  const [lists, setLists] = useState([]);
+  const [lessonLists, setLessonLists] = useState([]);
 
   const [tables, setTables] = useState([]);
   const [lessonTables, setLessonTables] = useState([]);
@@ -53,6 +57,14 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
     isError: isErrorDefs,
     error: errorDefs,
   } = useGetDefinitionsQuery(lesson?.id);
+
+  const {
+    data: listsData,
+    isLoading: isLoadingLists,
+    isSuccess: isSuccessLists,
+    isError: isErrorLists,
+    error: errorLists,
+  } = useGetSectionListsQuery(lesson?.id);
 
   const {
     data: tablesData,
@@ -93,6 +105,14 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       });
     }
   }, [defsData]);
+
+  useEffect(() => {
+    if (isSuccessLists) {
+      setLists(() => {
+        return listsData?.ids.map((id) => listsData.entities[id]) ?? [];
+      });
+    }
+  }, [listsData]);
 
   useEffect(() => {
     if (isSuccessTables) {
@@ -159,6 +179,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       const sectionTables = tables.filter(
         (table) => table?.sectionID === entities[id]?.id
       );
+      const sectionLists = lists.filter(
+        (list) => list?.sectionID === entities[id]?.id
+      );
       return (
         <Section
           section={entities[id]}
@@ -168,6 +191,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           definitions={sectionDefinitions}
           tables={sectionTables}
           tableWords={tableWords}
+          sectionLists={sectionLists}
           sectionsList={sectionsList}
         />
       );
@@ -178,10 +202,14 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-3">{defsContent}</div>
+      {defsContent?.length !== 0 && (
+        <div className="flex flex-col gap-3">{defsContent}</div>
+      )}
 
       {/* Sections */}
-      <div className="flex flex-col gap-3">{content}</div>
+      {content?.length !== 0 && (
+        <div className="flex flex-col gap-3">{content}</div>
+      )}
 
       {/* Lesson Words */}
       {lessonWords.length !== 0 && (

@@ -19,28 +19,22 @@ const initialState = sectionsAdapter.getInitialState();
 export const sectionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getSections: builder.query({
-      query: (lessonID) => ({
-        url: SERVER.GET_SECTION,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.GET_SECTION,
-            payload: { userName: store.getState()?.auth?.user, lessonID },
-          },
-        },
+      query: (lessonID = "lesson") => ({
+        url: SERVER.SECTION,
+        method: "GET",
+        params: { lessonID },
       }),
       transformResponse: (responseData) => {
         return sectionsAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [
         { type: "Section", id: "LIST" },
-        ...result.ids.map((id) => ({ type: "Section", id })),
+        ...result?.ids.map((id) => ({ type: "Section", id })),
       ],
     }),
     addSection: builder.mutation({
       query: (section) => ({
-        url: SERVER.ADD_SECTION,
+        url: SERVER.SECTION,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
@@ -54,8 +48,8 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     editSectionHeader: builder.mutation({
       query: (section) => ({
-        url: SERVER.EDIT_SECTION_HEADER,
-        method: "POST",
+        url: SERVER.SECTION,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
@@ -70,8 +64,8 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     editSectionLessonID: builder.mutation({
       query: (section) => ({
-        url: SERVER.EDIT_SECTION_LESSONID,
-        method: "POST",
+        url: SERVER.SECTION,
+        method: "PATCh",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
@@ -86,8 +80,8 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     removeSection: builder.mutation({
       query: (id) => ({
-        url: SERVER.REMOVE_SECTION,
-        method: "POST",
+        url: SERVER.SECTION,
+        method: "DELETE",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
@@ -102,7 +96,7 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     addSectionIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.SECTION_ADD_INTRO,
+        url: SERVER.SECTION_INTRO,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
@@ -116,8 +110,8 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     editSectionIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.SECTION_EDIT_INTRO,
-        method: "POST",
+        url: SERVER.SECTION_INTRO,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
@@ -130,8 +124,8 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     deleteSectionIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.SECTION_DELETE_INTRO,
-        method: "POST",
+        url: SERVER.SECTION_INTRO,
+        method: "DELETE",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {

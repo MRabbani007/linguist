@@ -106,6 +106,20 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],
     }),
+    editWordExercise: builder.mutation({
+      query: (word) => ({
+        url: SERVER.EDIT_WORD_EXER,
+        method: "POST",
+        body: {
+          roles: store.getState()?.auth?.roles,
+          action: {
+            type: ACTIONS.EDIT_WORD_SECTIONID,
+            payload: { userName: store.getState()?.auth?.user, word },
+          },
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],
+    }),
     addWordSentence: builder.mutation({
       query: (sentenceData) => ({
         url: SERVER.ADD_SENTENCE,
@@ -172,6 +186,7 @@ export const {
   useEditWordDetailsMutation,
   useEditWordBlockIDMutation,
   useEditWordSectionIDMutation,
+  useEditWordExerciseMutation,
   useAddWordSentenceMutation,
   useEditWordSentenceMutation,
   useDeleteWordSentenceMutation,

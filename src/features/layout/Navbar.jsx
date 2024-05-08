@@ -17,6 +17,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import UserDropDown from "../navigation/UserDropDown";
 import AdminDropDown from "../navigation/AdminDropDown";
 import { BsBook } from "react-icons/bs";
+import { GiWeightLiftingUp } from "react-icons/gi";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -73,6 +74,9 @@ const Navbar = () => {
         </Link>
         <Link to="/chapters">
           <BsBook size={34} />
+        </Link>
+        <Link to="/exercise">
+          <GiWeightLiftingUp size={34} />
         </Link>
       </span>
       <span>

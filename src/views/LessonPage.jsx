@@ -15,6 +15,7 @@ import LessonSections from "../features/sections/LessonSections";
 import LessonHeader from "../features/blocks/LessonHeader";
 import LessonHeaderEdit from "../features/blocks/LessonHeaderEdit";
 import LessonEditDetails from "../features/blocks/LessonEditDetails";
+import LessonContainer from "../features/blocks/LessonContainer";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -55,27 +56,19 @@ export default function LessonPage() {
           setAddSection={setAddSection}
         />
       </BlockNavigator>
-
-      {editLessonTitle ? (
-        <LessonHeaderEdit lesson={displayBlock} setEdit={setEditLessonTitle} />
-      ) : editLessonDetails ? (
-        <LessonEditDetails
-          lesson={displayBlock}
-          setEdit={setEditLessonDetails}
-        />
-      ) : null}
-
       <LessonIntro
         lesson={displayBlock}
         addLessonIntro={addLessonIntro}
         setAddLessonIntro={setAddLessonIntro}
       />
 
-      <article>
-        {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
-        {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
-        {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
-      </article>
+      {(displayBlock?.detail || displayBlock?.text || displayBlock?.notes) && (
+        <article>
+          {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
+          {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
+          {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
+        </article>
+      )}
 
       <LessonSections
         lesson={displayBlock}
@@ -92,12 +85,21 @@ export default function LessonPage() {
         </button>
       )}
 
-      {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
-
       {displayBlock?.caption ? (
         <div className="">{displayBlock?.caption}</div>
       ) : null}
       {/* footer */}
+
+      {editLessonTitle ? (
+        <LessonHeaderEdit lesson={displayBlock} setEdit={setEditLessonTitle} />
+      ) : editLessonDetails ? (
+        <LessonEditDetails
+          lesson={displayBlock}
+          setEdit={setEditLessonDetails}
+        />
+      ) : null}
+
+      {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
 
       <BlockNavigator />
     </div>

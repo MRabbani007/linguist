@@ -53,6 +53,11 @@ h1 {
   display: block;
 }
 
+p {
+  padding: 0;
+  margin: 0;
+}
+
 .form_input {
   display: flex;
   align-items: center;
@@ -254,6 +259,7 @@ table caption {
   background-color: #dc2626;
   color: #f7fee7;
   text-align: center;
+  border-radius: 0.375rem 0.375rem 0 0;
 }
 
 th {
@@ -281,6 +287,10 @@ td {
 .word-table thead tr {
   background-color: #dc2626;
   color: white;
+}
+
+.word-table tr:last-child {
+  border-radius: 0 0 0.375rem 0.375rem;
 }
 
 tbody tr:nth-child(2n+1) {
@@ -460,6 +470,88 @@ tbody tr:nth-child(2n+1):hover {
   color: #eab308;
 }
 
+.dashboard-exercises, .lesson-tracker, .progress, .user-word-lists, .dashboard-links {
+  border-radius: 0.375rem;
+  width: 300px;
+  color: white;
+  width: 300px;
+}
+
+.lesson-tracker > li, .dashboard-exercises > li, .progress > li, .user-word-lists > li, .dashboard-links > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+
+.dashboard ul > li:first-child {
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+.dashboard ul > li:last-child {
+  border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.lesson-tracker > li {
+  background-color: rgba(69, 126, 69, 0.651);
+}
+
+.progress > li {
+  background-color: rgba(243, 70, 70, 0.733);
+}
+
+.user-word-lists > li, .dashboard-links > li {
+  background-color: #aaa;
+}
+
+.user-word-lists > li:hover, .dashboard-links > li:hover {
+  background-color: #888;
+}
+
+.user-word-lists > li:first-child, .dashboard-links > li:first-child {
+  background-color: #555;
+}
+
+.progress > li:hover {
+  background-color: rgba(243, 70, 70, 0.89);
+}
+
+.progress > li:first-child {
+  background-color: rgb(241, 36, 36);
+}
+
+.progress > li:last-child {
+  background-color: rgb(243, 70, 70);
+}
+
+.lesson-tracker > li:first-child {
+  background-color: rgba(69, 126, 69, 0.911);
+}
+
+.lesson-tracker > li:last-child {
+  background-color: rgba(99, 182, 99, 0.911);
+}
+
+.lesson-tracker > li:hover {
+  background-color: rgba(49, 141, 49, 0.822);
+}
+
+.dashboard-exercises > li {
+  background-color: rgba(78, 98, 185, 0.658);
+  color: white;
+}
+
+.dashboard-exercises > li:hover {
+  background-color: rgba(58, 73, 141, 0.808);
+}
+
+.dashboard-exercises > li:first-child {
+  background-color: rgba(58, 73, 141, 0.938);
+}
+
 :root {
   --primary-color: #c6c3c3;
   --second-color: #ffffff;
@@ -624,4 +716,19 @@ tbody tr:nth-child(2n+1):hover {
   .login_box {
     padding: 7.5em 1.5em 4em 1.5em;
   }
+}
+.word_col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.word {
+  padding: 0.5rem;
+  border-width: 0.15rem;
+  border-radius: 0.375rem;
+  width: 10rem;
+  height: 3rem;
+  white-space: wrap;
+  transition: all 0.2s linear;
 }

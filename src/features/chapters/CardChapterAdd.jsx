@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddChapterMutation } from "./chapterSlice";
 
 const CardChapterAdd = () => {

@@ -1,24 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import { useRemoveWordMutation } from "./wordsSlice";
+import { useEditWordExerciseMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import {
   selectDisplayBlock,
   selectEditMode,
   selectLanguagesCount,
 } from "../globals/globalsSlice";
-import { CiEdit, CiTrash } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 import { FaCheck, FaEye, FaEyeSlash, FaPlus } from "react-icons/fa6";
 import CardSentence from "./CardSentence";
 import CardAddSentence from "./CardAddSentence";
 import CardWordListEdit from "./CardWordListEdit";
 import MoveWord from "./MoveWord";
-import WordImage from "./WordImage";
 import MoveWordSection from "./MoveWordSection";
-import { BiMove } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import WordDropDown from "../dropDowns/WordDropDown";
+import WordImageEdit from "./WordImageEdit";
 
 const CardWordList = ({ word, sectionsList }) => {
+  const [editWordExercise] = useEditWordExerciseMutation();
   const displayBlock = useSelector(selectDisplayBlock);
   const languagesCount = useSelector(selectLanguagesCount);
   const editMode = useSelector(selectEditMode);
@@ -47,9 +47,9 @@ const CardWordList = ({ word, sectionsList }) => {
   }, []);
 
   const [viewEditWord, setViewEditWord] = useState(false);
+  const [editImage, setEditImage] = useState(false);
   const [viewMoveLesson, setViewMoveLesson] = useState(false);
   const [viewMoveSection, setViewMoveSection] = useState(false);
-  const [addImage, setAddImage] = useState(false);
   const [addSentence, setAddSentence] = useState(false);
 
   const label_1 =
@@ -85,16 +85,24 @@ const CardWordList = ({ word, sectionsList }) => {
     setShow(!show);
   };
 
+  const isExercise = word.exercises === "all";
+
+  const handleAddExer = async () => {
+    await editWordExercise({
+      id: word.id,
+      exercises: isExercise ? "" : "all",
+      display: word.display,
+    });
+  };
+
   return (
-    <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex items-stretch">
-      {/* Left Col */}
-      <div className=" px-1">
-        <input type="checkbox" />
-      </div>
-      {/* Card Body */}
-      {viewEditWord ? (
-        <CardWordListEdit word={word} setViewEdit={setViewEditWord} />
-      ) : (
+    <>
+      <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex items-stretch">
+        {/* Left Col */}
+        <div className=" px-1">
+          <input type="checkbox" />
+        </div>
+        {/* Card Body */}
         <div className="flex flex-wrap flex-1 md:justify-between gap-3 relative">
           {editMode && (
             <button
@@ -109,26 +117,42 @@ const CardWordList = ({ word, sectionsList }) => {
           <WordDropDown
             word={word}
             showDropDown={showDropDown}
-            setAddImage={setAddImage}
+            setAddImage={setEditImage}
             setAddSentence={setAddSentence}
             setEditWord={setViewEditWord}
             setViewMoveSection={setViewMoveSection}
             setViewMoveLesson={setViewMoveLesson}
           />
-          <div className="flex flex-wrap flex-1 gap-3">
+          <div className="flex flex-wrap flex-1 gap-3 px-2">
             {/* Image */}
-            <WordImage
-              word={word}
-              displayBlock={displayBlock}
-              addImage={addImage}
-              setAddImage={setAddImage}
-            />
+            {word?.image ? (
+              <div className="relative group w-28 flex items-center justify-center">
+                <img
+                  src={(displayBlock?.imagesURL || "") + word.image}
+                  alt=""
+                  className="object-fill max-w-full max-h-[100px]"
+                />
+                {editMode && (
+                  <button
+                    className="absolute top-0 right-0 invisible group-hover:visible"
+                    onClick={() => setEditImage(!editImage)}
+                  >
+                    <CiEdit size={34} />
+                  </button>
+                )}
+              </div>
+            ) : null}
             {/* Word */}
             <div className="flex flex-col flex-1 gap-0">
               <div className="">
                 <span className="">{label_1}</span>
                 <span className="text-xl mx-2 font-normal">{word?.first}</span>
                 <span className="text-sm italic">{word?.firstCaption}</span>
+                {editMode && (
+                  <button onClick={() => setViewEditWord(true)}>
+                    <CiEdit size={32} className="inline" />
+                  </button>
+                )}
               </div>
               <div className="">
                 <span className="">{label_2}</span>
@@ -149,18 +173,6 @@ const CardWordList = ({ word, sectionsList }) => {
                   <span className="ml-2">{word?.fourth}</span>
                 </div>
               ) : null}
-              <div>
-                {viewMoveSection && (
-                  <MoveWordSection
-                    word={word}
-                    sectionsList={sectionsList}
-                    setViewMoveSection={setViewMoveSection}
-                  />
-                )}
-                {viewMoveLesson && (
-                  <MoveWord word={word} setViewMoveLesson={setViewMoveLesson} />
-                )}
-              </div>
             </div>
             {/* Sentences */}
             {Array.isArray(word?.sentences) && word.sentences.length !== 0 && (
@@ -177,25 +189,46 @@ const CardWordList = ({ word, sectionsList }) => {
                 })}
               </div>
             )}
-            {addSentence && (
-              <CardAddSentence
-                word={word}
-                addSentence={addSentence}
-                setAddSentence={setAddSentence}
-              />
-            )}
           </div>
         </div>
-      )}
-      <div className="flex flex-col justify-between px-1 text-slate-600">
-        <FaPlus className="icon-md hover:scale-150 cursor-pointer duration-200" />
-        <FaCheck className="icon-md hover:scale-150 cursor-pointer duration-200" />
-        <FaEyeSlash
-          className="icon-md hover:scale-150 cursor-pointer duration-200"
-          onClick={handleShowWord}
-        />
+        <div className="flex flex-col justify-between px-1 text-slate-600">
+          <button onClick={handleAddExer}>
+            <FaPlus
+              className={
+                (isExercise ? "text-lime-500 " : "") +
+                "icon-md hover:scale-150 cursor-pointer duration-200"
+              }
+            />
+          </button>
+          <FaCheck className="icon-md hover:scale-150 cursor-pointer duration-200" />
+          <FaEyeSlash
+            className="icon-md hover:scale-150 cursor-pointer duration-200"
+            onClick={handleShowWord}
+          />
+        </div>
       </div>
-    </div>
+      {viewEditWord ? (
+        <CardWordListEdit word={word} setViewEdit={setViewEditWord} />
+      ) : null}
+      {editImage ? <WordImageEdit word={word} setEdit={setEditImage} /> : null}
+      {addSentence ? (
+        <CardAddSentence
+          word={word}
+          addSentence={addSentence}
+          setAddSentence={setAddSentence}
+        />
+      ) : null}
+      {viewMoveSection && (
+        <MoveWordSection
+          word={word}
+          sectionsList={sectionsList}
+          setViewMoveSection={setViewMoveSection}
+        />
+      )}
+      {viewMoveLesson && (
+        <MoveWord word={word} setViewMoveLesson={setViewMoveLesson} />
+      )}
+    </>
   );
 };
 
