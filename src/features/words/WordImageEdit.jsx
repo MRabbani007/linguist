@@ -12,7 +12,7 @@ export default function WordImageEdit({ word, setEdit }) {
       const newWord = { ...word, image };
 
       await editWordDetails(newWord).unwrap();
-
+      console.log(newWord);
       setEdit(false);
     } catch (err) {
       console.error("Failed to save the word", err);

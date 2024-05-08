@@ -89,9 +89,8 @@ const CardWordList = ({ word, sectionsList }) => {
 
   const handleAddExer = async () => {
     await editWordExercise({
-      id: word.id,
+      ...word,
       exercises: isExercise ? "" : "all",
-      display: word.display,
     });
   };
 

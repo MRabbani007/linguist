@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { CiSquareCheck, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddWordSentenceMutation } from "./wordsSlice";
 
-const CardAddSentence = ({ word, addSentence, setAddSentence }) => {
+const CardAddSentence = ({ word, setAddSentence }) => {
   const [addWordSentence, { isLoading }] = useAddWordSentenceMutation();
 
   const [newSentence, setNewSentence] = useState("");

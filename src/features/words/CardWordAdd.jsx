@@ -5,9 +5,8 @@ import {
   selectDisplayBlock,
   selectLanguagesCount,
 } from "../globals/globalsSlice";
-import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 
-const CardWordAdd = ({ add, setAdd }) => {
+const CardWordAdd = ({ setAdd }) => {
   const displayBlock = useSelector(selectDisplayBlock);
   const languagesCount = useSelector(selectLanguagesCount);
 
