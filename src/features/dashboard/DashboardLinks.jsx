@@ -12,14 +12,18 @@ export default function DashboardLinks() {
       <li>
         <Link to="/definitions">Definitions</Link>
       </li>
-      <li className="flex-wrap">
-        <span className="word-types">Words</span>
-        <span className="word-types">Verbs</span>
-        <span className="word-types">Nouns</span>
-        <span className="word-types">Pronouns</span>
-        <span className="word-types">Phrases</span>
+      <li>
+        <Link to="/definitions">Verbs</Link>
       </li>
-      <li>Common Phrases</li>
+      <li>
+        <Link to="/definitions">Nouns</Link>
+      </li>
+      <li>
+        <Link to="/definitions">Pronouns</Link>
+      </li>
+      <li>
+        <Link to="/definitions">Phrases</Link>
+      </li>
     </ul>
   );
 }

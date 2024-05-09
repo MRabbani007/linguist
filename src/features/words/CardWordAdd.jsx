@@ -35,6 +35,7 @@ const CardWordAdd = ({ setAdd }) => {
           fourth: fourthInput,
         };
         const res = await addWord(word).unwrap();
+        alert("Word Added");
       } catch (err) {
         console.error("Failed to add the word", err);
       }

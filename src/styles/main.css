@@ -684,6 +684,23 @@ tbody tr:nth-child(2n+1):hover {
   cursor: pointer;
 }
 
+.progress {
+  border: 4px solid rgb(241, 36, 36);
+}
+
+.progress > li:first-child {
+  color: white;
+  background-color: rgb(241, 36, 36);
+}
+
+.progress > li {
+  background-color: rgba(245, 40, 40, 0.658);
+}
+
+.progress > li:hover {
+  background-color: rgba(245, 40, 40, 0.815);
+}
+
 .lesson-tracker {
   border: 4px solid rgba(69, 126, 69, 0.911);
 }
@@ -698,43 +715,16 @@ tbody tr:nth-child(2n+1):hover {
   color: white;
 }
 
-.progress {
-  border: 4px solid rgb(241, 36, 36);
-}
-
-.progress > li:first-child {
-  color: white;
-  background-color: rgb(241, 36, 36);
-}
-
-.user-word-lists > li:hover, .dashboard-links > li:hover {
-  background-color: #888;
-}
-
-.user-word-lists, .dashboard-links {
-  border: 4px solid #555;
-}
-
-.user-word-lists > li:first-child, .dashboard-links > li:first-child {
-  background-color: #555;
-  color: white;
-}
-
-.progress > li:hover {
-  background-color: rgba(243, 70, 70, 0.89);
+.lesson-tracker > li {
+  background-color: rgba(49, 141, 49, 0.582);
 }
 
 .lesson-tracker > li:hover {
   background-color: rgba(49, 141, 49, 0.822);
 }
 
-.dashboard ul > li {
-  color: white;
-  border-width: 4px;
-}
-
-.dashboard ul > li > span {
-  flex: 1 1 0%;
+.dashboard-exercises {
+  border: 4px solid rgba(58, 73, 141, 0.938);
 }
 
 .dashboard-exercises > li {
@@ -745,12 +735,34 @@ tbody tr:nth-child(2n+1):hover {
   background-color: rgba(58, 73, 141, 0.808);
 }
 
-.dashboard-exercises {
-  border: 4px solid rgba(58, 73, 141, 0.938);
-}
-
 .dashboard-exercises > li:first-child {
   background-color: rgba(58, 73, 141, 0.938);
+}
+
+.user-word-lists, .dashboard-links {
+  border: 4px solid #555;
+}
+
+.user-word-lists > li, .dashboard-links > li {
+  background-color: #777;
+}
+
+.user-word-lists > li:hover, .dashboard-links > li:hover {
+  background-color: #888;
+}
+
+.user-word-lists > li:first-child, .dashboard-links > li:first-child {
+  background-color: #555;
+  color: white;
+}
+
+.dashboard ul > li {
+  color: white;
+  border-width: 4px;
+}
+
+.dashboard ul > li > span {
+  flex: 1 1 0%;
 }
 
 .dashboard .word-types {

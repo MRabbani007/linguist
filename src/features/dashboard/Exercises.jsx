@@ -16,7 +16,7 @@ export default function Exercises() {
         <span>Exercises</span>
       </li>
       <li>
-        <Link to={"/exercise"} className="flex items-center gap-3">
+        <Link to={"/matchwords"} className="flex items-center gap-3">
           <TbArrowsJoin size={32} />
           Match Words
         </Link>
