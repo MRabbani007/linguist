@@ -24,6 +24,8 @@ export default function TableCard({ table, tableWords }) {
   const [editTableWord, { isLoading: isLoadingTableWord }] =
     useEditTableWordMutation();
 
+  const [showRowName, setShowRowName] = useState(false);
+
   // Toggle Edit Table Content / headers
   const [viewEditTitle, setViewEditTitle] = useState(false);
   const [editHeaders, setEditHeaders] = useState(false);
@@ -148,7 +150,7 @@ export default function TableCard({ table, tableWords }) {
           <thead>
             {table.colsTitles.length !== 0 && (
               <tr>
-                <th></th>
+                {showRowName && <th></th>}
                 {Array.isArray(table?.colsTitles) &&
                   table.colsTitles.map((colTitle, index) => {
                     return (
@@ -166,7 +168,7 @@ export default function TableCard({ table, tableWords }) {
             )}
             {table?.cols.length !== 0 && (
               <tr>
-                <th></th>
+                {showRowName && <th></th>}
                 {table?.cols.map((col, index) => {
                   return (
                     <th
@@ -185,9 +187,11 @@ export default function TableCard({ table, tableWords }) {
             {table?.rows.map((row, index) => {
               return (
                 <tr key={"row_" + index}>
-                  <th scope="row" className="w-fit whitespace-nowrap">
-                    {row}
-                  </th>
+                  {showRowName && (
+                    <th scope="row" className="w-fit whitespace-nowrap">
+                      {row}
+                    </th>
+                  )}
                   {Array.isArray(tableWords) && tableWords.length !== 0 ? (
                     tableWords.map((word, idx) => {
                       if (idx === editWordIndex) {
@@ -266,7 +270,7 @@ export default function TableCard({ table, tableWords }) {
             })}
             {editMode ? (
               <tr>
-                <th scope="row"></th>
+                {showRowName && <th scope="row"></th>}
                 {Array.isArray(tableWords) && tableWords.length !== 0 ? (
                   tableWords.map((word, idx) => {
                     if (idx === editWordIndex) {

@@ -5,6 +5,7 @@ const CardAddSentence = ({ word, setAddSentence }) => {
   const [addWordSentence, { isLoading }] = useAddWordSentenceMutation();
 
   const [newSentence, setNewSentence] = useState("");
+  const [newTranslation, setNewTranslation] = useState("");
 
   const canSave = !isLoading;
 
@@ -15,6 +16,7 @@ const CardAddSentence = ({ word, setAddSentence }) => {
         const sentenceData = {
           id: word?.id,
           sentence: newSentence,
+          translation: newTranslation,
         };
 
         await addWordSentence(sentenceData).unwrap();
@@ -34,7 +36,7 @@ const CardAddSentence = ({ word, setAddSentence }) => {
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Add Sentence</h2>
         <div>
-          <div className="field">
+          <div className="field w-full">
             <label htmlFor="sentenceInput" className="field__label">
               Enter Sentence
             </label>
@@ -48,6 +50,22 @@ const CardAddSentence = ({ word, setAddSentence }) => {
               value={newSentence}
               onChange={(e) => {
                 setNewSentence(e.target.value);
+              }}
+            />
+          </div>
+          <div className="field w-full">
+            <label htmlFor="translationInput" className="field__label">
+              Enter translation
+            </label>
+            <input
+              type="text"
+              id="translationInput"
+              name="translationInput"
+              placeholder="Enter translation"
+              className="field__input"
+              value={newTranslation}
+              onChange={(e) => {
+                setNewTranslation(e.target.value);
               }}
             />
           </div>

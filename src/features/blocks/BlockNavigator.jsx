@@ -41,7 +41,7 @@ const BlockNavigator = ({ children }) => {
   useEffect(() => {
     setBlockIndex(() => {
       const tempBlockIndex = blocks?.findIndex(
-        (item) => item.id === displayBlock.id
+        (item) => item?.id === displayBlock?.id
       );
       if (tempBlockIndex >= 0) {
         return tempBlockIndex;

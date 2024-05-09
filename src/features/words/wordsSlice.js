@@ -14,7 +14,7 @@ const initialState = wordsAdapter.getInitialState();
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getWords: builder.query({
-      query: (lessonID) => ({
+      query: (lessonID = "lesson") => ({
         url: SERVER.WORD,
         method: "GET",
         params: { lessonID },

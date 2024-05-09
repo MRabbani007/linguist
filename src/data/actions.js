@@ -80,7 +80,7 @@ export const ACTIONS = {
 
 export const SERVER = {
   WORD: "/word/main/",
-  WORD_SENTENCES: "/word/sentences/",
+  WORD_SENTENCES: "/word/sentence",
 
   GET_WORD_RANDOM: "/word/getrandom",
 
