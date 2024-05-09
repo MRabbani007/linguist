@@ -470,88 +470,6 @@ tbody tr:nth-child(2n+1):hover {
   color: #eab308;
 }
 
-.dashboard-exercises, .lesson-tracker, .progress, .user-word-lists, .dashboard-links {
-  border-radius: 0.375rem;
-  width: 300px;
-  color: white;
-  width: 300px;
-}
-
-.lesson-tracker > li, .dashboard-exercises > li, .progress > li, .user-word-lists > li, .dashboard-links > li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  gap: 1rem;
-  transition: all 0.2s linear;
-  cursor: pointer;
-}
-
-.dashboard ul > li:first-child {
-  border-radius: 0.375rem 0.375rem 0 0;
-}
-
-.dashboard ul > li:last-child {
-  border-radius: 0 0 0.375rem 0.375rem;
-}
-
-.lesson-tracker > li {
-  background-color: rgba(69, 126, 69, 0.651);
-}
-
-.progress > li {
-  background-color: rgba(243, 70, 70, 0.733);
-}
-
-.user-word-lists > li, .dashboard-links > li {
-  background-color: #aaa;
-}
-
-.user-word-lists > li:hover, .dashboard-links > li:hover {
-  background-color: #888;
-}
-
-.user-word-lists > li:first-child, .dashboard-links > li:first-child {
-  background-color: #555;
-}
-
-.progress > li:hover {
-  background-color: rgba(243, 70, 70, 0.89);
-}
-
-.progress > li:first-child {
-  background-color: rgb(241, 36, 36);
-}
-
-.progress > li:last-child {
-  background-color: rgb(243, 70, 70);
-}
-
-.lesson-tracker > li:first-child {
-  background-color: rgba(69, 126, 69, 0.911);
-}
-
-.lesson-tracker > li:last-child {
-  background-color: rgba(99, 182, 99, 0.911);
-}
-
-.lesson-tracker > li:hover {
-  background-color: rgba(49, 141, 49, 0.822);
-}
-
-.dashboard-exercises > li {
-  background-color: rgba(78, 98, 185, 0.658);
-  color: white;
-}
-
-.dashboard-exercises > li:hover {
-  background-color: rgba(58, 73, 141, 0.808);
-}
-
-.dashboard-exercises > li:first-child {
-  background-color: rgba(58, 73, 141, 0.938);
-}
-
 :root {
   --primary-color: #c6c3c3;
   --second-color: #ffffff;
@@ -724,11 +642,120 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .word {
-  padding: 0.5rem;
+  text-align: center;
   border-width: 0.15rem;
   border-radius: 0.375rem;
   width: 10rem;
   height: 3rem;
   white-space: wrap;
   transition: all 0.2s linear;
+}
+
+.exercise-card {
+  border: 2px solid rgb(23, 21, 117);
+  border-radius: 0.375rem;
+  width: 350px;
+}
+
+.exercise-card h2 {
+  background-color: rgb(23, 21, 117);
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.exercise-card > div {
+  min-height: 100px;
+  padding: 0.5rem;
+}
+
+.dashboard-exercises, .lesson-tracker, .progress, .user-word-lists, .dashboard-links {
+  border-radius: 0.375rem;
+  width: 300px;
+  width: 300px;
+}
+
+.lesson-tracker > li, .dashboard-exercises > li, .progress > li, .user-word-lists > li, .dashboard-links > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  transition: all 0.2s linear;
+  cursor: pointer;
+}
+
+.lesson-tracker {
+  border: 4px solid rgba(69, 126, 69, 0.911);
+}
+
+.lesson-tracker > li:first-child {
+  background-color: rgba(69, 126, 69, 0.911);
+  color: white;
+}
+
+.lesson-tracker > li:last-child {
+  background-color: rgba(99, 182, 99, 0.911);
+  color: white;
+}
+
+.progress {
+  border: 4px solid rgb(241, 36, 36);
+}
+
+.progress > li:first-child {
+  color: white;
+  background-color: rgb(241, 36, 36);
+}
+
+.user-word-lists > li:hover, .dashboard-links > li:hover {
+  background-color: #888;
+}
+
+.user-word-lists, .dashboard-links {
+  border: 4px solid #555;
+}
+
+.user-word-lists > li:first-child, .dashboard-links > li:first-child {
+  background-color: #555;
+  color: white;
+}
+
+.progress > li:hover {
+  background-color: rgba(243, 70, 70, 0.89);
+}
+
+.lesson-tracker > li:hover {
+  background-color: rgba(49, 141, 49, 0.822);
+}
+
+.dashboard ul > li {
+  color: white;
+  border-width: 4px;
+}
+
+.dashboard ul > li > span {
+  flex: 1 1 0%;
+}
+
+.dashboard-exercises > li {
+  background-color: rgba(78, 98, 185, 0.658);
+}
+
+.dashboard-exercises > li:hover {
+  background-color: rgba(58, 73, 141, 0.808);
+}
+
+.dashboard-exercises {
+  border: 4px solid rgba(58, 73, 141, 0.938);
+}
+
+.dashboard-exercises > li:first-child {
+  background-color: rgba(58, 73, 141, 0.938);
+}
+
+.dashboard .word-types {
+  padding: 0.25rem 0.5rem;
+  border: 2px solid white;
+  border-radius: 0.375rem;
+  width: fit-content;
 }

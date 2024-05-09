@@ -11,7 +11,7 @@ import SectionWordsRandom from "../features/homePage/SectionWordsRandom";
 
 const HomePage = () => {
   return (
-    <div className="flex gap-3 dashboard justify-center flex-1">
+    <div className="flex flex-wrap gap-3 dashboard justify-center flex-1">
       <div className="flex flex-col gap-3">
         <Progress />
         <UserLessonTracker />

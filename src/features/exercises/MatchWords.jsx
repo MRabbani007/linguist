@@ -3,6 +3,7 @@ import { useLazyGetRandomWordsQuery } from "../randomWords/randomWordsSlice";
 import { IoMdHeart } from "react-icons/io";
 import { BiSolidBadge } from "react-icons/bi";
 import MatchWordsScore from "./MatchWordsScore";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 // helper function to shuffle words
 function shuffle(array) {
@@ -25,6 +26,7 @@ function shuffle(array) {
 }
 
 export default function MatchWords() {
+  const [value, setValue] = useLocalStorage("highscore", 0);
   const [words, setWords] = useState([]);
 
   const [highestScore, setHighestScore] = useState(0);
@@ -54,6 +56,16 @@ export default function MatchWords() {
   useEffect(() => {
     getRandomWords();
   }, []);
+
+  useEffect(() => {
+    if (!isNaN(value)) {
+      setHighestScore(value);
+    }
+  }, []);
+
+  useEffect(() => {
+    setValue(highestScore);
+  }, [highestScore]);
 
   // de-normalize words
   useEffect(() => {
@@ -160,7 +172,11 @@ export default function MatchWords() {
 
   return (
     <div className="w-fit mx-auto">
-      <MatchWordsScore score={score} lives={lives} />
+      <MatchWordsScore
+        score={score}
+        lives={lives}
+        highestScore={highestScore}
+      />
       {/* <h1>Match Words</h1> */}
       <div className="flex gap-1">
         <div className="word_col">

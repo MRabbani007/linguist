@@ -3,9 +3,9 @@ import { BiSolidBadge } from "react-icons/bi";
 import { BsTrophyFill } from "react-icons/bs";
 import { IoMdHeart } from "react-icons/io";
 
-export default function MatchWordsScore({ score, lives }) {
+export default function MatchWordsScore({ score, lives, highestScore }) {
   return (
-    <div className="flex fixed top-[90px] right-4 rounded-md bg-red-400 text-white py-3 px-5">
+    <div className="flex justify-evenly rounded-md bg-red-400 text-white py-3 px-5 mb-2">
       <p title="Lives" className="flex items-center gap-3 relative w-fit">
         <IoMdHeart size={40} />
         <span className="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] text-red-600 font-semibold">
@@ -24,7 +24,7 @@ export default function MatchWordsScore({ score, lives }) {
       >
         <BsTrophyFill size={50} />
         <span className="absolute top-[30%] right-[50%] translate-x-[50%] -translate-y-[50%] text-red-600 font-semibold">
-          {score}
+          {highestScore}
         </span>
       </p>
     </div>

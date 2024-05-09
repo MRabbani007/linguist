@@ -5,11 +5,29 @@
 }
 
 .word {
-  padding: .5rem;
+  text-align: center;
   border-width: .15rem;
   border-radius: .375rem;
   width: 10rem;
   height: 3rem;
   white-space: wrap;
   transition: all .2s linear;
+}
+
+.exercise-card {
+ border: 2px solid rgb(23, 21, 117);
+ border-radius: .375rem;
+ width: 350px;
+}
+
+.exercise-card h2 {
+ background-color: rgb(23, 21, 117);
+ color: white;
+//  border-radius: .375rem .375rem 0 0;
+ padding: .5rem 1rem;
+}
+
+.exercise-card > div {
+  min-height: 100px;
+  padding: .5rem;
 }

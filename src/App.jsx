@@ -29,6 +29,8 @@ import SkeletonContentPage from "./skeletons/SkeletonContentPage";
 import SectionsPage from "./views/SectionsPage";
 import LessonPage from "./views/LessonPage";
 import ExercisesMainPage from "./features/exercises/ExercisesMainPage";
+import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
+import MatchWords from "./features/exercises/MatchWords";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 const AddContentPage = lazy(() =>
@@ -69,6 +71,8 @@ function App() {
               <Route path="sections" element={<SectionsPage />} />
               <Route path="lesson" element={<LessonPage />} />
               <Route path="exercise" element={<ExercisesMainPage />} />
+              <Route path="matchwords" element={<MatchWords />} />
+              <Route path="definitions" element={<DefinitionsPage />} />
               <Route path="unauthorized" element={<Unauthorized />} />
 
               {/* Settings page available to users */}

@@ -32,6 +32,19 @@ export const definitionsApiSlice = apiSlice.injectEndpoints({
         ...result.ids.map((id) => ({ type: "Definition", id })),
       ],
     }),
+    getAllDefinitions: builder.query({
+      query: () => ({
+        url: "/block/definitionsAll",
+        method: "GET",
+      }),
+      transformResponse: (responseData) => {
+        return definitionsAdapter.setAll(initialState, responseData);
+      },
+      providesTags: (result, error, arg) => [
+        { type: "Definition", id: "DEFINITION" },
+        ...result.ids.map((id) => ({ type: "Definition", id })),
+      ],
+    }),
     addDefinition: builder.mutation({
       query: (definition) => ({
         url: SERVER.DEFINITION,
@@ -103,6 +116,7 @@ export const {
   useEditDefinitionConentMutation,
   useEditDefinitionLessonIDMutation,
   useRemoveDefinitionMutation,
+  useGetAllDefinitionsQuery,
 } = definitionsApiSlice;
 
 // returns the query result object
