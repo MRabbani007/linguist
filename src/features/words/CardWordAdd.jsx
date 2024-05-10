@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import {
@@ -6,13 +6,26 @@ import {
   selectLanguagesCount,
 } from "../globals/globalsSlice";
 
-const CardWordAdd = ({ setAdd }) => {
+const CardWordAdd = ({ sectionID = "", setAdd }) => {
   const displayBlock = useSelector(selectDisplayBlock);
   const languagesCount = useSelector(selectLanguagesCount);
 
   const [addWord, { isLoading }] = useAddWordMutation();
 
-  const [statusMessage, setStatusMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState(null);
+  const [mssgClass, setMssgClass] = useState("");
+
+  useEffect(() => {
+    setMssgClass(() =>
+      statusMessage === "Success"
+        ? { borderWidth: "4px", borderColor: "green" }
+        : statusMessage === "Error"
+        ? { borderWidth: "4px", borderColor: "red" }
+        : statusMessage === "Provide required values"
+        ? { borderWidth: "4px", borderColor: "grey" }
+        : ""
+    );
+  }, [statusMessage]);
 
   const [firstInput, setFirstInput] = useState("");
   const [secondInput, setSecondInput] = useState("");
@@ -29,22 +42,34 @@ const CardWordAdd = ({ setAdd }) => {
           id: crypto.randomUUID(),
           chpaterID: displayBlock.chapterID,
           blockID: displayBlock.id,
+          sectionID,
           first: firstInput,
           second: secondInput,
           third: thirdInput,
           fourth: fourthInput,
         };
         const res = await addWord(word).unwrap();
-        alert("Word Added");
+        setStatusMessage("Success");
       } catch (err) {
+        setStatusMessage("Error");
         console.error("Failed to add the word", err);
       }
+    } else {
+      setStatusMessage("Provide required values");
     }
   };
 
   const handleReset = () => {
     setAdd(false);
   };
+
+  // handle status message
+  useEffect(() => {
+    const timer = setTimeout(() => setStatusMessage(null), 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [statusMessage]);
 
   return (
     <div className="form-container">
@@ -119,7 +144,6 @@ const CardWordAdd = ({ setAdd }) => {
               </div>
             ) : null}
           </div>
-          <p>{statusMessage}</p>
           <div className="form-buttons">
             <button type="submit" title="Add" className="add">
               Add
@@ -128,6 +152,10 @@ const CardWordAdd = ({ setAdd }) => {
               Cancel
             </button>
           </div>
+          {/* Status Message */}
+          <p className={"py-2 px-4 rounded-md"} style={{ ...mssgClass }}>
+            {statusMessage}
+          </p>
         </div>
       </form>
     </div>

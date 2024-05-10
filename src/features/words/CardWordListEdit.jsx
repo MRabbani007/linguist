@@ -12,6 +12,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
   const languagesCount = useSelector(selectLanguagesCount);
   const displayBlock = useSelector(selectDisplayBlock);
 
+  const [sortIndex, setSortIndex] = useState(word?.sortIndex || "");
   const [first, setFirst] = useState(word?.first || "");
   const [firstCaption, setFirstCaption] = useState(word?.firstCaption || "");
   const [second, setSecond] = useState(word?.second || "");
@@ -60,6 +61,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
           fourth,
           firstCaption,
           secondCaption,
+          sortIndex,
         };
 
         await editWord(newWord).unwrap();
@@ -89,11 +91,28 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Edit Word</h2>
         <div>
+          <div className="field max-w-[25%]">
+            <label htmlFor="edit_sortIndex" className="field__label">
+              Sort Index
+            </label>
+            <input
+              type="text"
+              id="edit_sortIndex"
+              name="edit_sortIndex"
+              placeholder={"Sort Index"}
+              autoFocus
+              value={sortIndex}
+              onChange={(e) => {
+                setSortIndex(e.target.value);
+              }}
+              className="field__input"
+            />
+          </div>
           {/* Word */}
           <div className="field_group">
             {/* First Word */}
             <div className="field">
-              <label htmlFor="edit_firstWord" className="field__label">
+              <label htmlFor="edit_sortIndex" className="field__label">
                 {label_1}
               </label>
               <input

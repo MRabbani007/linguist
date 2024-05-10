@@ -15,6 +15,7 @@ export default function SectionTitle({
   setAddDef,
   setAddList,
   setAddTable,
+  setAddWord,
 }) {
   const editMode = useSelector(selectEditMode);
 
@@ -44,9 +45,14 @@ export default function SectionTitle({
   return (
     <div className="flex items-center gap-2 group relative w-fit">
       <div>
-        <h3 className="font-bold text-xl text-red-600 flex items-center gap-3">
+        <h3 className=" text-red-600 flex items-center gap-3">
           <TbPoint className="inline" size={26} />
-          <span>{section?.title}</span>
+          <div>
+            <p className="font-bold text-xl">{section?.title}</p>
+            {section?.subtitle && (
+              <i className="text-zinc-900">{section?.subtitle}</i>
+            )}
+          </div>
           <button onClick={() => setExpand(!expand)}>
             <IoIosArrowForward
               size={24}
@@ -54,11 +60,6 @@ export default function SectionTitle({
             />
           </button>
         </h3>
-        {section?.subtitle && (
-          <p>
-            <i>{section?.subtitle}</i>
-          </p>
-        )}
       </div>
       {editMode && (
         <button
@@ -78,6 +79,7 @@ export default function SectionTitle({
         setAddDef={setAddDef}
         setAddTable={setAddTable}
         setAddList={setAddList}
+        setAddWord={setAddWord}
       />
     </div>
   );

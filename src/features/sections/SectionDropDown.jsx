@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import copy from "copy-to-clipboard";
 import { ToastContainer, toast } from "react-toastify";
 import {
+  CiCirclePlus,
   CiEdit,
   CiHashtag,
   CiTextAlignLeft,
@@ -21,6 +22,7 @@ const SectionDropDown = forwardRef(
       setAddDef,
       setAddTable,
       setAddList,
+      setAddWord,
     },
     ref
   ) => {
@@ -90,6 +92,12 @@ const SectionDropDown = forwardRef(
           <button title="Add Table" onClick={handleAddTable}>
             <CiViewTable size={32} />
             <span>Table</span>
+          </button>
+        </li>
+        <li>
+          <button title="Add Word" onClick={() => setAddWord(true)}>
+            <CiCirclePlus size={32} />
+            <span>Word</span>
           </button>
         </li>
         <li className="dropdown-title">Edit...</li>

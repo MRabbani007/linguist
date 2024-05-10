@@ -51,6 +51,7 @@ const CardWordList = ({ word, sectionsList }) => {
   const [viewMoveLesson, setViewMoveLesson] = useState(false);
   const [viewMoveSection, setViewMoveSection] = useState(false);
   const [addSentence, setAddSentence] = useState(false);
+  const [showPronunce, setShowPronunce] = useState(false);
 
   const label_1 =
     displayBlock?.firstLang === "Russian"
@@ -108,7 +109,7 @@ const CardWordList = ({ word, sectionsList }) => {
               ref={dropDownButtonRef}
               title="Edit Section"
               onClick={() => setShowDropDown(true)}
-              className="absolute top-0 right-0"
+              className="absolute top-0 right-0 z-10"
             >
               <BsThreeDots size={28} />
             </button>
@@ -142,10 +143,16 @@ const CardWordList = ({ word, sectionsList }) => {
               </div>
             ) : null}
             {/* Word */}
-            <div className="flex flex-col flex-1 gap-0">
+            <div className="flex flex-1 flex-col gap-0 relative group">
               <div className="">
-                <span className="">{label_1}</span>
-                <span className="text-xl mx-2 font-normal">{word?.first}</span>
+                <span className="text-sm italic">{label_1}</span>
+                <span
+                  className="mx-2 text-lg font-medium cursor-pointer"
+                  onMouseOver={() => setShowPronunce(true)}
+                  onMouseOut={() => setShowPronunce(false)}
+                >
+                  {word?.first}
+                </span>
                 <span className="text-sm italic">{word?.firstCaption}</span>
                 {editMode && (
                   <button onClick={() => setViewEditWord(true)}>
@@ -154,14 +161,20 @@ const CardWordList = ({ word, sectionsList }) => {
                 )}
               </div>
               <div className="">
-                <span className="">{label_2}</span>
-                <span className="ml-2 font-semibold">{word?.second}</span>
+                <span className="text-sm italic">{label_2}</span>
+                <span className="mx-2 font-normal">{word?.second}</span>
                 <span className="text-sm italic">{word?.secondCaption}</span>
               </div>
-              {languagesCount > 2 ? (
-                <div>
-                  <span className="">{label_3}</span>
-                  <span className="font-semibold ml-2">{word?.third}</span>
+              {languagesCount > 2 && word?.third ? (
+                <div
+                  className={
+                    showPronunce
+                      ? "absolute top-6 left-8 bg-slate-50 py-1 px-2 border-[1px] border-red-400 rounded-md"
+                      : "hidden"
+                  }
+                >
+                  {/* <span className="">{label_3}</span> */}
+                  <span className="">{word?.third}</span>
                 </div>
               ) : null}
               {languagesCount > 3 ? (
@@ -175,7 +188,7 @@ const CardWordList = ({ word, sectionsList }) => {
             </div>
             {/* Sentences */}
             {Array.isArray(word?.sentences) && word.sentences.length !== 0 && (
-              <div className="flex flex-col flex-1 gap-3">
+              <div className="flex flex-col flex-1 gap-3 min-w-[300px]">
                 {word.sentences.map((sentence, index) => {
                   return (
                     <CardSentence

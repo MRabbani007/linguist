@@ -245,6 +245,11 @@ p {
   color: white;
 }
 
+.save {
+  background-color: rgb(64, 150, 64);
+  color: white;
+}
+
 .cancel {
   background-color: #fbbf24;
   color: white;
@@ -429,7 +434,7 @@ tbody tr:nth-child(2n+1):hover {
   right: 0;
   background-color: #f7fee7;
   border-radius: 0.375rem;
-  z-index: 10;
+  z-index: 30;
   transition: all 0.3s ease-in-out;
 }
 

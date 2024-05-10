@@ -31,7 +31,7 @@ export default function MoveWordSection({
     e.preventDefault();
     if (canSave) {
       await editWordSectionID({
-        id: word.id,
+        id: word?.id,
         sectionID: sectionsList[selected]?.id,
       });
     }

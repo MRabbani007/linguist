@@ -11,18 +11,16 @@ const CardSentence = ({ word, index }) => {
 
   return (
     <>
-      <div className="group">
-        <p>{word?.sentences[index]}</p>
-        <p>
-          <i>{word?.sentencesTranslation[index] ?? ""}</i>
-        </p>
+      <div className="group flex items-start">
+        <div>
+          <p>{word?.sentences[index]}</p>
+          <p>
+            <i>{word?.sentencesTranslation[index] ?? ""}</i>
+          </p>
+        </div>
         {editMode && (
           <button className="invisible group-hover:visible">
-            <CiEdit
-              size={32}
-              className="inline"
-              onClick={() => setEdit(true)}
-            />
+            <CiEdit size={28} className="" onClick={() => setEdit(true)} />
           </button>
         )}
       </div>

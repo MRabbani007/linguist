@@ -6,7 +6,13 @@ import { store } from "../../app/store";
 // TODO: change compare value to date or sort option
 const wordsAdapter = createEntityAdapter({
   selectId: (word) => word.id,
-  sortComparer: (a, b) => a.blockID.localeCompare(b.blockID),
+  sortComparer: (a, b) => {
+    if (a.sortIndex && b.sortIndex) {
+      return a.sortIndex.toString().localeCompare(b.sortIndex.toString());
+    } else {
+      return a.blockID.localeCompare(b.blockID);
+    }
+  },
 });
 
 const initialState = wordsAdapter.getInitialState();
@@ -85,7 +91,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     }),
     editWordSectionID: builder.mutation({
       query: (word) => ({
-        url: SERVER.EDIT_WORD_SECTIONID,
+        url: SERVER.WORD,
         method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,

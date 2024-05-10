@@ -45,7 +45,7 @@ export default function MoveWord({ word, setViewMoveLesson }) {
       const newWord = {
         ...word,
         chapterID: allLessons[selected].chapterID,
-        blockID: allLessons[selected].id,
+        lessonID: allLessons[selected].id,
       };
       await editWordBlockID(newWord);
     }

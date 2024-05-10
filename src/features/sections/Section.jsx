@@ -11,6 +11,7 @@ import TableAdd from "../tables/TableAdd";
 import TableCard from "../tables/TableCard";
 import ListSection from "../sectionList/ListSection";
 import ListAdd from "../sectionList/ListAdd";
+import CardWordAdd from "../words/CardWordAdd";
 
 export default function Section({
   section = {},
@@ -30,6 +31,7 @@ export default function Section({
   const [addDef, setAddDef] = useState(false);
   const [addList, setAddList] = useState(false);
   const [addTable, setAddTable] = useState(false);
+  const [addWord, setAddWord] = useState(false);
 
   let content = words.map((word, index) => (
     <CardWordList word={word} key={index} sectionsList={sectionsList} />
@@ -46,6 +48,7 @@ export default function Section({
         setAddDef={setAddDef}
         setAddTable={setAddTable}
         setAddList={setAddList}
+        setAddWord={setAddWord}
       />
 
       <div
@@ -117,6 +120,10 @@ export default function Section({
           sectionID={section?.id}
           setAdd={setAddList}
         />
+      ) : null}
+
+      {editMode && addWord ? (
+        <CardWordAdd sectionID={section?.id} setAdd={setAddWord} />
       ) : null}
     </div>
   );
