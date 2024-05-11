@@ -11,14 +11,15 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   const [deleteLessonIntro, { isLoading: isLoadingDelete }] =
     useDeleteBlockIntroMutation();
 
+  console.log(lesson);
   const [input, setInput] = useState(intro);
 
   const canSaveEdit = !isLoadingEdit && input !== "";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSaveEdit) {
-      editBlockIntro({ id: lesson?.id, introduction: input, index });
+      await editBlockIntro({ id: lesson?.id, introduction: input, index });
     }
     setEdit(false);
   };
@@ -31,6 +32,7 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
     if (confirm("Delete Intro Item")) {
       await deleteLessonIntro({ id: lesson.id, index });
       alert("Intro Item Deleted");
+      setEdit(false);
     }
   };
 

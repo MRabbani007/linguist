@@ -50,7 +50,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
         return blocksAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [
-        { type: "Block", id: "LIST" },
+        { type: "Block", id: "BLOCK" },
         ...result.ids.map((id) => ({ type: "Block", id })),
       ],
     }),
@@ -66,7 +66,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
           },
         },
       }),
-      invalidatesTags: [{ type: "Block", id: "LIST" }],
+      invalidatesTags: [{ type: "Block", id: "BLOCK" }],
     }),
     editBlockHeader: builder.mutation({
       query: (lesson) => ({
@@ -112,45 +112,45 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
     }),
     addBlockIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.ADD_INTRO,
+        url: SERVER.LESSON_INTRO,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.ADD_INTRO,
+            type: ACTIONS.LESSON_ADD_INTRO,
             payload: { userName: store.getState()?.auth?.user, introData },
           },
         },
       }),
-      invalidatesTags: [{ type: "Block", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
     editBlockIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.EDIT_INTRO,
-        method: "POST",
+        url: SERVER.LESSON_INTRO,
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.EDIT_INTRO,
+            type: ACTIONS.LESSON_EDIT_INTRO,
             payload: { userName: store.getState()?.auth?.user, introData },
           },
         },
       }),
-      invalidatesTags: [{ type: "Block", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
     deleteBlockIntro: builder.mutation({
       query: (introData) => ({
-        url: SERVER.DELETE_INTRO,
-        method: "POST",
+        url: SERVER.LESSON_INTRO,
+        method: "DELETE",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
-            type: ACTIONS.DELETE_INTRO,
+            type: ACTIONS.LESSON_DELETE_INTRO,
             payload: { userName: store.getState()?.auth?.user, introData },
           },
         },
       }),
-      invalidatesTags: [{ type: "Block", id: "LIST" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
   }),
 });

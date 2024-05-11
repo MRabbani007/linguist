@@ -62,9 +62,9 @@ export const ACTIONS = {
   DELETE_LESSON: "DELETE_LESSON",
   CLOSE_BLOCK: "CLOSE_BLOCK",
 
-  ADD_INTRO: "ADD_INTRO",
-  EDIT_INTRO: "EDIT_INTRO",
-  DELETE_INTRO: "DELETE_INTRO",
+  LESSON_ADD_INTRO: "LESSON_ADD_INTRO",
+  LESSON_EDIT_INTRO: "LESSON_EDIT_INTRO",
+  LESSON_DELETE_INTRO: "LESSON_DELETE_INTRO",
 
   ADD_CHAPTER: "ADD_CHAPTER",
   GET_CHAPTER: "GET_CHAPTER",
@@ -90,14 +90,12 @@ export const SERVER = {
 
   CHAPTER: "/chapter/main",
   LESSON: "/block/lesson",
+  LESSON_INTRO: "/block/intro",
+
   SECTION: "/section/main",
   SECTION_INTRO: "/section/intro",
   SECTION_LIST: "/section/list",
   SECTION_LIST_ITEM: "/section/listItem",
-
-  ADD_INTRO: "/block/addIntro",
-  EDIT_INTRO: "/block/editIntro",
-  DELETE_INTRO: "/block/deleteIntro",
 
   EDITOR_GET_BLOCKS: "/block/getall",
   EDITOR_GET_CHAPTERS: "/chapter/getall",
