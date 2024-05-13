@@ -1,28 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import TableEditContent from "./TableEditContent";
-import {
-  CiCirclePlus,
-  CiEdit,
-  CiSquareCheck,
-  CiSquareRemove,
-} from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 import TableEditHeaders from "./TableEditHeaders";
 import { useSelector } from "react-redux";
 import { selectEditMode } from "../globals/globalsSlice";
-import {
-  useAddTableWordMutation,
-  useEditTableWordMutation,
-} from "../tableWords/tableWordsSlice";
 import TableEditLessonID from "./TableEditLessonID";
 import TableTitle from "./TableTitle";
 import TableDropDown from "../dropDowns/TableDropDown";
 import { BsThreeDots } from "react-icons/bs";
+import { IoAdd } from "react-icons/io5";
+import FormTableWordAdd from "./FormTableWordAdd";
+import FormTableWordEdit from "./FormTableWordEdit";
 
 export default function TableCard({ table, tableWords }) {
   const editMode = useSelector(selectEditMode);
-  const [addTableWord, { isLoading }] = useAddTableWordMutation();
-  const [editTableWord, { isLoading: isLoadingTableWord }] =
-    useEditTableWordMutation();
 
   const [showRowName, setShowRowName] = useState(false);
 
@@ -32,22 +23,8 @@ export default function TableCard({ table, tableWords }) {
   const [editLessonID, setEditLessonID] = useState(false);
 
   // Toggle Edit/Add
-  const [addWord, setAddWord] = useState(false);
-  const [editWordIndex, setEditWordIndex] = useState(null);
-
-  // Store edit word
+  const [addWord, setAddWord] = useState(null);
   const [editWord, setEditWord] = useState(null);
-
-  const [newWord, setNewWord] = useState({
-    id: crypto.randomUUID(),
-    lessonID: table?.lessonID,
-    tableID: table?.id,
-    baseWord: "",
-    cases: new Array(table?.rows.length).fill(""),
-    translation: new Array(table?.rows.length).fill(""),
-    pronunce: new Array(table?.rows.length).fill(""),
-    sortIndex: 0,
-  });
 
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -71,47 +48,6 @@ export default function TableCard({ table, tableWords }) {
       document.removeEventListener("mousedown", handleDropDown);
     };
   }, []);
-
-  const handleSetEditWord = (colIndex) => {
-    if (tableWords.length) {
-      setEditWordIndex(Math.floor(colIndex / 2));
-      setEditWord(tableWords[Math.floor(colIndex / 2)]);
-    }
-  };
-
-  const handleEditWordCase = (caseIndex, value) => {
-    const temp = { ...editWord, cases: [...editWord.cases] };
-    temp.cases.splice(caseIndex, 1, value);
-    setEditWord(temp);
-  };
-
-  const handleEditWordTranslation = (translationIndex, value) => {
-    const temp = { ...editWord, translation: [...editWord.translation] };
-    temp.translation.splice(translationIndex, 1, value);
-    setEditWord(temp);
-  };
-
-  const handleSaveEdit = async () => {
-    await editTableWord(editWord);
-    setEditWordIndex(null);
-    setEditWord(null);
-    alert("Word Modified");
-  };
-
-  const handleResetEdit = () => {
-    setEditWordIndex(null);
-    setEditWord(null);
-  };
-
-  const handleSubmit = async () => {
-    await addTableWord(newWord);
-    setAddWord(false);
-    alert("New Word Added");
-  };
-
-  const handleReset = () => {
-    setAddWord(false);
-  };
 
   return (
     <div>
@@ -164,6 +100,7 @@ export default function TableCard({ table, tableWords }) {
                       </th>
                     );
                   })}
+                {editMode ? <th scope="col"></th> : null}
               </tr>
             )}
             {table?.cols.length !== 0 && (
@@ -180,151 +117,64 @@ export default function TableCard({ table, tableWords }) {
                     </th>
                   );
                 })}
+                {editMode ? (
+                  <th scope="col">
+                    <button
+                      title="Add Word After"
+                      onClick={() => setAddWord(0)}
+                    >
+                      <IoAdd size={28} />
+                    </button>
+                  </th>
+                ) : null}
               </tr>
             )}
           </thead>
           <tbody>
-            {table?.rows.map((row, index) => {
-              return (
-                <tr key={"row_" + index}>
-                  {showRowName && (
-                    <th scope="row" className="w-fit whitespace-nowrap">
-                      {row}
-                    </th>
-                  )}
-                  {Array.isArray(tableWords) && tableWords.length !== 0 ? (
-                    tableWords.map((word, idx) => {
-                      if (idx === editWordIndex) {
-                        return (
-                          <td key={"col_" + idx} colSpan={2}>
-                            <input
-                              type="text"
-                              title="Word Case"
-                              placeholder="Word Case"
-                              value={editWord?.cases[index]}
-                              onChange={(e) =>
-                                handleEditWordCase(index, e.target.value)
-                              }
-                            />
-                            <input
-                              type="text"
-                              title="Word Translation"
-                              placeholder="Word Translation"
-                              value={editWord?.translation[index]}
-                              onChange={(e) =>
-                                handleEditWordTranslation(index, e.target.value)
-                              }
-                            />
-                          </td>
-                        );
-                      } else {
-                        return (
-                          <>
-                            <td key={"col_" + idx}>{word?.cases[index]}</td>
-                            <td key={"col_" + idx + "_2"}>
-                              {word?.translation[index]}
-                            </td>
-                          </>
-                        );
-                      }
-                    })
-                  ) : addWord ? (
-                    <>
-                      <td>
-                        <input
-                          type="text"
-                          value={newWord.cases[index]}
-                          onChange={(e) =>
-                            setNewWord((curr) => {
-                              curr.cases[index] = e.target.value;
-                              return { ...curr };
-                            })
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          value={newWord.translation[index]}
-                          onChange={(e) =>
-                            setNewWord((curr) => {
-                              curr.translation[index] = e.target.value;
-                              return { ...curr };
-                            })
-                          }
-                        />
-                      </td>
-                    </>
-                  ) : (
-                    table?.cols.map((col, idx) => {
-                      return (
-                        <td
-                          colSpan={table?.colsColSpan[idx]}
-                          key={"col_" + idx}
-                        ></td>
-                      );
-                    })
-                  )}
-                </tr>
-              );
-            })}
-            {editMode ? (
-              <tr>
-                {showRowName && <th scope="row"></th>}
-                {Array.isArray(tableWords) && tableWords.length !== 0 ? (
-                  tableWords.map((word, idx) => {
-                    if (idx === editWordIndex) {
-                      return (
-                        <td key={"edit_col_" + idx} colSpan={2}>
-                          <button title="Save Edit" onClick={handleSaveEdit}>
-                            <CiSquareCheck size={32} />
+            {Array.isArray(tableWords) && tableWords.length !== 0
+              ? tableWords.map((word, idx) => {
+                  return Array.isArray(word?.cases) ? (
+                    <tr key={idx} onClick={() => console.log(word)}>
+                      {showRowName ? (
+                        <th scope="row">{table.rows[idx]}</th>
+                      ) : null}
+                      {table.cols.map((col, index) => {
+                        return <td key={index}>{word.cases[index] ?? ""}</td>;
+                      })}
+                      {editMode ? (
+                        <td>
+                          <button
+                            title="Edit Word"
+                            onClick={() => setEditWord(word)}
+                          >
+                            <CiEdit size={28} />
                           </button>
-                          <button title="Cancel Edit" onClick={handleResetEdit}>
-                            <CiSquareRemove size={32} />
+                          <button
+                            title="Add Word After"
+                            onClick={() => setAddWord(idx + 1)}
+                          >
+                            <IoAdd size={28} />
                           </button>
                         </td>
-                      );
-                    } else {
-                      return (
-                        <td key={"edit_col_" + idx} colSpan={2}>
-                          {editMode && (
-                            <button onClick={() => handleSetEditWord(idx)}>
-                              <CiEdit size={32} />
-                            </button>
-                          )}
-                        </td>
-                      );
-                    }
-                  })
-                ) : addWord ? (
-                  <td colSpan={2}>
-                    <button onClick={handleSubmit}>
-                      <CiSquareCheck size={32} />
-                    </button>
-                    <button onClick={handleReset}>
-                      <CiSquareRemove size={32} />
-                    </button>
-                  </td>
-                ) : (
-                  table?.cols.map((col, idx) => {
-                    return (
-                      <td
-                        key={"edit_col_" + idx}
-                        colSpan={table?.colsColSpan[idx]}
-                      >
-                        <button onClick={() => setAddWord(true)}>
-                          <CiCirclePlus size={32} />
-                        </button>
-                      </td>
-                    );
-                  })
-                )}
-              </tr>
-            ) : null}
+                      ) : null}
+                    </tr>
+                  ) : null;
+                })
+              : null}
           </tbody>
         </table>
       )}
       <div>{table?.notes}</div>
+      {addWord !== null ? (
+        <FormTableWordAdd table={table} index={addWord} setAdd={setAddWord} />
+      ) : null}
+      {editWord !== null ? (
+        <FormTableWordEdit
+          table={table}
+          word={editWord}
+          setEdit={setEditWord}
+        />
+      ) : null}
     </div>
   );
 }

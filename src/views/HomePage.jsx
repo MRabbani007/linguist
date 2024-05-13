@@ -1,30 +1,44 @@
-// Imported Context
-// Imported Components
-import CardHeader from "../components/CardHeader";
-import DashboardLinks from "../features/dashboard/DashboardLinks";
-import Exercises from "../features/dashboard/Exercises";
-import Progress from "../features/dashboard/Progress";
-import UserLessonTracker from "../features/dashboard/UserLessonTracker";
-import UserWordList from "../features/dashboard/UserWordList";
-import CardProgress from "../features/homePage/CardProgress";
-import SectionWordsRandom from "../features/homePage/SectionWordsRandom";
+import { useEffect, useState } from "react";
+import FormAddLanguage from "../features/languages/FormAddLanguage";
+import { axiosPrivate } from "../api/axios";
+import LanguageCard from "../features/languages/LanguageCard";
+import { useSelector } from "react-redux";
+import { selectEditMode } from "../features/globals/globalsSlice";
 
 const HomePage = () => {
+  const editMode = useSelector(selectEditMode);
+  const [languages, setLanguages] = useState([]);
+  const [add, setAdd] = useState(false);
+
+  const getLangauges = async () => {
+    let response = await axiosPrivate.get("/languages");
+
+    if (Array.isArray(response?.data)) {
+      setLanguages(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getLangauges();
+  }, [add]);
+
   return (
-    <div className="flex flex-wrap gap-3 dashboard justify-center flex-1">
-      <div className="flex flex-col gap-3">
-        <Progress />
-        <UserLessonTracker />
+    <div className="flex flex-col gap-3 justify-center flex-1">
+      <div className="flex flex-wrap items-stretch justify-center gap-3">
+        {languages.map((lang) => {
+          return <LanguageCard language={lang} key={lang.id} />;
+        })}
       </div>
-      <div>
-        <Exercises />
-      </div>
-      <div className="flex flex-col gap-3">
-        <UserWordList />
-        <DashboardLinks />
-      </div>
-      {/* <CardProgress /> */}
-      {/* <SectionWordsRandom /> */}
+      {editMode && (
+        <button
+          title="Add Language"
+          onClick={() => setAdd(true)}
+          className="btn btn-red w-fit mx-auto"
+        >
+          Add Language
+        </button>
+      )}
+      {add && <FormAddLanguage setAdd={setAdd} />}
     </div>
   );
 };

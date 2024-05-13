@@ -123,7 +123,7 @@ const CardWordList = ({ word, sectionsList }) => {
             setViewMoveSection={setViewMoveSection}
             setViewMoveLesson={setViewMoveLesson}
           />
-          <div className="flex flex-wrap flex-1 gap-3 px-2">
+          <div className="flex flex-wrap md:flex-row flex-col flex-1 gap-3 px-2">
             {/* Image */}
             {word?.image ? (
               <div className="relative group w-28 flex items-center justify-center">

@@ -214,7 +214,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       {/* Lesson Words */}
       {lessonWords.length !== 0 && (
         <div className="flex flex-col gap-3">
-          <br />
+          {words.length > lessonWords.length ? <br /> : null}
           {lessonWords.map((word, index) => {
             return (
               <CardWordList

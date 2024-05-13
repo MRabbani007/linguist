@@ -2,11 +2,24 @@ import ChapterTitleBlock from "../features/chapters/ChapterTitleBlock";
 import CardChapterAdd from "../features/chapters/CardChapterAdd";
 import { useSelector } from "react-redux";
 import { useGetChaptersQuery } from "../features/chapters/chapterSlice";
-import { selectEditMode } from "../features/globals/globalsSlice";
+import {
+  selectEditMode,
+  selectLanguage,
+} from "../features/globals/globalsSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 // Imported components
 
 const ChapterPage = () => {
   const editMode = useSelector(selectEditMode);
+  const language = useSelector(selectLanguage);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!language?.id) {
+      navigate("/");
+    }
+  }, [language]);
 
   const {
     data: chapters,
@@ -14,7 +27,7 @@ const ChapterPage = () => {
     isSuccess,
     isError,
     error,
-  } = useGetChaptersQuery();
+  } = useGetChaptersQuery(language?.id || "language");
 
   let content;
   if (isLoading) {
@@ -31,7 +44,7 @@ const ChapterPage = () => {
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-bold text-xl text-center p-3 bg-slate-200 rounded-md shadow-md shadow-slate-400">
-        Learn Russian Language
+        {language?.title}
       </h2>
       <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
         {content}

@@ -9,6 +9,7 @@ export default function LessonAdd() {
   const [addBlock, { isLoading }] = useAddBlockMutation();
 
   const [add, setAdd] = useState(false);
+  const [statusMessage, setStatusMessage] = useState(null);
 
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -27,11 +28,12 @@ export default function LessonAdd() {
           title,
           subtitle,
           detail,
+          lessonNo,
           firstLang: "",
           secondLang: "",
           thirdLang: "",
           fourthLang: "",
-          introduction: "",
+          introduction: [],
           caption: "",
           notes: "",
           text: "",
@@ -39,7 +41,6 @@ export default function LessonAdd() {
           createDate: new Date(),
         };
         const res = await addBlock(block).unwrap();
-        console.log(res);
         // setAdd(false);
       } catch (err) {
         console.error("Failed to add the section", err);

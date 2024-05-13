@@ -100,7 +100,7 @@ const LessonHeaderEdit = ({ lesson, setEdit }) => {
                 id="chapter_id"
                 name="chapter_id"
                 className="field__input"
-                required
+                disabled
                 value={chapterID}
                 onChange={(e) => setChapterID(e.target.value)}
               >

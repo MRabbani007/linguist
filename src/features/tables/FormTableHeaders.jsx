@@ -3,7 +3,7 @@ import { TABLE } from "../../data/actions";
 
 export default function FormTableHeaders({ type, dispatch }) {
   const [value, setValue] = useState("");
-  const [colSpan, setColSpan] = useState("");
+  const [colSpan, setColSpan] = useState(1);
 
   const formTitle =
     type === TABLE.CAPTION
@@ -40,7 +40,8 @@ export default function FormTableHeaders({ type, dispatch }) {
   };
 
   const handleDelete = () => {
-    const typeArray = type.split("_", 1);
+    const typeArray = type.split("_", 2);
+    console.log(typeArray, type);
     const tempType =
       typeArray[1] === "ROW"
         ? TABLE.DELETE_ROW
@@ -90,16 +91,17 @@ export default function FormTableHeaders({ type, dispatch }) {
             </div>
           )}
           <div className="flex items-center gap-3">
-            <button type="submit" className="btn btn-blue">
+            <button type="submit" title="Save" className="save">
               Save
             </button>
-            <button type="reset" className="btn btn-yellow">
+            <button type="reset" title="Cancel" className="cancel">
               Cancel
             </button>
             {canDelete && (
               <button
                 type="button"
-                className="btn btn-red"
+                title="Delete"
+                className="delete"
                 onClick={handleDelete}
               >
                 Delete

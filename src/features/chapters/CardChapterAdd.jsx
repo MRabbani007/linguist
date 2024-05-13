@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useAddChapterMutation } from "./chapterSlice";
+import { useSelector } from "react-redux";
+import { selectLanguage } from "../globals/globalsSlice";
 
 const CardChapterAdd = () => {
+  const language = useSelector(selectLanguage);
   const [addChapter, { isLoading }] = useAddChapterMutation();
 
   const [viewAddChapter, setViewAddChapter] = useState(false);
@@ -10,7 +13,7 @@ const CardChapterAdd = () => {
   const [subtitle, setSubtitle] = useState("");
   const [detail, setDetail] = useState("");
 
-  const canSave = [title, subtitle, detail].every(Boolean) && !isLoading;
+  const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +21,7 @@ const CardChapterAdd = () => {
       try {
         let chapter = {
           id: crypto.randomUUID(),
+          langID: language?.id,
           title,
           subtitle,
           detail,

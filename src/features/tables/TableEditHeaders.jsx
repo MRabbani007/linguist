@@ -36,6 +36,7 @@ export default function TableEditHeaders({ table, setEdit }) {
   const [state, setState] = useState(table);
 
   const dispatch = ({ type, payload }) => {
+    console.log(type);
     switch (type) {
       case TABLE.SET_EDIT_CAPTION: {
         setEditType(TABLE.CAPTION);
@@ -245,7 +246,6 @@ export default function TableEditHeaders({ table, setEdit }) {
     e.preventDefault();
 
     if (canSave) {
-      console.log(state);
       await editTableHeaders(state);
       alert("Table Modified");
       setEdit(false);

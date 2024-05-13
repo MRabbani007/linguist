@@ -5,7 +5,6 @@ import {
   selectDisplayChapter,
 } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
-import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 
 export default function SectionAdd({ setAdd }) {
   const displayBlock = useSelector(selectDisplayBlock);
@@ -13,10 +12,15 @@ export default function SectionAdd({ setAdd }) {
 
   const [addSection, { isLoading }] = useAddSectionMutation();
 
+  const [sortIndex, setSortIndex] = useState(9);
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
 
-  const canSave = !isLoading && (title !== "" || subtitle !== "");
+  const canSave =
+    !isLoading &&
+    (title !== "" || subtitle !== "") &&
+    !isNan(sortIndex) &&
+    sortIndex >= 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,6 +31,7 @@ export default function SectionAdd({ setAdd }) {
         lessonID: displayBlock?.id,
         title,
         subtitle,
+        sortIndex,
       };
       await addSection(section);
       alert("Section Created");
@@ -43,12 +48,23 @@ export default function SectionAdd({ setAdd }) {
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Add New Section</h2>
         <div>
+          <div className="field max-w-[25%]">
+            <input
+              type="number"
+              title="Number"
+              placeholder="Number"
+              min={0}
+              step={1}
+              value={sortIndex}
+              onChange={(e) => setSortIndex(e.target.value)}
+              className="field__input"
+            />
+          </div>
           <div className="field">
             <input
               type="text"
               value={title}
               autoFocus
-              required
               title="Section Title"
               placeholder="Section Title"
               onChange={(e) => setTitle(e.target.value)}
@@ -66,7 +82,7 @@ export default function SectionAdd({ setAdd }) {
             />
           </div>
           <div className="form-buttons">
-            <button type="submit" title="Save" className="add">
+            <button type="submit" title="Save" className="save">
               Save
             </button>
             <button type="reset" title="Cancel" className="cancel">

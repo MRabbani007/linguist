@@ -19,9 +19,10 @@ const initialState = chaptersAdapter.getInitialState();
 export const chaptersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getChapters: builder.query({
-      query: () => ({
+      query: (langID = "lang") => ({
         url: SERVER.CHAPTER,
         method: "GET",
+        params: { langID },
       }),
       transformResponse: (responseData) => {
         return chaptersAdapter.setAll(initialState, responseData);
@@ -32,9 +33,10 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getAllChapters: builder.query({
-      query: () => ({
+      query: (langID) => ({
         url: SERVER.CHAPTER,
         method: "GET",
+        params: { langID },
       }),
       transformResponse: (responseData) => {
         return chaptersAdapter.setAll(initialState, responseData);

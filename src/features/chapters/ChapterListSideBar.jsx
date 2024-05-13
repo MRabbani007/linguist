@@ -5,11 +5,13 @@ import ChapterTitle from "./ChapterTitle";
 import {
   selectDisplayBlock,
   selectDisplayChapter,
+  selectLanguage,
 } from "../globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
 
 const ChapterListSideBar = () => {
   const navigate = useNavigate();
+  const language = useSelector(selectLanguage);
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
   const [expandedIndex, setExpandedIndex] = useState(0);
@@ -20,7 +22,7 @@ const ChapterListSideBar = () => {
     isSuccess,
     isError,
     error,
-  } = useGetChaptersQuery();
+  } = useGetChaptersQuery(language?.id);
 
   useEffect(() => {
     if (isSuccess) {

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const globalsSlice = createSlice({
   name: "globals",
   initialState: {
+    language: {},
     languagesCount: 2,
     displayChapter: null,
     displayBlock: null,
@@ -11,6 +12,10 @@ const globalsSlice = createSlice({
     editMode: false,
   },
   reducers: {
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+      return state;
+    },
     // called to open chapter
     setDisplayChapter: (state, action) => {
       state.displayChapter = action.payload;
@@ -85,6 +90,7 @@ const globalsSlice = createSlice({
 });
 
 export const {
+  setLanguage,
   setDisplayBlock,
   setLangaugesCount,
   setDisplayChapter,
@@ -95,6 +101,7 @@ export const {
 
 export default globalsSlice.reducer;
 
+export const selectLanguage = (state) => state.globals.language;
 export const selectDisplayChapter = (state) => state.globals.displayChapter;
 export const selectDisplayBlock = (state) => state.globals.displayBlock;
 export const selectLanguagesCount = (state) => state.globals.languagesCount;
