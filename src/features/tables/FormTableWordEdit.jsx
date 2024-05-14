@@ -3,6 +3,7 @@ import {
   useEditTableWordMutation,
   useRemoveTableWordMutation,
 } from "../tableWords/tableWordsSlice";
+import { toast } from "react-toastify";
 
 const getWordArray = (arr, colsLen) => {
   if (!Array.isArray(arr)) {
@@ -72,9 +73,9 @@ export default function FormTableWordEdit({ word, table, setEdit }) {
         sortIndex: sortIndex,
       };
       const response = await editTableWord(newWord);
-      alert("Word Saved");
+      toast.success("Word Saved");
+      setEdit(null);
     }
-    setEdit(null);
   };
 
   const handleReset = () => {
@@ -84,7 +85,7 @@ export default function FormTableWordEdit({ word, table, setEdit }) {
   const handleDelete = async () => {
     if (confirm("Delete this word?")) {
       await deleteTableWord(word.id);
-      alert("Word Deleted");
+      toast.success("Word Deleted");
       setEdit(null);
     }
   };

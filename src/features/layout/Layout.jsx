@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import Navbar from "./Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 import Sidebar from "../navigation/Sidebar";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const Layout = () => {
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />
         </Suspense>
+        <ToastContainer autoClose={2000} />
       </div>
     </>
   );

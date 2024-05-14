@@ -5,6 +5,7 @@ import {
   selectDisplayBlock,
   selectLanguagesCount,
 } from "../globals/globalsSlice";
+import { toast } from "react-toastify";
 
 const CardWordAdd = ({ sectionID = "", setAdd }) => {
   const displayBlock = useSelector(selectDisplayBlock);
@@ -12,20 +13,20 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
 
   const [addWord, { isLoading }] = useAddWordMutation();
 
-  const [statusMessage, setStatusMessage] = useState(null);
-  const [mssgClass, setMssgClass] = useState("");
+  // const [statusMessage, setStatusMessage] = useState(null);
+  // const [mssgClass, setMssgClass] = useState("");
 
-  useEffect(() => {
-    setMssgClass(() =>
-      statusMessage === "Success"
-        ? { borderWidth: "4px", borderColor: "green" }
-        : statusMessage === "Error"
-        ? { borderWidth: "4px", borderColor: "red" }
-        : statusMessage === "Provide required values"
-        ? { borderWidth: "4px", borderColor: "grey" }
-        : ""
-    );
-  }, [statusMessage]);
+  // useEffect(() => {
+  //   setMssgClass(() =>
+  //     statusMessage === "Success"
+  //       ? { borderWidth: "4px", borderColor: "green" }
+  //       : statusMessage === "Error"
+  //       ? { borderWidth: "4px", borderColor: "red" }
+  //       : statusMessage === "Provide required values"
+  //       ? { borderWidth: "4px", borderColor: "grey" }
+  //       : ""
+  //   );
+  // }, [statusMessage]);
 
   const [firstInput, setFirstInput] = useState("");
   const [secondInput, setSecondInput] = useState("");
@@ -49,12 +50,15 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
           fourth: fourthInput,
         };
         const res = await addWord(word).unwrap();
-        setStatusMessage("Success");
+        toast.success("Word Added");
+        // setStatusMessage("Success");
       } catch (err) {
-        setStatusMessage("Error");
-        console.error("Failed to add the word", err);
+        toast.error("Error");
+        // setStatusMessage("Error");
+        // console.error("Failed to add the word", err);
       }
     } else {
+      toast.info("Provide Required Values");
       setStatusMessage("Provide required values");
     }
   };
@@ -63,13 +67,13 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
     setAdd(false);
   };
 
-  // handle status message
-  useEffect(() => {
-    const timer = setTimeout(() => setStatusMessage(null), 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [statusMessage]);
+  // // handle status message
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setStatusMessage(null), 2000);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [statusMessage]);
 
   return (
     <div className="form-container">
@@ -153,9 +157,9 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
             </button>
           </div>
           {/* Status Message */}
-          <p className={"py-2 px-4 rounded-md"} style={{ ...mssgClass }}>
+          {/* <p className={"py-2 px-4 rounded-md"} style={{ ...mssgClass }}>
             {statusMessage}
-          </p>
+          </p> */}
         </div>
       </form>
     </div>

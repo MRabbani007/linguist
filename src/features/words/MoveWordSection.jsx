@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEditWordSectionIDMutation } from "./wordsSlice";
+import { toast } from "react-toastify";
 
 export default function MoveWordSection({
   word,
@@ -30,12 +31,17 @@ export default function MoveWordSection({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      await editWordSectionID({
-        id: word?.id,
-        sectionID: sectionsList[selected]?.id,
-      });
+      try {
+        await editWordSectionID({
+          id: word?.id,
+          sectionID: sectionsList[selected]?.id,
+        });
+        toast.success("Word Moved");
+        setViewMoveSection(false);
+      } catch (e) {
+        toast.error("Server Error");
+      }
     }
-    setViewMoveSection(false);
   };
 
   const handleReset = () => {

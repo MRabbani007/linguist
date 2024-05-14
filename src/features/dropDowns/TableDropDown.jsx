@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { CiEdit, CiTrash, CiViewColumn } from "react-icons/ci";
 import { useRemoveTableMutation } from "../tables/tablesSlice";
 import { BsArrowBarUp } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 const TableDropDown = forwardRef(
   (
@@ -31,7 +32,7 @@ const TableDropDown = forwardRef(
     const handleDelete = async () => {
       if (confirm("Delete this Table?")) {
         await removeTable(table?.id);
-        alert("Table Deleted");
+        toast.success("Table Deleted");
       }
     };
 

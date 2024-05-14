@@ -3,6 +3,7 @@ import {
   useDeleteWordSentenceMutation,
   useEditWordSentenceMutation,
 } from "./wordsSlice";
+import { toast } from "react-toastify";
 
 const CardEditSentence = ({ word, index, setEdit }) => {
   const [editWordSentence] = useEditWordSentenceMutation();
@@ -21,7 +22,7 @@ const CardEditSentence = ({ word, index, setEdit }) => {
       translation: newTranslation,
       index,
     });
-    // alert("Sentence saved");
+    toast.success("Sentence Saved");
     setEdit(false);
   };
 
@@ -32,8 +33,8 @@ const CardEditSentence = ({ word, index, setEdit }) => {
   const handleDelete = async () => {
     if (confirm("Delete this Sentence?")) {
       await deleteWordSentece({ id: word.id, index });
+      toast.success("Sentence Deleted");
       setEdit(false);
-      // alert("Sentence Deleted");
     }
   };
 

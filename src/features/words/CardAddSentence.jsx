@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAddWordSentenceMutation } from "./wordsSlice";
+import { toast } from "react-toastify";
 
 const CardAddSentence = ({ word, setAddSentence }) => {
   const [addWordSentence, { isLoading }] = useAddWordSentenceMutation();
@@ -20,9 +21,11 @@ const CardAddSentence = ({ word, setAddSentence }) => {
         };
 
         await addWordSentence(sentenceData).unwrap();
-        setAddSentence(false);
+        toast.success("Sentence Added");
+        // setAddSentence(false);
       } catch (err) {
-        console.error("Failed to save the word", err);
+        toast.error("Error");
+        // console.error("Failed to save the word", err);
       }
     }
   };

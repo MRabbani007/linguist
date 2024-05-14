@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAddTableWordMutation } from "../tableWords/tableWordsSlice";
+import { toast } from "react-toastify";
 
 export default function FormTableWordAdd({ table, index = 99, setAdd }) {
   const [addTableWord, { isLoading }] = useAddTableWordMutation();
@@ -54,7 +55,7 @@ export default function FormTableWordAdd({ table, index = 99, setAdd }) {
         baseWord: "",
       };
       const response = await addTableWord(newWord);
-      alert("Word Added");
+      toast.success("Word Added");
     }
     // setAdd(null);
   };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEditSectionListItemMutation } from "./sectionListSlice";
+import { toast } from "react-toastify";
 
 export default function ListItemEdit({ list, editItem, setEdit }) {
   const [editListItem, { isLoading }] = useEditSectionListItemMutation();
@@ -17,7 +18,7 @@ export default function ListItemEdit({ list, editItem, setEdit }) {
       };
       await editListItem(itemData);
       setEdit(null);
-      alert("List Point Modified");
+      toast.success("List Point Saved");
     }
   };
 

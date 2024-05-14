@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAddSectionListItemMutation } from "./sectionListSlice";
+import { toast } from "react-toastify";
 
 export default function ListItemAdd({ list, setAdd }) {
   const [addListItem, { isLoading }] = useAddSectionListItemMutation();
@@ -16,7 +17,7 @@ export default function ListItemAdd({ list, setAdd }) {
         item,
       };
       await addListItem(itemData);
-      alert("List Point Added");
+      toast.success("List Point Added");
     }
   };
 

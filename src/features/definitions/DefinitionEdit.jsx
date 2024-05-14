@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useEditDefinitionConentMutation } from "./definitionsSlice";
+import { toast } from "react-toastify";
 
 export default function DefinitionEdit({ definition, setEdit }) {
   const [editDefinitionContent, { isLoading }] =
@@ -27,7 +28,7 @@ export default function DefinitionEdit({ definition, setEdit }) {
     console.log(newDefinition);
     if (canSave) {
       await editDefinitionContent(newDefinition);
-      alert("Definition Modified");
+      toast.success("Definition Modified");
       setEdit(false);
     }
   };

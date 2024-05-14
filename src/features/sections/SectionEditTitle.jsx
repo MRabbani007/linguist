@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEditSectionHeaderMutation } from "./sectionSlice";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 export default function SectionEditTitle({ section, setEdit }) {
   const [editSectionHeader, { isLoading }] = useEditSectionHeaderMutation();
@@ -16,6 +17,7 @@ export default function SectionEditTitle({ section, setEdit }) {
     if (canSave) {
       const newSection = { ...section, sectionNo, title, subtitle };
       await editSectionHeader(newSection);
+      toast.success("Section Saved");
       setEdit(false);
     }
   };

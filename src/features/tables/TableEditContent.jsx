@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEditTableContentMutation } from "./tablesSlice";
+import { toast } from "react-toastify";
 
 export default function TableEditContent({ table, setEdit }) {
   const [editTableContent, { isLoading }] = useEditTableContentMutation();
@@ -23,7 +24,7 @@ export default function TableEditContent({ table, setEdit }) {
     };
     if (canSave) {
       await editTableContent(newTable);
-      alert("Table Modified");
+      toast.success("Table Modified");
       setEdit(false);
     }
   };

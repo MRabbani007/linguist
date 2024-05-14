@@ -5,6 +5,7 @@ import {
   selectDisplayChapter,
 } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function SectionAdd({ setAdd }) {
   const displayBlock = useSelector(selectDisplayBlock);
@@ -25,17 +26,21 @@ export default function SectionAdd({ setAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      const section = {
-        id: crypto.randomUUID(),
-        chapterID: displayChapter?.id,
-        lessonID: displayBlock?.id,
-        title,
-        subtitle,
-        sortIndex,
-      };
-      await addSection(section);
-      alert("Section Created");
-      setAdd(false);
+      try {
+        const section = {
+          id: crypto.randomUUID(),
+          chapterID: displayChapter?.id,
+          lessonID: displayBlock?.id,
+          title,
+          subtitle,
+          sortIndex,
+        };
+        await addSection(section);
+        toast.success("Section Added");
+        setAdd(false);
+      } catch (e) {
+        toast.error("Server Error");
+      }
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditTableLessonIDMutation } from "./tablesSlice";
+import { toast } from "react-toastify";
 
 export default function TableEditLessonID({ table, setEdit }) {
   const [editTableLessonID, { isLoading }] = useEditTableLessonIDMutation();
@@ -15,7 +16,7 @@ export default function TableEditLessonID({ table, setEdit }) {
     if (canSave) {
       const newTable = { ...table, lessonID, sectionID };
       await editTableLessonID(newTable);
-      alert("Table Modified");
+      toast.success("Table Modified");
       setEdit(false);
     }
   };

@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import copy from "copy-to-clipboard";
-import { ToastContainer, toast } from "react-toastify";
 import {
   CiCirclePlus,
   CiEdit,
@@ -11,6 +10,7 @@ import {
 } from "react-icons/ci";
 import { useRemoveSectionMutation } from "./sectionSlice";
 import { CgDetailsMore } from "react-icons/cg";
+import { toast } from "react-toastify";
 
 const SectionDropDown = forwardRef(
   (
@@ -31,7 +31,7 @@ const SectionDropDown = forwardRef(
     const copyIDtoClipboard = () => {
       const isCopy = copy(section?.id);
       if (isCopy) {
-        toast.success("Section ID Copied!");
+        toast.success("Section ID Copied");
       }
     };
 
@@ -57,7 +57,7 @@ const SectionDropDown = forwardRef(
     const handleDelete = async () => {
       if (confirm("Delete this section?")) {
         await removeSection(section?.id);
-        alert("Section Deleted");
+        toast.success("Section Deleted");
       }
     };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditDefinitionLessonIDMutation } from "./definitionsSlice";
+import { toast } from "react-toastify";
 
 export default function DefinitionMove({ definition, setMove }) {
   const [editDefinitionLessonID, { isLoading }] =
@@ -16,7 +17,7 @@ export default function DefinitionMove({ definition, setMove }) {
     if (canSave) {
       const newDefinition = { ...definition, lessonID, sectionID };
       editDefinitionLessonID(newDefinition);
-      alert("Definition Modified");
+      toast.success("Definition Modified");
       setMove(false);
     }
   };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditChapterMutation } from "./chapterSlice";
+import { toast } from "react-toastify";
 
 const ChapterHeaderEdit = ({ chapter, setEditChapter }) => {
   const [editChapter, { isLoading }] = useEditChapterMutation();
@@ -25,18 +26,18 @@ const ChapterHeaderEdit = ({ chapter, setEditChapter }) => {
           chapterNo,
         };
         await editChapter(newChapter).unwrap();
-
-        handleReset();
+        toast.success("Chapter saved");
+        setEditChapter(false);
 
         // handleChapterEdit(newChapter);
       } catch (err) {
-        console.error("Failed to save the chapter", err);
+        toast.error("Failed to save the chapter");
       }
     }
   };
 
   const handleReset = () => {
-    setEditChapter((curr) => !curr);
+    setEditChapter(false);
   };
 
   return (

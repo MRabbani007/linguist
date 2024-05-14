@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { useEditSectionIntroMutation } from "./sectionSlice";
+import { toast } from "react-toastify";
 
 export default function SectionIntroItemEdit({
   section,
@@ -14,12 +15,13 @@ export default function SectionIntroItemEdit({
 
   const canSave = !isLoading && input !== "";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      editSectionIntro({ id: section?.id, introduction: input, index });
+      await editSectionIntro({ id: section?.id, introduction: input, index });
+      toast.success("Intro item saved");
+      setEdit(false);
     }
-    setEdit(false);
   };
 
   const handleReset = () => {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEditSectionListLessonIDMutation } from "./sectionListSlice";
+import { toast } from "react-toastify";
 
 export default function ListEditLessonID({ list, setEdit }) {
   const [editSectionListLessonID, { isLoading }] =
@@ -15,7 +16,7 @@ export default function ListEditLessonID({ list, setEdit }) {
     if (canSave) {
       const newList = { id: list.id, lessonID, sectionID };
       await editSectionListLessonID(newList);
-      alert("List Modified");
+      toast.success("List Modified");
       setEdit(false);
     }
   };

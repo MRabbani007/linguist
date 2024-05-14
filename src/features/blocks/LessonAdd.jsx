@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayChapter } from "../globals/globalsSlice";
 import { useAddBlockMutation } from "./blockSlice";
+import { toast } from "react-toastify";
 
 export default function LessonAdd() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -41,9 +42,10 @@ export default function LessonAdd() {
           createDate: new Date(),
         };
         const res = await addBlock(block).unwrap();
+        toast.success("Lesson Added");
         // setAdd(false);
       } catch (err) {
-        console.error("Failed to add the section", err);
+        toast.error("Server Error");
       }
     }
   };

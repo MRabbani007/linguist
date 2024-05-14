@@ -6,6 +6,7 @@ import {
   selectDisplayBlock,
   selectLanguagesCount,
 } from "../globals/globalsSlice";
+import { toast } from "react-toastify";
 
 const CardWordListEdit = ({ word, setViewEdit }) => {
   const [editWord, { isLoading }] = useEditWordMutation();
@@ -65,10 +66,10 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
         };
 
         await editWord(newWord).unwrap();
-        // alert("Word Modified");
+        toast.success("Word Saved");
         setViewEdit(false);
       } catch (err) {
-        console.error("Failed to save the word", err);
+        toast.error("Server Error");
       }
     }
   };

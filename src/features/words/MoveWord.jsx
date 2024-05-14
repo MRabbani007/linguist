@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 import { useGetAllBlocksQuery } from "../blocks/blockSlice";
 import { useEditWordBlockIDMutation } from "./wordsSlice";
 import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 export default function MoveWord({ word, setViewMoveLesson }) {
-  const [editWordBlockID, { isLoading }] = useEditWordBlockIDMutation();
+  const [editWordBlockID] = useEditWordBlockIDMutation();
 
-  const {
-    data,
-    isLoading: loading,
-    isSuccess: success,
-  } = useGetAllBlocksQuery();
+  const { data, isSuccess } = useGetAllBlocksQuery();
 
   const [allLessons, setAllLessons] = useState([]);
 
   useEffect(() => {
-    if (success) {
+    if (isSuccess) {
       setAllLessons(() => data.ids.map((id) => data.entities[id]));
     }
   }, [data]);
@@ -36,20 +33,24 @@ export default function MoveWord({ word, setViewMoveLesson }) {
     });
   }, [word, allLessons]);
 
-  const canSave =
-    selected !== "" && !isNaN(selected) && selected >= 0 && !isLoading;
+  const canSave = selected !== "" && !isNaN(selected) && selected >= 0;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      const newWord = {
-        ...word,
-        chapterID: allLessons[selected].chapterID,
-        lessonID: allLessons[selected].id,
-      };
-      await editWordBlockID(newWord);
+      try {
+        const newWord = {
+          ...word,
+          chapterID: allLessons[selected].chapterID,
+          lessonID: allLessons[selected].id,
+        };
+        await editWordBlockID(newWord);
+        toast.success("Word Moved");
+        setViewMoveLesson(false);
+      } catch (e) {
+        toast.error("Server Error");
+      }
     }
-    setViewMoveLesson(false);
   };
 
   const handleReset = () => {

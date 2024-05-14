@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { useRemoveWordMutation } from "../words/wordsSlice";
 import { CiEdit, CiTextAlignLeft, CiTrash } from "react-icons/ci";
 import { BiMove } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 const WordDropDown = forwardRef(
   (
@@ -41,7 +42,7 @@ const WordDropDown = forwardRef(
     const handleDelete = async () => {
       if (confirm("Delete this Word?")) {
         await removeWord(word?.id);
-        alert("Word Deleted");
+        toast.success("Word Deleted");
       }
     };
 

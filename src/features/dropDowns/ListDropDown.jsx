@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import { useRemoveSectionListMutation } from "../sectionList/sectionListSlice";
 import { CiEdit, CiTextAlignLeft, CiTrash } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 const ListDropDown = forwardRef(
   (
@@ -12,7 +13,7 @@ const ListDropDown = forwardRef(
     const handleDelete = async () => {
       if (confirm("Delete this List?")) {
         await removeSectionList(list?.id);
-        alert("List Deleted");
+        toast.success("List Deleted");
       }
     };
 

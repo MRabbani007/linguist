@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAddSectionIntroMutation } from "./sectionSlice";
+import { toast } from "react-toastify";
 
 export default function SectionIntroAdd({ section, setAdd }) {
   const [addSectionIntro, { isLoading }] = useAddSectionIntroMutation();
@@ -8,10 +9,11 @@ export default function SectionIntroAdd({ section, setAdd }) {
 
   const canSave = !isLoading && input !== "";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (canSave) {
-      addSectionIntro({ id: section?.id, introduction: input });
+      await addSectionIntro({ id: section?.id, introduction: input });
+      toast.success("Intro item added");
       setAdd(false);
     }
   };

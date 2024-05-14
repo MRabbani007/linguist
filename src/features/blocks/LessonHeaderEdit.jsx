@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { selectAllChapters } from "../chapters/chapterSlice";
 import { useEditBlockHeaderMutation } from "./blockSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const LessonHeaderEdit = ({ lesson, setEdit }) => {
   const chapters = useSelector(selectAllChapters);
@@ -31,9 +32,9 @@ const LessonHeaderEdit = ({ lesson, setEdit }) => {
         }
         await editBlockHeader(newBlock).unwrap();
         setEdit(false);
-        alert("Lesson Saved");
+        toast.success("Lesson Saved");
       } catch (err) {
-        console.error("Failed to save the Lesson", err);
+        toast.error("Failed to save the Lesson");
       }
     }
   };

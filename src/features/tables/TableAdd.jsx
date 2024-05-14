@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAddTableMutation } from "./tablesSlice";
 import { CiCirclePlus, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { tableTemplatePronouns, tableTemplateVerb } from "../../data/templates";
+import { toast } from "react-toastify";
 
 export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
   const [addTable, { isLoading }] = useAddTableMutation();
@@ -50,7 +51,7 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
 
     if (canSave) {
       await addTable(table);
-      alert("Table Created");
+      toast.success("Table Created");
       setAdd(false);
     }
   };

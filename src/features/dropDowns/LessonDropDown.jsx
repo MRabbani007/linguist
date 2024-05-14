@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { useRemoveBlockMutation } from "../blocks/blockSlice";
 import copy from "copy-to-clipboard";
 import { CiEdit, CiHashtag, CiTextAlignLeft, CiTrash } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 const LessonDropDown = forwardRef(
   (
@@ -20,7 +21,7 @@ const LessonDropDown = forwardRef(
     const copyIDtoClipboard = () => {
       const isCopy = copy(lesson?.id);
       if (isCopy) {
-        alert("Lesson ID Copied!");
+        toast.success("Lesson ID Copied!");
       }
     };
 
@@ -43,7 +44,7 @@ const LessonDropDown = forwardRef(
     const handleDelete = async () => {
       if (confirm("Delete this lesson?")) {
         await removeBlock(lesson?.id);
-        alert("Lesson Deleted");
+        toast.success("Lesson Deleted");
       }
     };
 

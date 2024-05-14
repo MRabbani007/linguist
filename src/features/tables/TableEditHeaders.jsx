@@ -4,6 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 import TableDropDownColsRows from "../dropDowns/TableDropDownColsRows";
 import { TABLE } from "../../data/actions";
 import FormTableHeaders from "./FormTableHeaders";
+import { toast } from "react-toastify";
 
 export default function TableEditHeaders({ table, setEdit }) {
   const [editTableHeaders, { isLoading }] = useEditTableHeadersMutation();
@@ -36,7 +37,6 @@ export default function TableEditHeaders({ table, setEdit }) {
   const [state, setState] = useState(table);
 
   const dispatch = ({ type, payload }) => {
-    console.log(type);
     switch (type) {
       case TABLE.SET_EDIT_CAPTION: {
         setEditType(TABLE.CAPTION);
@@ -94,7 +94,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Added");
+        toast.success("Col Added");
         break;
       }
       case TABLE.ADD_COL: {
@@ -112,7 +112,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Added");
+        toast.success("Col Added");
         break;
       }
       case TABLE.ADD_ROW: {
@@ -127,7 +127,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Row Added");
+        toast.success("Row Added");
         break;
       }
       case TABLE.EDIT_COLTITLE: {
@@ -145,7 +145,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Modified");
+        toast.success("Col Modified");
         break;
       }
       case TABLE.EDIT_COL: {
@@ -163,7 +163,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Modified");
+        toast.success("Col Modified");
         break;
       }
       case TABLE.EDIT_ROW: {
@@ -179,7 +179,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Row Modified");
+        toast.success("Row Modified");
         break;
       }
       case TABLE.DELETE_COLTITLE: {
@@ -197,7 +197,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Deleted");
+        toast.success("Col Deleted");
         break;
       }
       case TABLE.DELETE_COL: {
@@ -215,7 +215,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Col Deleted");
+        toast.success("Col Deleted");
         break;
       }
       case TABLE.DELETE_ROW: {
@@ -230,7 +230,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
         setEditType(null);
         setEditIndex(null);
-        alert("Row Modified");
+        toast.success("Row Modified");
         break;
       }
       default: {
@@ -247,7 +247,7 @@ export default function TableEditHeaders({ table, setEdit }) {
 
     if (canSave) {
       await editTableHeaders(state);
-      alert("Table Modified");
+      toast.success("Table Saved");
       setEdit(false);
     }
   };

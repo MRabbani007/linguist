@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiCirclePlus, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddDefinitionMutation } from "./definitionsSlice";
+import { toast } from "react-toastify";
 
 export default function DefinitionAdd({ lessonID, sectionID = "", setAdd }) {
   const [addDefinition, { isLoading }] = useAddDefinitionMutation();
@@ -25,7 +26,7 @@ export default function DefinitionAdd({ lessonID, sectionID = "", setAdd }) {
     };
     if (canSave) {
       await addDefinition(definition);
-      alert("Definition Created");
+      toast.success("Definition Created");
       setAdd(false);
     }
   };

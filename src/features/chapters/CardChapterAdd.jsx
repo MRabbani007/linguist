@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAddChapterMutation } from "./chapterSlice";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../globals/globalsSlice";
+import { toast } from "react-toastify";
 
 const CardChapterAdd = () => {
   const language = useSelector(selectLanguage);
@@ -27,10 +28,10 @@ const CardChapterAdd = () => {
           detail,
         };
         await addChapter(chapter).unwrap();
-
+        toast.success("Chapter Added");
         setViewAddChapter(false);
       } catch (err) {
-        console.error("Failed to add the chapter", err);
+        toast.error("Failed to add the chapter");
       }
     }
   };
@@ -97,7 +98,7 @@ const CardChapterAdd = () => {
               </div>
               <p className="form-buttons">
                 <button type="submit" title="Add" className="add">
-                  Save
+                  Add Chapter
                 </button>
                 <button type="reset" title="Cancel" className="cancel">
                   Cancel

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddBlockIntroMutation } from "./blockSlice";
+import { toast } from "react-toastify";
 
 export default function LessonIntroAdd({ lesson, setAdd }) {
   const [addBlockIntro, { isLoading }] = useAddBlockIntroMutation();
@@ -13,7 +14,7 @@ export default function LessonIntroAdd({ lesson, setAdd }) {
     e.preventDefault();
     if (canSave) {
       await addBlockIntro({ id: lesson?.id, introduction: input });
-      alert("Introduction item Added");
+      toast.success("Introduction item Added");
     }
   };
 

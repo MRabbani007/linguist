@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAddSectionListMutation } from "./sectionListSlice";
+import { toast } from "react-toastify";
 
 export default function ListAdd({ lessonID, sectionID = "", setAdd }) {
   const [addSectionList, { isLoading }] = useAddSectionListMutation();
@@ -26,7 +27,7 @@ export default function ListAdd({ lessonID, sectionID = "", setAdd }) {
     };
     if (canSave) {
       await addSectionList(sectionList);
-      alert("List Created");
+      toast.success("List Added");
       setAdd(false);
     }
   };

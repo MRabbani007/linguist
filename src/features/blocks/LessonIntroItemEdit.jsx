@@ -4,6 +4,7 @@ import {
   useDeleteBlockIntroMutation,
   useEditBlockIntroMutation,
 } from "./blockSlice";
+import { toast } from "react-toastify";
 
 export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   const [editBlockIntro, { isLoading: isLoadingEdit }] =
@@ -20,8 +21,9 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
     e.preventDefault();
     if (canSaveEdit) {
       await editBlockIntro({ id: lesson?.id, introduction: input, index });
+      toast.success("Lesson intro item saved");
+      setEdit(false);
     }
-    setEdit(false);
   };
 
   const handleReset = () => {
@@ -31,7 +33,7 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   const handleDelete = async () => {
     if (confirm("Delete Intro Item")) {
       await deleteLessonIntro({ id: lesson.id, index });
-      alert("Intro Item Deleted");
+      toast.success("Intro Item Deleted");
       setEdit(false);
     }
   };

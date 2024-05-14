@@ -4,6 +4,7 @@ import { IoMdHeart } from "react-icons/io";
 import { BiSolidBadge } from "react-icons/bi";
 import MatchWordsScore from "./MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { toast } from "react-toastify";
 
 // helper function to shuffle words
 function shuffle(array) {
@@ -105,11 +106,13 @@ export default function MatchWords() {
         return temp;
       });
       setScore((curr) => curr + 1);
-      setResult("Success");
+      toast.success("Correct!");
+      // setResult("Success");
       setFirstWordIndex(null);
       setSecondWordIndex(null);
     } else {
-      setResult("Failed");
+      toast.error("Wrong!");
+      // setResult("Failed");
       setFirstWordIndex(null);
       setSecondWordIndex(null);
       setLives((curr) => curr - 1);
@@ -148,12 +151,12 @@ export default function MatchWords() {
   }, [firstWordIndex, secondWordIndex]);
 
   // handle success message
-  useEffect(() => {
-    const timer = setTimeout(() => setResult("wait"), 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [result]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setResult("wait"), 2000);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   };
+  // }, [result]);
 
   useEffect(() => {
     if (Array.isArray(firstWord) && firstWord.length !== 0) {
@@ -220,7 +223,7 @@ export default function MatchWords() {
           })}
         </div>
       </div>
-      <p
+      {/* <p
         className={
           (result === "Success"
             ? " bg-lime-200 border-lime-400 "
@@ -231,7 +234,7 @@ export default function MatchWords() {
         }
       >
         {result === "Success" ? "Success" : result === "Failed" ? "Wrong!" : ""}
-      </p>
+      </p> */}
       {/* <div className="flex items-center justify-center">
         {!allWordsCompleted ? (
           <button className="btn btn-red mx-auto my-2" onClick={handleCheck}>

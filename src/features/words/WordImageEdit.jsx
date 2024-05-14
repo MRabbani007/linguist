@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEditWordDetailsMutation } from "./wordsSlice";
+import { toast } from "react-toastify";
 
 const imageFileTypes = ["png", "svg", "jpg", "jpeg"];
 
@@ -20,10 +21,11 @@ export default function WordImageEdit({ word, setEdit }) {
         const newWord = { ...word, image: image + "." + newImage };
 
         await editWordDetails(newWord).unwrap();
+        toast.success("Word Saved");
         setEdit(false);
       }
     } catch (err) {
-      console.error("Failed to save the word", err);
+      toast.error("Server Error");
     }
   };
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useEditBlockDetailsMutation } from "./blockSlice";
+import { toast } from "react-toastify";
 
 const LessonEditDetails = ({ lesson, setEdit }) => {
   const [editBlockDetails, { isLoading }] = useEditBlockDetailsMutation();
@@ -27,6 +28,7 @@ const LessonEditDetails = ({ lesson, setEdit }) => {
       };
       await editBlockDetails(newBlock).unwrap();
 
+      toast.success("Lesson Saved");
       setEdit(false);
     }
   };
