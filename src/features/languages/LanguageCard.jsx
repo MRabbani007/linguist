@@ -28,7 +28,7 @@ export default function LanguageCard({ language }) {
         )}
       </h2>
       <div className="min-h-32 w-[300px] border-2 border-red-600 p-2">
-        <img src={"public/lang/" + language?.image} alt={language?.name} />
+        <img src={"fruits/apple.png"} />
         <p className="">{language.subtitle}</p>
         <div className="w-full flex items-center justify-end">
           <button

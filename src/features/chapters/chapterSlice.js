@@ -97,6 +97,7 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetChaptersQuery,
+  useLazyGetChaptersQuery,
   useGetAllChaptersQuery,
   useAddChapterMutation,
   useEditChapterMutation,

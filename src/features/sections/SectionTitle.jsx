@@ -43,22 +43,22 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 group relative w-fit">
+    <div className="flex items-center gap-2 group relative bg-zinc-200 rounded-md py-2 px-4 justify-between">
       <div>
-        <h3 className=" text-red-600 flex items-center gap-3">
-          <TbPoint className="inline" size={26} />
-          <div>
-            <p className="font-bold text-xl">{section?.title}</p>
-            {section?.subtitle && (
-              <i className="text-zinc-900">{section?.subtitle}</i>
-            )}
-          </div>
-          <button onClick={() => setExpand(!expand)}>
-            <IoIosArrowForward
-              size={24}
-              className={(expand ? "rotate-90" : "") + " duration-200"}
-            />
-          </button>
+        <h3 className=" text-red-600 ">
+          <p className="font-bold text-xl flex items-center gap-3 ">
+            <TbPoint className="inline" size={26} />
+            {section?.title}
+            <button onClick={() => setExpand(!expand)}>
+              <IoIosArrowForward
+                size={24}
+                className={(expand ? "rotate-90" : "") + " duration-200"}
+              />
+            </button>
+          </p>
+          {section?.subtitle && (
+            <i className="text-zinc-900 pl-10">{section?.subtitle}</i>
+          )}
         </h3>
       </div>
       {editMode && (

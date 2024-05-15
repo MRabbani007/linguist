@@ -2,15 +2,43 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDisplayChapter,
+  selectLanguage,
   setDisplayChapter,
 } from "../globals/globalsSlice";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { selectAllChapters } from "../chapters/chapterSlice";
+import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 
 const ChapterNavigator = ({ children }) => {
   const dispatch = useDispatch();
   const displayChapter = useSelector(selectDisplayChapter);
-  const chapters = useSelector(selectAllChapters);
+  const language = useSelector(selectLanguage);
+
+  const [
+    getChapters,
+    {
+      data: chaptersData,
+      isLoading: isLoadingChapters,
+      isSuccess: isSuccessChapters,
+      isError: isErrorChapters,
+      error: errorChapters,
+    },
+  ] = useLazyGetChaptersQuery(displayChapter?.id);
+
+  const [chapters, setChapters] = useState([]);
+
+  // get chapters on first load
+  useEffect(() => {
+    getChapters(language?.id);
+  }, []);
+
+  // denoralize chapters data
+  useEffect(() => {
+    if (isSuccessChapters) {
+      setChapters(() => {
+        return chaptersData.ids.map((id) => chaptersData.entities[id]);
+      });
+    }
+  }, [chaptersData]);
 
   const [chapterIndex, setChapterIndex] = useState(0);
 

@@ -20,7 +20,7 @@ export default function SectionAdd({ setAdd }) {
   const canSave =
     !isLoading &&
     (title !== "" || subtitle !== "") &&
-    !isNan(sortIndex) &&
+    !isNaN(sortIndex) &&
     sortIndex >= 0;
 
   const handleSubmit = async (e) => {
@@ -54,7 +54,12 @@ export default function SectionAdd({ setAdd }) {
         <h2>Add New Section</h2>
         <div>
           <div className="field max-w-[25%]">
+            <label htmlFor="section_number" className="field__label">
+              Number
+            </label>
             <input
+              id="section_number"
+              name="section_number"
               type="number"
               title="Number"
               placeholder="Number"
@@ -66,29 +71,39 @@ export default function SectionAdd({ setAdd }) {
             />
           </div>
           <div className="field">
+            <label htmlFor="section_title" className="field__label">
+              Section Title
+            </label>
             <input
+              id="section_title"
+              name="section_title"
               type="text"
-              value={title}
               autoFocus
               title="Section Title"
               placeholder="Section Title"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="field__input"
             />
           </div>
           <div className="field">
+            <label htmlFor="section_subtitle" className="field__label">
+              Section Sub-Title
+            </label>
             <input
+              id="section_subtitle"
+              name="section_subtitle"
               type="text"
+              title="Section Sub-Title"
+              placeholder="Section Sub-Title"
               value={subtitle}
-              title="Section SubTitle"
-              placeholder="Section SubTitle"
               onChange={(e) => setSubtitle(e.target.value)}
               className="field__input"
             />
           </div>
           <div className="form-buttons">
-            <button type="submit" title="Save" className="save">
-              Save
+            <button type="submit" title="Add" className="add">
+              Add Section
             </button>
             <button type="reset" title="Cancel" className="cancel">
               Cancel
