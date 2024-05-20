@@ -3,6 +3,8 @@ import { useRemoveWordMutation } from "../words/wordsSlice";
 import { CiEdit, CiTextAlignLeft, CiTrash } from "react-icons/ci";
 import { BiMove } from "react-icons/bi";
 import { toast } from "react-toastify";
+import { BsBoxArrowUpRight } from "react-icons/bs";
+import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 
 const WordDropDown = forwardRef(
   (
@@ -76,13 +78,13 @@ const WordDropDown = forwardRef(
         </li>
         <li title="Move to Section">
           <button onClick={handleMoveSection}>
-            <BiMove size={32} />
+            <HiOutlineArrowsPointingOut size={25} />
             <span>Move to Section</span>
           </button>
         </li>
         <li title="Move to Lesson">
           <button onClick={handleMoveLesson}>
-            <BiMove size={32} />
+            <BsBoxArrowUpRight size={25} />
             <span>Move to Lesson</span>
           </button>
         </li>

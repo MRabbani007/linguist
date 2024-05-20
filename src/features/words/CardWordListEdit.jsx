@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import {
@@ -7,6 +6,8 @@ import {
   selectLanguagesCount,
 } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
+
+const wordTypes = ["verb", "noun", "pronoun", "adverb", "phrase", "sentence"];
 
 const CardWordListEdit = ({ word, setViewEdit }) => {
   const [editWord, { isLoading }] = useEditWordMutation();

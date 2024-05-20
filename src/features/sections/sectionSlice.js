@@ -6,8 +6,8 @@ import { store } from "../../app/store";
 const sectionsAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
   sortComparer: (a, b) => {
-    if (a.sectionNo && b.sectionNo) {
-      return a.sectionNo.toString().localeCompare(b.sectionNo.toString());
+    if (a.sortIndex && b.sortIndex) {
+      return a.sortIndex.toString().localeCompare(b.sortIndex.toString());
     } else {
       return a.title.localeCompare(b.title);
     }
@@ -65,7 +65,7 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     editSectionLessonID: builder.mutation({
       query: (section) => ({
         url: SERVER.SECTION,
-        method: "PATCh",
+        method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {

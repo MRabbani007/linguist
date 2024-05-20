@@ -66,6 +66,14 @@ const BlockNavigator = ({ children }) => {
   }, [displayChapter]);
 
   useEffect(() => {
+    if (moveDirection === "next") {
+      dispatch(setDisplayBlock(blocks[0]));
+    } else if (moveDirection === "prev") {
+      dispatch(setDisplayBlock(blocks[blocks.length - 1]));
+    }
+  }, [blocks]);
+
+  useEffect(() => {
     setBlockIndex(() => {
       const tempBlockIndex = blocks?.findIndex(
         (item) => item?.id === displayBlock?.id

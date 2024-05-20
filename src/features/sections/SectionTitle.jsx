@@ -11,11 +11,13 @@ export default function SectionTitle({
   expand,
   setExpand,
   setEditTitle,
+  setEditLessonID,
   setAddIntro,
   setAddDef,
   setAddList,
   setAddTable,
   setAddWord,
+  setAddSentence,
 }) {
   const editMode = useSelector(selectEditMode);
 
@@ -75,11 +77,13 @@ export default function SectionTitle({
         showDropDown={showDropDown}
         ref={dropDownRef}
         setEditTitle={setEditTitle}
+        setEditLessonID={setEditLessonID}
         setAddIntro={setAddIntro}
         setAddDef={setAddDef}
         setAddTable={setAddTable}
         setAddList={setAddList}
         setAddWord={setAddWord}
+        setAddSentence={setAddSentence}
       />
     </div>
   );

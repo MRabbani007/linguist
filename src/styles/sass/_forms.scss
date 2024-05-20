@@ -167,11 +167,6 @@
   padding: 1rem;
 }
 
-.form-container button {
-  padding: .5rem 1rem;
-  border-radius: .375rem;
-}
-
 .form-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -181,21 +176,29 @@
 }
 
 .add {
-  background-color: $clr-sky-800;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #075985;
   color: white;
 }
 
 .save {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
   background-color: rgb(64, 150, 64);
   color: white;
 }
 
 .cancel {
-  background-color: $clr-yellow-400;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #fbbf24;
   color: white;
 }
 
 .delete {
-  background-color: $clr-red-400;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: #f87171;
   color: white;
 }

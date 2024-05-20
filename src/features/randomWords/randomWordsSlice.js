@@ -13,14 +13,17 @@ const initialState = randomWordsAdapter.getInitialState();
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getRandomWords: builder.query({
-      query: () => ({
+      query: (selectedLessons = []) => ({
         url: SERVER.GET_WORD_RANDOM,
         method: "POST",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.GET_WORD_RANDOM,
-            payload: { userName: store.getState()?.auth?.user }, // auth?.user
+            payload: {
+              userName: store.getState()?.auth?.user,
+              selectedLessons,
+            },
           },
         },
       }),

@@ -52,6 +52,7 @@ export const apiSlice = createApi({
     "Block",
     "Section",
     "Word",
+    "Sentence",
     "Definition",
     "Table",
     "TableWord",

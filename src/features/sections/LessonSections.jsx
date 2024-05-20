@@ -12,6 +12,7 @@ import { useGetTablesQuery } from "../tables/tablesSlice";
 import TableCard from "../tables/TableCard";
 import { useGetTableWordsQuery } from "../tableWords/tableWordsSlice";
 import { useGetSectionListsQuery } from "../sectionList/sectionListSlice";
+import { useGetSentencesQuery } from "../sentences/sentencesSlice";
 
 export default function LessonSections({ lesson, addSection, setAddSection }) {
   const editMode = useSelector(selectEditMode);
@@ -33,6 +34,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   const [tableWords, setTableWords] = useState([]);
   const [lessonTableWords, setLessonTableWords] = useState([]);
+
+  const [sentences, setSentences] = useState([]);
+  const [lessonSentences, setLessonSentences] = useState([]);
 
   const {
     data: sectionsData,
@@ -81,6 +85,14 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
     isError: isErrorTableWords,
     error: errorTableWords,
   } = useGetTableWordsQuery(lesson?.id);
+
+  const {
+    data: sentenceData,
+    isLoading: isLoadingSentence,
+    isSuccess: isSuccessSentence,
+    isError: isErrorSentence,
+    error: errorSentence,
+  } = useGetSentencesQuery(lesson?.id);
 
   useEffect(() => {
     if (isSuccessWords) {
@@ -132,6 +144,14 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
     }
   }, [tableWordsData]);
 
+  useEffect(() => {
+    if (isSuccessSentence) {
+      setSentences(() => {
+        return sentenceData?.ids.map((id) => sentenceData.entities[id]) ?? [];
+      });
+    }
+  }, [sentenceData]);
+
   // filter words that are not part of a section
   useEffect(() => {
     let sectionIDList = sectionsList.map((section) => section?.id);
@@ -156,8 +176,16 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
     let temp = tables.filter((table) => {
       return !sectionIDList.includes(table?.sectionID);
     });
-    setLessonDefinitions(temp);
+    setLessonTables(temp);
   }, [tables, sectionsList]);
+
+  useEffect(() => {
+    let sectionIDList = sectionsList.map((section) => section?.id);
+    let temp = sentences.filter((item) => {
+      return !sectionIDList.includes(item?.sectionID);
+    });
+    setLessonSentences(temp);
+  }, [sentences, sectionsList]);
 
   let defsContent = lessonDefinitions.map((def, index) => (
     <Definition definition={def} key={index} />
@@ -182,6 +210,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
       const sectionLists = lists.filter(
         (list) => list?.sectionID === entities[id]?.id
       );
+      const sectionSentences = sentences.filter(
+        (item) => item?.sectionID === entities[id]?.id
+      );
       return (
         <Section
           section={entities[id]}
@@ -193,6 +224,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           tableWords={tableWords}
           sectionLists={sectionLists}
           sectionsList={sectionsList}
+          sentences={sectionSentences}
         />
       );
     });

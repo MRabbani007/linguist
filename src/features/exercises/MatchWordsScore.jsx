@@ -5,7 +5,7 @@ import { IoMdHeart } from "react-icons/io";
 
 export default function MatchWordsScore({ score, lives, highestScore }) {
   return (
-    <div className="flex justify-evenly rounded-md bg-red-400 text-white py-3 px-5 mb-2">
+    <div className="flex flex-1 justify-evenly rounded-md bg-red-400 text-white py-3 px-5 mb-2">
       <p title="Lives" className="flex items-center gap-3 relative w-fit">
         <IoMdHeart size={40} />
         <span className="absolute top-[50%] right-[50%] translate-x-[50%] -translate-y-[50%] text-red-600 font-semibold">

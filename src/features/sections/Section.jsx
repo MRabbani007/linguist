@@ -12,6 +12,9 @@ import TableCard from "../tables/TableCard";
 import ListSection from "../sectionList/ListSection";
 import ListAdd from "../sectionList/ListAdd";
 import CardWordAdd from "../words/CardWordAdd";
+import SectionMoveToLesson from "./SectionMoveToLesson";
+import Sentence from "../sentences/Sentence";
+import FormSentenceAdd from "../sentences/FormSentenceAdd";
 
 export default function Section({
   section = {},
@@ -21,17 +24,20 @@ export default function Section({
   sectionLists = [],
   tables = [],
   tableWords = [],
+  sentences = [],
 }) {
   const editMode = useSelector(selectEditMode);
 
   const [expand, setExpand] = useState(true);
   const [editTitle, setEditTitle] = useState(false);
+  const [editLessonID, setEditLessonID] = useState(false);
 
   const [addIntro, setAddIntro] = useState(false);
   const [addDef, setAddDef] = useState(false);
   const [addList, setAddList] = useState(false);
   const [addTable, setAddTable] = useState(false);
   const [addWord, setAddWord] = useState(false);
+  const [addSentence, setAddSentence] = useState(false);
 
   let content = words.map((word, index) => (
     <CardWordList word={word} key={index} sectionsList={sectionsList} />
@@ -44,11 +50,13 @@ export default function Section({
         expand={expand}
         setExpand={setExpand}
         setEditTitle={setEditTitle}
+        setEditLessonID={setEditLessonID}
         setAddIntro={setAddIntro}
         setAddDef={setAddDef}
         setAddTable={setAddTable}
         setAddList={setAddList}
         setAddWord={setAddWord}
+        setAddSentence={setAddSentence}
       />
 
       <div
@@ -91,11 +99,27 @@ export default function Section({
           </div>
         ) : null}
 
+        {/* Words */}
         <div className="flex flex-col gap-3">{content}</div>
+
+        {Array.isArray(sentences) && sentences.length !== 0 ? (
+          <div className="flex flex-col gap-3">
+            {sentences.map((sentence) => {
+              return <Sentence sentence={sentence} key={sentence?.id} />;
+            })}
+          </div>
+        ) : null}
       </div>
 
       {editTitle ? (
         <SectionEditTitle section={section} setEdit={setEditTitle} />
+      ) : null}
+
+      {editLessonID ? (
+        <SectionMoveToLesson
+          section={section}
+          setViewMoveLesson={setEditLessonID}
+        />
       ) : null}
 
       {editMode && addDef ? (
@@ -124,6 +148,10 @@ export default function Section({
 
       {editMode && addWord ? (
         <CardWordAdd sectionID={section?.id} setAdd={setAddWord} />
+      ) : null}
+
+      {editMode && addSentence ? (
+        <FormSentenceAdd sectionID={section?.id} setAdd={setAddSentence} />
       ) : null}
     </div>
   );

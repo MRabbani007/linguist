@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLazyGetRandomWordsQuery } from "../randomWords/randomWordsSlice";
-import { IoMdHeart } from "react-icons/io";
-import { BiSolidBadge } from "react-icons/bi";
 import MatchWordsScore from "./MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
+import Filter from "./Filter";
+import { CiFilter } from "react-icons/ci";
 
 // helper function to shuffle words
 function shuffle(array) {
@@ -27,6 +27,9 @@ function shuffle(array) {
 }
 
 export default function MatchWords() {
+  const [selectedLessons, setSelectedLessons] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
+
   const [value, setValue] = useLocalStorage("highscore", 0);
   const [words, setWords] = useState([]);
 
@@ -55,8 +58,8 @@ export default function MatchWords() {
 
   // Load Words on first render
   useEffect(() => {
-    getRandomWords();
-  }, []);
+    getRandomWords(selectedLessons);
+  }, [selectedLessons]);
 
   useEffect(() => {
     if (!isNaN(value)) {
@@ -174,53 +177,67 @@ export default function MatchWords() {
   }, [allWordsCompleted]);
 
   return (
-    <div className="w-fit mx-auto">
-      <MatchWordsScore
-        score={score}
-        lives={lives}
-        highestScore={highestScore}
-      />
-      {/* <h1>Match Words</h1> */}
-      <div className="flex gap-1">
-        <div className="word_col">
-          {firstWord.map((word, index) => {
-            return (
-              <button
-                disabled={word.selected}
-                onClick={() => handleSelect("first", index)}
-                key={index}
-                className={
-                  (word.selected
-                    ? "border-zinc-500 bg-zinc-300"
-                    : index === firstWordIndex
-                    ? "border-lime-500 bg-lime-200"
-                    : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
-                }
-              >
-                {word.word}
-              </button>
-            );
-          })}
+    <div className="w-fit mx-auto flex">
+      {showFilter ? (
+        <Filter
+          selectedLessons={selectedLessons}
+          setSelectedLessons={setSelectedLessons}
+          setShowFilter={setShowFilter}
+        />
+      ) : null}
+      <div>
+        <div className="flex gap-2">
+          <button onClick={() => setShowFilter(true)}>
+            <CiFilter size={32} />
+          </button>
+          <MatchWordsScore
+            score={score}
+            lives={lives}
+            highestScore={highestScore}
+          />
         </div>
-        <div className="word_col">
-          {secondWord.map((word, index) => {
-            return (
-              <button
-                key={index}
-                disabled={word.selected}
-                onClick={() => handleSelect("second", index)}
-                className={
-                  (word.selected
-                    ? "border-zinc-500 bg-zinc-300"
-                    : index === secondWordIndex
-                    ? "border-lime-500 bg-lime-200"
-                    : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
-                }
-              >
-                {word.word}
-              </button>
-            );
-          })}
+        {/* <h1>Match Words</h1> */}
+        <div className="flex gap-1">
+          <div className="word_col">
+            {firstWord.map((word, index) => {
+              return (
+                <button
+                  disabled={word.selected}
+                  onClick={() => handleSelect("first", index)}
+                  key={index}
+                  className={
+                    (word.selected
+                      ? "border-zinc-500 bg-zinc-300"
+                      : index === firstWordIndex
+                      ? "border-lime-500 bg-lime-200"
+                      : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
+                  }
+                >
+                  {word.word}
+                </button>
+              );
+            })}
+          </div>
+          <div className="word_col">
+            {secondWord.map((word, index) => {
+              return (
+                <button
+                  key={index}
+                  disabled={word.selected}
+                  onClick={() => handleSelect("second", index)}
+                  className={
+                    (word.selected
+                      ? "border-zinc-500 bg-zinc-300"
+                      : index === secondWordIndex
+                      ? "border-lime-500 bg-lime-200"
+                      : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
+                  }
+                >
+                  {word.word}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
       {/* <p

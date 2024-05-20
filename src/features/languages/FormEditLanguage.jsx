@@ -143,10 +143,9 @@ export default function FormEditLanguage({ language, setEdit }) {
               className="field__input"
             />
           </div>
-
           <p className="form-buttons">
-            <button type="submit" title="Add" className="add">
-              Add
+            <button type="submit" title="Save" className="save">
+              Save
             </button>
             <button type="reset" title="Cancel" className="cancel">
               Cancel

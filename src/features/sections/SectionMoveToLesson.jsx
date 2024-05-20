@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetAllBlocksQuery } from "../blocks/blockSlice";
-import { useEditWordBlockIDMutation } from "./wordsSlice";
-import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
+import { useEditSectionLessonIDMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
 
-export default function MoveWord({ word, setViewMoveLesson }) {
-  const [editWordBlockID] = useEditWordBlockIDMutation();
+export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
+  const [editSectionLessonID] = useEditSectionLessonIDMutation();
 
   const [allLessons, setAllLessons] = useState([]);
   const [selected, setSelected] = useState("");
@@ -25,11 +24,11 @@ export default function MoveWord({ word, setViewMoveLesson }) {
 
   useEffect(() => {
     setSelected(() => {
-      const idx = allLessons.findIndex((block) => block.id === word.blockID);
+      const idx = allLessons.findIndex((block) => block.id === section.blockID);
       if (idx >= 0) return idx;
       return "";
     });
-  }, [word, allLessons]);
+  }, [section, allLessons]);
 
   const canSave = selected !== "" && !isNaN(selected) && selected >= 0;
 
@@ -37,15 +36,16 @@ export default function MoveWord({ word, setViewMoveLesson }) {
     e.preventDefault();
     if (canSave) {
       try {
-        const newWord = {
-          ...word,
+        const sectionData = {
+          id: section?.id,
           chapterID: allLessons[selected].chapterID,
           lessonID: allLessons[selected].id,
         };
-        await editWordBlockID(newWord);
-        toast.success("Word Moved");
+        await editSectionLessonID(sectionData);
+        toast.success("Section Moved");
         setViewMoveLesson(false);
       } catch (e) {
+        console.log(e);
         toast.error("Server Error");
       }
     }
@@ -53,7 +53,9 @@ export default function MoveWord({ word, setViewMoveLesson }) {
 
   const handleReset = () => {
     setSelected(() => {
-      const idx = allLessons.findIndex((block) => block.id === word.blockID);
+      const idx = allLessons.findIndex(
+        (block) => block.id === section.lessonID
+      );
       if (idx >= 0) return idx;
       return "";
     });
@@ -63,15 +65,15 @@ export default function MoveWord({ word, setViewMoveLesson }) {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} onReset={handleReset}>
-        <h2>Move Word to Lesson</h2>
+        <h2>Move Section to Lesson</h2>
         <div>
           <div className="field">
-            <label htmlFor="move-word-lesson" className="field__label">
-              Move Word to Lesson
+            <label htmlFor="move-section-lesson" className="field__label">
+              Move Section to Lesson
             </label>
             <select
-              name="move-word-lesson"
-              id="move-word-lesson"
+              name="move-section-lesson"
+              id="move-section-lesson"
               required
               value={selected}
               onChange={(e) => setSelected(e.target.value)}
