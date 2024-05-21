@@ -1,16 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCircleRemove, CiEdit } from "react-icons/ci";
 import { IoAdd } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectEditMode,
-  selectLanguagesCount,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
 
 const CardTableHeader = ({ toggleEdit }) => {
   const displayBlock = useSelector(selectDisplayBlock);
-  const languagesCount = useSelector(selectLanguagesCount);
+
+  const [languagesCount, setLanguagesCount] = useState(2);
   const editMode = useSelector(selectEditMode);
 
   // TODO: implement add language
@@ -50,17 +47,17 @@ const CardTableHeader = ({ toggleEdit }) => {
         <th>
           <span>{displayBlock?.secondLang}</span>
         </th>
-        {languagesCount > 2 ? (
+        {displayBlock?.thirdLang ? (
           <th>
             <span>{displayBlock?.thirdLang}</span>
           </th>
         ) : null}
-        {languagesCount > 3 ? (
+        {displayBlock?.fourthLang ? (
           <th>
             <span>{displayBlock?.fourthLang}</span>
           </th>
         ) : null}
-        {languagesCount > 3 && editMode ? (
+        {displayBlock?.thirdLang && editMode ? (
           <th>
             <span>Edit</span>
           </th>

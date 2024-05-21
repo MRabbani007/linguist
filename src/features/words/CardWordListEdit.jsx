@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { useEditWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectLanguagesCount,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
 
 const wordTypes = ["verb", "noun", "pronoun", "adverb", "phrase", "sentence"];
 
 const CardWordListEdit = ({ word, setViewEdit }) => {
   const [editWord, { isLoading }] = useEditWordMutation();
-  const languagesCount = useSelector(selectLanguagesCount);
   const displayBlock = useSelector(selectDisplayBlock);
 
   const [sortIndex, setSortIndex] = useState(word?.sortIndex || "");
@@ -184,7 +180,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
           </div>
           <div className="field_group">
             {/* Third Word */}
-            {languagesCount > 2 ? (
+            {displayBlock?.thirdLang ? (
               <div className="field">
                 <label htmlFor="edit_thirdWord" className="field__label">
                   {label_3}
@@ -193,7 +189,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
                   type="text"
                   id="edit_thirdWord"
                   name="edit_thirdWord"
-                  placeholder={displayBlock?.thirdLang || "Third Language"}
+                  placeholder={displayBlock.thirdLang || "Third Language"}
                   value={third}
                   onChange={(e) => {
                     setThird(e.target.value);
@@ -203,7 +199,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
               </div>
             ) : null}
             {/* Fourth Word */}
-            {languagesCount > 3 ? (
+            {displayBlock?.fourthLang ? (
               <div className="field">
                 <label htmlFor="edit_fourthWord" className="field__label">
                   {displayBlock?.fourthLang}:

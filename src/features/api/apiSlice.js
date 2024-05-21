@@ -23,7 +23,7 @@ const baseQuerywithReauth = async (args, api, extraOptions) => {
     // console.log("sending refresh token");
 
     // send refresh token to get new access token
-    const refreshResult = await baseQuery("/refresh", api, extraOptions);
+    const refreshResult = await baseQuery("/user/refresh", api, extraOptions);
 
     // console.log(refreshResult);
 
@@ -57,6 +57,7 @@ export const apiSlice = createApi({
     "Table",
     "TableWord",
     "User",
+    "Profile",
   ],
   endpoints: (builder) => ({}),
 });

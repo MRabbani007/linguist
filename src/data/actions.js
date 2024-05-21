@@ -110,6 +110,8 @@ export const SERVER = {
   USER_SIGNUP: "/user/register",
   USER_REFRESH: "/user/refresh",
   USER_LOGOUT: "/user/logout",
+
+  USER_PROFILE: "/user/profile",
 };
 
 export const TABLE = {
@@ -133,4 +135,11 @@ export const TABLE = {
   DELETE_COLTITLE: "DELETE_COLTITLE",
   DELETE_COL: "DELETE_COL",
   DELETE_ROW: "DELETE_ROW",
+};
+
+export const PROFILE = {
+  LANGUAGE: "LANGUAGE",
+  PROGRESS_LESSON: "PROGRESS_LESSON",
+  MATCHWRODS_SCORE: "MATCHWRODS_SCORE",
+  MATCHWRODS_LESSONS: "MATCHWRODS_SCORE",
 };

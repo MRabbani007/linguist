@@ -12,7 +12,7 @@
 }
 
 .page-container-fluid {
-  padding-top: calc(var(--navbar-height) + 0px);
+  padding-top: 0px; //calc(var(--navbar-height) + 0px);
   // padding-bottom: 40px;
   padding-left: 0rem;
   padding-right: 0rem;

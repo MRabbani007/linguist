@@ -11,7 +11,9 @@ const Layout = () => {
   const location = useLocation();
 
   const onAuthPage =
-    location.pathname.includes("login") || location.pathname.includes("signup");
+    location.pathname.includes("login") ||
+    location.pathname.includes("signup") ||
+    location.pathname === "/";
 
   const onContentPage =
     location.pathname.includes("chapters") ||

@@ -17,7 +17,7 @@ const ChapterPage = () => {
 
   useEffect(() => {
     if (!language?.id) {
-      navigate("/");
+      navigate("/language");
     }
   }, [language]);
 

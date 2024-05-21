@@ -114,6 +114,11 @@ const selectChaptersData = createSelector(
   (chapterResult) => chapterResult.data // normalized state object with ids & entities
 );
 
+// const chapterSelectors = chaptersAdapter.getSelectors((state) => state.data);
+// const allChapters = chapterSelectors.selectAll(store.getState());
+
+// console.log(allChapters);
+
 //getSelectors creates these selectors and we rename them with aliases using destructuring
 export const {
   selectAll: selectAllChapters,

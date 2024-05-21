@@ -8,8 +8,11 @@ import {
   selectLanguage,
 } from "../globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
+import { useLazyGetProfileQuery } from "../profile/profileSlice";
 
 const ChapterListSideBar = () => {
+  const [getProfile, { data: userProfile }] = useLazyGetProfileQuery();
+
   const navigate = useNavigate();
   const language = useSelector(selectLanguage);
   const displayChapter = useSelector(selectDisplayChapter);
@@ -23,6 +26,10 @@ const ChapterListSideBar = () => {
     isError,
     error,
   } = useGetChaptersQuery(language?.id);
+
+  useEffect(() => {
+    getProfile();
+  }, [displayBlock]);
 
   useEffect(() => {
     if (isSuccess) {

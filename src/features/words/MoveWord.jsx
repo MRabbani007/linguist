@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { useGetAllBlocksQuery } from "../blocks/blockSlice";
 import { useEditWordBlockIDMutation } from "./wordsSlice";
-import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectLanguage } from "../globals/globalsSlice";
 
 export default function MoveWord({ word, setViewMoveLesson }) {
+  const language = useSelector(selectLanguage);
   const [editWordBlockID] = useEditWordBlockIDMutation();
 
   const [allLessons, setAllLessons] = useState([]);
   const [selected, setSelected] = useState("");
-  const { data, isSuccess } = useGetAllBlocksQuery();
+  const { data, isSuccess } = useGetAllBlocksQuery(language?.id);
 
   useEffect(() => {
     if (isSuccess) {

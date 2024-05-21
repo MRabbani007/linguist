@@ -172,7 +172,7 @@ export default function MatchWords() {
   // re-load words when completed
   useEffect(() => {
     if (allWordsCompleted && confirm("Success! Load new words?")) {
-      getRandomWords();
+      getRandomWords(selectedLessons);
     }
   }, [allWordsCompleted]);
 

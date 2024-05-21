@@ -1,44 +1,23 @@
-import { useEffect, useState } from "react";
-import FormAddLanguage from "../features/languages/FormAddLanguage";
-import { axiosPrivate } from "../api/axios";
-import LanguageCard from "../features/languages/LanguageCard";
-import { useSelector } from "react-redux";
-import { selectEditMode } from "../features/globals/globalsSlice";
+import Linguist from "../assets/linguist.png";
+import WorldLang from "../assets/world-language.png";
 
 const HomePage = () => {
-  const editMode = useSelector(selectEditMode);
-  const [languages, setLanguages] = useState([]);
-  const [add, setAdd] = useState(false);
-
-  const getLangauges = async () => {
-    let response = await axiosPrivate.get("/languages");
-
-    if (Array.isArray(response?.data)) {
-      setLanguages(response.data);
-    }
-  };
-
-  useEffect(() => {
-    getLangauges();
-  }, [add]);
-
   return (
-    <div className="flex flex-col gap-3 justify-center flex-1">
-      <div className="flex flex-wrap items-stretch justify-center gap-3">
-        {languages.map((lang) => {
-          return <LanguageCard language={lang} key={lang.id} />;
-        })}
+    <div className="flex flex-col gap-3 flex-1">
+      <div className=" top-0 left-0 w-full h-[40vh] flex justify-center items-center bg-gradient-to-br from-zinc-600 to-zinc-400">
+        <img src={Linguist} alt="Linguist" width={300} height={150} />
       </div>
-      {editMode && (
-        <button
-          title="Add Language"
-          onClick={() => setAdd(true)}
-          className="btn btn-red w-fit mx-auto"
-        >
-          Add Language
-        </button>
-      )}
-      {add && <FormAddLanguage setAdd={setAdd} />}
+      <div className="flex justify-evenly items-center max-w-[1000px] mx-auto">
+        <img src={WorldLang} alt="World_Language" width={400} height={350} />
+        <div className="flex-1 flex flex-col justify-center items-center">
+          <p className="italic font-semibold text-xl">
+            Learn languages fast & easy
+          </p>
+          <button className="py-2 px-4 bg-gradient-to-tr from-red-800 to-red-600 text-white hover:shadow-lg hover:shadow-zinc-500 duration-200 rounded-full my-4">
+            Start Now
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

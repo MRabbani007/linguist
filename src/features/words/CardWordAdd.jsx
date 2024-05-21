@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAddWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectLanguagesCount,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
 
 const CardWordAdd = ({ sectionID = "", setAdd }) => {
   const displayBlock = useSelector(selectDisplayBlock);
-  const languagesCount = useSelector(selectLanguagesCount);
 
   const [addWord, { isLoading }] = useAddWordMutation();
 
@@ -113,7 +109,7 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
             </div>
           </div>
           <div className="field_group">
-            {languagesCount > 2 ? (
+            {displayBlock?.thirdLang ? (
               <div className="field">
                 <label htmlFor="thirdLanguage" className="field__label">
                   {displayBlock?.thirdLang || "Third Language"}
@@ -130,7 +126,7 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
                 />
               </div>
             ) : null}
-            {languagesCount > 3 ? (
+            {displayBlock?.fourthLang ? (
               <div className="field">
                 <label htmlFor="fourthLanguage" className="field__label">
                   {displayBlock?.fourthLang || "Fourth Language"}

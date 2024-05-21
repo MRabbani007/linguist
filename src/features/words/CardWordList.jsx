@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useEditWordExerciseMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectEditMode,
-  selectLanguagesCount,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
 import { CiEdit } from "react-icons/ci";
-import { FaCheck, FaEye, FaEyeSlash, FaPlus } from "react-icons/fa6";
+import { FaCheck, FaEyeSlash, FaPlus } from "react-icons/fa6";
 import CardSentence from "./CardSentence";
 import CardAddSentence from "./CardAddSentence";
 import CardWordListEdit from "./CardWordListEdit";
@@ -20,7 +16,6 @@ import WordImageEdit from "./WordImageEdit";
 const CardWordList = ({ word, sectionsList }) => {
   const [editWordExercise] = useEditWordExerciseMutation();
   const displayBlock = useSelector(selectDisplayBlock);
-  const languagesCount = useSelector(selectLanguagesCount);
   const editMode = useSelector(selectEditMode);
 
   const [showDropDown, setShowDropDown] = useState(false);
@@ -165,7 +160,7 @@ const CardWordList = ({ word, sectionsList }) => {
                 <span className="mx-2 font-normal">{word?.second}</span>
                 <span className="text-sm italic">{word?.secondCaption}</span>
               </div>
-              {languagesCount > 2 && word?.third ? (
+              {displayBlock?.thirdLang && word?.third ? (
                 <div
                   className={
                     showPronunce
@@ -177,7 +172,7 @@ const CardWordList = ({ word, sectionsList }) => {
                   <span className="">{word?.third}</span>
                 </div>
               ) : null}
-              {languagesCount > 3 ? (
+              {displayBlock?.fourthLang ? (
                 <div>
                   <span className="font-semibold">
                     {displayBlock?.fourthLang}:

@@ -1,10 +1,6 @@
 import { CiEdit, CiSquareRemove } from "react-icons/ci";
 import { useRemoveBlockMutation } from "../blocks/blockSlice";
-import {
-  selectDisplayBlock,
-  setDisplayBlock,
-  setViewTab,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock, setDisplayBlock } from "../globals/globalsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -36,7 +32,6 @@ const EditorBlockTitle = ({ block, index }) => {
 
   useEffect(() => {
     if (isMounted.current) {
-      dispatch(setViewTab("lesson"));
       navigate("/chapters");
     }
   }, [displayBlock]);

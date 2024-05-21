@@ -31,15 +31,17 @@ import LessonPage from "./views/LessonPage";
 import ExercisesMainPage from "./features/exercises/ExercisesMainPage";
 import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
 import MatchWords from "./features/exercises/MatchWords";
+import LanguagePage from "./views/userPages/LanguagePage";
+import DashboardPage from "./views/DashboardPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
-const AddContentPage = lazy(() =>
-  wait(0).then(() =>
-    import("./views/AddContentPage").then((module) => {
-      return { default: module.AddContentPage };
-    })
-  )
-);
+// const AddContentPage = lazy(() =>
+//   wait(0).then(() =>
+//     import("./views/AddContentPage").then((module) => {
+//       return { default: module.AddContentPage };
+//     })
+//   )
+// );
 
 function wait(time) {
   return new Promise((resolve) => {
@@ -67,6 +69,7 @@ function App() {
               {/* Page to display language chapters, visible to all */}
               <Route path="login" element={<SigninPage />} />
               <Route path="signup" element={<SignupPage />} />
+              <Route path="language" element={<LanguagePage />} />
               <Route path="chapters" element={<ChapterPage />} />
               <Route path="sections" element={<SectionsPage />} />
               <Route path="lesson" element={<LessonPage />} />
@@ -83,6 +86,7 @@ function App() {
                   />
                 }
               >
+                <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="settings" element={<SettingsPage />} />
               </Route>
 
@@ -95,24 +99,7 @@ function App() {
                 element={
                   <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
                 }
-              >
-                <Route
-                  path="addContent"
-                  index
-                  element={
-                    // <ErrorBoundary
-                    //   fallback={<ErrorFallBack />}
-                    //   onReset={() => {
-                    //     navigate("/");
-                    //   }}
-                    // >
-                    // <Suspense fallback={<SkeletonContentPage />}>
-                    <AddContentPage />
-                    // </Suspense>
-                    // </ErrorBoundary>
-                  }
-                />
-              </Route>
+              ></Route>
             </Route>
 
             {/* catch all */}

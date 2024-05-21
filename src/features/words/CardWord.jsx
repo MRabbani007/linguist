@@ -3,16 +3,11 @@ import { CiEdit, CiTrash } from "react-icons/ci";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { selectAllWords, useRemoveWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectEditMode,
-  selectLanguagesCount,
-} from "../globals/globalsSlice";
+import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
 
 const CardWord = ({ word = {}, index = 0, setEditWord = () => {} }) => {
   const [removeWord] = useRemoveWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
-  const languagesCount = useSelector(selectLanguagesCount);
   const editMode = useSelector(selectEditMode);
   const words = useSelector(selectAllWords);
 
@@ -71,13 +66,13 @@ const CardWord = ({ word = {}, index = 0, setEditWord = () => {} }) => {
             <span className="">{label_2}</span>
             <span className="ml-2 font-semibold">{word?.second}</span>
           </div>
-          {languagesCount > 2 ? (
+          {displayBlock?.thirdLang ? (
             <div>
               <span className="font-semibold">{displayBlock?.thirdLang}:</span>
               <span className="ml-2">{word?.third}</span>
             </div>
           ) : null}
-          {languagesCount > 3 ? (
+          {displayBlock?.fourthLang ? (
             <div>
               <span className="font-semibold">{displayBlock?.fourthLang}:</span>
               <span className="ml-2">{word?.fourth}</span>

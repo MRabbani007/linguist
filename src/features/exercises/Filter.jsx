@@ -34,7 +34,7 @@ export default function Filter({
     setShowFilter(false);
   };
 
-  const { data, isSuccess } = useGetAllBlocksQuery();
+  const { data, isSuccess } = useGetAllBlocksQuery(language?.id);
 
   useEffect(() => {
     if (isSuccess) {
@@ -110,11 +110,11 @@ export default function Filter({
           className="p-2 bg-zinc-300 rounded-md my-2"
           title="Select up to 10 lessons"
         >
-          {selectedLessons.length === 0
+          {newSelectedLessons.length === 0
             ? "All Content"
-            : selectedLessons.length === 1
+            : newSelectedLessons.length === 1
             ? " 1 lesson selected"
-            : selectedLessons.length + " lessons selected"}
+            : newSelectedLessons.length + " lessons selected"}
         </p>
         <ul className="h-full overflow-y-scroll">{lessonContent}</ul>
       </div>

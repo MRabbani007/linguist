@@ -4,6 +4,8 @@ import { FiUser } from "react-icons/fi";
 import { TbReportAnalytics } from "react-icons/tb";
 import {
   IoAddCircleOutline,
+  IoBookOutline,
+  IoGridOutline,
   IoHomeOutline,
   IoMenu,
   IoSettingsOutline,
@@ -18,6 +20,7 @@ import UserDropDown from "../navigation/UserDropDown";
 import AdminDropDown from "../navigation/AdminDropDown";
 import { BsBook } from "react-icons/bs";
 import { GiWeightLiftingUp } from "react-icons/gi";
+import { PiBirdLight } from "react-icons/pi";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -66,22 +69,30 @@ const Navbar = () => {
   return (
     <menu className="navbar-red">
       <span className="flex items-center justify-between gap-3">
-        <button ref={sideBarButtonRef} onClick={() => handleSideBar(true)}>
+        <button
+          ref={sideBarButtonRef}
+          onClick={() => handleSideBar(true)}
+          className="lg:hidden"
+        >
           <IoMenu size={34} />
         </button>
-        <Link to="/">
-          <IoHomeOutline size={34} />
+        <Link to="/" title="Home">
+          <PiBirdLight size={34} />
+          {/* <IoHomeOutline size={34} /> */}
         </Link>
-        <Link to="/chapters">
-          <BsBook size={34} />
+        <Link to="/dashboard" title="Dashboard">
+          <IoGridOutline size={34} />
         </Link>
-        <Link to="/exercise">
+        <Link to="/chapters" title="Learn">
+          <IoBookOutline size={34} />
+        </Link>
+        <Link to="/exercise" title="Exercise">
           <GiWeightLiftingUp size={34} />
         </Link>
       </span>
       <span>
         {!user ? (
-          <Link to="/login">
+          <Link to="/login" title="User">
             <FiUser className="icon" />
           </Link>
         ) : (
@@ -89,6 +100,7 @@ const Navbar = () => {
             <button
               className="flex items-center gap-0"
               onClick={handleUserDropDown}
+              title="User Menu"
             >
               {user}
               <FiUser className="icon" />

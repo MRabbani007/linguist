@@ -10,6 +10,7 @@ import { ACTIONS } from "../../data/actions";
 // Imported Icons
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from "../../api/axios";
+import Background from "../../assets/bg_1.jpg";
 
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
@@ -82,6 +83,9 @@ const SignIn = () => {
 
   return (
     <main className="wrapper">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 bg-green-500 flex justify-center items-center">
+        <img src={Background} alt="bg" className="object-fill" />
+      </div>
       {success ? (
         <section className="text-slate-950">
           <p>You are now logged in!</p>
@@ -141,11 +145,11 @@ const SignIn = () => {
               </div>
             </div>
             <div>
-              <button type="submit" className="input_submit">
+              <button type="submit" className="input_submit my-2">
                 Signin
               </button>
             </div>
-            <div className="persistCheck">
+            <div className="persistCheck ml-4">
               <input
                 type="checkbox"
                 id="persist"
@@ -156,7 +160,7 @@ const SignIn = () => {
                 Trust This Device
               </label>
             </div>
-            <div className="register">
+            <div className="register mt-2">
               Don't Have an account?
               <Link to="/signup" className="btn btn-red ml-2">
                 Signup

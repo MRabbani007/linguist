@@ -4,17 +4,20 @@ import { selectEditMode, setLanguage } from "../globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import FormEditLanguage from "./FormEditLanguage";
+import Russian from "../../assets/russian.png";
+import Arabic from "../../assets/arabic.png";
 
-export default function LanguageCard({ language }) {
+export default function LanguageCard({
+  language,
+  selectedLang,
+  handleSetLanguage,
+}) {
   const editMode = useSelector(selectEditMode);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [edit, setEdit] = useState(false);
 
   const handleSelect = () => {
-    dispatch(setLanguage(language));
-    navigate("/chapters");
+    handleSetLanguage(language);
   };
 
   return (
@@ -27,16 +30,25 @@ export default function LanguageCard({ language }) {
           </button>
         )}
       </h2>
-      <div className="min-h-32 w-[300px] border-2 border-red-600 p-2">
-        <img src={"lang/" + language.image} />
+      <div className="w-[300px] border-2 border-red-600 p-2">
+        {language?.image && (
+          <img
+            src={language.image === "russian.png" ? Russian : Arabic}
+            className="object-contain"
+          />
+        )}
         <p className="">{language.subtitle}</p>
-        <div className="w-full flex items-center justify-end">
+        <div className="w-full h-full flex items-end justify-center">
           <button
-            className="btn btn-red mx-auto"
+            className={
+              language?.id === selectedLang
+                ? "btn btn-blue mx-auto"
+                : "btn btn-red mx-auto"
+            }
             title={`Select ${language.name}`}
             onClick={handleSelect}
           >
-            Select
+            {language?.id === selectedLang ? "Selected" : "Select"}
           </button>
         </div>
       </div>

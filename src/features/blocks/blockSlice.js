@@ -35,16 +35,10 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getAllBlocks: builder.query({
-      query: () => ({
+      query: (langID = "lang") => ({
         url: SERVER.EDITOR_GET_BLOCKS,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDITOR_GET_BLOCKS,
-            payload: { userName: store.getState()?.auth?.user }, // auth?.user
-          },
-        },
+        method: "GET",
+        params: { langID },
       }),
       transformResponse: (responseData) => {
         return blocksAdapter.setAll(initialState, responseData);

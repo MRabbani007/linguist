@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useGetAllBlocksQuery } from "../blocks/blockSlice";
 import { useEditSectionLessonIDMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectLanguage } from "../globals/globalsSlice";
 
 export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
+  const language = useSelector(selectLanguage);
   const [editSectionLessonID] = useEditSectionLessonIDMutation();
 
   const [allLessons, setAllLessons] = useState([]);
   const [selected, setSelected] = useState("");
-  const { data, isSuccess } = useGetAllBlocksQuery();
+  const { data, isSuccess } = useGetAllBlocksQuery(language?.id);
 
   useEffect(() => {
     if (isSuccess) {
