@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useAddTableMutation } from "./tablesSlice";
 import { CiCirclePlus, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
-import { tableTemplatePronouns, tableTemplateVerb } from "../../data/templates";
+import {
+  tableTemplateAdjective,
+  tableTemplatePronouns,
+  tableTemplateVerb,
+} from "../../data/templates";
 import { toast } from "react-toastify";
 
 export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
@@ -35,6 +39,13 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
         lessonID,
         sectionID,
       };
+    } else if (template === "Adjective") {
+      table = {
+        ...tableTemplateAdjective,
+        id: crypto.randomUUID(),
+        lessonID,
+        sectionID,
+      };
     } else {
       table = {
         id: crypto.randomUUID(),
@@ -46,6 +57,7 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
         notes,
         caption: "",
         sortIndex,
+        showRows: false,
       };
     }
 
@@ -172,6 +184,15 @@ export default function TableAdd({ lessonID, sectionID = "", setAdd }) {
               onChange={(e) => setTemplate(e.target.value)}
             />
             <label htmlFor="radio_template_pronoun">Pronoun</label>
+            <input
+              id="radio_template_adjective"
+              type="radio"
+              name="template"
+              value={"Adjective"}
+              checked={template === "Adjective"}
+              onChange={(e) => setTemplate(e.target.value)}
+            />
+            <label htmlFor="radio_template_adjective">Adjective</label>
           </div>
           <p className="form-buttons">
             <button type="submit" title="Add" className="add">

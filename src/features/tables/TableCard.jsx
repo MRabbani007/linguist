@@ -15,7 +15,7 @@ import FormTableWordEdit from "./FormTableWordEdit";
 export default function TableCard({ table, tableWords }) {
   const editMode = useSelector(selectEditMode);
 
-  const [showRowName, setShowRowName] = useState(false);
+  const [showRowName, setShowRowName] = useState(table?.showRows);
 
   // Toggle Edit Table Content / headers
   const [viewEditTitle, setViewEditTitle] = useState(false);
@@ -62,27 +62,29 @@ export default function TableCard({ table, tableWords }) {
         <TableEditHeaders table={table} setEdit={setEditHeaders} />
       ) : (
         <table className="lesson-table">
-          <caption className="group relative">
-            <span>{table?.caption || "Add Caption"}</span>
-            {editMode && (
-              <button
-                ref={dropDownButtonRef}
-                onClick={() => setShowDropDown(true)}
-                title="Edit Table"
-                className="invisible group-hover:visible"
-              >
-                <BsThreeDots size={28} className="inline" />
-              </button>
-            )}
-            <TableDropDown
-              showDropDown={showDropDown}
-              ref={dropDownRef}
-              table={table}
-              setViewEditTitle={setViewEditTitle}
-              setViewEditHeaders={setEditHeaders}
-              setViewMoveTable={setEditLessonID}
-            />
-          </caption>
+          {editMode || table?.caption !== "" ? (
+            <caption className="group relative">
+              <span>{table?.caption || "Add Caption"}</span>
+              {editMode && (
+                <button
+                  ref={dropDownButtonRef}
+                  onClick={() => setShowDropDown(true)}
+                  title="Edit Table"
+                  className="inline invisible group-hover:visible"
+                >
+                  <BsThreeDots size={28} className="inline" />
+                </button>
+              )}
+              <TableDropDown
+                showDropDown={showDropDown}
+                ref={dropDownRef}
+                table={table}
+                setViewEditTitle={setViewEditTitle}
+                setViewEditHeaders={setEditHeaders}
+                setViewMoveTable={setEditLessonID}
+              />
+            </caption>
+          ) : null}
           <thead>
             {table.colsTitles.length !== 0 && (
               <tr>

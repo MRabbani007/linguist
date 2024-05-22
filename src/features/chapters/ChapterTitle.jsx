@@ -8,7 +8,13 @@ import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { selectProfileResult } from "../profile/profileSlice";
 
-const ChapterTitle = ({ chapter, index, expandedIndex, setExpandedIndex }) => {
+const ChapterTitle = ({
+  chapter,
+  index,
+  expandedIndex,
+  setExpandedIndex,
+  setViewSideBar,
+}) => {
   const displayChapter = useSelector(selectDisplayChapter);
   const { data: profile } = useSelector(selectProfileResult);
   const dispatch = useDispatch();
@@ -51,7 +57,12 @@ const ChapterTitle = ({ chapter, index, expandedIndex, setExpandedIndex }) => {
         />
       </div>
       <div className="pl-3">
-        {index === expandedIndex && <SectionTitlesList chapter={chapter} />}
+        {index === expandedIndex && (
+          <SectionTitlesList
+            chapter={chapter}
+            setViewSideBar={setViewSideBar}
+          />
+        )}
       </div>
     </div>
   );

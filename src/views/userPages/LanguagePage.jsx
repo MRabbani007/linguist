@@ -32,8 +32,9 @@ export default function LanguagePage() {
 
   const [updateProfile] = useUpdateProfileMutation();
   const handleSetLanguage = async (lang) => {
-    await updateProfile({ type: PROFILE.LANGUAGE, data: lang?.id });
     dispatch(setLanguage(lang));
+    await updateProfile({ type: PROFILE.LANGUAGE, data: lang?.id });
+    navigate("/chapters");
   };
 
   const getLangauges = async () => {

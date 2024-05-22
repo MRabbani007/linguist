@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 import { FaUserGear } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
-import Offcanvas from "../navigation/Offcanvas";
+import Offcanvas from "./Offcanvas";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import UserDropDown from "../navigation/UserDropDown";
-import AdminDropDown from "../navigation/AdminDropDown";
+import UserDropDown from "./UserDropDown";
+import AdminDropDown from "./AdminDropDown";
 import { BsBook } from "react-icons/bs";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { PiBirdLight } from "react-icons/pi";
@@ -67,14 +67,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <menu className="navbar-red">
+    <menu className="navbar-red bg-gradient-to-r from-red-600 to-red-500">
       <span className="flex items-center justify-between gap-3">
         <button
           ref={sideBarButtonRef}
           onClick={() => handleSideBar(true)}
           className="lg:hidden"
         >
-          <IoMenu size={34} />
+          <IoMenu className="icon" />
         </button>
         <Link to="/" title="Home">
           <PiBirdLight size={34} />
@@ -90,7 +90,7 @@ const Navbar = () => {
           <GiWeightLiftingUp size={34} />
         </Link>
       </span>
-      <span>
+      <span className="bg-transparent">
         {!user ? (
           <Link to="/login" title="User">
             <FiUser className="icon" />
@@ -119,6 +119,7 @@ const Navbar = () => {
         viewSideBar={viewSideBar}
         handleSideBar={handleSideBar}
         ref={sideBarRef}
+        setViewSideBar={setViewSideBar}
       />
     </menu>
   );

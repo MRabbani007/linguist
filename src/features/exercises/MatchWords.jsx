@@ -186,8 +186,12 @@ export default function MatchWords() {
         />
       ) : null}
       <div>
-        <div className="flex gap-2">
-          <button onClick={() => setShowFilter(true)}>
+        <div className="flex gap-2 relative">
+          <button
+            onClick={() => setShowFilter(true)}
+            title="Select Lessons"
+            className="absolute top-[50%] -translate-y-[50%] -left-[40px]"
+          >
             <CiFilter size={32} />
           </button>
           <MatchWordsScore

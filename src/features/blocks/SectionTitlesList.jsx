@@ -8,7 +8,7 @@ import SectionTitle from "./SectionTitle";
 import { useGetBlocksQuery } from "./blockSlice";
 import { useNavigate } from "react-router-dom";
 
-export default function SectionTitlesList({ chapter }) {
+export default function SectionTitlesList({ chapter, setViewSideBar }) {
   const displayChapter = useSelector(selectDisplayChapter);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +28,12 @@ export default function SectionTitlesList({ chapter }) {
     // destructure blocks from normalized object
     const { ids, entities } = blocks;
     content = ids.map((id) => (
-      <SectionTitle key={id} block={entities[id]} chapter={chapter} />
+      <SectionTitle
+        key={id}
+        block={entities[id]}
+        chapter={chapter}
+        setViewSideBar={setViewSideBar}
+      />
     ));
   } else if (isError) {
     content = <p>{error}</p>;

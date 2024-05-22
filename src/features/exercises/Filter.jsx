@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllBlocksQuery } from "../blocks/blockSlice";
+import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
 import { useGetChaptersQuery } from "../chapters/chapterSlice";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../globals/globalsSlice";
@@ -34,7 +34,13 @@ export default function Filter({
     setShowFilter(false);
   };
 
-  const { data, isSuccess } = useGetAllBlocksQuery(language?.id);
+  const [getAllBlocks, { data, isSuccess }] = useLazyGetAllBlocksQuery();
+
+  useEffect(() => {
+    if (language?.id) {
+      getAllBlocks(language?.id);
+    }
+  }, [language?.id]);
 
   useEffect(() => {
     if (isSuccess) {

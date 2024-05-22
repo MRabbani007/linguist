@@ -71,12 +71,14 @@ export default function ListSection({ list }) {
 
   return (
     <>
-      <div className="bg-lime-200 rounded-md p-2 sm:px-[5%] ">
+      <div className="p-2 sm:px-[5%] ">
         <div className="flex items-center gap-3 relative w-fit">
           {list?.title ? (
-            <em>{list?.title}</em>
+            <strong className="text-xl text-red-600 font-light">
+              {list?.title}
+            </strong>
           ) : editMode ? (
-            <em>Title</em>
+            <strong>Title</strong>
           ) : null}
           {editMode && (
             <button

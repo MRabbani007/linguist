@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../auth/authSlice";
 
 let API_URL = "https://linguistserver.onrender.com";
-// API_URL = "http://localhost:3000";
+API_URL = "http://localhost:3000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,

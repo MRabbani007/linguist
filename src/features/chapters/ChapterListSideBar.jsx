@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useLazyGetProfileQuery } from "../profile/profileSlice";
 
-const ChapterListSideBar = () => {
+const ChapterListSideBar = ({ setViewSideBar }) => {
   const [getProfile, { data: userProfile }] = useLazyGetProfileQuery();
 
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const ChapterListSideBar = () => {
         index={index}
         expandedIndex={expandedIndex}
         setExpandedIndex={setExpandedIndex}
+        setViewSideBar={setViewSideBar}
       />
     ));
   } else if (isError) {

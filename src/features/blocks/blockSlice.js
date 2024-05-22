@@ -151,8 +151,9 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetBlocksQuery,
-  useGetAllBlocksQuery,
   useLazyGetBlocksQuery,
+  useGetAllBlocksQuery,
+  useLazyGetAllBlocksQuery,
   useAddBlockMutation,
   useEditBlockHeaderMutation,
   useEditBlockDetailsMutation,

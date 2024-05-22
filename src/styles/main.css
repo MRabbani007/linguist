@@ -25,9 +25,9 @@ menu {
   top: 0.5rem;
   left: 0.5rem;
   right: 0.5rem;
-  height: var(--navbar-height);
-  padding: 0 1rem;
-  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0px 2px 2px 2px rgb(170, 170, 170);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,8 +35,12 @@ menu {
 }
 
 .navbar-red {
-  background-color: #dc2626;
   color: #f7fee7;
+}
+
+menu .icon {
+  font-size: 2.5rem;
+  width: 2.5rem;
 }
 
 input {
@@ -77,6 +81,7 @@ p {
 .field {
   flex: 1 1 0%;
   width: 100%;
+  min-width: fit-content;
   display: flex;
   flex-direction: column;
   border: 2px solid #e2e8f0;
@@ -203,8 +208,13 @@ p {
 .form-container form {
   border-radius: 0.75rem;
   background-color: #f1f5f9;
-  width: 1000px;
-  max-width: 80vw;
+  min-width: fit-content;
+  width: 70vw;
+  max-width: 1000px;
+  max-height: 80vh;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  overflow-y: auto;
 }
 
 .form-container form h2 {
@@ -315,7 +325,7 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .page-container {
-  padding-top: calc(var(--navbar-height) + 20px);
+  padding-top: calc(var(--navbar-height) + 30px);
   padding-bottom: 40px;
   padding-left: 1rem;
   padding-right: 1rem;

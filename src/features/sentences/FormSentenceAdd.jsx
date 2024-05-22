@@ -31,7 +31,7 @@ export default function FormSentenceAdd({ sectionID = "", setAdd = () => {} }) {
         };
         await addSentence(sentence);
         toast.success("Sentence Added");
-        setAdd(false);
+        // setAdd(false);
       } catch (e) {
         toast.error("Server Error");
       }

@@ -35,6 +35,7 @@ export default function TableEditHeaders({ table, setEdit }) {
   const [editType, setEditType] = useState(null);
   const [editIndex, setEditIndex] = useState(null);
   const [state, setState] = useState(table);
+  const [showRows, setShowRows] = useState(table?.showRows ?? true);
 
   const dispatch = ({ type, payload }) => {
     switch (type) {
@@ -246,7 +247,7 @@ export default function TableEditHeaders({ table, setEdit }) {
     e.preventDefault();
 
     if (canSave) {
-      await editTableHeaders(state);
+      await editTableHeaders({ ...state, showRows });
       toast.success("Table Saved");
       setEdit(false);
     }
@@ -264,6 +265,17 @@ export default function TableEditHeaders({ table, setEdit }) {
         onReset={handleReset}
         className="flex flex-col items-center justify-center gap-3"
       >
+        <div className="py-2 px-4 border-2 rounded-md">
+          <input
+            id="showRows"
+            type="checkbox"
+            title="Show Rows"
+            checked={showRows}
+            onChange={(e) => setShowRows(e.target.checked)}
+            className="mr-2"
+          />
+          <label htmlFor="showRows">Show Table Rows</label>
+        </div>
         <table className="lesson-table">
           <caption>
             <div className="flex flex-1 items-center gap-3 relative px-3">

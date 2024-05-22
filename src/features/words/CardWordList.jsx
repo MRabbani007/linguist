@@ -99,33 +99,15 @@ const CardWordList = ({ word, sectionsList }) => {
         </div>
         {/* Card Body */}
         <div className="flex flex-wrap flex-1 md:justify-between gap-3 relative">
-          {editMode && (
-            <button
-              ref={dropDownButtonRef}
-              title="Edit Section"
-              onClick={() => setShowDropDown(true)}
-              className="absolute top-0 right-0 z-10"
-            >
-              <BsThreeDots size={28} />
-            </button>
-          )}
-          <WordDropDown
-            word={word}
-            showDropDown={showDropDown}
-            setAddImage={setEditImage}
-            setAddSentence={setAddSentence}
-            setEditWord={setViewEditWord}
-            setViewMoveSection={setViewMoveSection}
-            setViewMoveLesson={setViewMoveLesson}
-          />
           <div className="flex flex-wrap md:flex-row flex-col flex-1 gap-3 px-2">
             {/* Image */}
             {word?.image ? (
               <div className="relative group w-28 flex items-center justify-center">
                 <img
                   src={(displayBlock?.imagesURL || "") + word.image}
-                  alt=""
+                  alt="Image"
                   className="object-fill max-w-full max-h-[100px]"
+                  loading="lazy"
                 />
                 {editMode && (
                   <button
@@ -197,6 +179,25 @@ const CardWordList = ({ word, sectionsList }) => {
               </div>
             )}
           </div>
+          {editMode && (
+            <button
+              ref={dropDownButtonRef}
+              title="Edit Word"
+              onClick={() => setShowDropDown(true)}
+              className="top-0 right-0"
+            >
+              <BsThreeDots size={28} />
+            </button>
+          )}
+          <WordDropDown
+            word={word}
+            showDropDown={showDropDown}
+            setAddImage={setEditImage}
+            setAddSentence={setAddSentence}
+            setEditWord={setViewEditWord}
+            setViewMoveSection={setViewMoveSection}
+            setViewMoveLesson={setViewMoveLesson}
+          />
         </div>
         <div className="flex flex-col justify-between px-1 text-slate-600">
           <button onClick={handleAddExer}>

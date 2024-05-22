@@ -9,7 +9,11 @@ import {
 import { IoCheckmarkDone } from "react-icons/io5";
 import { selectProfileResult } from "../profile/profileSlice";
 
-export default function SectionTitle({ block, chapter }) {
+export default function SectionTitle({
+  block,
+  chapter,
+  setViewSideBar = () => {},
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const displayBlock = useSelector(selectDisplayBlock);
@@ -35,6 +39,7 @@ export default function SectionTitle({ block, chapter }) {
   const blockOpen = () => {
     dispatch(setDisplayChapter(chapter));
     dispatch(setDisplayBlock(block));
+    setViewSideBar(false);
     navigate("/lesson");
   };
 

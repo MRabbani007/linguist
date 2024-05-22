@@ -27,9 +27,10 @@ menu {
   top: .5rem;
   left: .5rem;
   right: .5rem;
-  height: var(--navbar-height);
-  padding: 0 1rem;
-  border-radius: .5rem;
+  // height: var(--navbar-height);
+  padding: .5rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0px 2px 2px 2px rgb(170, 170, 170);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,8 +38,15 @@ menu {
 }
 
 .navbar-red {
-  background-color: $clr-red-600;
+  // // background-color: $clr-red-600;
+  // background-image: linear-gradient(to-right, red, green, blue);
+  // background-color: transparent;
   color: $clr-slate-50;
+}
+
+menu .icon{
+  font-size: 2.5rem;
+  width: 2.5rem;
 }
 
 input {
