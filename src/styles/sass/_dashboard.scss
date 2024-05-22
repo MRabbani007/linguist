@@ -2,6 +2,9 @@
   border-radius: .375rem;
   width: 300px;
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
 }
 
 .lesson-tracker > li, .dashboard-exercises >li, .progress>li,.user-word-lists > li, .dashboard-links >li {
@@ -86,7 +89,6 @@
 
 .dashboard ul >li {
   color: white;
-  border-width: 4px;
 }
 
 .dashboard ul > li >span {

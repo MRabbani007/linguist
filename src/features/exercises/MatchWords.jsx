@@ -5,6 +5,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import Filter from "./Filter";
 import { CiFilter } from "react-icons/ci";
+import { FaListCheck } from "react-icons/fa6";
 
 // helper function to shuffle words
 function shuffle(array) {
@@ -187,17 +188,11 @@ export default function MatchWords() {
       ) : null}
       <div>
         <div className="flex gap-2 relative">
-          <button
-            onClick={() => setShowFilter(true)}
-            title="Select Lessons"
-            className="absolute top-[50%] -translate-y-[50%] -left-[40px]"
-          >
-            <CiFilter size={32} />
-          </button>
           <MatchWordsScore
             score={score}
             lives={lives}
             highestScore={highestScore}
+            setShowFilter={setShowFilter}
           />
         </div>
         {/* <h1>Match Words</h1> */}
@@ -211,10 +206,11 @@ export default function MatchWords() {
                   key={index}
                   className={
                     (word.selected
-                      ? "border-zinc-500 bg-zinc-300"
+                      ? "from-zinc-500 to-zinc-300"
                       : index === firstWordIndex
-                      ? "border-lime-500 bg-lime-200"
-                      : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
+                      ? "from-lime-500 to-lime-400"
+                      : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
+                    " word bg-gradient-to-br "
                   }
                 >
                   {word.word}
@@ -231,10 +227,11 @@ export default function MatchWords() {
                   onClick={() => handleSelect("second", index)}
                   className={
                     (word.selected
-                      ? "border-zinc-500 bg-zinc-300"
+                      ? "from-zinc-500 to-zinc-400"
                       : index === secondWordIndex
-                      ? "border-lime-500 bg-lime-200"
-                      : "border-sky-900 bg-sky-200 cursor-pointer ") + " word"
+                      ? "from-lime-500 to-lime-400"
+                      : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
+                    " word bg-gradient-to-br "
                   }
                 >
                   {word.word}

@@ -4,27 +4,27 @@ export default function UserLessonTracker() {
   return (
     <ul className="lesson-tracker">
       <li>
-        <span>Chapter 1</span>
+        <span className="w-fit whitespace-nowrap">Learning Progress</span>
         <span>40%</span>
       </li>
       <li>
-        <span>Lesson 1</span>
+        <span>Chapter 1</span>
         <span>100%</span>
       </li>
       <li>
-        <span>Lesson 2</span>
+        <span>Chapter 2</span>
         <span>100%</span>
       </li>
       <li>
-        <span>Lesson 3</span>
+        <span>Chapter 3</span>
         <span>0%</span>
       </li>
       <li>
-        <span>Lesson 4</span>
+        <span>Chapter 4</span>
         <span>0%</span>
       </li>
       <li>
-        <span>Lesson 5</span>
+        <span>Chapter 5</span>
         <span>0%</span>
       </li>
       <li>

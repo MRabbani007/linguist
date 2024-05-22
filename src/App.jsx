@@ -33,6 +33,7 @@ import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
 import MatchWords from "./features/exercises/MatchWords";
 import LanguagePage from "./views/userPages/LanguagePage";
 import DashboardPage from "./views/DashboardPage";
+import SearchPage from "./views/SearchPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -73,6 +74,7 @@ function App() {
               <Route path="chapters" element={<ChapterPage />} />
               <Route path="sections" element={<SectionsPage />} />
               <Route path="lesson" element={<LessonPage />} />
+              <Route path="search?/:search" element={<SearchPage />} />
               <Route path="exercise" element={<ExercisesMainPage />} />
               <Route path="matchwords" element={<MatchWords />} />
               <Route path="definitions" element={<DefinitionsPage />} />

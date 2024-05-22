@@ -245,30 +245,27 @@ p {
   gap: 0.75rem;
 }
 
-.add {
+.add, .save, .cancel, .delete {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
+}
+
+.add {
   background-color: #075985;
   color: white;
 }
 
 .save {
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
   background-color: rgb(64, 150, 64);
   color: white;
 }
 
 .cancel {
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
   background-color: #fbbf24;
   color: white;
 }
 
 .delete {
-  padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
   background-color: #f87171;
   color: white;
 }
@@ -662,12 +659,14 @@ tbody tr:nth-child(2n+1):hover {
 
 .word {
   text-align: center;
-  border-width: 0.15rem;
-  border-radius: 0.375rem;
+  border-width: 0;
+  border-radius: 9999px;
   width: 10rem;
   height: 3rem;
   white-space: wrap;
   transition: all 0.2s linear;
+  font-weight: 500;
+  color: white;
 }
 
 .exercise-card {
@@ -691,6 +690,9 @@ tbody tr:nth-child(2n+1):hover {
   border-radius: 0.375rem;
   width: 300px;
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .lesson-tracker > li, .dashboard-exercises > li, .progress > li, .user-word-lists > li, .dashboard-links > li {
@@ -777,7 +779,6 @@ tbody tr:nth-child(2n+1):hover {
 
 .dashboard ul > li {
   color: white;
-  border-width: 4px;
 }
 
 .dashboard ul > li > span {

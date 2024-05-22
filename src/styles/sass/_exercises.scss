@@ -6,12 +6,14 @@
 
 .word {
   text-align: center;
-  border-width: .15rem;
-  border-radius: .375rem;
+  border-width: 0;//.15rem;
+  border-radius: 9999px;
   width: 10rem;
   height: 3rem;
   white-space: wrap;
   transition: all .2s linear;
+  font-weight: 500;
+  color: white;
 }
 
 .exercise-card {
