@@ -12,8 +12,8 @@ import {
   faInfoCircle,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { FaRegUserCircle } from "react-icons/fa";
 import axios from "../api/axios";
+import Background from "../assets/bg.svg";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -96,7 +96,10 @@ const Signup = () => {
   };
 
   return (
-    <main className="wrapper">
+    <main className="wrapper pt-10">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 bg-green-500 flex justify-center items-center">
+        <img src={Background} alt="bg" className="object-cover w-full h-full" />
+      </div>
       {success ? (
         <section>
           <h2>New user registered</h2>
@@ -248,7 +251,10 @@ const Signup = () => {
             </div>
             <div className="register">
               Have an account?
-              <Link to="/login" className="btn btn-red ml-2">
+              <Link
+                to="/login"
+                className="py-2 px-6 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 mx-2 duration-200"
+              >
                 Signin
               </Link>
             </div>

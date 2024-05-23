@@ -17,11 +17,14 @@ const SignOut = () => {
   };
 
   return (
-    <div className="w-fit my-4 mx-auto flex flex-col items-center gap-3">
+    <div className="w-fit my-4 mx-auto flex flex-col items-center justify-center gap-3 min-h-[70vh]">
       {/* Header */}
       <CardHeader />
       <div>
-        <button className="btn btn-blue" onClick={handleLogout}>
+        <button
+          className="py-2 px-6 rounded-full bg-red-600 hover:bg-red-500 text-zinc-50 mx-2 duration-200"
+          onClick={handleLogout}
+        >
           Sign Out
         </button>
       </div>

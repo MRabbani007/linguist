@@ -10,7 +10,7 @@ import { ACTIONS } from "../../data/actions";
 // Imported Icons
 import { FaRegUserCircle } from "react-icons/fa";
 import axios from "../../api/axios";
-import Background from "../../assets/bg_1.jpg";
+import Background from "../../assets/bg.svg";
 
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
@@ -84,7 +84,7 @@ const SignIn = () => {
   return (
     <main className="wrapper">
       <div className="fixed top-0 left-0 right-0 bottom-0 z-0 bg-green-500 flex justify-center items-center">
-        <img src={Background} alt="bg" className="object-fill" />
+        <img src={Background} alt="bg" className="object-cover w-full h-full" />
       </div>
       {success ? (
         <section className="text-slate-950">
@@ -162,7 +162,10 @@ const SignIn = () => {
             </div>
             <div className="register mt-2">
               Don't Have an account?
-              <Link to="/signup" className="btn btn-red ml-2">
+              <Link
+                to="/signup"
+                className="py-2 px-6 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 mx-2 duration-200"
+              >
                 Signup
               </Link>
             </div>
