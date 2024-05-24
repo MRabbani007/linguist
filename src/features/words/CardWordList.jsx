@@ -13,7 +13,7 @@ import { BsThreeDots } from "react-icons/bs";
 import WordDropDown from "../dropDowns/WordDropDown";
 import WordImageEdit from "./WordImageEdit";
 
-const CardWordList = ({ word, sectionsList }) => {
+const CardWordList = ({ word, sectionsList = [] }) => {
   const [editWordExercise] = useEditWordExerciseMutation();
   const displayBlock = useSelector(selectDisplayBlock);
   const editMode = useSelector(selectEditMode);

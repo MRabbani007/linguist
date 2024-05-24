@@ -6,7 +6,7 @@ const UserDropDown = forwardRef(({}, ref) => {
   return (
     <div
       ref={ref}
-      className="absolute top-0 right-0 w-fit p-2 flex flex-col gap-2"
+      className="absolute top-0 right-0 w-fit p-2 flex flex-col gap-2 z-10 rounded-lg"
     >
       <Link to="/settings">
         <IoSettingsOutline className="icon" />

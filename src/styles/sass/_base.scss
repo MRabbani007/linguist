@@ -1,8 +1,10 @@
-:root{ 
-  --font-general-Sans: 'General Sans', sans-serif;
-  --font-raleway: 'Raleway', sans-serif;
-  --font-supreme: 'Supreme', sans-serif;
-  --font-roboto: 'Roboto', sans-serif;
+:root {
+  --font-general-Sans: "General Sans", sans-serif;
+  --font-raleway: "Raleway", sans-serif;
+  --font-supreme: "Supreme", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+
+  --font-poppins: "Poppins", sans-serif;
 
   --navbar-height: 50px;
 
@@ -12,23 +14,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*, *::after, *::before{
+*,
+*::after,
+*::before {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
 body {
-  font-family: var(--font-roboto)
+  font-family: var(--font-poppins);
+  font-style: normal;
 }
 
 menu {
   position: fixed;
-  top: .5rem;
-  left: .5rem;
-  right: .5rem;
+  top: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
   // height: var(--navbar-height);
-  padding: .5rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 9999px;
   box-shadow: 0px 2px 2px 2px rgb(170, 170, 170);
   display: flex;
@@ -44,23 +49,17 @@ menu {
   color: $clr-slate-50;
 }
 
-menu .icon{
+menu .icon {
   font-size: 2.5rem;
   width: 2.5rem;
 }
 
 input {
   outline: none;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  display: block;
 }
 
 p {

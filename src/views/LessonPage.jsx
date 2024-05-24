@@ -16,6 +16,7 @@ import LessonHeader from "../features/blocks/LessonHeader";
 import LessonHeaderEdit from "../features/blocks/LessonHeaderEdit";
 import LessonEditDetails from "../features/blocks/LessonEditDetails";
 import LessonCompleted from "../features/blocks/LessonCompleted";
+import ContentNavigator from "../features/navigation/ContentNavigator";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -102,6 +103,7 @@ export default function LessonPage() {
       {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
 
       <BlockNavigator />
+      <ContentNavigator />
 
       <LessonCompleted />
     </div>

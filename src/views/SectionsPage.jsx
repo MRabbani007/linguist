@@ -11,6 +11,7 @@ import ChapterNavigator from "../features/navigation/ChapterNavigator";
 import ChapterHeaderEdit from "../features/chapters/ChapterHeaderEdit";
 import ChapterHeader from "../features/chapters/ChapterHeader";
 import LessonAdd from "../features/blocks/LessonAdd";
+import ContentNavigator from "../features/navigation/ContentNavigator";
 
 export default function SectionsPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -76,6 +77,7 @@ export default function SectionsPage() {
       <div className="flex flex-wrap justify-center gap-3">{content}</div>
       {editMode && <LessonAdd />}
       <ChapterNavigator />
+      <ContentNavigator />
     </div>
   );
 }

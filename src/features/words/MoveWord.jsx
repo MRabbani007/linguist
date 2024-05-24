@@ -15,7 +15,13 @@ export default function MoveWord({ word, setViewMoveLesson }) {
 
   useEffect(() => {
     if (isSuccess) {
-      setAllLessons(() => data.ids.map((id) => data.entities[id]));
+      setAllLessons(() =>
+        data.ids
+          .map((id) => data.entities[id])
+          .sort((a, b) =>
+            a?.title.toString().localeCompare(b?.title.toString())
+          )
+      );
     }
   }, [data]);
 
@@ -71,6 +77,12 @@ export default function MoveWord({ word, setViewMoveLesson }) {
             <label htmlFor="move-word-lesson" className="field__label">
               Move Word to Lesson
             </label>
+            {/* <input
+              type="text"
+              list="move-word-lesson"
+              id="selected-lesson"
+              name="selected-lesson"
+            /> */}
             <select
               name="move-word-lesson"
               id="move-word-lesson"

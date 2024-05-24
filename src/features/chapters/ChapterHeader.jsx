@@ -8,8 +8,8 @@ const ChapterHeader = ({ chapter, setEditChapter }) => {
 
   return (
     <h2 className="text-center flex-1 relative group">
-      <p className="font-bold">
-        {"Chapter " + chapter?.chapterNo + ":" + chapter?.title}
+      <p className="font-semibold text-xl">
+        {"Chapter " + chapter?.chapterNo + ": " + chapter?.title}
       </p>
       <p>{chapter?.subtitle}</p>
       {editMode && (

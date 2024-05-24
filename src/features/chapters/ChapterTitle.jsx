@@ -7,6 +7,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { selectProfileResult } from "../profile/profileSlice";
+import { PiCircleDashed } from "react-icons/pi";
 
 const ChapterTitle = ({
   chapter,
@@ -46,8 +47,12 @@ const ChapterTitle = ({
         }
         onClick={handleOpen}
       >
-        {isCompleted ? <IoCheckmarkDone size={25} /> : <TbProgress size={25} />}
-        <div className="flex-1 ml-1">
+        {/* {isCompleted ? (
+          <IoCheckmarkDone size={25} />
+        ) : (
+          <PiCircleDashed size={25} />
+        )} */}
+        <div className="flex-1">
           <p className="font-bold">{chapter.title}</p>
           <p>{chapter.subtitle}</p>
         </div>
@@ -56,14 +61,14 @@ const ChapterTitle = ({
           className={index === expandedIndex && "rotate-90 duration-200"}
         />
       </div>
-      <div className="pl-3">
+      <ul className="flex flex-col items-start gap-0 list-inside list-disc">
         {index === expandedIndex && (
           <SectionTitlesList
             chapter={chapter}
             setViewSideBar={setViewSideBar}
           />
         )}
-      </div>
+      </ul>
     </div>
   );
 };

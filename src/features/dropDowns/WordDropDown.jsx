@@ -1,9 +1,9 @@
 import { forwardRef } from "react";
 import { useRemoveWordMutation } from "../words/wordsSlice";
-import { CiEdit, CiTextAlignLeft, CiTrash } from "react-icons/ci";
+import { CiEdit, CiImageOn, CiTextAlignLeft, CiTrash } from "react-icons/ci";
 import { BiMove } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { BsBoxArrowUpRight } from "react-icons/bs";
+import { BsBoxArrowUpRight, BsTextParagraph } from "react-icons/bs";
 import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 
 const WordDropDown = forwardRef(
@@ -59,41 +59,34 @@ const WordDropDown = forwardRef(
         <li className="dropdown-title">Add...</li>
         <li>
           <button title="Add Image" onClick={handleAddImage}>
-            <CiTextAlignLeft size={32} />
+            <CiImageOn size={32} />
             <span>Image</span>
           </button>
-        </li>
-        <li>
           <button title="Add Sentence" onClick={handleAddSentence}>
-            <CiTextAlignLeft size={32} />
+            <BsTextParagraph size={32} />
             <span>Sentence</span>
           </button>
         </li>
         <li className="dropdown-title">Edit...</li>
-        <li title="Edit Word">
-          <button onClick={handleEditWord}>
+        <li>
+          <button title="Edit Word" onClick={handleEditWord}>
             <CiEdit size={32} />
             <span>Word</span>
           </button>
-        </li>
-        <li title="Move to Section">
-          <button onClick={handleMoveSection}>
+          <button title="Move to Section" onClick={handleMoveSection}>
             <HiOutlineArrowsPointingOut size={25} />
             <span>Move to Section</span>
           </button>
-        </li>
-        <li title="Move to Lesson">
-          <button onClick={handleMoveLesson}>
+          <button title="Move to Lesson" onClick={handleMoveLesson}>
             <BsBoxArrowUpRight size={25} />
             <span>Move to Lesson</span>
           </button>
-        </li>
-        <li title="Delete Word">
-          <button onClick={handleDelete}>
+          <button title="Delete Word" onClick={handleDelete}>
             <CiTrash size={32} />
             <span>Delete</span>
           </button>
         </li>
+        <li></li>
       </ul>
     );
   }

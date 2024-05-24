@@ -13,7 +13,6 @@ import { useLazyGetProfileQuery } from "../profile/profileSlice";
 const ChapterListSideBar = ({ setViewSideBar }) => {
   const [getProfile, { data: userProfile }] = useLazyGetProfileQuery();
 
-  const navigate = useNavigate();
   const language = useSelector(selectLanguage);
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
@@ -64,20 +63,8 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
     content = <p>{JSON.stringify(error)}</p>;
   }
 
-  const handleOverview = () => {
-    navigate("/chapters");
-  };
-
   return (
-    <div className="p-0 flex flex-col gap-2 overflow-y-auto">
-      <button
-        onClick={handleOverview}
-        className="text-start m-0 p-0 w-fit font-semibold text-slate-700"
-      >
-        Overview
-      </button>
-      {content}
-    </div>
+    <div className="p-0 flex flex-col gap-2 overflow-y-auto">{content}</div>
   );
 };
 

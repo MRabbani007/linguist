@@ -4,7 +4,6 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import "./styles/styles.css";
 // generated from SASS
 import "./styles/main.css";
-import "./styles/appStyles.css";
 // Imported Context
 import { GlobalProvider } from "./context/GlobalState";
 import { AuthProvider } from "./context/AuthProvider";

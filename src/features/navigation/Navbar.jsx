@@ -4,6 +4,7 @@ import { FiUser } from "react-icons/fi";
 import { TbReportAnalytics } from "react-icons/tb";
 import {
   IoAddCircleOutline,
+  IoBarbellOutline,
   IoBookOutline,
   IoGridOutline,
   IoHomeOutline,
@@ -21,6 +22,14 @@ import AdminDropDown from "./AdminDropDown";
 import { BsBook } from "react-icons/bs";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import { PiBirdLight } from "react-icons/pi";
+import { GoHome } from "react-icons/go";
+import { CiDumbbell, CiGrid41 } from "react-icons/ci";
+import { SlBookOpen } from "react-icons/sl";
+import Logo from "../../assets/logo-red.png";
+import Learn from "../../assets/learn.png";
+import Dashboard from "../../assets/dashboard.png";
+import Exercise from "../../assets/train.png";
+import IMG_User from "../../assets/user.png";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -67,8 +76,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <menu className="navbar-red bg-gradient-to-r from-red-600 to-red-500">
-      <span className="flex items-center justify-between gap-3">
+    <div className="z-50 py-2 px-4 text-white flex justify-between bg-gradient-to-br from-red-700 to-red-600">
+      <span className="flex items-center justify-between gap-4">
         <button
           ref={sideBarButtonRef}
           onClick={() => handleSideBar(true)}
@@ -77,23 +86,28 @@ const Navbar = () => {
           <IoMenu className="icon" />
         </button>
         <Link to="/" title="Home">
-          <PiBirdLight size={34} />
-          {/* <IoHomeOutline size={34} /> */}
+          {/* <GoHome size={40} /> */}
+          <img src={Logo} alt="Linguist" width={100} />
+          {/* <IoHomeOutline size={40} /> */}
         </Link>
         <Link to="/dashboard" title="Dashboard">
-          <IoGridOutline size={34} />
+          {/* <IoGridOutline size={40} /> */}
+          <img src={Dashboard} alt="Linguist" width={50} />
         </Link>
         <Link to="/chapters" title="Learn">
-          <IoBookOutline size={34} />
+          <img src={Learn} alt="Linguist" width={50} />
+          {/* <SlBookOpen size={40} /> */}
         </Link>
         <Link to="/exercise" title="Exercise">
-          <GiWeightLiftingUp size={34} />
+          <img src={Exercise} alt="Linguist" width={50} />
+          {/* <IoBarbellOutline size={40} /> */}
         </Link>
       </span>
       <span className="bg-transparent">
         {!user ? (
           <Link to="/login" title="User">
-            <FiUser className="icon" />
+            {/* <FiUser size={40} /> */}
+            <img src={IMG_User} alt="Linguist" width={50} />
           </Link>
         ) : (
           <div className=" relative">
@@ -103,15 +117,17 @@ const Navbar = () => {
               title="User Menu"
             >
               {user}
-              <FiUser className="icon" />
-              <MdKeyboardArrowRight size={20} />
+              {/* <FiUser size={40} /> */}
+              <img src={IMG_User} alt="Linguist" width={50} />
+              {/* <MdKeyboardArrowRight size={20} /> */}
             </button>
-            {viewUserDropDown && isAdmin && (
-              <AdminDropDown ref={dropDownRefUser} />
+            {isAdmin && (
+              <AdminDropDown
+                ref={dropDownRefUser}
+                viewUserDropDown={viewUserDropDown}
+              />
             )}
-            {viewUserDropDown && !isAdmin && (
-              <UserDropDown ref={dropDownRefAdmin} />
-            )}
+            {!isAdmin && <UserDropDown ref={dropDownRefAdmin} />}
           </div>
         )}
       </span>
@@ -121,7 +137,7 @@ const Navbar = () => {
         ref={sideBarRef}
         setViewSideBar={setViewSideBar}
       />
-    </menu>
+    </div>
   );
 };
 

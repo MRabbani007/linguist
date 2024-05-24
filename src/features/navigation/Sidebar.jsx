@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import ChapterListSideBar from "../chapters/ChapterListSideBar";
 import SidebarSearch from "./SidebarSearch";
+import { Link } from "react-router-dom";
 // Imported Media
 
 const Sidebar = () => {
@@ -12,7 +13,12 @@ const Sidebar = () => {
     >
       <SidebarSearch />
       <ChapterListSideBar />
-      <button className="btn btn-red">Show More</button>
+      <Link
+        to="/chapters"
+        className="py-2 px-4 text-white bg-red-600 rounded-full text-center"
+      >
+        Show More
+      </Link>
     </nav>
   );
 };

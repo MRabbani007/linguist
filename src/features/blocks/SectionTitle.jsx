@@ -8,6 +8,7 @@ import {
 } from "../globals/globalsSlice";
 import { IoCheckmarkDone } from "react-icons/io5";
 import { selectProfileResult } from "../profile/profileSlice";
+import { AiOutlineDash } from "react-icons/ai";
 
 export default function SectionTitle({
   block,
@@ -44,17 +45,19 @@ export default function SectionTitle({
   };
 
   return (
-    <div
+    <li
       onClick={blockOpen}
       className={
         (displayBlock?.id === block?.id ? "text-yellow-500" : "") +
         " cursor-pointer duration-200"
       }
     >
-      {isCompleted ? (
+      {/* {isCompleted ? (
         <IoCheckmarkDone size={25} className="inline mr-2" />
-      ) : null}
+      ) : (
+        <AiOutlineDash size={25} className="inline mr-2" />
+      )} */}
       {block?.title}
-    </div>
+    </li>
   );
 }

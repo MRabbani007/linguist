@@ -3,6 +3,8 @@ import { useRemoveBlockMutation } from "../blocks/blockSlice";
 import copy from "copy-to-clipboard";
 import { CiEdit, CiHashtag, CiTextAlignLeft, CiTrash } from "react-icons/ci";
 import { toast } from "react-toastify";
+import { RxSection, RxTextAlignLeft } from "react-icons/rx";
+import { IoCopyOutline } from "react-icons/io5";
 
 const LessonDropDown = forwardRef(
   (
@@ -59,37 +61,31 @@ const LessonDropDown = forwardRef(
         <li className="dropdown-title">Add...</li>
         <li>
           <button title="Add Introduction" onClick={handleAddIntro}>
-            <CiTextAlignLeft size={32} />
+            <RxTextAlignLeft size={32} />
             <span>Introduction</span>
           </button>
-        </li>
-        <li>
           <button title="Add Section" onClick={handleAddSection}>
-            <CiTextAlignLeft size={32} />
+            <RxSection size={32} />
             <span>Section</span>
           </button>
         </li>
         <li className="dropdown-title">Edit...</li>
-        <li title="Edit Lesson Title">
-          <button onClick={handleEditTitle}>
+        <li>
+          <button title="Edit Lesson Title" onClick={handleEditTitle}>
             <CiEdit size={32} />
             <span>Title</span>
           </button>
-        </li>
-        <li title="Edit Lesson Details">
-          <button onClick={handleEditDetails}>
+          <button title="Edit Lesson Details" onClick={handleEditDetails}>
             <CiEdit size={32} />
             <span>Details</span>
           </button>
         </li>
-        <li title="Copy Section ID">
-          <button onClick={copyIDtoClipboard}>
-            <CiHashtag size={32} />
+        <li>
+          <button title="Copy Section ID" onClick={copyIDtoClipboard}>
+            <IoCopyOutline size={30} />
             <span>Copy Lesson ID</span>
           </button>
-        </li>
-        <li title="Delete Section">
-          <button onClick={handleDelete}>
+          <button title="Delete Section" onClick={handleDelete}>
             <CiTrash size={32} />
             <span>Delete</span>
           </button>

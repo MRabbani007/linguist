@@ -50,9 +50,9 @@ const ChapterTitleBlock = ({ chapter }) => {
 
   return (
     <>
-      <div className="group w-full min-w-[300px] max-w-[500px]">
+      <div className="group flex flex-col flex-1 min-w-[300px] max-w-[500px] justify-stretch">
         {/* Card Header */}
-        <div className="card__header bg-zinc-700 text-zinc-200 ">
+        <div className="card__header bg-zinc-700 text-zinc-200 h-16">
           <span>
             {/* <TimeAgo timestamp={chapter?.createDate} /> */}
             <FaStar
@@ -60,19 +60,19 @@ const ChapterTitleBlock = ({ chapter }) => {
               title="Beginner"
             />
           </span>
-          <p
-            className="font-extralight cursor-pointer flex flex-col hover:text-yellow-400 duration-200"
+          <div
+            className="font-extralight cursor-pointer hover:text-yellow-400 duration-200"
             onClick={handleOpen}
           >
-            <span>
+            <p>
               <span>{"Chapter " + chapter?.chapterNo + ": "}</span>
               <span className="">{chapter?.title || ""}</span>
-            </span>
-            <span>{chapter?.subtitle || ""}</span>
-          </p>
+            </p>
+            <p className="">{chapter?.subtitle || ""}</p>
+          </div>
           <span>10%</span>
         </div>
-        <div className="card__body bg-slate-200 relative">
+        <div className="card__body bg-slate-200 relative h-24">
           {editMode && (
             <span className="absolute bottom-2 right-2 invisible group-hover:visible">
               <CiEdit className="icon" onClick={() => setEdit(true)} />
@@ -85,6 +85,10 @@ const ChapterTitleBlock = ({ chapter }) => {
             <span>Learning Time:</span>
             <span>5 Hours</span>
           </p>
+        </div>
+        <div className="card__footer justify-between flex">
+          <span>5 Lessons</span>
+          <span>10 Hours</span>
         </div>
       </div>
       {edit && <ChapterHeaderEdit chapter={chapter} setEditChapter={setEdit} />}

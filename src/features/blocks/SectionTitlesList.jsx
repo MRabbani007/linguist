@@ -39,20 +39,5 @@ export default function SectionTitlesList({ chapter, setViewSideBar }) {
     content = <p>{error}</p>;
   }
 
-  const handleChapterContent = () => {
-    dispatch(setDisplayChapter(chapter));
-    navigate("/sections");
-  };
-
-  return (
-    <div className="flex flex-col gap-1">
-      <button
-        onClick={handleChapterContent}
-        className="text-start m-0 p-0 w-fit font-semibold text-slate-700"
-      >
-        Chapter Content
-      </button>
-      {content}
-    </div>
-  );
+  return <>{content}</>;
 }

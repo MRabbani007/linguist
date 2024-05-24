@@ -93,7 +93,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
     removeBlock: builder.mutation({
       query: (id) => ({
         url: SERVER.LESSON,
-        method: "POST",
+        method: "DELETE",
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
