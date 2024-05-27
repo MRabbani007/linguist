@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const MissingPage = () => {
   return (
-    <main className="">
+    <main>
       <h2>Page Not Found</h2>
       <p>
         <Link to="/">Back to HomePage</Link>

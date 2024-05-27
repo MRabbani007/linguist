@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   selectDisplayBlock,
+  selectProgress,
   setDisplayBlock,
   setDisplayChapter,
 } from "../globals/globalsSlice";
@@ -11,35 +12,25 @@ import { selectProfileResult } from "../profile/profileSlice";
 import { AiOutlineDash } from "react-icons/ai";
 
 export default function SectionTitle({
-  block,
+  lesson,
   chapter,
   setViewSideBar = () => {},
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const displayBlock = useSelector(selectDisplayBlock);
+  const progress = useSelector(selectProgress);
 
-  const {
-    data: profile,
-    isLoading,
-    isSuccess,
-  } = useSelector(selectProfileResult);
+  const chap = progress.find((c) => c?.id === lesson?.chapterID);
 
-  useEffect(() => {}, [isSuccess]);
+  const lessonProgress =
+    chap?.lessons && chap?.lessons.find((l) => l.id === lesson?.id);
 
-  const chap =
-    Array.isArray(profile) &&
-    profile[0]?.chapters &&
-    profile[0]?.chapters.find((c) => c?.id === block?.chapterID);
-
-  const progress =
-    chap?.lessons && chap?.lessons.find((l) => l.id === block?.id);
-
-  const isCompleted = progress?.completed === true;
+  const isCompleted = lessonProgress?.completed === true;
 
   const blockOpen = () => {
     dispatch(setDisplayChapter(chapter));
-    dispatch(setDisplayBlock(block));
+    dispatch(setDisplayBlock(lesson));
     setViewSideBar(false);
     navigate("/lesson");
   };
@@ -48,7 +39,7 @@ export default function SectionTitle({
     <li
       onClick={blockOpen}
       className={
-        (displayBlock?.id === block?.id ? "text-yellow-500" : "") +
+        (displayBlock?.id === lesson?.id ? "text-yellow-500" : "") +
         " cursor-pointer duration-200"
       }
     >
@@ -57,7 +48,7 @@ export default function SectionTitle({
       ) : (
         <AiOutlineDash size={25} className="inline mr-2" />
       )} */}
-      {block?.title}
+      {lesson?.title}
     </li>
   );
 }

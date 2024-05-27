@@ -134,7 +134,7 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <div className="flex justify-between items-center p-3 bg-gradient-to-b from-neutral-500/30 to-neutral-300 rounded-xl shadow-md shadow-slate-400 group relative">
+    <section className="flex justify-between items-center p-3 bg-gradient-to-b from-neutral-500/30 to-neutral-300 rounded-xl shadow-md shadow-slate-400 group relative w-full">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
@@ -156,7 +156,7 @@ const BlockNavigator = ({ children }) => {
         </span>
         <FaChevronRight className="icon" />
       </button>
-    </div>
+    </section>
   );
 };
 

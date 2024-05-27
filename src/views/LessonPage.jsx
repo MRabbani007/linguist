@@ -47,53 +47,66 @@ export default function LessonPage() {
   isMounted.current = true;
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-[1000px] mx-auto">
-      <BlockNavigator>
-        <LessonHeader
-          lesson={displayBlock}
-          setEditLessonTitle={setEditLessonTitle}
-          setEditLessonDetails={setEditLessonDetails}
-          setAddLessonIntro={setAddLessonIntro}
-          setAddSection={setAddSection}
-        />
-      </BlockNavigator>
-      <LessonIntro
-        lesson={displayBlock}
-        addLessonIntro={addLessonIntro}
-        setAddLessonIntro={setAddLessonIntro}
-      />
+    <>
+      <main>
+        <BlockNavigator>
+          <LessonHeader
+            lesson={displayBlock}
+            setEditLessonTitle={setEditLessonTitle}
+            setEditLessonDetails={setEditLessonDetails}
+            setAddLessonIntro={setAddLessonIntro}
+            setAddSection={setAddSection}
+          />
+        </BlockNavigator>
+        <div>
+          <LessonIntro
+            lesson={displayBlock}
+            addLessonIntro={addLessonIntro}
+            setAddLessonIntro={setAddLessonIntro}
+          />
 
-      {(displayBlock?.detail || displayBlock?.text || displayBlock?.notes) && (
-        <article>
-          {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
-          {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
-          {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
-        </article>
-      )}
+          {(displayBlock?.detail ||
+            displayBlock?.text ||
+            displayBlock?.notes) && (
+            <article>
+              {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
+              {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
+              {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
+            </article>
+          )}
 
-      <LessonSections
-        lesson={displayBlock}
-        addSection={addSection}
-        setAddSection={setAddSection}
-      />
+          <LessonSections
+            lesson={displayBlock}
+            addSection={addSection}
+            setAddSection={setAddSection}
+          />
 
-      {editMode && (
-        <button
-          className="btn btn-red w-fit mx-auto"
-          onClick={() => setViewAddWord(true)}
-        >
-          Add Word
-        </button>
-      )}
+          {editMode && (
+            <button
+              className="btn btn-red w-fit mx-auto"
+              onClick={() => setViewAddWord(true)}
+            >
+              Add Word
+            </button>
+          )}
 
-      {displayBlock?.caption ? (
-        <div className="">{displayBlock?.caption}</div>
-      ) : null}
-      {/* footer */}
+          {displayBlock?.caption ? (
+            <div className="">{displayBlock?.caption}</div>
+          ) : null}
+          {/* footer */}
+        </div>
+
+        <BlockNavigator />
+        <ContentNavigator />
+
+        <LessonCompleted />
+      </main>
 
       {editLessonTitle ? (
         <LessonHeaderEdit lesson={displayBlock} setEdit={setEditLessonTitle} />
-      ) : editLessonDetails ? (
+      ) : null}
+
+      {editLessonDetails ? (
         <LessonEditDetails
           lesson={displayBlock}
           setEdit={setEditLessonDetails}
@@ -101,11 +114,6 @@ export default function LessonPage() {
       ) : null}
 
       {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
-
-      <BlockNavigator />
-      <ContentNavigator />
-
-      <LessonCompleted />
-    </div>
+    </>
   );
 }

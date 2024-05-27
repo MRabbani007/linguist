@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import SectionTitlesList from "../blocks/SectionTitlesList";
-import { selectDisplayChapter } from "../globals/globalsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {
+  selectDisplayChapter,
+  selectLessons,
+  selectProgress,
+} from "../globals/globalsSlice";
+import { useSelector } from "react-redux";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { TbProgress } from "react-icons/tb";
 import { IoCheckmarkDone } from "react-icons/io5";
-import { selectProfileResult } from "../profile/profileSlice";
 import { PiCircleDashed } from "react-icons/pi";
+import SectionTitle from "../blocks/SectionTitle";
 
 const ChapterTitle = ({
   chapter,
@@ -17,18 +19,23 @@ const ChapterTitle = ({
   setViewSideBar,
 }) => {
   const displayChapter = useSelector(selectDisplayChapter);
-  const { data: profile } = useSelector(selectProfileResult);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const lessons = useSelector(selectLessons);
+  const progress = useSelector(selectProgress);
 
-  const progress =
-    Array.isArray(profile) &&
-    profile[0]?.chapters &&
-    profile[0]?.chapters.find((c) => c.id === chapter.id);
+  const chapterProgress = progress.find((c) => c.id === chapter.id);
+
+  let content = lessons
+    .filter((l) => l.chapterID === chapter.id)
+    .map((lesson) => (
+      <SectionTitle
+        key={lesson?.id}
+        lesson={lesson}
+        chapter={chapter}
+        setViewSideBar={setViewSideBar}
+      />
+    ));
 
   const handleOpen = async () => {
-    // dispatch(setDisplayChapter(chapter));
-    // navigate("/sections");
     if (expandedIndex === index) {
       setExpandedIndex(-1);
     } else {
@@ -36,7 +43,7 @@ const ChapterTitle = ({
     }
   };
 
-  const isCompleted = progress?.completed;
+  const isCompleted = chapterProgress?.completed;
 
   return (
     <div>
@@ -62,12 +69,7 @@ const ChapterTitle = ({
         />
       </div>
       <ul className="flex flex-col items-start gap-0 list-inside list-disc">
-        {index === expandedIndex && (
-          <SectionTitlesList
-            chapter={chapter}
-            setViewSideBar={setViewSideBar}
-          />
-        )}
+        {index === expandedIndex && content}
       </ul>
     </div>
   );

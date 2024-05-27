@@ -59,25 +59,28 @@ export default function SectionsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-3 flex-1 max-w-[1000px] mx-auto">
-      <ChapterNavigator>
-        {editChapter ? (
-          <ChapterHeaderEdit
-            chapter={displayChapter}
-            setEditChapter={setEditChapter}
-          />
-        ) : (
+    <>
+      <main>
+        <ChapterNavigator>
           <ChapterHeader
             chapter={displayChapter}
             setEditChapter={setEditChapter}
           />
-        )}
-      </ChapterNavigator>
-      <p>{displayChapter?.detail}</p>
-      <div className="flex flex-wrap justify-center gap-3">{content}</div>
-      {editMode && <LessonAdd />}
-      <ChapterNavigator />
-      <ContentNavigator />
-    </div>
+        </ChapterNavigator>
+        <div>
+          <p>{displayChapter?.detail}</p>
+          <div className="flex flex-wrap justify-center gap-3">{content}</div>
+          {editMode && <LessonAdd />}
+          <ChapterNavigator />
+          <ContentNavigator />
+        </div>
+      </main>
+      {editChapter ? (
+        <ChapterHeaderEdit
+          chapter={displayChapter}
+          setEditChapter={setEditChapter}
+        />
+      ) : null}
+    </>
   );
 }

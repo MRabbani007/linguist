@@ -42,17 +42,19 @@ const ChapterPage = () => {
   }
 
   return (
-    <main className="flex flex-col gap-3 max-w-[1000px] mx-auto">
-      <header>
-        <h2 className="font-bold text-xl text-center p-3 bg-slate-200 rounded-md shadow-md shadow-slate-400">
-          {language?.title}
-        </h2>
-      </header>
-      <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
-        {content}
-      </div>
-      {editMode && <CardChapterAdd />}
-    </main>
+    <>
+      <main>
+        <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
+          <h1>{language?.title}</h1>
+        </header>
+        <div>
+          <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
+            {content}
+          </div>
+        </div>
+        {editMode && <CardChapterAdd />}
+      </main>
+    </>
   );
 };
 

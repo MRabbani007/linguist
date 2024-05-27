@@ -1,0 +1,27 @@
+import React, { forwardRef } from "react";
+import { Link } from "react-router-dom";
+
+const MenuLessons = forwardRef(({ viewDropDown }, ref) => {
+  return (
+    <ul
+      ref={ref}
+      className={
+        (viewDropDown ? " " : " -translate-y-[20px] invisible opacity-0") +
+        " text-zinc-800 bg-slate-200 mobile-menu"
+      }
+    >
+      <li>
+        <Link to="/chapters" title="Chapters" className="dropdown-item">
+          <span>Chapters</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/lessons" title="Lessons" className="dropdown-item">
+          <span>Lessons</span>
+        </Link>
+      </li>
+    </ul>
+  );
+});
+
+export default MenuLessons;

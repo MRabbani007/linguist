@@ -1,67 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAllChapters, useGetChaptersQuery } from "./chapterSlice";
 import ChapterTitle from "./ChapterTitle";
 import {
+  selectChapters,
   selectDisplayBlock,
   selectDisplayChapter,
-  selectLanguage,
 } from "../globals/globalsSlice";
-import { useNavigate } from "react-router-dom";
-import { useLazyGetProfileQuery } from "../profile/profileSlice";
 
 const ChapterListSideBar = ({ setViewSideBar }) => {
-  const [getProfile, { data: userProfile }] = useLazyGetProfileQuery();
-
-  const language = useSelector(selectLanguage);
+  const chapters = useSelector(selectChapters);
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
-  const {
-    data: chapters,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetChaptersQuery(language?.id);
-
   useEffect(() => {
-    getProfile();
-  }, [displayBlock]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      const temp = chapters.ids.map((id) => chapters.entities[id]);
-      setExpandedIndex(() => {
-        let idx = temp.findIndex((item) => item.id === displayChapter?.id);
-        if (idx >= 0) {
-          return idx;
-        } else {
-          return 0;
-        }
-      });
-    }
+    setExpandedIndex(() => {
+      let idx = chapters.findIndex((item) => item.id === displayChapter?.id);
+      if (idx >= 0) {
+        return idx;
+      } else {
+        return 0;
+      }
+    });
   }, [chapters, displayChapter, displayBlock]);
 
-  let content;
-  if (isLoading) {
-    content = <p>"Loading..."</p>;
-  } else if (isSuccess) {
-    const { ids, entities } = chapters;
-    content = ids.map((id, index) => (
-      <ChapterTitle
-        chapter={entities[id]}
-        key={id}
-        index={index}
-        expandedIndex={expandedIndex}
-        setExpandedIndex={setExpandedIndex}
-        setViewSideBar={setViewSideBar}
-      />
-    ));
-  } else if (isError) {
-    content = <p>{JSON.stringify(error)}</p>;
-  }
+  let content = chapters.map((chapter, index) => (
+    <ChapterTitle
+      chapter={chapter}
+      key={chapter?.id}
+      index={index}
+      expandedIndex={expandedIndex}
+      setExpandedIndex={setExpandedIndex}
+      setViewSideBar={setViewSideBar}
+    />
+  ));
 
   return (
     <div className="p-0 flex flex-col gap-2 overflow-y-auto">{content}</div>

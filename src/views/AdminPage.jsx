@@ -4,11 +4,15 @@ import React from "react";
 
 const AdminPage = () => {
   return (
-    <div className="">
-      <h1>AdminPage</h1>
-      {/* <EditorChapters />
-      <EditorBlocks /> */}
-    </div>
+    <main>
+      <header>
+        <h1>Admin Page</h1>
+      </header>
+      <div>
+        {/* <EditorChapters />
+        <EditorBlocks /> */}
+      </div>
+    </main>
   );
 };
 

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectDisplayChapter,
   setDisplayChapter,
-  setViewTab,
 } from "../globals/globalsSlice";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -37,7 +36,6 @@ const EditorChapterCard = ({ chapter, index }) => {
 
   useEffect(() => {
     if (isMounted.current) {
-      dispatch(setViewTab("sections"));
       navigate("/chapters");
     }
   }, [displayChapter]);

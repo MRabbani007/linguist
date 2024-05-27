@@ -30,15 +30,15 @@ export default function SectionIntroItem({ section, intro, index }) {
     );
   } else {
     return (
-      <p className="flex items-center gap-2 group">
-        <span>{intro}</span>
+      <p className="group">
+        {intro}
         {editMode && (
-          <span className="invisible group-hover:visible w-fit whitespace-nowrap">
+          <span className="invisible group-hover:visible w-fit whitespace-nowrap text-center">
             <button onClick={() => setEdit(true)}>
-              <CiEdit size={34} />
+              <CiEdit size={25} />
             </button>
             <button onClick={handleDelete}>
-              <CiTrash size={34} />
+              <CiTrash size={25} />
             </button>
           </span>
         )}

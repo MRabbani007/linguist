@@ -71,7 +71,7 @@ const ChapterNavigator = ({ children }) => {
   };
 
   return (
-    <div className="flex justify-between items-center p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group relative">
+    <section className="flex justify-between items-center p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group relative w-full">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}
@@ -91,7 +91,7 @@ const ChapterNavigator = ({ children }) => {
         <span className="font-semibold hidden md:inline">{"Next Chapter"}</span>
         <FaChevronRight className="icon" />
       </button>
-    </div>
+    </section>
   );
 };
 

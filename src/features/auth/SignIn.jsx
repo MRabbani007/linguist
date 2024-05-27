@@ -82,7 +82,7 @@ const SignIn = () => {
   };
 
   return (
-    <main className="wrapper">
+    <div className="wrapper min-h-full">
       {/* <div className="fixed top-0 left-0 right-0 bottom-0 z-0 flex justify-center items-center">
         <img src={Background} alt="bg" className="object-cover w-full h-full" />
       </div> */}
@@ -163,7 +163,7 @@ const SignIn = () => {
           </Link>
         </div>
       </form>
-    </main>
+    </div>
   );
 };
 

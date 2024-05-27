@@ -24,15 +24,17 @@ export default function SentencesPage() {
   }
 
   return (
-    <main className="flex flex-1 flex-col gap-4 max-w-[1000px] mx-auto">
-      <header>
-        <h1 className="text-2xl">Sentences</h1>
-        <p className="text-lg italic">{displayBlock?.title}</p>
+    <main>
+      <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
+        <h1>Sentences</h1>
       </header>
-      {/* <div>Filter Section</div> */}
-      <div className="w-full flex flex-col gap-4">{content}</div>
       <div>
-        <Link to={`/lesson/${displayBlock.id}`}>Back to Lesson</Link>
+        {/* <div>Filter Section</div> */}
+        <p className="text-lg italic">{displayBlock?.title}</p>
+        <div className="w-full flex flex-col gap-4">{content}</div>
+        <div>
+          <Link to={`/lesson/${displayBlock.id}`}>Back to Lesson</Link>
+        </div>
       </div>
     </main>
   );

@@ -3,6 +3,7 @@ import { genDate } from "../../data/utils";
 import { logOut, selectCurrentAuth } from "./authSlice";
 import { useLogoutMutation } from "./authApiSlice";
 import CardHeader from "../../components/CardHeader";
+import { clearState } from "../globals/globalsSlice";
 
 const SignOut = () => {
   const auth = useSelector(selectCurrentAuth);
@@ -14,6 +15,7 @@ const SignOut = () => {
   const handleLogout = () => {
     logout();
     dispatch(logOut());
+    dispatch(clearState());
   };
 
   return (

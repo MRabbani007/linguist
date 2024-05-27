@@ -5,7 +5,6 @@ import "./styles/styles.css";
 // generated from SASS
 import "./styles/main.css";
 // Imported Context
-import { GlobalProvider } from "./context/GlobalState";
 import { AuthProvider } from "./context/AuthProvider";
 // Imported Components
 import HomePage from "./views/HomePage";
@@ -29,11 +28,11 @@ import SectionsPage from "./views/SectionsPage";
 import LessonPage from "./views/LessonPage";
 import ExercisesMainPage from "./views/exercisePages/ExercisesMainPage";
 import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
-import MatchWords from "./features/exercises/MatchWords";
 import LanguagePage from "./views/userPages/LanguagePage";
 import DashboardPage from "./views/DashboardPage";
 import SearchPage from "./views/SearchPage";
 import SentencesPage from "./views/contentPages/SentencesPage";
+import MatchWordsPage from "./views/exercisePages/MatchWordsPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -77,7 +76,7 @@ function App() {
               <Route path="search?/:search" element={<SearchPage />} />
               <Route path="sentences?/:lessonID" element={<SentencesPage />} />
               <Route path="exercise" element={<ExercisesMainPage />} />
-              <Route path="matchwords" element={<MatchWords />} />
+              <Route path="matchwords" element={<MatchWordsPage />} />
               <Route path="definitions" element={<DefinitionsPage />} />
               <Route path="unauthorized" element={<Unauthorized />} />
 

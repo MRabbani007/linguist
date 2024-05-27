@@ -233,7 +233,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 w-full flex-col gap-3">
       {defsContent?.length !== 0 && (
         <div className="flex flex-col gap-3">{defsContent}</div>
       )}
