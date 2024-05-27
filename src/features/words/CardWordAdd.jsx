@@ -9,25 +9,13 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
 
   const [addWord, { isLoading }] = useAddWordMutation();
 
-  // const [statusMessage, setStatusMessage] = useState(null);
-  // const [mssgClass, setMssgClass] = useState("");
-
-  // useEffect(() => {
-  //   setMssgClass(() =>
-  //     statusMessage === "Success"
-  //       ? { borderWidth: "4px", borderColor: "green" }
-  //       : statusMessage === "Error"
-  //       ? { borderWidth: "4px", borderColor: "red" }
-  //       : statusMessage === "Provide required values"
-  //       ? { borderWidth: "4px", borderColor: "grey" }
-  //       : ""
-  //   );
-  // }, [statusMessage]);
-
+  const [sortIndex, setSortIndex] = useState(0);
   const [firstInput, setFirstInput] = useState("");
   const [secondInput, setSecondInput] = useState("");
   const [thirdInput, setThirdInput] = useState("");
   const [fourthInput, setFourthInput] = useState("");
+  const [firstCaption, setFirstCaption] = useState("");
+  const [secondCaption, setSecondCaption] = useState("");
 
   const canSave = !isLoading; //[firstInput, secondInput, thirdInput, fourthInput].every(Boolean) &&
 
@@ -40,8 +28,11 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
           chpaterID: displayBlock.chapterID,
           blockID: displayBlock.id,
           sectionID,
+          sortIndex,
           first: firstInput,
+          firstCaption,
           second: secondInput,
+          secondCaption,
           third: thirdInput,
           fourth: fourthInput,
         };
@@ -76,6 +67,25 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Add Word</h2>
         <div>
+          {/* Sort Index */}
+          <div className="field max-w-[25%]">
+            <label htmlFor="edit_sortIndex" className="field__label">
+              Sort Index
+            </label>
+            <input
+              type="text"
+              id="edit_sortIndex"
+              name="edit_sortIndex"
+              placeholder={"Sort Index"}
+              autoFocus
+              value={sortIndex}
+              onChange={(e) => {
+                setSortIndex(e.target.value);
+              }}
+              className="field__input"
+            />
+          </div>
+          {/* First word */}
           <div className="field_group">
             <div className="field">
               <label htmlFor="firstLanguage" className="field__label">
@@ -93,6 +103,25 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
               />
             </div>
             <div className="field">
+              <label htmlFor="edit_firstWord_caption" className="field__label">
+                First Word Caption
+              </label>
+              <input
+                type="text"
+                id="edit_firstWord_caption"
+                name="edit_firstWord_caption"
+                placeholder="First Word Caption"
+                value={firstCaption}
+                onChange={(e) => {
+                  setFirstCaption(e.target.value);
+                }}
+                className="field__input"
+              />
+            </div>
+          </div>
+          {/* Second Word */}
+          <div className="field_group">
+            <div className="field">
               <label htmlFor="secondLanguage" className="field__label">
                 {displayBlock?.secondLang || "Second Language"}
               </label>
@@ -105,6 +134,22 @@ const CardWordAdd = ({ sectionID = "", setAdd }) => {
                 onChange={(e) => {
                   setSecondInput(e.target.value);
                 }}
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="edit_secondWord_caption" className="field__label">
+                Second Word Caption
+              </label>
+              <input
+                type="text"
+                id="edit_secondWord_caption"
+                name="edit_secondWord_caption"
+                placeholder="Second Word Caption"
+                value={secondCaption}
+                onChange={(e) => {
+                  setSecondCaption(e.target.value);
+                }}
+                className="field__input"
               />
             </div>
           </div>

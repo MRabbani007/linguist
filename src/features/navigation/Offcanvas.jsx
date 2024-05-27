@@ -11,9 +11,9 @@ const Offcanvas = forwardRef(({ viewSideBar, setViewSideBar }, ref) => {
       ref={ref}
       className={
         (viewSideBar
-          ? "left-3 visible opacity-100"
-          : "left-[-2000px] invisible opacity-0") +
-        " fixed top-[75px] bottom-3 sm:right-auto right-3 min-w-[300px] p-2 rounded-lg duration-300 bg-slate-200 text-zinc-800 flex flex-col gap-3"
+          ? " visible opacity-100"
+          : " -translate-x-[1000px] invisible opacity-0") +
+        " absolute left-3 top-[80px] sm:right-auto min-w-[300px] p-2 rounded-lg duration-300 bg-slate-200 text-zinc-800 flex flex-col gap-3 z-40"
       }
     >
       <SidebarSearch />

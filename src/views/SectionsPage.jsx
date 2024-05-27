@@ -59,7 +59,7 @@ export default function SectionsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-3 flex-1">
+    <div className="flex flex-col gap-3 flex-1 max-w-[1000px] mx-auto">
       <ChapterNavigator>
         {editChapter ? (
           <ChapterHeaderEdit

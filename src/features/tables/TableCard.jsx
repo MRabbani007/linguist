@@ -50,21 +50,20 @@ export default function TableCard({ table, tableWords }) {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col gap-1 items-center">
       {viewEditTitle ? (
         <TableEditContent table={table} setEdit={setViewEditTitle} />
       ) : editLessonID ? (
         <TableEditLessonID table={table} setEdit={setEditLessonID} />
-      ) : (
-        <TableTitle table={table} />
-      )}
+      ) : null}
+      <TableTitle table={table} />
       {editHeaders ? (
         <TableEditHeaders table={table} setEdit={setEditHeaders} />
       ) : (
         <table className="lesson-table">
           {editMode || table?.caption !== "" ? (
             <caption className="group relative">
-              <span>{table?.caption || "Add Caption"}</span>
+              <span>{table?.caption ? table?.caption : "Add Caption"}</span>
               {editMode && (
                 <button
                   ref={dropDownButtonRef}

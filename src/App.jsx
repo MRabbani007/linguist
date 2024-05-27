@@ -27,12 +27,13 @@ import ErrorFallBack from "./features/auth/ErrorFallBack";
 import SkeletonContentPage from "./skeletons/SkeletonContentPage";
 import SectionsPage from "./views/SectionsPage";
 import LessonPage from "./views/LessonPage";
-import ExercisesMainPage from "./features/exercises/ExercisesMainPage";
+import ExercisesMainPage from "./views/exercisePages/ExercisesMainPage";
 import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
 import MatchWords from "./features/exercises/MatchWords";
 import LanguagePage from "./views/userPages/LanguagePage";
 import DashboardPage from "./views/DashboardPage";
 import SearchPage from "./views/SearchPage";
+import SentencesPage from "./views/contentPages/SentencesPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -72,8 +73,9 @@ function App() {
               <Route path="language" element={<LanguagePage />} />
               <Route path="chapters" element={<ChapterPage />} />
               <Route path="sections" element={<SectionsPage />} />
-              <Route path="lesson" element={<LessonPage />} />
+              <Route path="lesson?/:lessonID" element={<LessonPage />} />
               <Route path="search?/:search" element={<SearchPage />} />
+              <Route path="sentences?/:lessonID" element={<SentencesPage />} />
               <Route path="exercise" element={<ExercisesMainPage />} />
               <Route path="matchwords" element={<MatchWords />} />
               <Route path="definitions" element={<DefinitionsPage />} />

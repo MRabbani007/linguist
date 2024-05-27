@@ -47,7 +47,7 @@ export default function LessonPage() {
   isMounted.current = true;
 
   return (
-    <div className="flex flex-col gap-2 w-full">
+    <div className="flex flex-col gap-4 w-full max-w-[1000px] mx-auto">
       <BlockNavigator>
         <LessonHeader
           lesson={displayBlock}

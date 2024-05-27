@@ -10,7 +10,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
   const [editWord, { isLoading }] = useEditWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
 
-  const [sortIndex, setSortIndex] = useState(word?.sortIndex || "");
+  const [sortIndex, setSortIndex] = useState(word?.sortIndex || 0);
   const [first, setFirst] = useState(word?.first || "");
   const [firstCaption, setFirstCaption] = useState(word?.firstCaption || "");
   const [second, setSecond] = useState(word?.second || "");
@@ -110,7 +110,7 @@ const CardWordListEdit = ({ word, setViewEdit }) => {
           <div className="field_group">
             {/* First Word */}
             <div className="field">
-              <label htmlFor="edit_sortIndex" className="field__label">
+              <label htmlFor="edit_firstWord" className="field__label">
                 {label_1}
               </label>
               <input

@@ -69,7 +69,7 @@ const Layout = () => {
       <Navbar />
       <div className={onAuthPage ? "page-container-fluid" : "page-container"}>
         {/* <Header /> */}
-        {onContentPage && <Sidebar />}
+        {/* {onContentPage && <Sidebar />} */}
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />
         </Suspense>

@@ -38,8 +38,10 @@ export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState(params?.search || "");
 
   return (
-    <div className="flex flex-col flex-1 justify-center">
-      <h1>Search</h1>
+    <main className="flex flex-col flex-1 justify-center gap-4">
+      <header className="py-4 px-4 bg-gradient-to-r from-zinc-600 to-zinc-400 text-white w-full rounded-lg">
+        <h1 className="text-2xl">Search</h1>
+      </header>
       <form
         className="border-2 border-red-600 text-red-600 rounded-full flex items-center justify-between gap-1 pr-3 py-1 max-w-[800px] mx-auto"
         onSubmit={handleSubmit}
@@ -59,6 +61,6 @@ export default function SearchPage() {
         </button>
       </form>
       <div className="flex flex-col flex-1 gap-4 p-4">{wordsContent}</div>
-    </div>
+    </main>
   );
 }

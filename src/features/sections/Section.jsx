@@ -15,6 +15,7 @@ import CardWordAdd from "../words/CardWordAdd";
 import SectionMoveToLesson from "./SectionMoveToLesson";
 import Sentence from "../sentences/Sentence";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
+import { Link } from "react-router-dom";
 
 export default function Section({
   section = {},
@@ -103,10 +104,17 @@ export default function Section({
         <div className="flex flex-col gap-3">{content}</div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
-          <div className="flex flex-col gap-3">
-            {sentences.map((sentence) => {
+          <div className="flex flex-col gap-3 p-2">
+            <p className="underline italic bold text-xl">Examples: </p>
+            {sentences.slice(0, 2).map((sentence) => {
               return <Sentence sentence={sentence} key={sentence?.id} />;
             })}
+            <Link
+              to={`/sentences/${section?.lessonID}`}
+              className="text-blue-500 font-medium"
+            >
+              Show More
+            </Link>
           </div>
         ) : null}
       </div>

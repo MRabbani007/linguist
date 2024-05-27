@@ -42,15 +42,17 @@ const ChapterPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="font-bold text-xl text-center p-3 bg-slate-200 rounded-md shadow-md shadow-slate-400">
-        {language?.title}
-      </h2>
+    <main className="flex flex-col gap-3 max-w-[1000px] mx-auto">
+      <header>
+        <h2 className="font-bold text-xl text-center p-3 bg-slate-200 rounded-md shadow-md shadow-slate-400">
+          {language?.title}
+        </h2>
+      </header>
       <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
         {content}
       </div>
       {editMode && <CardChapterAdd />}
-    </div>
+    </main>
   );
 };
 

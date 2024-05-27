@@ -22,8 +22,8 @@ export default function Definition({ definition }) {
   };
 
   return (
-    <article className="bg-slate-200 rounded-md shadow-md shadow-red-600">
-      <div className="group px-3 bg-red-300 rounded-t-md flex items-center gap-3">
+    <article className="bg-neutral-200 rounded-xl shadow-sm shadow-red-500">
+      <div className="group px-3 bg-red-500/50 text-zinc-800 rounded-t-md flex items-center gap-3">
         <p className="py-2">
           <strong>Definition: </strong>
           <em>{definition?.title}</em>

@@ -8,7 +8,7 @@ const HomePage = () => {
       {/* <div className=" top-0 left-0 w-full h-[40vh] flex justify-center items-center bg-gradient-to-br from-orange-600/70 to-yellow-400/30">
         <img src={Linguist} alt="Linguist" width={300} height={150} />
       </div> */}
-      <div className="flex flex-wrap-reverse justify-evenly items-center gap-6 max-w-[1000px] mx-auto">
+      <div className="flex flex-col justify-center items-center gap-6 max-w-[1000px] mx-auto">
         <img src={WorldLang} alt="World_Language" width={400} height={350} />
         <div className="flex-1 flex flex-col justify-center items-center">
           <p className="italic font-semibold text-xl">

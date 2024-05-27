@@ -11,7 +11,10 @@ import SectionWordsRandom from "../features/homePage/SectionWordsRandom";
 
 export default function DashboardPage() {
   return (
-    <div className="flex flex-wrap gap-3 dashboard justify-center flex-1">
+    <main className="flex flex-wrap gap-3 dashboard justify-center flex-1 max-w-[1000px] mx-auto">
+      <header className="py-4 px-4 bg-gradient-to-r from-zinc-600 to-zinc-400 text-white w-full rounded-lg">
+        <h1 className="text-2xl">Dashboard</h1>
+      </header>
       <div className="flex flex-col gap-3">
         <Progress />
         <UserLessonTracker />
@@ -25,6 +28,6 @@ export default function DashboardPage() {
       </div>
       {/* <CardProgress /> */}
       {/* <SectionWordsRandom /> */}
-    </div>
+    </main>
   );
 }

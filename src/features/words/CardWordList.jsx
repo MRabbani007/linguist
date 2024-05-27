@@ -200,14 +200,23 @@ const CardWordList = ({ word, sectionsList = [] }) => {
           />
         </div>
         <div className="flex flex-col justify-between px-1 text-slate-600">
-          <button onClick={handleAddExer}>
+          {editMode ? (
+            <button onClick={handleAddExer}>
+              <FaPlus
+                className={
+                  (isExercise ? "text-lime-500 " : "") +
+                  "icon-md hover:scale-150 cursor-pointer duration-200"
+                }
+              />
+            </button>
+          ) : (
             <FaPlus
               className={
                 (isExercise ? "text-lime-500 " : "") +
                 "icon-md hover:scale-150 cursor-pointer duration-200"
               }
             />
-          </button>
+          )}
           <FaCheck className="icon-md hover:scale-150 cursor-pointer duration-200" />
           <FaEyeSlash
             className="icon-md hover:scale-150 cursor-pointer duration-200"

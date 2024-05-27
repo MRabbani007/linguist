@@ -6,7 +6,7 @@ import { selectEditMode } from "../globals/globalsSlice";
 
 export default function TableTitle({ table, setEdit, setMove }) {
   return (
-    <div>
+    <div className="w-full">
       <div className="group relative">
         <p>{table?.title}</p>
         <p>{table?.subtitle}</p>

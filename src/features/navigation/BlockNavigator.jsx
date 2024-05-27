@@ -134,7 +134,7 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <div className="flex justify-between items-center p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group relative">
+    <div className="flex justify-between items-center p-3 bg-gradient-to-b from-neutral-500/30 to-neutral-300 rounded-xl shadow-md shadow-slate-400 group relative">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}

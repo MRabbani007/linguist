@@ -30,6 +30,7 @@ import Learn from "../../assets/learn.png";
 import Dashboard from "../../assets/dashboard.png";
 import Exercise from "../../assets/train.png";
 import IMG_User from "../../assets/user.png";
+import SidebarSearch from "./SidebarSearch";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -76,68 +77,83 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className="z-50 py-2 px-4 text-white flex justify-between bg-gradient-to-br from-red-700 to-red-600">
-      <span className="flex items-center justify-between gap-4">
-        <button
-          ref={sideBarButtonRef}
-          onClick={() => handleSideBar(true)}
-          className="lg:hidden"
-        >
-          <IoMenu className="icon" />
-        </button>
-        <Link to="/" title="Home">
-          {/* <GoHome size={40} /> */}
-          <img src={Logo} alt="Linguist" width={100} />
-          {/* <IoHomeOutline size={40} /> */}
-        </Link>
-        <Link to="/dashboard" title="Dashboard">
-          {/* <IoGridOutline size={40} /> */}
-          <img src={Dashboard} alt="Linguist" width={50} />
-        </Link>
-        <Link to="/chapters" title="Learn">
-          <img src={Learn} alt="Linguist" width={50} />
-          {/* <SlBookOpen size={40} /> */}
-        </Link>
-        <Link to="/exercise" title="Exercise">
-          <img src={Exercise} alt="Linguist" width={50} />
-          {/* <IoBarbellOutline size={40} /> */}
-        </Link>
-      </span>
-      <span className="bg-transparent">
-        {!user ? (
-          <Link to="/login" title="User">
-            {/* <FiUser size={40} /> */}
-            <img src={IMG_User} alt="Linguist" width={50} />
-          </Link>
-        ) : (
-          <div className=" relative">
+    <>
+      <div className="z-50 py-4 sm:px-4 px-2 text-white  bg-gradient-to-r from-red-700 to-red-500 relative">
+        <div className="flex justify-between items-center max-w-[1000px] mx-auto">
+          <span className="flex items-center justify-between sm:gap-4 gap-2">
             <button
-              className="flex items-center gap-0"
-              onClick={handleUserDropDown}
-              title="User Menu"
+              ref={sideBarButtonRef}
+              onClick={() => handleSideBar(true)}
+              className=""
             >
-              {user}
-              {/* <FiUser size={40} /> */}
-              <img src={IMG_User} alt="Linguist" width={50} />
-              {/* <MdKeyboardArrowRight size={20} /> */}
+              <IoMenu size={36} />
             </button>
-            {isAdmin && (
-              <AdminDropDown
-                ref={dropDownRefUser}
-                viewUserDropDown={viewUserDropDown}
-              />
-            )}
-            {!isAdmin && <UserDropDown ref={dropDownRefAdmin} />}
+            <Link to="/" title="Home">
+              <img src={Logo} alt="Linguist" width={100} />
+            </Link>
+          </span>
+          <div className="bg-transparent">
+            <div className="flex items-center justify-between sm:gap-4 gap-2">
+              <Link to="/dashboard" title="Dashboard">
+                Dashboard
+                {/* <IoGridOutline size={40} /> */}
+              </Link>
+              <Link to="/chapters" title="Learn">
+                Lessons
+                {/* <SlBookOpen size={40} /> */}
+              </Link>
+              <Link to="/exercise" title="Exercise">
+                Practice
+                {/* <IoBarbellOutline size={40} /> */}
+              </Link>
+              <div className="hidden md:inline-block">
+                <SidebarSearch />
+              </div>
+              {!user ? (
+                <Link to="/login" title="User">
+                  <FiUser size={40} />
+                  {/* <img src={IMG_User} alt="Linguist" width={50} /> */}
+                </Link>
+              ) : (
+                <div className=" relative">
+                  <button
+                    className="flex items-center gap-0"
+                    onClick={handleUserDropDown}
+                    title="User Menu"
+                  >
+                    {/* {user} */}
+                    <FiUser size={40} />
+                    {/* <MdKeyboardArrowRight size={20} /> */}
+                  </button>
+                  {isAdmin && (
+                    <AdminDropDown
+                      ref={dropDownRefUser}
+                      viewUserDropDown={viewUserDropDown}
+                    />
+                  )}
+                  {!isAdmin && <UserDropDown ref={dropDownRefAdmin} />}
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </span>
-      <Offcanvas
-        viewSideBar={viewSideBar}
-        handleSideBar={handleSideBar}
-        ref={sideBarRef}
-        setViewSideBar={setViewSideBar}
-      />
-    </div>
+        </div>
+        <Offcanvas
+          viewSideBar={viewSideBar}
+          handleSideBar={handleSideBar}
+          ref={sideBarRef}
+          setViewSideBar={setViewSideBar}
+        />
+      </div>
+      {/* <div className="flex items-center justify-evenly py-2">
+        <div></div>
+        <div className="flex items-center justify-between gap-4">
+          <span>Dashboard</span>
+          <span>Lessons</span>
+          <span>Practice</span>
+          <SidebarSearch />
+        </div>
+      </div> */}
+    </>
   );
 };
 

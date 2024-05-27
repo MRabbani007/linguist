@@ -45,10 +45,10 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 group relative bg-zinc-200 rounded-md py-2 px-4 justify-between">
+    <div className="flex items-center gap-2 group relative bg-gradient-to-r from-zinc-300 to-zinc-100 rounded-md py-2 px-4 justify-between">
       <div>
-        <h3 className=" text-red-600 ">
-          <p className="font-bold text-xl flex items-center gap-3 ">
+        <h3 className="text-red-600 ">
+          <p className="font-semibold text-xl flex items-center gap-3 ">
             <TbPoint className="inline" size={26} />
             {section?.title}
             <button onClick={() => setExpand(!expand)}>

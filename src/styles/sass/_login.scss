@@ -1,19 +1,19 @@
-:root{
+:root {
   --primary-color: #c6c3c3;
-  --second-color: #ffffff; 
+  --second-color: #ffffff;
   --black-color: #000000;
 }
 
-.wrapper{
+.wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  min-height: 100vh;
-  background-color: rgba(0,0,0,0.2);
+  // min-height: 80vh;
+  background-color: rgba(0, 0, 0, 0.2);
 
-  background-image: url('bg.jpg');
+  background-image: url("bg.svg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -31,10 +31,10 @@
   border-radius: 15px;
   padding: 4em 2.5em 2em;
   color: var(--second-color);
-  box-shadow: 8px 8px 10px 2px rgba(0,0,0,0.3);
+  box-shadow: 8px 8px 10px 2px rgba(0, 0, 0, 0.3);
 }
 
-.login_header{
+.login_header {
   position: absolute;
   top: 0;
   left: 50%;
@@ -45,9 +45,9 @@
   background-color: var(--primary-color);
   width: 140px;
   border-radius: 0 0 20px 20px;
- }
+}
 
- .login_header span {
+.login_header span {
   font-size: 30px;
   color: var(--black-color);
 }
@@ -103,10 +103,10 @@
   position: absolute;
   top: 15px;
   left: 23px;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-.input_field:focus ~ .label, 
+.input_field:focus ~ .label,
 .input_field:valid ~ .label {
   position: absolute;
   top: -10px;
@@ -140,12 +140,12 @@
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  transition: .2s;
+  transition: 0.2s;
   color: var(--black-color);
   display: block;
 }
 
-.input_submit:hover{
+.input_submit:hover {
   background: var(--second-color);
 }
 
@@ -156,16 +156,15 @@
   flex-shrink: 0;
 }
 
-.register a{
+.register a {
   font-weight: 500;
 }
 
 @media only screen and (max-width: 564px) {
-  .wrapper{
+  .wrapper {
     padding: 20px;
   }
-  .login_box{
-    padding: 7.5em 1.5em 4em 1.5em;;
+  .login_box {
+    padding: 7.5em 1.5em 4em 1.5em;
   }
-  
 }

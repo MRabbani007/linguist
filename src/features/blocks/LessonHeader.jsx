@@ -38,12 +38,12 @@ const LessonHeader = ({
 
   return (
     <div className="flex flex-1 relative px-3 z-5">
-      <h1 className="text-center flex-1">
-        <p className="font-semibold text-xl">
+      <div className="text-center flex-1">
+        <h1 className="font-medium text-xl text-zinc-800">
           {"Lesson " + lesson?.lessonNo + ": " + lesson?.title}
-        </p>
+        </h1>
         <p>{lesson?.subtitle}</p>
-      </h1>
+      </div>
       {editMode && (
         <button title="Edit Lesson" onClick={() => setShowDropDown(true)}>
           <BsThreeDots size={28} />
