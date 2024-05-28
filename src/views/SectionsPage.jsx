@@ -61,12 +61,11 @@ export default function SectionsPage() {
   return (
     <>
       <main>
-        <ChapterNavigator>
-          <ChapterHeader
-            chapter={displayChapter}
-            setEditChapter={setEditChapter}
-          />
-        </ChapterNavigator>
+        <ChapterNavigator></ChapterNavigator>
+        <ChapterHeader
+          chapter={displayChapter}
+          setEditChapter={setEditChapter}
+        />
         <div>
           <p>{displayChapter?.detail}</p>
           <div className="flex flex-wrap justify-center gap-3">{content}</div>

@@ -10,7 +10,7 @@ const SignOut = () => {
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
 
-  const todayDate = genDate();
+  const today = genDate();
 
   const handleLogout = () => {
     logout();
@@ -19,17 +19,17 @@ const SignOut = () => {
   };
 
   return (
-    <div className="w-fit my-4 mx-auto flex flex-col items-center justify-center gap-3 min-h-[70vh]">
-      {/* Header */}
-      <CardHeader />
-      <div>
-        <button
-          className="py-2 px-6 rounded-full bg-red-600 hover:bg-red-500 text-zinc-50 mx-2 duration-200"
-          onClick={handleLogout}
-        >
-          Sign Out
-        </button>
-      </div>
+    <div className="wrapper">
+      <form className="login_form" onSubmit={handleLogout}>
+        <div className="login_header">
+          <span>Sign Out</span>
+        </div>
+        <h2 className="text-white text-center">{auth.user}</h2>
+        {/* <p className="bg-red-600 text-red-50 rounded-b-lg py-2 px-4 text-end">
+          {today.day + ", " + today.date + " " + today.month}
+        </p> */}
+        <button className="input_submit">Sign Out</button>
+      </form>
     </div>
   );
 };

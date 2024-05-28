@@ -44,8 +44,8 @@ const ChapterPage = () => {
   return (
     <>
       <main>
-        <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
-          <h1>{language?.title}</h1>
+        <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
+          <h1 className="mx-auto font-bold text-2xl">{language?.title}</h1>
         </header>
         <div>
           <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">

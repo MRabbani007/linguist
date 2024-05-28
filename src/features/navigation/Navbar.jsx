@@ -67,7 +67,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="z-50 h-[80px] flex items-center flex-row w-full sm:px-4 px-2 text-white  bg-gradient-to-r from-red-700 to-red-500 relative">
+      <div className="z-50 h-[80px] flex items-center flex-row w-full sm:px-4 px-2 text-red-600  bg-gradient-to-r from-zinc-100 to-white relative border-b-2 border-red-600">
         <div className="flex justify-between items-center flex-1 max-w-[1000px] mx-auto">
           <span className="flex items-center justify-between sm:gap-4 gap-2">
             <Link to="/" title="Home">
@@ -109,7 +109,7 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className="hidden md:inline-block">
-                <SidebarSearch className="border-white text-white" />
+                <SidebarSearch className="border-red-600 text-red-600" />
               </div>
               <button
                 ref={sideBarButtonRef}

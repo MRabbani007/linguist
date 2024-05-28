@@ -9,7 +9,7 @@ import { selectCurrentAuth } from "../features/auth/authSlice";
 const SigninPage = () => {
   const auth = useSelector(selectCurrentAuth);
 
-  return <div className="">{auth?.user ? <SignOut /> : <SignIn />}</div>;
+  return auth?.user ? <SignOut /> : <SignIn />;
 };
 
 export default SigninPage;

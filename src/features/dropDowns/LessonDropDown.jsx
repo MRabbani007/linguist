@@ -55,7 +55,7 @@ const LessonDropDown = forwardRef(
         ref={ref}
         className={
           (showDropDown ? "" : "-translate-y-2 opacity-0 invisible") +
-          " section-dropdown"
+          " section-dropdown text-zinc-900"
         }
       >
         <li className="dropdown-title">Add...</li>

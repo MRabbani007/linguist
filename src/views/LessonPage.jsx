@@ -49,15 +49,14 @@ export default function LessonPage() {
   return (
     <>
       <main>
-        <BlockNavigator>
-          <LessonHeader
-            lesson={displayBlock}
-            setEditLessonTitle={setEditLessonTitle}
-            setEditLessonDetails={setEditLessonDetails}
-            setAddLessonIntro={setAddLessonIntro}
-            setAddSection={setAddSection}
-          />
-        </BlockNavigator>
+        <BlockNavigator></BlockNavigator>
+        <LessonHeader
+          lesson={displayBlock}
+          setEditLessonTitle={setEditLessonTitle}
+          setEditLessonDetails={setEditLessonDetails}
+          setAddLessonIntro={setAddLessonIntro}
+          setAddSection={setAddSection}
+        />
         <div>
           <LessonIntro
             lesson={displayBlock}
@@ -83,7 +82,7 @@ export default function LessonPage() {
 
           {editMode && (
             <button
-              className="btn btn-red w-fit mx-auto"
+              className="btn btn-red w-fit mx-auto "
               onClick={() => setViewAddWord(true)}
             >
               Add Word

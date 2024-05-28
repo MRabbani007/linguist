@@ -71,7 +71,7 @@ const ChapterNavigator = ({ children }) => {
   };
 
   return (
-    <section className="flex justify-between items-center p-3 bg-slate-200 rounded-lg shadow-md shadow-slate-400 group relative w-full">
+    <section className="w-full flex flex-1 justify-between items-center">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}

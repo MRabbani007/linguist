@@ -10,7 +10,7 @@ import {
 import { SlBookOpen } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectEditMode } from "../globals/globalsSlice";
+import { selectEditMode, toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 
 const MobileMenu = forwardRef(({ viewDropDown }, ref) => {

@@ -37,15 +37,26 @@ const LessonHeader = ({
   }, []);
 
   return (
-    <div className="flex flex-1 relative px-3 z-5">
-      <div className="text-center flex-1">
-        <h1 className="font-medium text-xl text-zinc-800 whitespace-break-spaces">
-          {"Lesson " + lesson?.lessonNo + ": " + lesson?.title}
+    <header className="flex relative group bg-gradient-to-r from-red-600 to-red-500 shadow-md shadow-slate-400 text-white my-4 rounded-xl min-h-[80px]">
+      <p
+        title={"Lesson " + lesson?.lessonNo}
+        className="absolute left-4 top-[50%] -translate-y-[50%] py-2 w-12 text-center border-2 border-white rounded-xl text-xl"
+      >
+        {lesson?.lessonNo}
+      </p>
+      <div className="text-center">
+        {/* "Lesson " + lesson?.lessonNo + ": " +  */}
+        <h1 className="font-medium text-2xl whitespace-break-spaces text-wrap">
+          {lesson?.title}
         </h1>
-        <p>{lesson?.subtitle}</p>
+        <p className="font-light text-wrap">{lesson?.subtitle}</p>
       </div>
       {editMode && (
-        <button title="Edit Lesson" onClick={() => setShowDropDown(true)}>
+        <button
+          className="absolute top-1/2 -translate-y-1/2 right-4 invisible group-hover:visible"
+          title="Edit Lesson"
+          onClick={() => setShowDropDown(true)}
+        >
           <BsThreeDots size={28} />
         </button>
       )}
@@ -57,7 +68,7 @@ const LessonHeader = ({
         setEditLessonTitle={setEditLessonTitle}
         setEditLessonDetails={setEditLessonDetails}
       />
-    </div>
+    </header>
   );
 };
 

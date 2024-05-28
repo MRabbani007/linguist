@@ -134,14 +134,14 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <section className="w-full flex flex-1 justify-between items-center p-3 bg-gradient-to-b from-neutral-500/30 to-neutral-300 rounded-xl shadow-md shadow-slate-400 group relative">
+    <section className={"w-full flex flex-1 justify-between items-center"}>
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
-        className="flex items-center text-red-600 hover:text-red-500 duration-200"
+        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
       >
-        <FaChevronLeft className="icon" />
-        <span className="font-semibold hidden md:inline">
+        <FaChevronLeft size={32} />
+        <span className="font-semibold hidden md:inline text-nowrap">
           {firstLesson ? "Previous Chapter" : "Previous Lesson"}
         </span>
       </button>
@@ -149,12 +149,12 @@ const BlockNavigator = ({ children }) => {
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
-        className="flex items-center text-red-600 hover:text-red-500 duration-200"
+        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
       >
-        <span className="font-semibold hidden md:inline">
+        <span className="font-semibold hidden md:inline text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}
         </span>
-        <FaChevronRight className="icon" />
+        <FaChevronRight size={32} />
       </button>
     </section>
   );
