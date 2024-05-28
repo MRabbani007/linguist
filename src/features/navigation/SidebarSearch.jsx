@@ -2,7 +2,9 @@ import React, { useId, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-export default function SidebarSearch() {
+export default function SidebarSearch({
+  className = "border-white text-white",
+}) {
   const navigate = useNavigate();
 
   const id = useId();
@@ -17,7 +19,10 @@ export default function SidebarSearch() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border-2 border-white text-white rounded-full flex flex-1 items-center justify-between gap-1 pr-3 py-1 "
+      className={
+        "border-2 rounded-full flex flex-1 items-center justify-between gap-1 pr-3 py-1 " +
+        className
+      }
     >
       {/* <label htmlFor="search-btn"></label> */}
       <input

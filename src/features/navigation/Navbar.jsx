@@ -92,10 +92,10 @@ const Navbar = () => {
                   onMouseLeave={() => setViewLessonsMenu(false)}
                 >
                   <button
-                    title="Learn"
+                    title="Learning"
                     onClick={() => setViewLessonsMenu(true)}
                   >
-                    Lessons
+                    Learning
                     {/* <SlBookOpen size={40} /> */}
                   </button>
                   <MenuLessons
@@ -109,12 +109,13 @@ const Navbar = () => {
                 </Link>
               </div>
               <div className="hidden md:inline-block">
-                <SidebarSearch />
+                <SidebarSearch className="border-white text-white" />
               </div>
               <button
                 ref={sideBarButtonRef}
                 onClick={() => handleSideBar(true)}
                 className=""
+                title="Chapters & Lessons"
               >
                 <PiBookOpenTextLight size={50} />
               </button>
@@ -148,7 +149,11 @@ const Navbar = () => {
                   {!isAdmin && <UserDropDown ref={dropDownRefAdmin} />}
                 </div>
               )}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseOver={() => setViewMobileMenu(true)}
+                onMouseLeave={() => setViewMobileMenu(false)}
+              >
                 <button
                   onClick={() => setViewMobileMenu(true)}
                   className="sm:hidden"
@@ -170,15 +175,6 @@ const Navbar = () => {
           setViewSideBar={setViewSideBar}
         />
       </div>
-      {/* <div className="flex items-center justify-evenly py-2">
-        <div></div>
-        <div className="flex items-center justify-between gap-4">
-          <span>Dashboard</span>
-          <span>Lessons</span>
-          <span>Practice</span>
-          <SidebarSearch />
-        </div>
-      </div> */}
     </>
   );
 };

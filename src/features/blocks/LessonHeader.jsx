@@ -39,7 +39,7 @@ const LessonHeader = ({
   return (
     <div className="flex flex-1 relative px-3 z-5">
       <div className="text-center flex-1">
-        <h1 className="font-medium text-xl text-zinc-800">
+        <h1 className="font-medium text-xl text-zinc-800 whitespace-break-spaces">
           {"Lesson " + lesson?.lessonNo + ": " + lesson?.title}
         </h1>
         <p>{lesson?.subtitle}</p>

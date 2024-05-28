@@ -11,7 +11,7 @@ const Sidebar = () => {
         "hidden w-[300px] p-2 rounded-lg duration-300 bg-slate-200 shadow-md shadow-slate-400 text-zinc-800 lg:flex flex-col gap-3"
       }
     >
-      <SidebarSearch />
+      <SidebarSearch className="border-white text-white" />
       <ChapterListSideBar />
       <Link
         to="/chapters"

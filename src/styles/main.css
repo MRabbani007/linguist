@@ -65,7 +65,7 @@ p {
 }
 
 main {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -107,6 +107,11 @@ main header h1 {
   line-height: 2rem;
 }
 
+@media screen and (min-width: 640px) {
+  main {
+    padding: 1rem;
+  }
+}
 .form_input {
   display: flex;
   align-items: center;
@@ -115,7 +120,8 @@ main header h1 {
   flex: 1 1 0%;
 }
 
-.input_group, .field_group {
+.input_group,
+.field_group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -184,59 +190,6 @@ main header h1 {
   gap: 0.5rem;
 }
 
-.instructions {
-  font-size: 0.75rem;
-  border-radius: 0.5rem;
-  background: #000;
-  color: #fff;
-  padding: 0.25rem;
-  position: relative;
-  bottom: -10px;
-}
-
-.instructions > svg {
-  margin-right: 0.25rem;
-}
-
-.offscreen {
-  position: absolute;
-  left: -9999px;
-}
-
-.hide {
-  display: none;
-}
-
-.valid {
-  color: limegreen;
-  margin-left: 0.25rem;
-}
-
-.invalid {
-  color: red;
-  margin-left: 0.25rem;
-}
-
-.errmsg {
-  background-color: lightpink;
-  color: firebrick;
-  font-weight: bold;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.line {
-  display: inline-block;
-}
-
-.otpInput {
-  width: 40px;
-  height: 40px;
-  margin: 5px;
-  text-align: center;
-  font-size: 1.2em;
-}
-
 .form-container {
   position: fixed;
   top: 0;
@@ -290,7 +243,10 @@ main header h1 {
   gap: 0.75rem;
 }
 
-.add, .save, .cancel, .delete {
+.add,
+.save,
+.cancel,
+.delete {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
 }
@@ -564,6 +520,7 @@ tbody tr:nth-child(2n+1):hover {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 450px;
   min-height: fit-content;
   backdrop-filter: blur(25px);
@@ -620,7 +577,6 @@ tbody tr:nth-child(2n+1):hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
 }
 
 .input_field {
@@ -633,6 +589,62 @@ tbody tr:nth-child(2n+1):hover {
   border: 2px solid var(--primary-color);
   border-radius: 30px;
   outline: none;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #242424;
+  color: #fff;
+  padding: 0.5rem;
+  position: absolute;
+  top: 0.25rem;
+  left: 1rem;
+  z-index: 5;
+}
+
+.instructions > svg {
+  margin-right: 0.5rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  border-radius: 0.5rem;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.line {
+  display: inline-block;
+}
+
+.otpInput {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  text-align: center;
+  font-size: 1.2em;
 }
 
 .label {
@@ -686,9 +698,10 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .register {
-  min-height: fit-content;
   text-align: center;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   flex-shrink: 0;
 }
 
@@ -739,18 +752,27 @@ tbody tr:nth-child(2n+1):hover {
   padding: 0.5rem;
 }
 
-.dashboard-exercises, .lesson-tracker, .progress, .user-word-lists, .dashboard-links {
+.dashboard-exercises,
+.lesson-tracker,
+.progress,
+.user-word-lists,
+.dashboard-links {
   border-radius: 0.375rem;
   width: 300px;
   width: 300px;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  color: white;
 }
 
-.lesson-tracker > li, .dashboard-exercises > li, .progress > li, .user-word-lists > li, .dashboard-links > li {
+.lesson-tracker li,
+.dashboard-exercises li,
+.progress li,
+.user-word-lists li,
+.dashboard-links li {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 0.5rem 1rem;
   gap: 1rem;
@@ -781,7 +803,6 @@ tbody tr:nth-child(2n+1):hover {
 
 .lesson-tracker > li:first-child {
   background-color: rgba(69, 126, 69, 0.911);
-  color: white;
 }
 
 .lesson-tracker > li:last-child {
@@ -813,19 +834,23 @@ tbody tr:nth-child(2n+1):hover {
   background-color: rgba(58, 73, 141, 0.938);
 }
 
-.user-word-lists, .dashboard-links {
+.user-word-lists,
+.dashboard-links {
   border: 4px solid #555;
 }
 
-.user-word-lists > li, .dashboard-links > li {
+.user-word-lists > li,
+.dashboard-links > li {
   background-color: #777;
 }
 
-.user-word-lists > li:hover, .dashboard-links > li:hover {
+.user-word-lists > li:hover,
+.dashboard-links > li:hover {
   background-color: #888;
 }
 
-.user-word-lists > li:first-child, .dashboard-links > li:first-child {
+.user-word-lists > li:first-child,
+.dashboard-links > li:first-child {
   background-color: #555;
   color: white;
 }

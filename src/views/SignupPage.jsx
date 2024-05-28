@@ -148,19 +148,23 @@ const Signup = () => {
                 />
               </label>
               <i className="bx bx-user icon"></i>
-              <p
-                id="uidnote"
-                className={
-                  userFocus && user && !validName ? "instructions" : "offscreen"
-                }
-              >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                4 to 24 characters.
-                <br />
-                Must begin with a letter.
-                <br />
-                Letters, numbers, underscores, hyphens allowed.
-              </p>
+              <div className="w-full relative">
+                <p
+                  id="uidnote"
+                  className={
+                    userFocus && user && !validName
+                      ? "instructions"
+                      : "offscreen"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  4 to 24 characters.
+                  <br />
+                  Must begin with a letter.
+                  <br />
+                  Letters, numbers, underscores, hyphens allowed.
+                </p>
+              </div>
             </div>
             <div className="input_box">
               <input
@@ -188,23 +192,27 @@ const Signup = () => {
                 />
               </label>
               <i className="bx bx-lock-alt icon"></i>
-              <p
-                id="pwdnote"
-                className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
-              >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                8 to 24 characters.
-                <br />
-                Must include uppercase and lowercase letters, a number and a
-                special character.
-                <br />
-                Allowed special characters:{" "}
-                <span aria-label="exclamation mark">!</span>{" "}
-                <span aria-label="at symbol">@</span>{" "}
-                <span aria-label="hashtag">#</span>{" "}
-                <span aria-label="dollar sign">$</span>{" "}
-                <span aria-label="percent">%</span>
-              </p>
+              <div className="w-full relative">
+                <p
+                  id="pwdnote"
+                  className={
+                    pwdFocus && !validPwd ? "instructions" : "offscreen"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  8 to 24 characters.
+                  <br />
+                  Must include uppercase and lowercase letters, a number and a
+                  special character.
+                  <br />
+                  Allowed special characters:{" "}
+                  <span aria-label="exclamation mark">!</span>{" "}
+                  <span aria-label="at symbol">@</span>{" "}
+                  <span aria-label="hashtag">#</span>{" "}
+                  <span aria-label="dollar sign">$</span>{" "}
+                  <span aria-label="percent">%</span>
+                </p>
+              </div>
             </div>
             <div className="input_box">
               <input
@@ -231,24 +239,24 @@ const Signup = () => {
                 />
               </label>
               <i className="bx bx-lock-alt icon"></i>
-              <p
-                id="confirmnote"
-                className={
-                  matchFocus && !validMatch ? "instructions" : "offscreen"
-                }
-              >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                Must match the first password input field.
-              </p>
+              <div className="w-full relative">
+                <p
+                  id="confirmnote"
+                  className={
+                    matchFocus && !validMatch ? "instructions" : "offscreen"
+                  }
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  Must match the first password input field.
+                </p>
+              </div>
             </div>
-            <div className="my-3">
-              <button
-                disabled={!validName || !validPwd || !validMatch ? true : false}
-                className="input_submit"
-              >
-                Signup
-              </button>
-            </div>
+            <button
+              disabled={!validName || !validPwd || !validMatch ? true : false}
+              className="input_submit"
+            >
+              Signup
+            </button>
             <div className="register">
               Have an account?
               <Link

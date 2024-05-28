@@ -16,7 +16,7 @@ const Offcanvas = forwardRef(({ viewSideBar, setViewSideBar }, ref) => {
         " absolute left-4 top-[90px] sm:right-auto min-w-[300px] p-2 rounded-lg duration-300 bg-slate-200 text-zinc-800 flex flex-col gap-3 z-40 mb-4"
       }
     >
-      <SidebarSearch />
+      <SidebarSearch className="border-red-600 text-red-600" />
       <ChapterListSideBar setViewSideBar={setViewSideBar} />
       <Link
         to="/chapters"

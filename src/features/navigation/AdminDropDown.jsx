@@ -23,26 +23,32 @@ const AdminDropDown = forwardRef(({ viewUserDropDown }, ref) => {
       }
     >
       <li>
+        <button
+          onClick={handleToggleEditMode}
+          className={(editMode ? "text-green-600" : "") + " dropdown-item"}
+        >
+          <IoAddCircleOutline size={32} />
+          <span>Toggle Edit</span>
+        </button>
+      </li>
+      <li>
+        <Link to="/admin" className="dropdown-item">
+          <FaUserGear size={32} />
+          <span>Admin Page</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/settings" className="dropdown-item">
+          <IoSettingsOutline size={32} />
+          <span>Settings</span>
+        </Link>
+      </li>
+      <li>
         <Link to={"/login"} className="dropdown-item">
           <IoIosLogOut size={32} />
           <span>Sign Out</span>
         </Link>
       </li>
-      <button
-        onClick={handleToggleEditMode}
-        className={(editMode ? "text-green-600" : "") + " dropdown-item"}
-      >
-        <IoAddCircleOutline size={32} />
-        <span>Toggle Edit</span>
-      </button>
-      <Link to="/settings" className="dropdown-item">
-        <IoSettingsOutline size={32} />
-        <span>Settings</span>
-      </Link>
-      <Link to="/admin" className="dropdown-item">
-        <FaUserGear size={32} />
-        <span>Admin Page</span>
-      </Link>
     </ul>
   );
 });
