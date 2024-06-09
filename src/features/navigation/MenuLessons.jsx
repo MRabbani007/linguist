@@ -20,6 +20,11 @@ const MenuLessons = forwardRef(({ viewDropDown }, ref) => {
           <span>Lessons</span>
         </Link>
       </li>
+      <li>
+        <Link to="/sentences" title="Sentences" className="dropdown-item">
+          <span>Sentences</span>
+        </Link>
+      </li>
     </ul>
   );
 });

@@ -1,19 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
 import { useAddSentenceMutation } from "./sentencesSlice";
 import { toast } from "react-toastify";
 
-export default function FormSentenceAdd({ sectionID = "", setAdd = () => {} }) {
+export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
   const displayBlock = useSelector(selectDisplayBlock);
   const [addSentence, { isLoading }] = useAddSentenceMutation();
+
+  const [closeOnFinish, setCloseOnFinish] = useState(false);
+  const [change, setChange] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const [sortIndex, setSortIndex] = useState(9);
   const [text, setText] = useState("");
   const [translation, setTranslation] = useState("");
   const [pronunce, setPronunce] = useState("");
+  const [baseWord, setBaseWord] = useState("");
+  const [baseWordID, setBaseWordID] = useState("");
+  const [note, setNote] = useState("");
+  const [show, setShow] = useState(true);
 
-  const canSave = !isLoading && !isNaN(sortIndex) && sortIndex >= 0;
+  // useEffect(() => {
+  //   if (mounted) {
+  //     setChange(true);
+  //   }
+  // }, [
+  //   sortIndex,
+  //   text,
+  //   translation,
+  //   pronunce,
+  //   baseWord,
+  //   baseWordID,
+  //   note,
+  //   show,
+  // ]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => (document.body.style.overflow = "unset");
+  }, []);
+
+  const canSave =
+    !isLoading &&
+    !isNaN(sortIndex) &&
+    sortIndex >= 0 &&
+    text + translation !== "";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,17 +57,23 @@ export default function FormSentenceAdd({ sectionID = "", setAdd = () => {} }) {
       try {
         const sentence = {
           id: crypto.randomUUID(),
-          chapterID: displayBlock?.chapterID,
-          lessonID: displayBlock?.id,
-          sectionID: sectionID || "",
+          chapterID: section?.chapterID || "",
+          lessonID: section?.id || "",
+          sectionID: section?.id || "",
           text,
           translation,
           pronunce,
           sortIndex,
+          baseWord,
+          baseWordID,
+          note,
+          show,
         };
         await addSentence(sentence);
         toast.success("Sentence Added");
-        // setAdd(false);
+        if (closeOnFinish === true) {
+          setAdd(false);
+        }
       } catch (e) {
         toast.error("Server Error");
       }
@@ -47,22 +89,50 @@ export default function FormSentenceAdd({ sectionID = "", setAdd = () => {} }) {
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Add New Sentence</h2>
         <div>
-          <div className="field max-w-[25%]">
-            <label htmlFor="sentence_number" className="field__label">
-              Number
-            </label>
-            <input
-              id="sentence_number"
-              name="sentence_number"
-              type="number"
-              title="Number"
-              placeholder="Number"
-              min={0}
-              step={1}
-              value={sortIndex}
-              onChange={(e) => setSortIndex(e.target.value)}
-              className="field__input"
-            />
+          <div className="field_group">
+            <div className="flex items-center gap-2">
+              <input
+                name="autoclose"
+                type="checkbox"
+                checked={closeOnFinish}
+                onChange={() => setCloseOnFinish((curr) => !curr)}
+              />
+              <label htmlFor="autoclose">Auto Close</label>
+            </div>
+            <div className="field sm:max-w-[25%]">
+              <label htmlFor="sentence_number" className="field__label">
+                Number
+              </label>
+              <input
+                id="sentence_number"
+                name="sentence_number"
+                type="number"
+                title="Number"
+                placeholder="Number"
+                min={0}
+                step={1}
+                value={sortIndex}
+                onChange={(e) => setSortIndex(e.target.value)}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="sentence_baseWord" className="field__label">
+                Base Word
+              </label>
+              <input
+                id="sentence_baseWord"
+                name="sentence_baseWord"
+                type="text"
+                title="Base Word"
+                placeholder="Base Word"
+                min={0}
+                step={1}
+                value={baseWord}
+                onChange={(e) => setBaseWord(e.target.value)}
+                className="field__input"
+              />
+            </div>
           </div>
           <div className="field">
             <label htmlFor="sentence_text" className="field__label">

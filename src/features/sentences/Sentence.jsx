@@ -21,6 +21,12 @@ export default function Sentence({ sentence }) {
             <i>{sentence?.translation}</i>
           </p>
         ) : null}
+        {sentence?.baseWord || sentence?.baseWordTranslation ? (
+          <p>
+            <span>{sentence?.baseWord}</span>
+            <span>{sentence?.baseWordTranslation}</span>
+          </p>
+        ) : null}
         {editMode ? (
           <button
             className="absolute top-2 right-2 invisible group-hover:visible"

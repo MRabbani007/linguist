@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 // Imported Context
 // Imported Components
 // Imported Data
-import { ACTIONS } from "../data/actions";
+import { ACTIONS } from "../../data/actions";
 // Imported Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,8 +12,7 @@ import {
   faInfoCircle,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "../api/axios";
-import Background from "../assets/bg.svg";
+import axios from "../../api/axios";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -242,7 +241,7 @@ const Signup = () => {
           disabled={!validName || !validPwd || !validMatch ? true : false}
           className="input_submit"
         >
-          Signup
+          Sign Up
         </button>
         <div className="register">
           Have an account?
@@ -250,7 +249,7 @@ const Signup = () => {
             to="/login"
             className="py-2 px-6 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 mx-2 duration-200"
           >
-            Signin
+            Sign In
           </Link>
         </div>
       </form>

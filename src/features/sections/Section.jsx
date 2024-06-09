@@ -159,7 +159,7 @@ export default function Section({
       ) : null}
 
       {editMode && addSentence ? (
-        <FormSentenceAdd sectionID={section?.id} setAdd={setAddSentence} />
+        <FormSentenceAdd section={section} setAdd={setAddSentence} />
       ) : null}
     </div>
   );

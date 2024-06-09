@@ -8,11 +8,11 @@ import "./styles/main.css";
 import { AuthProvider } from "./context/AuthProvider";
 // Imported Components
 import HomePage from "./views/HomePage";
-import SigninPage from "./views/SigninPage";
-import SignupPage from "./views/SignupPage";
+import SigninPage from "./views/auth/SigninPage";
+import SignupPage from "./views/auth/SignupPage";
+import Unauthorized from "./views/auth/Unauthorized";
 import ChapterPage from "./views/ChapterPage";
 import SettingsPage from "./views/SettingsPage";
-import Unauthorized from "./views/Unauthorized";
 import AdminPage from "./views/AdminPage";
 // import AddContentPage from "./views/AddContentPage";
 import Layout from "./features/layout/Layout";
@@ -33,6 +33,7 @@ import DashboardPage from "./views/DashboardPage";
 import SearchPage from "./views/SearchPage";
 import SentencesPage from "./views/contentPages/SentencesPage";
 import MatchWordsPage from "./views/exercisePages/MatchWordsPage";
+import SignOutPage from "./views/auth/SignOutPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -68,13 +69,14 @@ function App() {
 
               {/* Page to display language chapters, visible to all */}
               <Route path="login" element={<SigninPage />} />
-              <Route path="signup" element={<SignupPage />} />
+              <Route path="register" element={<SignupPage />} />
+
               <Route path="language" element={<LanguagePage />} />
               <Route path="chapters" element={<ChapterPage />} />
               <Route path="sections" element={<SectionsPage />} />
               <Route path="lesson?/:lessonID" element={<LessonPage />} />
               <Route path="search?/:search" element={<SearchPage />} />
-              <Route path="sentences?/:lessonID" element={<SentencesPage />} />
+              <Route path="sentences/:lessonID?" element={<SentencesPage />} />
               <Route path="exercise" element={<ExercisesMainPage />} />
               <Route path="matchwords" element={<MatchWordsPage />} />
               <Route path="definitions" element={<DefinitionsPage />} />
@@ -90,6 +92,7 @@ function App() {
               >
                 <Route path="dashboard" element={<DashboardPage />} />
                 <Route path="settings" element={<SettingsPage />} />
+                <Route path="logout" element={<SignOutPage />} />
               </Route>
 
               {/* Admin page available to admin */}

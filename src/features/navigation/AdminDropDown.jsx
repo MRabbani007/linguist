@@ -44,7 +44,7 @@ const AdminDropDown = forwardRef(({ viewUserDropDown }, ref) => {
         </Link>
       </li>
       <li>
-        <Link to={"/login"} className="dropdown-item">
+        <Link to={"/logout"} className="dropdown-item">
           <IoIosLogOut size={32} />
           <span>Sign Out</span>
         </Link>

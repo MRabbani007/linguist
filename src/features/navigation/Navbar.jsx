@@ -140,13 +140,14 @@ const Navbar = () => {
                   >
                     <FiUser size={40} />
                   </button>
-                  {isAdmin && (
+                  {isAdmin ? (
                     <AdminDropDown
                       ref={dropDownRefUser}
                       viewUserDropDown={viewUserDropDown}
                     />
-                  )}
-                  {!isAdmin && <UserDropDown ref={dropDownRefAdmin} />}
+                  ) : !!user ? (
+                    <UserDropDown ref={dropDownRefAdmin} />
+                  ) : null}
                 </div>
               )}
               <div

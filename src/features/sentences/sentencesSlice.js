@@ -32,6 +32,20 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         ...result.ids.map((id) => ({ type: "Sentence", id })),
       ],
     }),
+    getSentencesAll: builder.query({
+      query: ({ searchTerm = "", lessonID = "" }) => ({
+        url: "/sentences",
+        method: "GET",
+        params: { searchTerm, lessonID },
+      }),
+      transformResponse: (responseData) => {
+        return sentencesAdapter.setAll(initialState, responseData);
+      },
+      providesTags: (result, error, arg) => [
+        { type: "Sentence", id: "Sentence" },
+        ...result.ids.map((id) => ({ type: "Sentence", id })),
+      ],
+    }),
     addSentence: builder.mutation({
       query: (sentence) => ({
         url: SERVER.SENTENCE,
@@ -83,6 +97,8 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetSentencesQuery,
+  useLazyGetSentencesQuery,
+  useLazyGetSentencesAllQuery,
   useAddSentenceMutation,
   useEditSentenceMutation,
   useRemoveSentenceMutation,

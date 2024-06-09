@@ -200,7 +200,7 @@ main header h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 60;
 }
 
 .form-container form {
@@ -508,12 +508,11 @@ tbody tr:nth-child(2n+1):hover {
 
 .wrapper {
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: stretch;
   min-height: calc(100vh - var(--navbar-height));
   background-color: rgba(255, 0, 0, 0.651);
-  background-image: url("bg.svg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
