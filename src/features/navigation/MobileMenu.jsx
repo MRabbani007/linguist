@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectEditMode, toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
+import { BsTextParagraph } from "react-icons/bs";
 
 const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
   const dispatch = useDispatch();
@@ -44,6 +45,12 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
         <Link to="/chapters" title="Learn" className="dropdown-item">
           <SlBookOpen size={34} />
           <span>Lessons</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/sentences" title="Sentences" className="dropdown-item">
+          <BsTextParagraph size={32} />
+          <span>Sentences</span>
         </Link>
       </li>
       <li>

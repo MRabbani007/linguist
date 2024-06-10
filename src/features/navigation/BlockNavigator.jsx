@@ -109,14 +109,15 @@ const BlockNavigator = ({ children }) => {
       setMoveDirection("next");
       setBlockIndex((curr) => curr + 1);
       dispatch(setDisplayBlock(blocks[blockIndex + 1]));
+      window.scrollTo(0, 0);
     } else {
       if (lastChapter) {
       } else {
         setMoveDirection("next");
         dispatch(setDisplayChapter(chapters[chapterIndex + 1]));
+        window.scrollTo(0, 0);
       }
     }
-    window.scrollTo(0, 0);
   };
 
   const handlePrevious = () => {
@@ -124,13 +125,14 @@ const BlockNavigator = ({ children }) => {
       setMoveDirection("prev");
       setBlockIndex((curr) => curr - 1);
       dispatch(setDisplayBlock(blocks[blockIndex - 1]));
+      window.scrollTo(0, 0);
     } else {
       if (chapterIndex > 0) {
         setMoveDirection("prev");
         dispatch(setDisplayChapter(chapters[chapterIndex - 1]));
+        window.scrollTo(0, 0);
       }
     }
-    window.scrollTo(0, 0);
   };
 
   return (

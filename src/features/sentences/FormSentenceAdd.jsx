@@ -126,8 +126,6 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
                 type="text"
                 title="Base Word"
                 placeholder="Base Word"
-                min={0}
-                step={1}
                 value={baseWord}
                 onChange={(e) => setBaseWord(e.target.value)}
                 className="field__input"

@@ -23,13 +23,13 @@ const HomePage = () => {
           <p className="italic font-semibold text-xl">
             Learn languages fast & easy
           </p>
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-col md:flex-row flex-wrap items-center md:gap-4 gap-2 mt-2">
             {!!language?.name ? (
               <>
                 <Link
                   to="/chapters"
                   title={"Continue  " + language.name}
-                  className="py-4 px-10 text-2xl bg-gradient-to-tr from-blue-700 to-blue-600 text-white  hover:from-blue-600 hover:to-blue-500 duration-200 rounded-full my-4"
+                  className="py-4 px-10 text-2xl bg-gradient-to-tr from-blue-700 to-blue-600 text-white  hover:from-blue-600 hover:to-blue-500 duration-200 rounded-full md:my-4"
                 >
                   {"Continue  " + language.name}
                 </Link>
@@ -44,7 +44,7 @@ const HomePage = () => {
             <Link
               to="/language"
               title={!!language?.name ? "Select Language" : "Start Now"}
-              className="py-2 px-6 text-xl bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 rounded-full my-4"
+              className="py-2 px-6 text-xl bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 rounded-full md:my-4"
             >
               {!!language?.name ? "Select Language" : "Start Now"}
             </Link>

@@ -15,6 +15,14 @@ export default function FormSentenceEditContent({ sentence, setEdit }) {
   const [text, setText] = useState(sentence?.text || "");
   const [translation, setTranslation] = useState(sentence?.translation || "");
   const [pronunce, setPronunce] = useState(sentence?.pronunce || "");
+  const [baseWord, setBaseWord] = useState(sentence?.baseWord || "");
+  const [baseWordTranslation, setBaseWordTranslation] = useState(
+    sentence?.baseWordTranslation || ""
+  );
+  const [baseWordID, setBaseWordID] = useState(sentence?.baseWordID || "");
+  const [note, setNote] = useState(sentence?.note || "");
+  const [show, setShow] = useState(sentence?.show || true);
+  const [level, setLevel] = useState(sentence?.level || 1);
 
   const canSave = !isLoading && !isNaN(sortIndex) && sortIndex >= 0;
 
@@ -28,6 +36,12 @@ export default function FormSentenceEditContent({ sentence, setEdit }) {
           translation,
           pronunce,
           sortIndex,
+          baseWord,
+          baseWordID,
+          baseWordTranslation,
+          note,
+          show,
+          level,
         };
         await editSentence({
           type: ACTIONS.EDIT_SENTENCE_CONTENT,
@@ -48,24 +62,83 @@ export default function FormSentenceEditContent({ sentence, setEdit }) {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} onReset={handleReset}>
-        <h2>Add New Sentence</h2>
+        <h2>Edit Sentence</h2>
         <div>
-          <div className="field max-w-[25%]">
-            <label htmlFor="sentence_number" className="field__label">
-              Number
-            </label>
-            <input
-              id="sentence_number"
-              name="sentence_number"
-              type="number"
-              title="Number"
-              placeholder="Number"
-              min={0}
-              step={1}
-              value={sortIndex}
-              onChange={(e) => setSortIndex(e.target.value)}
-              className="field__input"
-            />
+          <div className="field_group">
+            <div className="field max-w-[25%]">
+              <label htmlFor="sentence_number" className="field__label">
+                Number
+              </label>
+              <input
+                id="sentence_number"
+                name="sentence_number"
+                type="number"
+                title="Number"
+                placeholder="Number"
+                min={0}
+                step={1}
+                value={sortIndex}
+                onChange={(e) => setSortIndex(e.target.value)}
+                className="field__input"
+              />
+            </div>
+            <div className="field max-w-[25%]">
+              <label htmlFor="level" className="field__label">
+                Level
+              </label>
+              <select
+                name="level"
+                id="level"
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+                className="bg-transparent"
+              >
+                {new Array(10).fill("").map((item, idx) => (
+                  <option value={idx + 1} key={idx}>
+                    {idx + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="sentence_baseWord" className="field__label">
+                Base Word
+              </label>
+              <input
+                id="sentence_baseWord"
+                name="sentence_baseWord"
+                type="text"
+                title="Base Word"
+                placeholder="Base Word"
+                value={baseWord}
+                onChange={(e) => setBaseWord(e.target.value)}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="sentence_baseWordT" className="field__label">
+                Base Word Translation
+              </label>
+              <input
+                id="sentence_baseWordT"
+                name="sentence_baseWordT"
+                type="text"
+                title="Base Word Translation"
+                placeholder="Base Word Translation"
+                value={baseWord}
+                onChange={(e) => setBaseWordTranslation(e.target.value)}
+                className="field__input"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                name="show_sentence"
+                type="checkbox"
+                checked={show}
+                onChange={() => setShow((curr) => !curr)}
+              />
+              <label htmlFor="show_sentence">Show Sentence</label>
+            </div>
           </div>
           <div className="field">
             <label htmlFor="sentence_text" className="field__label">

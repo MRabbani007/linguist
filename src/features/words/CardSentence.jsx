@@ -12,7 +12,7 @@ const CardSentence = ({ word, index }) => {
   return (
     <>
       <div className="group flex items-start">
-        <div>
+        <div className="text-wrap">
           <p>{word?.sentences[index]}</p>
           <p>
             <i>{word?.sentencesTranslation[index] ?? ""}</i>

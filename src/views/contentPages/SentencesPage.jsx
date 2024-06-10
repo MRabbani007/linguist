@@ -12,10 +12,12 @@ import {
 } from "../../features/globals/globalsSlice";
 import { CiSearch } from "react-icons/ci";
 import { useDebounce } from "use-debounce";
-import { IoSearch, IoSearchOutline } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa6";
 import FormSentenceAdd from "../../features/sentences/FormSentenceAdd";
 import { IoIosSearch } from "react-icons/io";
+import { MdOutlinePlayLesson } from "react-icons/md";
+import { IoSearchOutline } from "react-icons/io5";
+import { GoPlus } from "react-icons/go";
 
 const sortFunction = (type, payload) => {
   switch (type) {
@@ -67,15 +69,13 @@ export default function SentencesPage() {
   useEffect(() => {
     getSentencesAll({ searchTerm: value, lessonID });
   }, [value]);
-  console.log(data?.length);
 
   useEffect(() => {
     if (Array.isArray(data)) {
       setSentences(data.ids.map((id) => data.entities[id]));
     }
-  }, [data]);
+  }, [data, isSuccess]);
 
-  console.log(sentences);
   let content = "";
   if (isLoading) {
     content = <p>Loading...</p>;
@@ -93,12 +93,14 @@ export default function SentencesPage() {
         <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
           <h1>Sentences</h1>
         </header>
-        <div>
-          {/* <div>Filter Section</div> */}
-          <p className="text-lg italic">{displayBlock?.title}</p>
+        <div className="flex flex-col gap-4">
+          {/* <p className="text-lg italic">{displayBlock?.title}</p> */}
           <div className="flex items-center gap-2">
-            <p>{isSuccess ? data?.ids.length : null}</p>
-            <form onSubmit={handleSubmit} className="flex items-center">
+            <p>{isSuccess ? data?.ids.length + " results" : null}</p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex items-center p-2 border-2 rounded-full border-zinc-600 text-zinc-600 pr-4"
+            >
               <input
                 type="text"
                 title="Search sentences"
@@ -107,22 +109,30 @@ export default function SentencesPage() {
                 onChange={(e) => setSearch(e.target.value)}
               />
               <button type="submit">
-                <IoIosSearch size={32} />
+                <IoSearchOutline size={32} />
               </button>
             </form>
             {editMode ? (
               <button title="Add sentence" onClick={() => setAdd(true)}>
-                <FaPlus size={28} />
+                <GoPlus size={28} />
               </button>
             ) : null}
           </div>
-
           <div className="w-full flex flex-col gap-4">{content}</div>
-          <div>
+          <div className="my-2">
             {displayBlock?.id ? (
-              <Link to={`/lesson/${displayBlock?.id}`}>Back to Lesson</Link>
+              <Link
+                to={`/lesson/${displayBlock?.id}`}
+                className="flex items-center gap-2"
+              >
+                <span>Back to Lesson</span>
+                <MdOutlinePlayLesson size={32} />
+              </Link>
             ) : (
-              <Link to={"/chapters"}>Go to lessons</Link>
+              <Link to={"/chapters"} className="flex items-center gap-2">
+                <span>Go to lessons</span>
+                <MdOutlinePlayLesson size={32} />
+              </Link>
             )}
           </div>
         </div>

@@ -18,6 +18,7 @@ import {
 } from "../globals/globalsSlice";
 import { useGetChaptersQuery } from "../chapters/chapterSlice";
 import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
+import Footer from "./Footer";
 
 const Layout = () => {
   const location = useLocation();
@@ -113,6 +114,7 @@ const Layout = () => {
         <Outlet />
       </Suspense>
       <ToastContainer autoClose={2000} />
+      <Footer />
     </>
   );
 };

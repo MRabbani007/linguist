@@ -17,11 +17,14 @@ import LessonHeaderEdit from "../features/blocks/LessonHeaderEdit";
 import LessonEditDetails from "../features/blocks/LessonEditDetails";
 import LessonCompleted from "../features/blocks/LessonCompleted";
 import ContentNavigator from "../features/navigation/ContentNavigator";
+import { selectCurrentUser } from "../features/auth/authSlice";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
   const editMode = useSelector(selectEditMode);
+
+  const user = useSelector(selectCurrentUser);
 
   const [viewAddWord, setViewAddWord] = useState(false);
   const [addLessonIntro, setAddLessonIntro] = useState(false);
@@ -98,7 +101,7 @@ export default function LessonPage() {
         <BlockNavigator />
         <ContentNavigator />
 
-        <LessonCompleted />
+        {!!user ? <LessonCompleted /> : null}
       </main>
 
       {editLessonTitle ? (

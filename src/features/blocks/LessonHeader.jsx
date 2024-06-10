@@ -49,7 +49,9 @@ const LessonHeader = ({
         <h1 className="font-medium text-2xl whitespace-break-spaces text-wrap">
           {lesson?.title}
         </h1>
-        <p className="font-light text-wrap">{lesson?.subtitle}</p>
+        {lesson?.subtitle ? (
+          <p className="font-light text-wrap">{lesson?.subtitle}</p>
+        ) : null}
       </div>
       {editMode && (
         <button
