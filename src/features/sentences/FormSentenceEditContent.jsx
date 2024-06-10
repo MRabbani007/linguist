@@ -125,7 +125,7 @@ export default function FormSentenceEditContent({ sentence, setEdit }) {
                 type="text"
                 title="Base Word Translation"
                 placeholder="Base Word Translation"
-                value={baseWord}
+                value={baseWordTranslation}
                 onChange={(e) => setBaseWordTranslation(e.target.value)}
                 className="field__input"
               />

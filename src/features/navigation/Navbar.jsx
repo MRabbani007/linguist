@@ -13,6 +13,7 @@ import Logo from "../../assets/logo-red.png";
 import SidebarSearch from "./SidebarSearch";
 import MobileMenu from "./MobileMenu";
 import MenuLessons from "./MenuLessons";
+import { AiOutlineUser } from "react-icons/ai";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -125,7 +126,7 @@ const Navbar = () => {
                   title="User"
                   className="hidden sm:inline-block"
                 >
-                  <FiUser size={40} />
+                  <AiOutlineUser size={40} />
                 </Link>
               ) : (
                 <div
@@ -138,7 +139,7 @@ const Navbar = () => {
                     onClick={() => setViewUserDropDown(true)}
                     title="User"
                   >
-                    <FiUser size={40} />
+                    <AiOutlineUser size={40} />
                   </button>
                   {isAdmin ? (
                     <AdminDropDown

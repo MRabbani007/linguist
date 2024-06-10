@@ -2,6 +2,7 @@ import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { ACTIONS, SERVER } from "../../data/actions";
 import { store } from "../../app/store";
+import { setSentenceSearchCount } from "../globals/globalsSlice";
 
 const sentencesAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
@@ -33,13 +34,14 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getSentencesAll: builder.query({
-      query: ({ searchTerm = "", lessonID = "" }) => ({
+      query: ({ searchTerm = "", lessonID = "", page }) => ({
         url: "/sentences",
         method: "GET",
-        params: { searchTerm, lessonID },
+        params: { searchTerm, lessonID, page },
       }),
       transformResponse: (responseData) => {
-        return sentencesAdapter.setAll(initialState, responseData);
+        store.dispatch(setSentenceSearchCount(responseData.count));
+        return sentencesAdapter.setAll(initialState, responseData.data);
       },
       providesTags: (result, error, arg) => [
         { type: "Sentence", id: "Sentence" },

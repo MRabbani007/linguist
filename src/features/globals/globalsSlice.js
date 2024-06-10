@@ -5,6 +5,7 @@ const initialState = {
   progress: [],
   chapters: [],
   lessons: [],
+  sentenceSearchCount: 0,
   displayChapter: null,
   displayBlock: null,
   editMode: false,
@@ -29,6 +30,10 @@ const globalsSlice = createSlice({
     },
     setProgress: (state, action) => {
       state.progress = action.payload;
+      return state;
+    },
+    setSentenceSearchCount: (state, action) => {
+      state.sentenceSearchCount = action.payload;
       return state;
     },
     setSiteLanguages: (state, action) => {
@@ -60,6 +65,7 @@ export const {
   setChapters,
   setLessons,
   setProgress,
+  setSentenceSearchCount,
   setDisplayBlock,
   setDisplayChapter,
   setSiteLanguages,
@@ -69,6 +75,7 @@ export const {
 
 export default globalsSlice.reducer;
 
+export const selectSentenceCount = (state) => state.globals.sentenceSearchCount;
 export const selectLanguage = (state) => state.globals.language;
 export const selectChapters = (state) => state.globals.chapters;
 export const selectLessons = (state) => state.globals.lessons;

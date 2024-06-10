@@ -1,11 +1,11 @@
-import ChapterTitleBlock from "../features/chapters/ChapterTitleBlock";
-import CardChapterAdd from "../features/chapters/CardChapterAdd";
+import ChapterTitleBlock from "../../features/chapters/ChapterTitleBlock";
+import CardChapterAdd from "../../features/chapters/CardChapterAdd";
 import { useSelector } from "react-redux";
-import { useGetChaptersQuery } from "../features/chapters/chapterSlice";
+import { useGetChaptersQuery } from "../../features/chapters/chapterSlice";
 import {
   selectEditMode,
   selectLanguage,
-} from "../features/globals/globalsSlice";
+} from "../../features/globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 // Imported components

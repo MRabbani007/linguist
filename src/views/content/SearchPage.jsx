@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import { axiosPrivate } from "../api/axios";
-import CardWordList from "../features/words/CardWordList";
+import { axiosPrivate } from "../../api/axios";
+import CardWordList from "../../features/words/CardWordList";
 
 export default function SearchPage() {
   let params = useParams();

@@ -5,19 +5,19 @@ import {
   selectDisplayChapter,
   selectDisplayBlock,
   selectEditMode,
-} from "../features/globals/globalsSlice";
+} from "../../features/globals/globalsSlice";
 // Imported Components
-import CardWordAdd from "../features/words/CardWordAdd";
-import BlockNavigator from "../features/navigation/BlockNavigator";
+import CardWordAdd from "../../features/words/CardWordAdd";
+import BlockNavigator from "../../features/navigation/BlockNavigator";
 // Imported Icons
-import LessonIntro from "../features/blocks/LessonIntro";
-import LessonSections from "../features/sections/LessonSections";
-import LessonHeader from "../features/blocks/LessonHeader";
-import LessonHeaderEdit from "../features/blocks/LessonHeaderEdit";
-import LessonEditDetails from "../features/blocks/LessonEditDetails";
-import LessonCompleted from "../features/blocks/LessonCompleted";
-import ContentNavigator from "../features/navigation/ContentNavigator";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import LessonIntro from "../../features/blocks/LessonIntro";
+import LessonSections from "../../features/sections/LessonSections";
+import LessonHeader from "../../features/blocks/LessonHeader";
+import LessonHeaderEdit from "../../features/blocks/LessonHeaderEdit";
+import LessonEditDetails from "../../features/blocks/LessonEditDetails";
+import LessonCompleted from "../../features/blocks/LessonCompleted";
+import ContentNavigator from "../../features/navigation/ContentNavigator";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);

@@ -1,8 +1,8 @@
-import DashboardLinks from "../features/dashboard/DashboardLinks";
-import Exercises from "../features/dashboard/Exercises";
-import Progress from "../features/dashboard/Progress";
-import UserLessonTracker from "../features/dashboard/UserLessonTracker";
-import UserWordList from "../features/dashboard/UserWordList";
+import DashboardLinks from "../../features/dashboard/DashboardLinks";
+import Exercises from "../../features/dashboard/Exercises";
+import Progress from "../../features/dashboard/Progress";
+import UserLessonTracker from "../../features/dashboard/UserLessonTracker";
+import UserWordList from "../../features/dashboard/UserWordList";
 
 export default function DashboardPage() {
   return (

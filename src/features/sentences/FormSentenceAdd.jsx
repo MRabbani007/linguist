@@ -18,23 +18,10 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
   const [pronunce, setPronunce] = useState("");
   const [baseWord, setBaseWord] = useState("");
   const [baseWordID, setBaseWordID] = useState("");
+  const [baseWordTranslation, setBaseWordTranslation] = useState("");
   const [note, setNote] = useState("");
   const [show, setShow] = useState(true);
-
-  // useEffect(() => {
-  //   if (mounted) {
-  //     setChange(true);
-  //   }
-  // }, [
-  //   sortIndex,
-  //   text,
-  //   translation,
-  //   pronunce,
-  //   baseWord,
-  //   baseWordID,
-  //   note,
-  //   show,
-  // ]);
+  const [level, setLevel] = useState(1);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -68,6 +55,8 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
           baseWordID,
           note,
           show,
+          baseWordTranslation,
+          level,
         };
         await addSentence(sentence);
         toast.success("Sentence Added");
@@ -116,6 +105,24 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
                 className="field__input"
               />
             </div>
+            <div className="field max-w-[25%]">
+              <label htmlFor="level" className="field__label">
+                Level
+              </label>
+              <select
+                name="level"
+                id="level"
+                value={level}
+                onChange={(e) => setLevel(e.target.value)}
+                className="bg-transparent"
+              >
+                {new Array(10).fill("").map((item, idx) => (
+                  <option value={idx + 1} key={idx}>
+                    {idx + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="field">
               <label htmlFor="sentence_baseWord" className="field__label">
                 Base Word
@@ -128,6 +135,21 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
                 placeholder="Base Word"
                 value={baseWord}
                 onChange={(e) => setBaseWord(e.target.value)}
+                className="field__input"
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="sentence_baseWordT" className="field__label">
+                Base Word Translation
+              </label>
+              <input
+                id="sentence_baseWordT"
+                name="sentence_baseWordT"
+                type="text"
+                title="Base Word Translation"
+                placeholder="Base Word Translation"
+                value={baseWordTranslation}
+                onChange={(e) => setBaseWordTranslation(e.target.value)}
                 className="field__input"
               />
             </div>

@@ -4,14 +4,14 @@ import { useSelector } from "react-redux";
 import {
   selectDisplayChapter,
   selectEditMode,
-} from "../features/globals/globalsSlice";
-import { useGetBlocksQuery } from "../features/blocks/blockSlice";
-import CardBlockTitle from "../features/blocks/CardBlockTitle";
-import ChapterNavigator from "../features/navigation/ChapterNavigator";
-import ChapterHeaderEdit from "../features/chapters/ChapterHeaderEdit";
-import ChapterHeader from "../features/chapters/ChapterHeader";
-import LessonAdd from "../features/blocks/LessonAdd";
-import ContentNavigator from "../features/navigation/ContentNavigator";
+} from "../../features/globals/globalsSlice";
+import { useGetBlocksQuery } from "../../features/blocks/blockSlice";
+import CardBlockTitle from "../../features/blocks/CardBlockTitle";
+import ChapterNavigator from "../../features/navigation/ChapterNavigator";
+import ChapterHeaderEdit from "../../features/chapters/ChapterHeaderEdit";
+import ChapterHeader from "../../features/chapters/ChapterHeader";
+import LessonAdd from "../../features/blocks/LessonAdd";
+import ContentNavigator from "../../features/navigation/ContentNavigator";
 
 export default function SectionsPage() {
   const displayChapter = useSelector(selectDisplayChapter);

@@ -6,34 +6,56 @@ import "./styles/styles.css";
 import "./styles/main.css";
 // Imported Context
 import { AuthProvider } from "./context/AuthProvider";
-// Imported Components
-import HomePage from "./views/HomePage";
-import SigninPage from "./views/auth/SigninPage";
-import SignupPage from "./views/auth/SignupPage";
-import Unauthorized from "./views/auth/Unauthorized";
-import ChapterPage from "./views/ChapterPage";
-import SettingsPage from "./views/SettingsPage";
-import AdminPage from "./views/AdminPage";
-// import AddContentPage from "./views/AddContentPage";
+// import { lazyLoad } from "./data/lazyLoad";
+// Import Error Handler
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallBack from "./features/auth/ErrorFallBack";
+import SkeletonContentPage from "./skeletons/SkeletonContentPage";
+// Layouts & navigation
 import Layout from "./features/layout/Layout";
 import RequireAuth from "./features/auth/RequireAuth";
 import PersistLogin from "./features/auth/PersistLogin";
+import Unauthorized from "./views/auth/Unauthorized";
 import MissingPage from "./views/MissingPage";
-// Import Error Handler
-import { ErrorBoundary } from "react-error-boundary";
-// import { lazyLoad } from "./data/lazyLoad";
-import ErrorFallBack from "./features/auth/ErrorFallBack";
-import SkeletonContentPage from "./skeletons/SkeletonContentPage";
-import SectionsPage from "./views/SectionsPage";
-import LessonPage from "./views/LessonPage";
-import ExercisesMainPage from "./views/exercisePages/ExercisesMainPage";
-import DefinitionsPage from "./views/summaryPages/DefinitionsPage";
-import LanguagePage from "./views/userPages/LanguagePage";
-import DashboardPage from "./views/DashboardPage";
-import SearchPage from "./views/SearchPage";
-import SentencesPage from "./views/contentPages/SentencesPage";
-import MatchWordsPage from "./views/exercisePages/MatchWordsPage";
+// Auth
+import SigninPage from "./views/auth/SigninPage";
+import SignupPage from "./views/auth/SignupPage";
 import SignOutPage from "./views/auth/SignOutPage";
+// Admin
+import AdminPage from "./views/admin/AdminPage";
+import AdminSettings from "./views/admin/AdminSettings";
+import AdminUsersPage from "./views/admin/AdminUsersPage";
+// Editor
+import EditorDashboard from "./views/editor/EditorDashboard";
+import EditorChapters from "./views/editor/EditorChapters";
+import EditorLessons from "./views/editor/EditorLessons";
+// User
+import DashboardPage from "./views/user/DashboardPage";
+import ProfilePage from "./views/user/ProfilePage";
+import UserNotesPage from "./views/user/UserNotesPage";
+import SettingsPage from "./views/user/SettingsPage";
+// Website
+import HomePage from "./views/HomePage";
+import AboutPage from "./views/website/AboutPage";
+import NotePage from "./views/website/NotePage";
+// Content
+import LanguagePage from "./views/content/LanguagePage";
+import ChapterPage from "./views/content/ChapterPage";
+import SectionsPage from "./views/content/SectionsPage";
+import LessonPage from "./views/content/LessonPage";
+import SearchPage from "./views/content/SearchPage";
+import SentencesPage from "./views/content/SentencesPage";
+// Review
+import DefinitionsPage from "./views/review/DefinitionsPage";
+import WordsPage from "./views/review/WordsPage";
+import WordListsPage from "./views/review/WordListsPage";
+// Exercise
+import ExercisesMainPage from "./views/exercise/ExercisesMainPage";
+import MatchWordsPage from "./views/exercise/MatchWordsPage";
+import ReadingPage from "./views/exercise/ReadingPage";
+import SpellingPage from "./views/exercise/SpellingPage";
+import GrammarPage from "./views/exercise/GrammarPage";
+import FlashCardsPage from "./views/exercise/FlashCardsPage";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -57,62 +79,85 @@ const ROLES = {
 };
 
 function App() {
-  const navigate = useNavigate();
-
   return (
-    <>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route element={<PersistLogin />}>
-              <Route index element={<HomePage />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route element={<PersistLogin />}>
+            <Route index element={<HomePage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="note" element={<NotePage />} />
 
-              {/* Page to display language chapters, visible to all */}
-              <Route path="login" element={<SigninPage />} />
-              <Route path="register" element={<SignupPage />} />
+            {/* Page to display language chapters, visible to all */}
+            <Route path="login" element={<SigninPage />} />
+            <Route path="register" element={<SignupPage />} />
 
-              <Route path="language" element={<LanguagePage />} />
-              <Route path="chapters" element={<ChapterPage />} />
-              <Route path="sections" element={<SectionsPage />} />
-              <Route path="lesson?/:lessonID" element={<LessonPage />} />
-              <Route path="search?/:search" element={<SearchPage />} />
-              <Route path="sentences/:lessonID?" element={<SentencesPage />} />
-              <Route path="exercise" element={<ExercisesMainPage />} />
+            <Route path="language" element={<LanguagePage />} />
+            <Route path="chapters" element={<ChapterPage />} />
+            <Route path="sections" element={<SectionsPage />} />
+            <Route path="lesson?/:lessonID" element={<LessonPage />} />
+            <Route path="search?/:search" element={<SearchPage />} />
+            <Route path="sentences/:lessonID?" element={<SentencesPage />} />
+
+            <Route path="exercise">
+              <Route index element={<ExercisesMainPage />} />
               <Route path="matchwords" element={<MatchWordsPage />} />
-              <Route path="definitions" element={<DefinitionsPage />} />
-              <Route path="unauthorized" element={<Unauthorized />} />
-
-              {/* Settings page available to users */}
-              <Route
-                element={
-                  <RequireAuth
-                    allowedRoles={[ROLES.User, ROLES.Editor, ROLES.Admin]}
-                  />
-                }
-              >
-                <Route path="dashboard" element={<DashboardPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route path="logout" element={<SignOutPage />} />
-              </Route>
-
-              {/* Admin page available to admin */}
-              <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-                <Route path="admin" element={<AdminPage />} />
-              </Route>
-
-              <Route
-                element={
-                  <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
-                }
-              ></Route>
+              <Route path="reading" element={<ReadingPage />} />
+              <Route path="spelling" element={<SpellingPage />} />
+              <Route path="grammar" element={<GrammarPage />} />
+              <Route path="flashcards" element={<FlashCardsPage />} />
             </Route>
 
-            {/* catch all */}
-            <Route path="*" element={<MissingPage />} />
+            <Route path="review">
+              <Route path="definitions" element={<DefinitionsPage />} />
+              <Route path="words" element={<WordsPage />} />
+              <Route path="wordlists" element={<WordListsPage />} />
+            </Route>
+
+            <Route path="unauthorized" element={<Unauthorized />} />
+
+            {/* Settings page available to users */}
+            <Route
+              element={
+                <RequireAuth
+                  allowedRoles={[ROLES.User, ROLES.Editor, ROLES.Admin]}
+                />
+              }
+            >
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="notebook" element={<UserNotesPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="logout" element={<SignOutPage />} />
+            </Route>
+
+            {/* Admin page available to admin */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="admin">
+                <Route index element={<AdminPage />} />
+                <Route path="settings" element={<AdminSettings />} />
+                <Route path="users" element={<AdminUsersPage />} />
+              </Route>
+            </Route>
+
+            <Route
+              element={
+                <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
+              }
+            >
+              <Route path="edit">
+                <Route index element={<EditorDashboard />} />
+                <Route path="chapters" element={<EditorChapters />} />
+                <Route path="lessons" element={<EditorLessons />} />
+              </Route>
+            </Route>
           </Route>
-        </Routes>
-      </AuthProvider>
-    </>
+
+          {/* catch all */}
+          <Route path="*" element={<MissingPage />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

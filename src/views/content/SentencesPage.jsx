@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import {
   selectDisplayBlock,
   selectEditMode,
+  selectSentenceCount,
 } from "../../features/globals/globalsSlice";
 import { CiSearch } from "react-icons/ci";
 import { useDebounce } from "use-debounce";
@@ -18,6 +19,7 @@ import { IoIosSearch } from "react-icons/io";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
+import Pagination from "../../features/components/Pagination";
 
 const sortFunction = (type, payload) => {
   switch (type) {
@@ -56,6 +58,8 @@ export default function SentencesPage() {
   const [search, setSearch] = useState("");
   const [value] = useDebounce(search, 1000);
 
+  const [page, setPage] = useState(1);
+  const count = useSelector(selectSentenceCount);
   const [sentences, setSentences] = useState([]);
 
   const [getSentencesAll, { data, isLoading, isSuccess, isError, error }] =
@@ -63,12 +67,12 @@ export default function SentencesPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getSentencesAll({ searchTerm: search, lessonID });
+    getSentencesAll({ searchTerm: search, lessonID, page });
   };
 
   useEffect(() => {
-    getSentencesAll({ searchTerm: value, lessonID });
-  }, [value]);
+    getSentencesAll({ searchTerm: value, lessonID, page });
+  }, [value, page]);
 
   useEffect(() => {
     if (Array.isArray(data)) {
@@ -96,7 +100,7 @@ export default function SentencesPage() {
         <div className="flex flex-col gap-4">
           {/* <p className="text-lg italic">{displayBlock?.title}</p> */}
           <div className="flex items-center gap-2">
-            <p>{isSuccess ? data?.ids.length + " results" : null}</p>
+            <p>{isSuccess ? count + " results" : null}</p>
             <form
               onSubmit={handleSubmit}
               className="flex items-center p-2 border-2 rounded-full border-zinc-600 text-zinc-600 pr-4"
@@ -118,7 +122,9 @@ export default function SentencesPage() {
               </button>
             ) : null}
           </div>
+          <Pagination currentPage={page} setPage={setPage} count={count} />
           <div className="w-full flex flex-col gap-4">{content}</div>
+          <Pagination currentPage={page} setPage={setPage} count={count} />
           <div className="my-2">
             {displayBlock?.id ? (
               <Link
