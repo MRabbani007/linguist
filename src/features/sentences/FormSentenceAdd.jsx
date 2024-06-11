@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
 import { useAddSentenceMutation } from "./sentencesSlice";
 import { toast } from "react-toastify";
+import FormContainer from "../components/FormContainer";
 
 export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
   const displayBlock = useSelector(selectDisplayBlock);
@@ -22,11 +23,6 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
   const [note, setNote] = useState("");
   const [show, setShow] = useState(true);
   const [level, setLevel] = useState(1);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => (document.body.style.overflow = "unset");
-  }, []);
 
   const canSave =
     !isLoading &&
@@ -74,7 +70,7 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
   };
 
   return (
-    <div className="form-container">
+    <FormContainer>
       <form onSubmit={handleSubmit} onReset={handleReset}>
         <h2>Add New Sentence</h2>
         <div>
@@ -210,6 +206,6 @@ export default function FormSentenceAdd({ section = {}, setAdd = () => {} }) {
           </div>
         </div>
       </form>
-    </div>
+    </FormContainer>
   );
 }

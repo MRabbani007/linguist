@@ -74,6 +74,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  min-height: 100dvh;
   min-width: fit-content;
   max-width: 1000px;
   width: 100%;
@@ -454,7 +455,7 @@ tbody tr:nth-child(2n+1):hover {
   flex-direction: row;
   gap: 0.5rem;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .mobile-menu .dropdown-item {
@@ -463,7 +464,7 @@ tbody tr:nth-child(2n+1):hover {
   flex-direction: row;
   gap: 0.5rem;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .mobile-menu .dropdown-item span {
@@ -478,7 +479,7 @@ tbody tr:nth-child(2n+1):hover {
 .section-dropdown .dropdown-title {
   background-color: #cbd5e1;
   font-weight: 500;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .section-dropdown .dropdown-title:first-child {
@@ -709,6 +710,8 @@ tbody tr:nth-child(2n+1):hover {
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   flex-shrink: 0;
 }

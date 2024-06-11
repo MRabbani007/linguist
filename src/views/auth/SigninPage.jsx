@@ -150,7 +150,7 @@ const SigninPage = () => {
           </label>
         </div>
         <div className="register mt-2">
-          Don't Have an account?
+          <span>Don't Have an account?</span>
           <Link
             to="/register"
             className="py-2 px-6 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 mx-2 duration-200"

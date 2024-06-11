@@ -99,7 +99,7 @@ export default function SentencesPage() {
         </header>
         <div className="flex flex-col gap-4">
           {/* <p className="text-lg italic">{displayBlock?.title}</p> */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap justify-center items-center gap-2">
             <p>{isSuccess ? count + " results" : null}</p>
             <form
               onSubmit={handleSubmit}

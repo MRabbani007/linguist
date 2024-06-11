@@ -78,6 +78,7 @@ p {
 main {
   padding: 0.5rem;
   @include flexColStart;
+  min-height: 100dvh;
   min-width: fit-content;
   max-width: 1000px;
   width: 100%;

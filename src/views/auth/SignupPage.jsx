@@ -244,7 +244,7 @@ const Signup = () => {
           Sign Up
         </button>
         <div className="register">
-          Have an account?
+          <span>Have an account?</span>
           <Link
             to="/login"
             className="py-2 px-6 rounded-full bg-zinc-100 hover:bg-white text-zinc-950 mx-2 duration-200"
