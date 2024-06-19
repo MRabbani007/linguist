@@ -7,17 +7,17 @@ import {
   selectEditMode,
 } from "../../features/globals/globalsSlice";
 // Imported Components
-import CardWordAdd from "../../features/words/CardWordAdd";
 import BlockNavigator from "../../features/navigation/BlockNavigator";
 // Imported Icons
 import LessonIntro from "../../features/blocks/LessonIntro";
 import LessonSections from "../../features/sections/LessonSections";
 import LessonHeader from "../../features/blocks/LessonHeader";
-import LessonHeaderEdit from "../../features/blocks/LessonHeaderEdit";
-import LessonEditDetails from "../../features/blocks/LessonEditDetails";
 import LessonCompleted from "../../features/blocks/LessonCompleted";
 import ContentNavigator from "../../features/navigation/ContentNavigator";
 import { selectCurrentUser } from "../../features/auth/authSlice";
+import FormWordAdd from "../../features/words/FormWordAdd";
+import FormLessonEditHeader from "../../features/blocks/FormLessonEditHeader";
+import FormLessonEditDetails from "../../features/blocks/FormLessonEditDetails";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -105,17 +105,20 @@ export default function LessonPage() {
       </main>
 
       {editLessonTitle ? (
-        <LessonHeaderEdit lesson={displayBlock} setEdit={setEditLessonTitle} />
+        <FormLessonEditHeader
+          lesson={displayBlock}
+          setEdit={setEditLessonTitle}
+        />
       ) : null}
 
       {editLessonDetails ? (
-        <LessonEditDetails
+        <FormLessonEditDetails
           lesson={displayBlock}
           setEdit={setEditLessonDetails}
         />
       ) : null}
 
-      {viewAddWord && <CardWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
+      {viewAddWord && <FormWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
     </>
   );
 }

@@ -45,7 +45,7 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 group relative bg-gradient-to-r from-zinc-300 to-zinc-100 rounded-md py-2 px-4 justify-between">
+    <div className="flex items-center gap-2 group relative bg-gradient-to-r from-zinc-300 to-zinc-100 py-4 px-6 justify-between">
       <div>
         <h3 className="text-red-600 ">
           <p className="font-semibold text-xl flex items-center gap-3 ">

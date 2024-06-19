@@ -8,10 +8,13 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 
-const ChapterNavigator = ({ children }) => {
+const ChapterNavigator = () => {
   const dispatch = useDispatch();
   const displayChapter = useSelector(selectDisplayChapter);
   const language = useSelector(selectLanguage);
+
+  const [chapterIndex, setChapterIndex] = useState(0);
+  const [chapters, setChapters] = useState([]);
 
   const [
     getChapters,
@@ -24,14 +27,12 @@ const ChapterNavigator = ({ children }) => {
     },
   ] = useLazyGetChaptersQuery(displayChapter?.id);
 
-  const [chapters, setChapters] = useState([]);
-
   // get chapters on first load
   useEffect(() => {
     getChapters(language?.id);
   }, []);
 
-  // denoralize chapters data
+  // denormalize chapters data
   useEffect(() => {
     if (isSuccessChapters) {
       setChapters(() => {
@@ -39,8 +40,6 @@ const ChapterNavigator = ({ children }) => {
       });
     }
   }, [chaptersData]);
-
-  const [chapterIndex, setChapterIndex] = useState(0);
 
   useEffect(() => {
     setChapterIndex(() => {
@@ -51,10 +50,7 @@ const ChapterNavigator = ({ children }) => {
         return tempChapterIndex;
       } else return 0;
     });
-  }, [displayChapter]);
-
-  const firstChapter = chapterIndex === 0;
-  const lastChapter = chapterIndex === chapters.length - 1;
+  }, [displayChapter, chapters]);
 
   const handleNext = () => {
     if (!lastChapter) {
@@ -70,26 +66,26 @@ const ChapterNavigator = ({ children }) => {
     }
   };
 
+  const firstChapter = chapterIndex === 0;
+  const lastChapter = chapterIndex === chapters.length - 1;
+
   return (
-    <section className="w-full flex flex-1 justify-between items-center">
+    <section className="w-full flex flex-1 justify-between items-start">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}
         className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
       >
-        <FaChevronLeft className="icon" />
-        <span className="font-semibold hidden md:inline">
-          {"Previous Chapter"}
-        </span>
+        <FaChevronLeft size={32} />
+        <span className="font-semibold hidden md:inline">Previous Chapter</span>
       </button>
-      {children}
       <button
         onClick={handleNext}
         disabled={lastChapter}
         className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
       >
-        <span className="font-semibold hidden md:inline">{"Next Chapter"}</span>
-        <FaChevronRight className="icon" />
+        <span className="font-semibold hidden md:inline">Next Chapter</span>
+        <FaChevronRight size={32} />
       </button>
     </section>
   );

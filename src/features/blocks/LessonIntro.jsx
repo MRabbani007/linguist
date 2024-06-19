@@ -10,7 +10,7 @@ export default function LessonIntro({
     <>
       {Array.isArray(lesson?.introduction) &&
       lesson?.introduction?.length !== 0 ? (
-        <article className="rounded-md p-2 sm:px-[5%] bg-orange-400/10 text-zinc-800">
+        <article className="py-2 px-4 bg-orange-200 text-zinc-800 w-full font-medium">
           {lesson.introduction.map((intro, index) => {
             return (
               <LessonIntroItem

@@ -1,16 +1,23 @@
 .skeleton {
-  background-color: rgb(199, 199, 199);
   margin: 0.75rem 0;
   border-radius: 0.25rem;
 }
 
-.skeleton.title { 
+.skeleton .chapterCard {
+  background-color: rgb(218, 0, 0);
+  min-width: 100px;
+  min-height: 300px;
+}
+
+.skeleton.title {
   height: 1.25rem;
   margin-bottom: 1rem;
+  background-color: rgb(199, 199, 199);
 }
 
 .skeleton.text {
   height: 0.75rem;
+  background-color: rgb(199, 199, 199);
 }
 
 .skeleton.width-100 {
@@ -30,7 +37,7 @@
 /* animation */
 @keyframes pulse {
   50% {
-      opacity: .5;
+    opacity: 0.5;
   }
 }
 

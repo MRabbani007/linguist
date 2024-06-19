@@ -32,20 +32,6 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
         ...result.ids.map((id) => ({ type: "Chapter", id })),
       ],
     }),
-    getAllChapters: builder.query({
-      query: (langID) => ({
-        url: SERVER.CHAPTER,
-        method: "GET",
-        params: { langID },
-      }),
-      transformResponse: (responseData) => {
-        return chaptersAdapter.setAll(initialState, responseData);
-      },
-      providesTags: (result, error, arg) => [
-        { type: "Chapter", id: "LIST" },
-        ...result.ids.map((id) => ({ type: "Chapter", id })),
-      ],
-    }),
     addChapter: builder.mutation({
       query: (chapter) => ({
         url: SERVER.CHAPTER,
@@ -98,7 +84,6 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetChaptersQuery,
   useLazyGetChaptersQuery,
-  useGetAllChaptersQuery,
   useAddChapterMutation,
   useEditChapterMutation,
   useRemoveChapterMutation,

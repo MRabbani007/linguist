@@ -6,14 +6,14 @@ import { CiEdit } from "react-icons/ci";
 import { FaCheck, FaEyeSlash, FaPlus } from "react-icons/fa6";
 import CardSentence from "./CardSentence";
 import CardAddSentence from "./CardAddSentence";
-import CardWordListEdit from "./CardWordListEdit";
 import MoveWord from "./MoveWord";
 import MoveWordSection from "./MoveWordSection";
 import { BsThreeDots } from "react-icons/bs";
 import WordDropDown from "../dropDowns/WordDropDown";
 import WordImageEdit from "./WordImageEdit";
+import FormWordEdit from "./FormWordEdit";
 
-const CardWordList = ({ word, sectionsList = [] }) => {
+export default function CardWordList({ word, sectionsList = [] }) {
   const [editWordExercise] = useEditWordExerciseMutation();
   const displayBlock = useSelector(selectDisplayBlock);
   const editMode = useSelector(selectEditMode);
@@ -225,7 +225,7 @@ const CardWordList = ({ word, sectionsList = [] }) => {
         </div>
       </div>
       {viewEditWord ? (
-        <CardWordListEdit word={word} setViewEdit={setViewEditWord} />
+        <FormWordEdit word={word} setViewEdit={setViewEditWord} />
       ) : null}
       {editImage ? <WordImageEdit word={word} setEdit={setEditImage} /> : null}
       {addSentence ? (
@@ -247,6 +247,4 @@ const CardWordList = ({ word, sectionsList = [] }) => {
       )}
     </>
   );
-};
-
-export default CardWordList;
+}

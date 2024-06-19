@@ -50,7 +50,7 @@ const ChapterTitleBlock = ({ chapter }) => {
 
   return (
     <>
-      <div className="group flex flex-col flex-1 min-w-[300px] max-w-[500px] justify-stretch ">
+      <div className="group flex flex-col flex-1 justify-stretch">
         {/* Card Header */}
         <div className="card__header text-white bg-red-600 font-light h-16">
           <span>
@@ -82,7 +82,7 @@ const ChapterTitleBlock = ({ chapter }) => {
           <p>{chapter?.detail || ""}</p>
         </div>
         <div className="card__footer border-2 border-red-600 text-red-600 bg-zinc-50 font-medium justify-between flex">
-          <span>5 Lessons</span>
+          <span>{chapter?.lessons && `${chapter?.lessons} Lessons`}</span>
           <span>10 Hours</span>
         </div>
       </div>

@@ -8,9 +8,9 @@ const sentencesAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
   sortComparer: (a, b) => {
     if (a.sortIndex && b.sortIndex) {
-      return a.sortIndex.toString().localeCompare(b.sortIndex.toString());
+      return a.sortIndex > b.sortIndex ? 1 : -1;
     } else {
-      return a.first.localeCompare(b.first);
+      return (a?.translation || "").localeCompare(b?.translation || "");
     }
   },
 });

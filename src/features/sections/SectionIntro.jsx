@@ -11,7 +11,7 @@ export default function SectionIntro({ section, add, setAdd }) {
     <>
       {Array.isArray(section?.introduction) &&
       section.introduction.length !== 0 ? (
-        <article className="rounded-md py-2 px-4 bg-zinc-100 text-zinc-800">
+        <article className="py-2 px-4 bg-zinc-100 text-zinc-800">
           {section.introduction.map((intro, index) => {
             return (
               <SectionIntroItem

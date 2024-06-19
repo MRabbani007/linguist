@@ -58,6 +58,7 @@ export const apiSlice = createApi({
     "TableWord",
     "User",
     "Profile",
+    "Lesson",
   ],
   endpoints: (builder) => ({}),
 });

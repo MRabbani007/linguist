@@ -4,6 +4,7 @@ import { useEditSectionLessonIDMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../globals/globalsSlice";
+import FormContainer from "../components/FormContainer";
 
 export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
   const language = useSelector(selectLanguage);
@@ -54,48 +55,40 @@ export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
     }
   };
 
-  const handleReset = () => {
-    setSelected(() => {
-      const idx = allLessons.findIndex(
-        (block) => block.id === section.lessonID
-      );
-      if (idx >= 0) return idx;
-      return "";
-    });
-    setViewMoveLesson(false);
-  };
+  // const handleReset = () => {
+  //   setSelected(() => {
+  //     const idx = allLessons.findIndex(
+  //       (block) => block.id === section.lessonID
+  //     );
+  //     if (idx >= 0) return idx;
+  //     return "";
+  //   });
+  //   setViewMoveLesson(false);
+  // };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <h2>Move Section to Lesson</h2>
-        <div>
-          <div className="field">
-            <label htmlFor="move-section-lesson" className="field__label">
-              Move Section to Lesson
-            </label>
-            <select
-              name="move-section-lesson"
-              id="move-section-lesson"
-              required
-              value={selected}
-              onChange={(e) => setSelected(e.target.value)}
-              className="field__input"
-            >
-              <option value="">Select Lesson</option>
-              {content}
-            </select>
-          </div>
-          <div className="form-buttons">
-            <button type="submit" title="Save" className="save">
-              Save
-            </button>
-            <button type="reset" title="Cancel" className="cancel">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <FormContainer
+      type="edit"
+      title="Move Section to Lesson"
+      onSubmit={handleSubmit}
+      closeForm={setViewMoveLesson}
+    >
+      <div className="field">
+        <label htmlFor="move-section-lesson" className="field__label">
+          Move Section to Lesson
+        </label>
+        <select
+          name="move-section-lesson"
+          id="move-section-lesson"
+          required
+          value={selected}
+          onChange={(e) => setSelected(e.target.value)}
+          className="field__input"
+        >
+          <option value="">Select Lesson</option>
+          {content}
+        </select>
+      </div>
+    </FormContainer>
   );
 }

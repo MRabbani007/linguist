@@ -11,11 +11,11 @@ import TableAdd from "../tables/TableAdd";
 import TableCard from "../tables/TableCard";
 import ListSection from "../sectionList/ListSection";
 import ListAdd from "../sectionList/ListAdd";
-import CardWordAdd from "../words/CardWordAdd";
 import SectionMoveToLesson from "./SectionMoveToLesson";
 import Sentence from "../sentences/Sentence";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
 import { Link } from "react-router-dom";
+import FormWordAdd from "../words/FormWordAdd";
 
 export default function Section({
   section = {},
@@ -32,6 +32,7 @@ export default function Section({
   const [expand, setExpand] = useState(true);
   const [editTitle, setEditTitle] = useState(false);
   const [editLessonID, setEditLessonID] = useState(false);
+  const [expandSentences, setExpandSentences] = useState(false);
 
   const [addIntro, setAddIntro] = useState(false);
   const [addDef, setAddDef] = useState(false);
@@ -43,6 +44,8 @@ export default function Section({
   let content = words.map((word, index) => (
     <CardWordList word={word} key={index} sectionsList={sectionsList} />
   ));
+
+  const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
   return (
     <div className="flex flex-col gap-3">
@@ -106,15 +109,20 @@ export default function Section({
         {Array.isArray(sentences) && sentences.length !== 0 ? (
           <div className="flex flex-col gap-3 p-2">
             <p className="underline italic bold text-xl">Examples: </p>
-            {sentences.slice(0, 2).map((sentence) => {
+            {temp.map((sentence) => {
               return <Sentence sentence={sentence} key={sentence?.id} />;
             })}
-            <Link
-              to={`/sentences/${section?.lessonID}`}
-              className="text-blue-500 font-medium"
-            >
-              Show More
-            </Link>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <button onClick={() => setExpandSentences((curr) => !curr)}>
+                {expandSentences ? "Show Less" : "Show more"}
+              </button>
+              <Link
+                to={`/sentences/${section?.lessonID}`}
+                className="text-blue-500 font-medium"
+              >
+                Go to Sentences
+              </Link>
+            </div>
           </div>
         ) : null}
       </div>
@@ -155,7 +163,7 @@ export default function Section({
       ) : null}
 
       {editMode && addWord ? (
-        <CardWordAdd sectionID={section?.id} setAdd={setAddWord} />
+        <FormWordAdd sectionID={section?.id} setAdd={setAddWord} />
       ) : null}
 
       {editMode && addSentence ? (

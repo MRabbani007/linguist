@@ -7,7 +7,7 @@ const ChapterHeader = ({ chapter, setEditChapter }) => {
   const editMode = useSelector(selectEditMode);
 
   return (
-    <header className="bg-slate-200 shadow-md shadow-slate-400 rounded-xl group relative min-h-[80px] my-4">
+    <header className="bg-slate-200 group relative">
       <div className="text-center">
         <h1 className="font-semibold text-xl whitespace-break-spaces text-wrap">
           {"Chapter " + chapter?.chapterNo + ": " + chapter?.title}

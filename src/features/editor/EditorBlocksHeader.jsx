@@ -4,9 +4,11 @@ const EditorBlocksHeader = () => {
   return (
     <tr className="">
       <th>SN</th>
+      <th>Lesson No</th>
       <th>Title</th>
       <th>Sub-Title</th>
       <th>Detail</th>
+      <th>Lesson ID</th>
       <th>Chapter ID</th>
       <th>Edit</th>
     </tr>

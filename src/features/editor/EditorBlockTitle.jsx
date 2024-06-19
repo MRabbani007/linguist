@@ -39,15 +39,17 @@ const EditorBlockTitle = ({ block, index }) => {
   return (
     <tr className="">
       <td>{index + 1}</td>
+      <td>{block?.lessonNo}</td>
       <td>{block?.title}</td>
       <td>{block?.subtitle}</td>
       <td>{block?.detail}</td>
+      <td>{block?.id}</td>
       <td>{block?.chapterID}</td>
       <td>
-        <span className="flex items-center gap-1">
+        {/* <span className="flex items-center gap-1">
           <CiEdit className="icon-md" onClick={handleOpen} />
           <CiSquareRemove className="icon-md" onClick={handleDelete} />
-        </span>
+        </span> */}
       </td>
     </tr>
   );

@@ -26,9 +26,6 @@ import AdminPage from "./views/admin/AdminPage";
 import AdminSettings from "./views/admin/AdminSettings";
 import AdminUsersPage from "./views/admin/AdminUsersPage";
 // Editor
-import EditorDashboard from "./views/editor/EditorDashboard";
-import EditorChapters from "./views/editor/EditorChapters";
-import EditorLessons from "./views/editor/EditorLessons";
 // User
 import DashboardPage from "./views/user/DashboardPage";
 import ProfilePage from "./views/user/ProfilePage";
@@ -56,6 +53,13 @@ import ReadingPage from "./views/exercise/ReadingPage";
 import SpellingPage from "./views/exercise/SpellingPage";
 import GrammarPage from "./views/exercise/GrammarPage";
 import FlashCardsPage from "./views/exercise/FlashCardsPage";
+import LayoutAdmin from "./features/layout/LayoutAdmin";
+import AdminChapters from "./views/admin/AdminChapters";
+import AdminLessons from "./views/admin/AdminLessons";
+import AdminSections from "./views/admin/AdminSections";
+import AdminDefinitions from "./views/admin/AdminDefinitions";
+import AdminSentences from "./views/admin/AdminSentences";
+import AdminWords from "./views/admin/AdminWords";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -133,8 +137,14 @@ function App() {
 
             {/* Admin page available to admin */}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-              <Route path="admin">
+              <Route path="admin" element={<LayoutAdmin />}>
                 <Route index element={<AdminPage />} />
+                <Route path="chapters" element={<AdminChapters />} />
+                <Route path="lessons" element={<AdminLessons />} />
+                <Route path="sections" element={<AdminSections />} />
+                <Route path="definitions" element={<AdminDefinitions />} />
+                <Route path="sentences" element={<AdminSentences />} />
+                <Route path="words" element={<AdminWords />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="users" element={<AdminUsersPage />} />
               </Route>
@@ -145,11 +155,7 @@ function App() {
                 <RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />
               }
             >
-              <Route path="edit">
-                <Route index element={<EditorDashboard />} />
-                <Route path="chapters" element={<EditorChapters />} />
-                <Route path="lessons" element={<EditorLessons />} />
-              </Route>
+              <Route path="edit"></Route>
             </Route>
           </Route>
 

@@ -17,9 +17,13 @@ const EditorBlocks = () => {
   } else if (isSuccess) {
     // destructure blocks from normalized object
     const { ids, entities } = blocks;
-    content = ids.map((id, index) => (
-      <EditorBlockTitle key={id} block={entities[id]} index={index} />
-    ));
+    content = (
+      <tbody>
+        {ids.map((id, index) => (
+          <EditorBlockTitle key={id} block={entities[id]} index={index} />
+        ))}
+      </tbody>
+    );
   } else if (isError) {
     content = <p>{error}</p>;
   }
@@ -31,7 +35,7 @@ const EditorBlocks = () => {
         <thead>
           <EditorBlocksHeader />
         </thead>
-        <tbody>{content}</tbody>
+        {content}
       </table>
     </div>
   );

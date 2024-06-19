@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { useEditSectionIntroMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
+import FormContainer from "../components/FormContainer";
 
 export default function SectionIntroItemEdit({
   section,
@@ -24,41 +25,30 @@ export default function SectionIntroItemEdit({
     }
   };
 
-  const handleReset = () => {
-    setEdit(false);
-  };
-
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <div>
-          <div className="field">
-            <label htmlFor="edit_intro_item" className="field__label">
-              Introduction
-            </label>
-            <input
-              id="edit_intro_item"
-              name="edit_intro_item"
-              type="text"
-              value={input}
-              autoFocus
-              required
-              title="Introduction"
-              placeholder="Introduction"
-              onChange={(e) => setInput(e.target.value)}
-              className="field__input"
-            />
-          </div>
-          <div className="form-buttons">
-            <button type="submit" title="Add" className="add">
-              Add
-            </button>
-            <button type="reset" title="Cancel" className="cancel">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <FormContainer
+      type="edit"
+      title="Edit Section Intro"
+      onSubmit={handleSubmit}
+      closeForm={setEdit}
+    >
+      <div className="field">
+        <label htmlFor="edit_intro_item" className="field__label">
+          Introduction
+        </label>
+        <input
+          id="edit_intro_item"
+          name="edit_intro_item"
+          type="text"
+          value={input}
+          autoFocus
+          required
+          title="Introduction"
+          placeholder="Introduction"
+          onChange={(e) => setInput(e.target.value)}
+          className="field__input"
+        />
+      </div>
+    </FormContainer>
   );
 }

@@ -9,7 +9,7 @@ const blocksAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
   sortComparer: (a, b) => {
     if (a.lessonNo && b.lessonNo) {
-      return a.lessonNo.toString().localeCompare(b.lessonNo.toString());
+      return a.lessonNo > b.lessonNo ? 1 : -1;
     } else {
       return a.title.localeCompare(b.title);
     }
@@ -36,7 +36,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
     }),
     getAllBlocks: builder.query({
       query: (langID = "lang") => ({
-        url: SERVER.EDITOR_GET_BLOCKS,
+        url: "/block/getall",
         method: "GET",
         params: { langID },
       }),

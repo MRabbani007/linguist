@@ -74,9 +74,8 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100dvh;
-  min-width: fit-content;
-  max-width: 1000px;
+  gap: 1rem;
+  max-width: 1024px;
   width: 100%;
   flex: 1 1 0%;
   margin-left: auto;
@@ -90,8 +89,6 @@ main > div {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  max-width: 1000px;
-  padding: 0.75rem;
   gap: 0.5rem;
 }
 
@@ -102,7 +99,6 @@ header {
   align-items: center;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
-  border-radius: 1rem;
   width: 100%;
 }
 
@@ -209,15 +205,12 @@ main header h1 {
 }
 
 .form-container form {
-  border-radius: 0.75rem;
   background-color: #f1f5f9;
   min-width: fit-content;
   width: 70vw;
   max-width: 1000px;
-  max-height: 80vh;
   margin-right: 1rem;
   margin-left: 1rem;
-  overflow-y: auto;
 }
 
 .form-container form h2 {
@@ -228,10 +221,14 @@ main header h1 {
   font-weight: 500;
   text-align: center;
   padding: 0.5rem 1rem;
-  border-radius: 0.75rem 0.75rem 0 0;
 }
 
 .form-container form > div {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.form-container form .content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -246,6 +243,7 @@ main header h1 {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  padding: 0.5rem;
 }
 
 .add,
@@ -409,8 +407,6 @@ tbody tr:nth-child(2n+1):hover {
 
 .card__header {
   padding: 0.5rem 0.5rem;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -424,8 +420,6 @@ tbody tr:nth-child(2n+1):hover {
 
 .card__footer {
   padding: 0.5rem 1rem;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
   display: flex;
   justify-content: space-between;
 }

@@ -1,5 +1,4 @@
 import ChapterTitleBlock from "../../features/chapters/ChapterTitleBlock";
-import CardChapterAdd from "../../features/chapters/CardChapterAdd";
 import { useSelector } from "react-redux";
 import { useGetChaptersQuery } from "../../features/chapters/chapterSlice";
 import {
@@ -7,13 +6,17 @@ import {
   selectLanguage,
 } from "../../features/globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import FormChapterAdd from "../../features/chapters/FormChapterAdd";
+import Loading from "../../features/components/Loading";
 // Imported components
 
 const ChapterPage = () => {
   const editMode = useSelector(selectEditMode);
   const language = useSelector(selectLanguage);
   const navigate = useNavigate();
+
+  const [viewAddChapter, setViewAddChapter] = useState(false);
 
   useEffect(() => {
     if (!language?.id) {
@@ -31,7 +34,7 @@ const ChapterPage = () => {
 
   let content;
   if (isLoading) {
-    content = <p>"Loading..."</p>;
+    content = <Loading />;
   } else if (isSuccess) {
     const { ids, entities } = chapters;
     content = ids.map((id) => (
@@ -44,15 +47,23 @@ const ChapterPage = () => {
   return (
     <>
       <main>
-        <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
+        <header className="from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
           <h1 className="mx-auto font-bold text-2xl">{language?.title}</h1>
         </header>
         <div>
-          <div className="flex flex-wrap flex-row items-stretch justify-center gap-3">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
             {content}
           </div>
         </div>
-        {editMode && <CardChapterAdd />}
+        {editMode ? (
+          <button
+            onClick={() => setViewAddChapter(!viewAddChapter)}
+            className="btn btn-red"
+          >
+            Add Chapter
+          </button>
+        ) : null}
+        {viewAddChapter ? <FormChapterAdd setAdd={setViewAddChapter} /> : null}
       </main>
     </>
   );

@@ -3,6 +3,16 @@ import { useSelector } from "react-redux";
 import { selectEditMode } from "../globals/globalsSlice";
 import { CiEdit } from "react-icons/ci";
 import FormSentenceEditContent from "./FormSentenceEditContent";
+import { IoInformationCircleOutline } from "react-icons/io5";
+
+const types = {
+  Nouns: "n",
+  Verbs: "v",
+  Adjectives: "adj",
+  Adverbs: "adv",
+  Dialogues: "dialogue",
+  Phrases: "phrase",
+};
 
 export default function Sentence({ sentence }) {
   const editMode = useSelector(selectEditMode);
@@ -18,6 +28,8 @@ export default function Sentence({ sentence }) {
       : "bg-red-500"
     : "bg-zinc-300";
 
+  const type = types[sentence?.type] ?? "";
+
   return (
     <>
       <div className="w-full shadow-md shadow-green-600 rounded-md relative group flex items-stretch">
@@ -25,8 +37,16 @@ export default function Sentence({ sentence }) {
           className={"min-w-4 min-h-full shrink-0 rounded-l-md " + color}
         ></div>
         <div className="flex-1 p-4">
+          <p>
+            <span>{sentence?.group}</span>
+          </p>
           {sentence?.baseWord || sentence?.baseWordTranslation ? (
             <p>
+              {type !== "" ? (
+                <span>
+                  <i>{`(${type})`}</i>
+                </span>
+              ) : null}
               <span className="font-semibold">{sentence?.baseWord}</span>
               {sentence?.baseWordTranslation ? (
                 <span>
@@ -36,21 +56,30 @@ export default function Sentence({ sentence }) {
             </p>
           ) : null}
           <p className="w-fit font-medium" title={sentence?.pronunce}>
-            {sentence?.text}
+            <span className="font-semibold text-zinc-800">
+              {sentence?.text}
+            </span>
+            <span>{sentence?.caption}</span>
           </p>
           {sentence?.translation ? (
             <p>
-              <i>{sentence?.translation}</i>
+              <span>
+                <i>{sentence?.translation}</i>
+              </span>
+              <span>
+                <i>{sentence?.tCaption}</i>
+              </span>
             </p>
           ) : null}
           {editMode ? (
-            <button
-              className="absolute top-2 right-2 invisible group-hover:visible"
-              onClick={() => setEditContent(true)}
-              title="Edit"
-            >
-              <CiEdit size={28} />
-            </button>
+            <div className="absolute top-2 right-2 invisible group-hover:visible">
+              <button onClick={() => setEditContent(true)} title="Edit">
+                <CiEdit size={28} />
+              </button>
+              <button onClick={() => console.log(sentence)} title="Info">
+                <IoInformationCircleOutline size={28} />
+              </button>
+            </div>
           ) : null}
         </div>
       </div>

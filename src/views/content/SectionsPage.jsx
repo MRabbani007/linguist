@@ -6,12 +6,13 @@ import {
   selectEditMode,
 } from "../../features/globals/globalsSlice";
 import { useGetBlocksQuery } from "../../features/blocks/blockSlice";
-import CardBlockTitle from "../../features/blocks/CardBlockTitle";
+import CardLesson from "../../features/blocks/CardLesson";
 import ChapterNavigator from "../../features/navigation/ChapterNavigator";
 import ChapterHeaderEdit from "../../features/chapters/ChapterHeaderEdit";
 import ChapterHeader from "../../features/chapters/ChapterHeader";
-import LessonAdd from "../../features/blocks/LessonAdd";
 import ContentNavigator from "../../features/navigation/ContentNavigator";
+import FormLessonAdd from "../../features/blocks/FormLessonAdd";
+import ReactLoading from "react-loading";
 
 export default function SectionsPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -19,6 +20,7 @@ export default function SectionsPage() {
   const navigate = useNavigate();
 
   const [editChapter, setEditChapter] = useState(false);
+  const [addLesson, setAddLesson] = useState(false);
 
   const isMounted = useRef(null);
 
@@ -49,11 +51,19 @@ export default function SectionsPage() {
 
   let content;
   if (isLoading) {
-    content = <p>"Loading..."</p>;
+    content = (
+      <ReactLoading
+        type={"bubbles"}
+        color={"#000"}
+        height={"10%"}
+        width={"10%"}
+        className="mx-auto"
+      />
+    );
   } else if (isSuccess) {
     // destructure blocks from normalized object
     const { ids, entities } = blocks;
-    content = ids.map((id) => <CardBlockTitle key={id} block={entities[id]} />);
+    content = ids.map((id) => <CardLesson key={id} lesson={entities[id]} />);
   } else if (isError) {
     content = <p>{error}</p>;
   }
@@ -66,10 +76,19 @@ export default function SectionsPage() {
           chapter={displayChapter}
           setEditChapter={setEditChapter}
         />
-        <div>
-          <p>{displayChapter?.detail}</p>
-          <div className="flex flex-wrap justify-center gap-3">{content}</div>
-          {editMode && <LessonAdd />}
+        <div className="">
+          <p className="w-full">{displayChapter?.detail}</p>
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 w-full h-full">
+            {content}
+          </div>
+          {editMode && (
+            <button
+              className="btn btn-yellow mx-auto"
+              onClick={() => setAddLesson(true)}
+            >
+              Add Lesson
+            </button>
+          )}
           <ChapterNavigator />
           <ContentNavigator />
         </div>
@@ -80,6 +99,7 @@ export default function SectionsPage() {
           setEditChapter={setEditChapter}
         />
       ) : null}
+      {addLesson ? <FormLessonAdd setAdd={setAddLesson} /> : null}
     </>
   );
 }

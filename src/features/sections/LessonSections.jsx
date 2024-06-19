@@ -193,7 +193,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   let content;
   if (isLoadingSections) {
-    content = <p>"Loading..."</p>;
+    content = <p>Loading...</p>;
   } else if (isSuccessSections) {
     // destructure from normalized object
     const { ids, entities } = sectionsData;

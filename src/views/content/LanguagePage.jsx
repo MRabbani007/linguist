@@ -11,6 +11,7 @@ import { useUpdateProfileMutation } from "../../features/profile/profileSlice";
 import LanguageCard from "../../features/languages/LanguageCard";
 import FormAddLanguage from "../../features/languages/FormAddLanguage";
 import { PROFILE } from "../../data/actions";
+import axios from "../../api/axios";
 
 export default function LanguagePage() {
   const dispatch = useDispatch();
@@ -28,6 +29,14 @@ export default function LanguagePage() {
     await updateProfile({ type: PROFILE.LANGUAGE, data: lang?.id });
     navigate("/chapters");
   };
+
+  const getSummary = async () => {
+    const summary = await axios.get("/getsummary", { withCredentials: true });
+  };
+
+  useEffect(() => {
+    getSummary();
+  }, []);
 
   return (
     <main>

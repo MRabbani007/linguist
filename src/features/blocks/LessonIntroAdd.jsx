@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddBlockIntroMutation } from "./blockSlice";
 import { toast } from "react-toastify";
+import FormContainer from "../components/FormContainer";
 
 export default function LessonIntroAdd({ lesson, setAdd }) {
   const [addBlockIntro, { isLoading }] = useAddBlockIntroMutation();
@@ -18,37 +19,26 @@ export default function LessonIntroAdd({ lesson, setAdd }) {
     }
   };
 
-  const handleReset = () => {
-    setAdd(false);
-  };
-
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <h2>Add Lesson Introduction</h2>
-        <div>
-          <div className="field w-full">
-            <input
-              type="text"
-              value={input}
-              autoFocus
-              required
-              title="Introduction"
-              placeholder="Introduction"
-              onChange={(e) => setInput(e.target.value)}
-              className="field__input"
-            />
-          </div>
-          <p className="form-buttons">
-            <button type="submit" title="Add" className="add">
-              Save
-            </button>
-            <button type="reset" title="Cancel" className="cancel">
-              Cancel
-            </button>
-          </p>
-        </div>
-      </form>
-    </div>
+    <FormContainer
+      title="Add Lesson Introduction"
+      type="add"
+      submitButton="Add Intro"
+      onSubmit={handleSubmit}
+      closeForm={setAdd}
+    >
+      <div className="field">
+        <input
+          type="text"
+          value={input}
+          autoFocus
+          required
+          title="Introduction"
+          placeholder="Introduction"
+          onChange={(e) => setInput(e.target.value)}
+          className="field__input"
+        />
+      </div>
+    </FormContainer>
   );
 }

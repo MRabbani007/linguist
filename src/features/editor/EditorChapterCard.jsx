@@ -48,10 +48,10 @@ const EditorChapterCard = ({ chapter, index }) => {
       <td>{chapter?.detail}</td>
       <td>{chapter?.id}</td>
       <td>
-        <span className="flex items-center gap-2">
+        {/* <span className="flex items-center gap-2">
           <CiEdit className="icon-md" onClick={handleOpen} />
           <CiSquareRemove className="icon-md" onClick={handleDelete} />
-        </span>
+        </span> */}
       </td>
     </tr>
   );

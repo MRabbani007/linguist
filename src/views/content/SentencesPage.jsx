@@ -20,6 +20,7 @@ import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 import Pagination from "../../features/components/Pagination";
+import ReactLoading from "react-loading";
 
 const sortFunction = (type, payload) => {
   switch (type) {
@@ -71,21 +72,34 @@ export default function SentencesPage() {
   };
 
   useEffect(() => {
-    getSentencesAll({ searchTerm: value, lessonID, page });
-  }, [value, page]);
+    setPage(1);
+    getSentencesAll({ searchTerm: value, lessonID, page: 1 });
+  }, [value]);
 
   useEffect(() => {
-    if (Array.isArray(data)) {
+    getSentencesAll({ searchTerm: value, lessonID, page });
+  }, [page]);
+
+  useEffect(() => {
+    if (Array.isArray(data?.ids)) {
       setSentences(data.ids.map((id) => data.entities[id]));
     }
   }, [data, isSuccess]);
 
   let content = "";
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = (
+      <ReactLoading
+        type={"bubbles"}
+        color={"#000"}
+        height={"10%"}
+        width={"10%"}
+        className="mx-auto"
+      />
+    );
   } else if (isSuccess) {
-    content = data.ids.map((id) => {
-      return <Sentence sentence={data.entities[id]} key={id} />;
+    content = sentences.map((sentence) => {
+      return <Sentence sentence={sentence} key={sentence?.id} />;
     });
   } else if (isError) {
     content = <p>Error Loading Sentences</p>;

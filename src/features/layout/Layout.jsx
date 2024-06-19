@@ -113,7 +113,7 @@ const Layout = () => {
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />
       </Suspense>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={1000} />
       <Footer />
     </>
   );

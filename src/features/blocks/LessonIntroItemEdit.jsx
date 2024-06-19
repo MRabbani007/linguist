@@ -5,6 +5,7 @@ import {
   useEditBlockIntroMutation,
 } from "./blockSlice";
 import { toast } from "react-toastify";
+import FormContainer from "../components/FormContainer";
 
 export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   const [editBlockIntro, { isLoading: isLoadingEdit }] =
@@ -39,40 +40,28 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit} onReset={handleReset}>
-        <h2>Edit Introduction Item</h2>
-        <div>
-          <div className="field">
-            <input
-              type="text"
-              value={input}
-              autoFocus
-              required
-              title="Introduction"
-              placeholder="Introduction"
-              onChange={(e) => setInput(e.target.value)}
-              className="field__input"
-            />
-          </div>
-          <div className="form-buttons">
-            <button type="submit" title="Save" className="add">
-              Save
-            </button>
-            <button type="reset" title="Cancel" className="cancel">
-              Cancel
-            </button>
-            <button
-              type="submit"
-              title="Delete"
-              className="delete"
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <FormContainer
+      title="Edit Introduction Item"
+      type="edit"
+      deleteButton={true}
+      onDelete={handleDelete}
+      onSubmit={handleSubmit}
+    >
+      <div className="field">
+        <label htmlFor="introduction">Intro Item</label>
+        <input
+          type="text"
+          id="introduction"
+          name="introduction"
+          title="Introduction"
+          placeholder="Introduction"
+          autoFocus
+          required
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="field__input"
+        />
+      </div>
+    </FormContainer>
   );
 }
