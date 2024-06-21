@@ -4,6 +4,7 @@ import Filter from "../../features/exercises/Filter";
 import MatchWordsScore from "../../features/exercises/MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useLazyGetRandomWordsQuery } from "../../features/randomWords/randomWordsSlice";
+import { toast } from "react-toastify";
 
 // helper function to shuffle words
 function shuffle(array) {

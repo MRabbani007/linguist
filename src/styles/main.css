@@ -64,7 +64,6 @@ p {
   padding: 0;
   margin: 0;
   text-wrap: wrap;
-  word-break: break-all;
   overflow-wrap: break-word;
 }
 
@@ -332,43 +331,6 @@ tbody tr:nth-child(2n+1):hover {
   background-color: rgba(180, 180, 180, 0.3);
 }
 
-.btn {
-  border: none;
-  outline: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  cursor: pointer;
-}
-
-.btn-yellow {
-  background-color: #fbbf24;
-}
-
-.btn-yellow:hover {
-  background-color: #eab308;
-}
-
-.btn-red {
-  background-color: #f87171;
-  color: white;
-}
-
-.btn-red-dark {
-  background-color: #ef4444;
-  color: white;
-}
-
-.btn-red-dark:hover,
-.btn-red:hover {
-  background-color: #ef4444;
-}
-
-.btn-blue {
-  background-color: #60a5fa;
-  color: #eff6ff;
-}
-
 .icon-sm {
   width: 1rem;
   font-size: 1rem;
@@ -418,18 +380,19 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .card__body {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .card__footer {
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.section-dropdown,
-.mobile-menu {
+.section-dropdown {
   position: absolute;
+  top: 2rem;
   right: 0;
   background-color: #f7fee7;
   border-radius: 0.375rem;
@@ -437,39 +400,16 @@ tbody tr:nth-child(2n+1):hover {
   transition: all 0.3s ease-in-out;
 }
 
-.section-dropdown {
-  top: 2rem;
-}
-
-.mobile-menu {
-  top: 3rem;
-  width: fit-content;
-}
-
 .section-dropdown li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
   padding: 0.25rem 1rem 0.25rem 0.5rem;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: flex-start;
 }
 
-.mobile-menu .dropdown-item {
-  padding: 0.5rem 1rem;
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.mobile-menu .dropdown-item span {
-  white-space: nowrap;
-}
-
-.section-dropdown li:last-child,
-.mobile-menu li:last-child {
+.section-dropdown li:last-child {
   border-radius: 0 0 0.375rem 0.375rem;
 }
 
@@ -500,6 +440,67 @@ tbody tr:nth-child(2n+1):hover {
 
 .edit_item:hover {
   color: #eab308;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+}
+
+.btn-r {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.btn-yellow {
+  background-color: #eab308;
+  color: white;
+}
+
+.btn-yellow:hover {
+  background-color: #fbbf24;
+}
+
+.btn-red {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: #f87171;
+}
+
+.btn-blue {
+  background-color: #60a5fa;
+  color: #eff6ff;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: fit-content;
+  background-color: #f7fee7;
+  z-index: 40;
+  transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu .dropdown-item {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mobile-menu .dropdown-item span {
+  white-space: nowrap;
 }
 
 :root {

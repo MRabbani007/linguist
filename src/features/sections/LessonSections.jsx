@@ -20,9 +20,6 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
   // List of sections to move words
   const [sectionsList, setSectionsList] = useState([]);
 
-  const [words, setWords] = useState([]);
-  const [lessonWords, setLessonWords] = useState([]);
-
   const [definitions, setDefinitions] = useState([]);
   const [lessonDefinitions, setLessonDefinitions] = useState([]);
 
@@ -34,6 +31,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   const [tableWords, setTableWords] = useState([]);
   const [lessonTableWords, setLessonTableWords] = useState([]);
+
+  const [words, setWords] = useState([]);
+  const [lessonWords, setLessonWords] = useState([]);
 
   const [sentences, setSentences] = useState([]);
   const [lessonSentences, setLessonSentences] = useState([]);
@@ -232,8 +232,32 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
     content = <p>{errorSections}</p>;
   }
 
+  const tempTime =
+    (definitions?.length || 0) * 60 +
+    (lists?.length || 0) * 60 * 3 +
+    (tables?.length || 0) * 30 +
+    (tableWords?.length || 0) * 60 +
+    (words?.length || 0) * 45 +
+    (sentences?.length || 0) * 75;
+
+  const learningTime = {
+    hours: Math.floor(tempTime / 3600),
+    minutes: Math.floor((tempTime % 3600) / 60),
+  };
+
   return (
     <div className="flex flex-1 w-full flex-col gap-3">
+      {editMode ? (
+        <div className="absolute top-24 right-4">
+          <p>{`${definitions?.length} definitions`}</p>
+          <p>{`${lists?.length} lists`}</p>
+          <p>{`${tables?.length} tables`}</p>
+          <p>{`${tableWords?.length} table words`}</p>
+          <p>{`${words?.length} words`}</p>
+          <p>{`${sentences?.length} sentences`}</p>
+          <p>{`${learningTime.hours} Hours ${learningTime.minutes} minutes`}</p>
+        </div>
+      ) : null}
       {defsContent?.length !== 0 && (
         <div className="flex flex-col gap-3">{defsContent}</div>
       )}

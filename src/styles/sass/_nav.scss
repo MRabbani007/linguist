@@ -1,0 +1,27 @@
+//
+// Navigation
+// Menu, sidebar, offcanvas
+//
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: fit-content;
+  background-color: $clr-slate-50;
+  z-index: 40;
+  transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu .dropdown-item {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mobile-menu .dropdown-item span {
+  white-space: nowrap;
+}

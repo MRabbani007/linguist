@@ -20,6 +20,7 @@ const initialState = {
   text: "",
   imagesURL: "",
   learningTime: 0,
+  level: "beginner",
   langID: "",
 };
 
@@ -43,7 +44,7 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
     e.preventDefault();
     if (canSave) {
       try {
-        let newBlock = { state };
+        let newBlock = { ...state };
         await editBlockHeader(newBlock).unwrap();
         setEdit(false);
         toast.success("Lesson Saved");
@@ -210,6 +211,21 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           name="imagesURL"
           placeholder="Images URL"
           value={state?.imagesURL}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="level" className="field__label">
+          Level
+        </label>
+        <input
+          type="text"
+          id="level"
+          name="level"
+          title="Level"
+          placeholder="Level"
+          value={state?.level}
           onChange={handleChange}
           className="field__input"
         />

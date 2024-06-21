@@ -14,6 +14,44 @@ import { selectEditMode, toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 import { BsTextParagraph } from "react-icons/bs";
 
+const items = [
+  {
+    id: 1,
+    label: "Dashboard",
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: <IoGridOutline size={34} />,
+  },
+  {
+    id: 2,
+    label: "Learn",
+    title: "Lessons",
+    url: "/chapters",
+    icon: <SlBookOpen size={34} />,
+  },
+  {
+    id: 3,
+    label: "Sentences",
+    title: "Sentences",
+    url: "/sentences",
+    icon: <BsTextParagraph size={32} />,
+  },
+  {
+    id: 4,
+    label: "Exercise",
+    title: "Exercise",
+    url: "/exercise",
+    icon: <IoBarbellOutline size={38} />,
+  },
+  {
+    id: 5,
+    label: "Settings",
+    title: "Settings",
+    url: "/settings",
+    icon: <IoSettingsOutline size={36} />,
+  },
+];
+
 const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
   const dispatch = useDispatch();
   const editMode = useSelector(selectEditMode);
@@ -35,30 +73,6 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
         " text-zinc-800 bg-slate-200 mobile-menu sm:hidden"
       }
     >
-      <li>
-        <Link to="/dashboard" title="Dashboard" className="dropdown-item">
-          <IoGridOutline size={34} />
-          <span>Dashboard</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/chapters" title="Learn" className="dropdown-item">
-          <SlBookOpen size={34} />
-          <span>Lessons</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/sentences" title="Sentences" className="dropdown-item">
-          <BsTextParagraph size={32} />
-          <span>Sentences</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/exercise" title="Exercise" className="dropdown-item">
-          <IoBarbellOutline size={38} />
-          <span>Practice</span>
-        </Link>
-      </li>
       {isAdmin ? (
         <>
           <li>
@@ -78,12 +92,14 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
           </li>
         </>
       ) : null}
-      <li>
-        <Link to={"/settings"} title="Settings" className="dropdown-item">
-          <IoSettingsOutline size={36} />
-          <span>Settings</span>
-        </Link>
-      </li>
+      {items.map((item) => (
+        <li key={item?.id}>
+          <Link to={item.url} title={item?.title} className="dropdown-item">
+            {item?.icon}
+            <span>{item?.label}</span>
+          </Link>
+        </li>
+      ))}
       <li>
         <Link
           to={"/login"}

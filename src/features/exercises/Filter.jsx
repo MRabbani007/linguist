@@ -1,19 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
-import { useGetChaptersQuery } from "../chapters/chapterSlice";
-import { useSelector } from "react-redux";
-import { selectLanguage } from "../globals/globalsSlice";
 import { BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
+import axios from "../../api/axios";
+
+const initialStatus = {
+  isLoading: true,
+  isSuccess: false,
+  isError: false,
+};
 
 export default function Filter({
   selectedLessons,
   setSelectedLessons,
   setShowFilter,
 }) {
-  const language = useSelector(selectLanguage);
   const [allLessons, setAllLessons] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [status, setStatus] = useState(initialStatus);
+
+  const getLessons = async () => {
+    try {
+      setStatus({
+        isLoading: true,
+        isSuccess: false,
+        isError: false,
+      });
+      const response = await axios.get("/exercises");
+      if (response.status !== 200) {
+      }
+      if (Array.isArray(response.data)) {
+        setStatus({
+          isLoading: false,
+          isSuccess: true,
+          isError: false,
+        });
+        setAllLessons(() =>
+          response.data.map((item) => {
+            const lesson = selectedLessons.find((l) => l.id === item.id);
+            return {
+              id: item.id,
+              title: item.title,
+              lessonSelected: lesson?.lessonSelected === true ? true : false,
+            };
+          })
+        );
+      }
+    } catch (err) {
+      setStatus({
+        isLoading: false,
+        isSuccess: false,
+        isError: true,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getLessons();
+  }, []);
 
   const newSelectedLessons = allLessons.filter(
     (lesson) => lesson.lessonSelected === true
@@ -34,31 +76,6 @@ export default function Filter({
     setShowFilter(false);
   };
 
-  const [getAllBlocks, { data, isSuccess }] = useLazyGetAllBlocksQuery();
-
-  useEffect(() => {
-    if (language?.id) {
-      getAllBlocks(language?.id);
-    }
-  }, [language?.id]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setAllLessons(() =>
-        data.ids.map((id) => {
-          const lesson = selectedLessons.find(
-            (item) => item.id === data.entities[id].id
-          );
-          let isSelected = false;
-          if (lesson?.id) {
-            isSelected = lesson?.lessonSelected || false;
-          }
-          return { ...data.entities[id], lessonSelected: isSelected };
-        })
-      );
-    }
-  }, [data]);
-
   const handleSelect = (index, value) => {
     setAllLessons((curr) => {
       let temp = [...curr];
@@ -67,39 +84,31 @@ export default function Filter({
     });
   };
 
-  let lessonContent = allLessons.map((block, index) => (
-    <li value={index} key={index} className="flex items-center gap-3">
-      <input
-        type="checkbox"
-        checked={block.lessonSelected}
-        onChange={(e) => handleSelect(index, e.target.checked)}
-      />
-      <span>{block?.title}</span>
-    </li>
-  ));
-
-  const {
-    data: chaptersData,
-    isLoading: isLoadingChapters,
-    isSuccess: isSuccessChapters,
-    isError: isErrorChapters,
-    error: errorChapters,
-  } = useGetChaptersQuery();
-
-  const [chapters, setChapters] = useState([]);
-
-  // denoralize chapters data
-  useEffect(() => {
-    if (isSuccessChapters) {
-      setChapters(() => {
-        return chaptersData.ids.map((id) => chaptersData.entities[id]);
-      });
-    }
-  }, [chaptersData]);
+  let lessonContent = null;
+  if (status.isLoading === true) {
+    lessonContent = <p>Loading...</p>;
+  } else if (status.isError === true) {
+    lessonContent = <p>Error Loading Lessons</p>;
+  } else if (status.isSuccess === true) {
+    lessonContent = (
+      <ul className="h-full overflow-y-scroll">
+        {allLessons.map((block, index) => (
+          <li value={index} key={index} className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={block.lessonSelected}
+              onChange={(e) => handleSelect(index, e.target.checked)}
+            />
+            <span>{block?.title}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <div className="form-container">
-      <div className="bg-zinc-200 rounded-md p-4 max-h-[60vh] flex flex-col">
+      <div className="bg-zinc-200 rounded-md p-4 max-h-[60vh] flex flex-col min-w-[300px]">
         <div className="flex items-center justify-between">
           <button onClick={handleSubmit} title="Save" className="save">
             Save
@@ -122,7 +131,7 @@ export default function Filter({
             ? " 1 lesson selected"
             : newSelectedLessons.length + " lessons selected"}
         </p>
-        <ul className="h-full overflow-y-scroll">{lessonContent}</ul>
+        {lessonContent}
       </div>
     </div>
   );

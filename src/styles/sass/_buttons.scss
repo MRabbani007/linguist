@@ -1,0 +1,37 @@
+.btn {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  text-align: center;
+}
+
+.btn-r {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.btn-yellow {
+  background-color: $clr-yellow-500;
+  color: white;
+}
+
+.btn-yellow:hover {
+  background-color: $clr-yellow-400;
+}
+
+.btn-red {
+  background-color: $clr-red-500;
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: $clr-red-400;
+}
+
+.btn-blue {
+  background-color: $clr-blue-400;
+  color: $clr-blue-50;
+}

@@ -72,16 +72,16 @@ const ChapterTitleBlock = ({ chapter, lessonCount = 0 }) => {
           </div>
           <span>10%</span>
         </div>
-        <div className="card__body text-zinc-800 bg-zinc-50 border-l-2 border-r-2 border-red-600 relative min-h-24">
+        <div className="card__body text-zinc-800 bg-zinc-100 relative min-h-24">
           {editMode && (
             <span className="absolute bottom-2 right-2 invisible group-hover:visible">
-              <CiEdit className="icon" onClick={() => setEdit(true)} />
-              <CiTrash className="icon" onClick={handleDelete} />
+              <CiEdit size={30} onClick={() => setEdit(true)} />
+              <CiTrash size={30} onClick={handleDelete} />
             </span>
           )}
           <p>{chapter?.detail || ""}</p>
         </div>
-        <div className="card__footer border-2 border-red-600 text-red-600 bg-zinc-50 font-medium justify-between flex">
+        <div className="card__footer text-red-600 bg-zinc-100 font-medium justify-between flex">
           <span>{`${lessonCount} Lessons`}</span>
           <span>10 Hours</span>
         </div>

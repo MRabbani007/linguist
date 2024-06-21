@@ -13,6 +13,8 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
   const displayBlock = useSelector(selectDisplayBlock);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
+  const [showMore, setShowMore] = useState(false);
+
   useEffect(() => {
     setExpandedIndex(() => {
       let idx = chapters.findIndex((item) => item.id === displayChapter?.id);
@@ -24,7 +26,9 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
     });
   }, [chapters, displayChapter, displayBlock]);
 
-  let content = chapters.map((chapter, index) => (
+  const temp = showMore ? chapters : chapters.slice(0, 6);
+
+  let content = temp.map((chapter, index) => (
     <ChapterTitle
       chapter={chapter}
       key={chapter?.id}
@@ -36,7 +40,15 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
   ));
 
   return (
-    <div className="p-0 flex flex-col gap-2 overflow-y-auto">{content}</div>
+    <div className="p-0 flex flex-col gap-2 overflow-y-auto px-4">
+      {content}
+      <button
+        onClick={() => setShowMore((curr) => !curr)}
+        className="text-red-600 font-semibold"
+      >
+        {showMore ? "Show Less" : "Show More"}
+      </button>
+    </div>
   );
 };
 

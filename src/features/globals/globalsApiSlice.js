@@ -20,7 +20,6 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         params: { langID },
       }),
       transformResponse: (responseData) => {
-        console.log(responseData);
         // store.dispatch(setAllCount(responseData));
         return globalsAdapter.setAll(
           initialState,

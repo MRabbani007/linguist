@@ -18,7 +18,7 @@ export default function CardFlashCards({
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    if (selected?.id === showWord?.id) {
+    if (selected?.id && selected?.id === showWord?.id) {
       setNewWord(false);
       setShow(true);
       setStatus("success");
