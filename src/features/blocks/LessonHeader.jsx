@@ -37,7 +37,7 @@ const LessonHeader = ({
   }, []);
 
   return (
-    <header className="flex relative group bg-gradient-to-r from-red-700 to-red-500 shadow-md shadow-slate-400 text-white min-h-[80px]">
+    <header className="flex relative group bg-gradient-to-r from-red-700 to-red-500 text-white min-h-[80px]">
       <p
         title={"Lesson " + lesson?.lessonNo}
         className="absolute left-4 top-[50%] -translate-y-[50%] py-2 w-12 text-center border-2 border-white text-xl"

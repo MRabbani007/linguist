@@ -5,22 +5,37 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
+const initialState = {
+  title: "",
+  subtitle: "",
+  detail: "",
+  lessonNo: 0,
+  firstLang: "",
+  secondLang: "",
+  thirdLang: "",
+  fourthLang: "",
+  introduction: [],
+  caption: "",
+  notes: "",
+  text: "",
+  imagesURL: "",
+  learningTime: 0,
+  langID: "",
+};
+
 export default function FormLessonEditHeader({ lesson, setEdit }) {
   const chapters = useSelector(selectAllChapters);
   const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
 
-  const [title, setTitle] = useState(lesson?.title);
-  const [subtitle, setSubtitle] = useState(lesson?.subtitle);
-  const [detail, setDetail] = useState(lesson?.detail);
-  const [chapterID, setChapterID] = useState(lesson?.chapterID);
-  const [lessonNo, setLessonNo] = useState(lesson?.lessonNo || 0);
+  const [state, setState] = useState({ ...initialState, ...lesson });
 
-  const [firstLang, setFirstLang] = useState(lesson?.firstLang || "");
-  const [secondLang, setSecondLang] = useState(lesson?.secondLang || "");
-  const [thirdLang, setThirdLang] = useState(lesson?.thirdLang || "");
-  const [fourthLang, setFourthLang] = useState(lesson?.fourthLang || "");
-
-  const [imagesURL, setImagesURL] = useState(lesson?.imagesURL || "");
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setState((prevProps) => ({
+      ...prevProps,
+      [name]: value,
+    }));
+  };
 
   const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
@@ -28,21 +43,7 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
     e.preventDefault();
     if (canSave) {
       try {
-        let newBlock = {
-          ...lesson,
-          title,
-          subtitle,
-          detail,
-          lessonNo,
-          firstLang,
-          secondLang,
-          thirdLang,
-          fourthLang,
-          imagesURL,
-        };
-        if (chapterID !== undefined) {
-          newBlock.chapterID = chapterID;
-        }
+        let newBlock = { state };
         await editBlockHeader(newBlock).unwrap();
         setEdit(false);
         toast.success("Lesson Saved");
@@ -65,7 +66,7 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
   return (
     <FormContainer
       type="edit"
-      title="Edit Lesson Title"
+      title="Edit Lesson"
       onSubmit={handleSubmit}
       closeForm={setEdit}
     >
@@ -80,10 +81,8 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           placeholder="Number"
           title="Lesson Number"
           className="field__input"
-          value={lessonNo}
-          onChange={(e) => {
-            setLessonNo(e.target.value);
-          }}
+          value={state?.lessonNo}
+          onChange={handleChange}
         />
       </div>
       <div className="field">
@@ -97,10 +96,8 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           placeholder="Lesson Title"
           title="Lesson Title"
           className="field__input"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
+          value={state?.title}
+          onChange={handleChange}
         />
       </div>
       <div className="field">
@@ -110,10 +107,10 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
         <select
           id="chapter_id"
           name="chapter_id"
-          className="field__input"
           disabled
-          value={chapterID}
-          onChange={(e) => setChapterID(e.target.value)}
+          value={state?.chapterID}
+          onChange={handleChange}
+          className="field__input"
         >
           <option value="">Select Chapter</option>
           {menuOptions}
@@ -129,10 +126,8 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           name="subtitle"
           placeholder="Sub Title"
           className="field__input"
-          value={subtitle}
-          onChange={(e) => {
-            setSubtitle(e.target.value);
-          }}
+          value={state?.subtitle}
+          onChange={handleChange}
         />
       </div>
       <div className="field">
@@ -145,10 +140,8 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           name="detail"
           placeholder="Detail"
           className="field__input"
-          value={detail}
-          onChange={(e) => {
-            setDetail(e.target.value);
-          }}
+          value={state?.detail}
+          onChange={handleChange}
         />
       </div>
       <div className="field">
@@ -159,10 +152,10 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           type="text"
           id="section_firstLang"
           name="section_firstLang"
-          value={firstLang}
           placeholder="First Language"
+          value={state?.firstLang}
+          onChange={handleChange}
           className="field__input"
-          onChange={(e) => setFirstLang(e.target.value)}
         />
       </div>
       <div className="field">
@@ -173,10 +166,10 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           type="text"
           id="section_secondLang"
           name="section_secondLang"
-          value={secondLang}
           placeholder="Second Language"
+          value={state?.secondLang}
+          onChange={handleChange}
           className="field__input"
-          onChange={(e) => setSecondLang(e.target.value)}
         />
       </div>
       <div className="field">
@@ -187,10 +180,10 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           type="text"
           id="section_thirdLang"
           name="section_thirdLang"
-          value={thirdLang}
           placeholder="Third Language"
+          value={state?.thirdLang}
+          onChange={handleChange}
           className="field__input"
-          onChange={(e) => setThirdLang(e.target.value)}
         />
       </div>
       <div className="field">
@@ -201,24 +194,42 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
           type="text"
           id="section_fourthLang"
           name="section_fourthLang"
-          value={fourthLang}
           placeholder="Fourth Language"
+          value={state?.fourthLang}
+          onChange={handleChange}
           className="field__input"
-          onChange={(e) => setFourthLang(e.target.value)}
         />
       </div>
       <div className="field">
-        <label htmlFor="lesson_imagesURL" className="field__label">
+        <label htmlFor="imagesURL" className="field__label">
           Images URL
         </label>
         <input
           type="text"
-          id="lesson_imagesURL"
-          name="lesson_imagesURL"
-          value={imagesURL}
+          id="imagesURL"
+          name="imagesURL"
           placeholder="Images URL"
+          value={state?.imagesURL}
+          onChange={handleChange}
           className="field__input"
-          onChange={(e) => setImagesURL(e.target.value)}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="learningTime" className="field__label">
+          <span>Learning Time</span>
+          <span>
+            <i>{" (minutes)"}</i>
+          </span>
+        </label>
+        <input
+          type="text"
+          id="learningTime"
+          name="learningTime"
+          title="Learning Time"
+          placeholder="Learning Time (minutes)"
+          value={state?.learningTime}
+          onChange={handleChange}
+          className="field__input"
         />
       </div>
     </FormContainer>

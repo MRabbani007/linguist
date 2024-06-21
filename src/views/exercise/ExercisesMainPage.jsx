@@ -8,7 +8,7 @@ export default function ExercisesMainPage() {
         <h1>Exercises</h1>
       </header>
       <div>
-        <div className="flex flex-wrap items-stretch justify-center gap-3 flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {exerciseCards.map((exercise, index) => {
             return <CardExerciseTitle exercise={exercise} key={index} />;
           })}

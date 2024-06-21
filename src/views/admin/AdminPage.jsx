@@ -4,20 +4,23 @@ import { useGetAllCountQuery } from "../../features/admin/adminApiSlice";
 const AdminPage = () => {
   const { data, isLoading, isSuccess, isError } = useGetAllCountQuery();
 
-  console.log();
-
   let content;
   if (isLoading) {
     content = <p>Loading...</p>;
   } else if (isSuccess) {
     const count = data.entities[data.ids[0]].responseData;
     content = (
-      <div>
-        <p>{count.chaptersCount + " chapters"}</p>
-        <p>{count.lessonsCount + " lessons"}</p>
-        <p>{count.sectionsCount + " sections"}</p>
-        <p>{count.wordsCount + " words"}</p>
-        <p>{count.sentencesCount + " sentences"}</p>
+      <div className="grid grid-cols-2">
+        <span>{count?.chaptersCount}</span>
+        <span>chapters</span>
+        <span>{count?.lessonsCount}</span>
+        <span>lessons</span>
+        <span>{count?.sectionsCount}</span>
+        <span>sections</span>
+        <span>{count?.wordsCount}</span>
+        <span>words</span>
+        <span>{count?.sentenceCount}</span>
+        <span>sentences</span>
       </div>
     );
   }

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import FormChapterAdd from "../../features/chapters/FormChapterAdd";
 import Loading from "../../features/components/Loading";
+import { useGetChapterSummaryQuery } from "../../features/globals/globalsApiSlice";
 // Imported components
 
 const ChapterPage = () => {
@@ -32,14 +33,27 @@ const ChapterPage = () => {
     error,
   } = useGetChaptersQuery(language?.id || "language");
 
+  const { data: chapterSummary, isSuccess: isSuccessSummary } =
+    useGetChapterSummaryQuery(language?.id || "language");
+
   let content;
   if (isLoading) {
     content = <Loading />;
   } else if (isSuccess) {
     const { ids, entities } = chapters;
-    content = ids.map((id) => (
-      <ChapterTitleBlock key={id} chapter={entities[id]} />
-    ));
+    content = ids.map((id) => {
+      const foundItem = isSuccessSummary
+        ? chapterSummary.entities[entities[id].id]
+        : {};
+      const lessonCount = foundItem?.total ?? 0;
+      return (
+        <ChapterTitleBlock
+          key={id}
+          chapter={entities[id]}
+          lessonCount={lessonCount}
+        />
+      );
+    });
   } else if (isError) {
     content = <p>{JSON.stringify(error)}</p>;
   }

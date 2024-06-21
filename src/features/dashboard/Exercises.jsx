@@ -16,27 +16,33 @@ export default function Exercises() {
         <span>Exercises</span>
       </li>
       <li>
-        <Link to={"/matchwords"} className="flex items-center gap-3">
+        <Link to={"/exercise/matchwords"} className="flex items-center gap-3">
           <TbArrowsJoin size={32} />
-          Match Words
+          <span>Match Words</span>
         </Link>
       </li>
       <li>
-        <GiCardRandom size={32} />
-        <span>Flash Cards</span>
+        <Link to={"/exercise/flashcards"} className="flex items-center gap-3">
+          <GiCardRandom size={32} />
+          <span>Flash Cards</span>
+        </Link>
       </li>
       <li>
-        <FaBookReader size={32} />
-        <span>Reading</span>
+        <Link to={"/exercise/reading"} className="flex items-center gap-3">
+          <FaBookReader size={32} />
+          <span>Reading</span>
+        </Link>
       </li>
       <li>
-        <BsSpellcheck size={32} />
-        <span>Spelling</span>
+        <Link to={"/exercise/spelling"} className="flex items-center gap-3">
+          <BsSpellcheck size={32} />
+          <span>Spelling</span>
+        </Link>
       </li>
-      <li>
+      {/* <li>
         <MdOutlineSpellcheck size={32} />
         <span>Grammar</span>
-      </li>
+      </li> */}
     </ul>
   );
 }

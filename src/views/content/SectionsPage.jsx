@@ -71,12 +71,12 @@ export default function SectionsPage() {
   return (
     <>
       <main>
-        <ChapterNavigator></ChapterNavigator>
+        <ChapterNavigator />
         <ChapterHeader
           chapter={displayChapter}
           setEditChapter={setEditChapter}
         />
-        <div className="">
+        <div>
           <p className="w-full">{displayChapter?.detail}</p>
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 w-full h-full">
             {content}

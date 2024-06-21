@@ -13,7 +13,7 @@ export default function DashboardPage() {
       <div>
         <div className="flex flex-wrap justify-between gap-3 flex-1">
           <div className="flex flex-col gap-3">
-            <Progress />
+            {/* <Progress /> */}
             <UserLessonTracker />
           </div>
           <div>

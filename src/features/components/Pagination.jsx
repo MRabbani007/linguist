@@ -35,7 +35,7 @@ export default function Pagination({ count, currentPage, setPage }) {
   const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
 
   return (
-    <ul className="flex items-center text-center">
+    <ul className="flex items-center text-center mx-auto">
       <li
         onClick={handlePrev}
         className={

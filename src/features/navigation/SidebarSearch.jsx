@@ -29,7 +29,7 @@ export default function SidebarSearch({
         type="text"
         id={"search-btn" + id}
         placeholder="Search"
-        className="bg-transparent m-0 flex-1 flex-shrink w-full"
+        className="bg-transparent focus:bg-transparent m-0 flex-1 flex-shrink w-full"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

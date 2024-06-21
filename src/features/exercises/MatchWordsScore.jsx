@@ -11,7 +11,7 @@ export default function MatchWordsScore({
   setShowFilter,
 }) {
   return (
-    <div className="flex flex-1 items-center justify-evenly rounded-full bg-gradient-to-r from-red-500 to-red-400 text-white py-3 px-5 mb-2">
+    <div className="flex flex-1 items-center justify-evenly bg-gradient-to-r from-red-500 to-red-400 text-white py-3 px-5 mb-2">
       <button
         onClick={() => setShowFilter(true)}
         title="Select Lessons"

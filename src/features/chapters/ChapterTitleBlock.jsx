@@ -11,7 +11,7 @@ import { FaStar } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import ChapterHeaderEdit from "./ChapterHeaderEdit";
 
-const ChapterTitleBlock = ({ chapter }) => {
+const ChapterTitleBlock = ({ chapter, lessonCount = 0 }) => {
   const displayChapter = useSelector(selectDisplayChapter);
   const editMode = useSelector(selectEditMode);
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ const ChapterTitleBlock = ({ chapter }) => {
           <p>{chapter?.detail || ""}</p>
         </div>
         <div className="card__footer border-2 border-red-600 text-red-600 bg-zinc-50 font-medium justify-between flex">
-          <span>{chapter?.lessons && `${chapter?.lessons} Lessons`}</span>
+          <span>{`${lessonCount} Lessons`}</span>
           <span>10 Hours</span>
         </div>
       </div>

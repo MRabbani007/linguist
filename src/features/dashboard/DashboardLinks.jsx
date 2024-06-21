@@ -10,20 +10,20 @@ export default function DashboardLinks() {
         <span>Quick Links</span>
       </li>
       <li>
-        <Link to="/definitions">Definitions</Link>
+        <Link to="/review/definitions">Definitions</Link>
       </li>
       <li>
-        <Link to="/definitions">Verbs</Link>
+        <Link to="/review/words">Words</Link>
       </li>
       <li>
-        <Link to="/definitions">Nouns</Link>
+        <Link to="/review/wordlists">Word Lists</Link>
+      </li>
+      {/* <li>
+        <Link to="/review/definitions">Pronouns</Link>
       </li>
       <li>
-        <Link to="/definitions">Pronouns</Link>
-      </li>
-      <li>
-        <Link to="/definitions">Phrases</Link>
-      </li>
+        <Link to="/review/definitions">Phrases</Link>
+      </li> */}
     </ul>
   );
 }

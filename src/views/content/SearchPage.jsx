@@ -7,8 +7,9 @@ import CardWordList from "../../features/words/CardWordList";
 export default function SearchPage() {
   let params = useParams();
 
-  const [words, setWords] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(params?.search || "");
   const [match, setMatch] = useState(false);
+  const [words, setWords] = useState([]);
 
   const handleSearch = async () => {
     const { data } = await axiosPrivate.get("/search", {
@@ -33,9 +34,7 @@ export default function SearchPage() {
     if (searchTerm && searchTerm !== "") {
       handleSearch();
     }
-  }, []);
-
-  const [searchTerm, setSearchTerm] = useState(params?.search || "");
+  }, [searchTerm]);
 
   return (
     <main>
@@ -61,7 +60,9 @@ export default function SearchPage() {
             <IoIosSearch size={26} className="" />
           </button>
         </form>
-        <div className="flex flex-col flex-1 gap-4 p-4">{wordsContent}</div>
+        <div className="flex flex-col flex-1 gap-4 p-4 w-full">
+          {wordsContent}
+        </div>
       </div>
     </main>
   );

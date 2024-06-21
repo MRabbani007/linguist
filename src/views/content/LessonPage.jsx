@@ -52,7 +52,7 @@ export default function LessonPage() {
   return (
     <>
       <main>
-        <BlockNavigator></BlockNavigator>
+        <BlockNavigator />
         <LessonHeader
           lesson={displayBlock}
           setEditLessonTitle={setEditLessonTitle}

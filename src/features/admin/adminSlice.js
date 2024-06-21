@@ -6,6 +6,7 @@ const initialState = {
   lessonsCount: 0,
   sectionsCount: 0,
   definitionsCount: 0,
+  sentencesCount: 0,
   wordsCount: 0,
   usersCount: 0,
   allCount: {},
@@ -35,6 +36,10 @@ const adminSlice = createSlice({
       state.wordsCount = action.payload;
       return state;
     },
+    setSentencesCount: (state, action) => {
+      state.sentencesCount = action.payload;
+      return state;
+    },
     setAllCount: (state, action) => {
       state.allCount = action.payload;
       return state;
@@ -54,6 +59,7 @@ export const {
   setSectionsCount,
   setDefinitionsCount,
   setWordsCount,
+  setSentencesCount,
   setAllCount,
   toggleEditMode,
   clearAdminState,
@@ -66,4 +72,5 @@ export const selectLessonsCount = (state) => state.admin?.lessonsCount;
 export const selectSectionsCount = (state) => state.admin?.sectionsCount;
 export const selectDefinitionsCount = (state) => state.admin?.defintionsCount;
 export const selectWordsCount = (state) => state.admin?.wordsCount;
+export const selectSentencesCount = (state) => state.admin?.sentencesCount;
 export const selectAllCount = (state) => state.admin?.allCount;

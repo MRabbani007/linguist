@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="w-full border-t-2 border-red-600 bg-zinc-100 p-4 flex flex-wrap justify-evenly">
+    <div className="w-full border-t-2 border-red-600 bg-zinc-100 p-4 flex flex-col sm:flex-row flex-wrap justify-evenly">
       <Link to="/" title="Home">
         <img
           src={Logo}

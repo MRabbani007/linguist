@@ -19,6 +19,8 @@ const initialState = {
   notes: "",
   text: "",
   imagesURL: "",
+  learningTime: 0,
+  langID: "",
 };
 
 const lastValues = {};

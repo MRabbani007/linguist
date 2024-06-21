@@ -136,7 +136,7 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <section className={"w-full flex flex-1 justify-between items-center"}>
+    <section className="w-full flex flex-1 justify-between items-center">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
@@ -147,7 +147,7 @@ const BlockNavigator = ({ children }) => {
           {firstLesson ? "Previous Chapter" : "Previous Lesson"}
         </span>
       </button>
-      {children}
+      {/* {children} */}
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
