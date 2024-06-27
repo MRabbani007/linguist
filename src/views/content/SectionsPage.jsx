@@ -27,7 +27,7 @@ export default function SectionsPage() {
   useEffect(() => {
     if (isMounted.current) {
       if (!displayChapter) {
-        navigate("/chapters");
+        navigate("/content/chapters");
       }
     }
   }, []);

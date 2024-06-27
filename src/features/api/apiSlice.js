@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../auth/authSlice";
 
 let API_URL = "https://linguistserver.onrender.com";
-// API_URL = "http://localhost:3000";
+API_URL = "http://localhost:3000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
-      headers.set("authorization", `Brearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
   },
@@ -24,8 +24,6 @@ const baseQuerywithReauth = async (args, api, extraOptions) => {
 
     // send refresh token to get new access token
     const refreshResult = await baseQuery("/user/refresh", api, extraOptions);
-
-    // console.log(refreshResult);
 
     if (refreshResult?.data) {
       const user = api.getState().auth.user;

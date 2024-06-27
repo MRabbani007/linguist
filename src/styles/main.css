@@ -504,8 +504,9 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 :root {
-  --primary-color: #c6c3c3;
-  --second-color: #ffffff;
+  --primary-color: #afafaf;
+  --primary-hover-color: #cccccc;
+  --second-color: #303030;
   --black-color: #000000;
 }
 
@@ -515,7 +516,6 @@ tbody tr:nth-child(2n+1):hover {
   justify-content: center;
   align-items: stretch;
   min-height: calc(100vh - var(--navbar-height));
-  background-color: rgba(255, 0, 0, 0.651);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -531,6 +531,7 @@ tbody tr:nth-child(2n+1):hover {
   width: 450px;
   min-height: fit-content;
   backdrop-filter: blur(25px);
+  background-color: rgb(236, 236, 236);
   border: 2px solid var(--primary-color);
   border-radius: 15px;
   padding: 4em 2.5em 2em;
@@ -661,8 +662,7 @@ tbody tr:nth-child(2n+1):hover {
   transition: 0.2s;
 }
 
-.input_field:focus ~ .label,
-.input_field:valid ~ .label {
+.input_field ~ .label {
   position: absolute;
   top: -10px;
   left: 20px;
@@ -689,7 +689,7 @@ tbody tr:nth-child(2n+1):hover {
 .input_submit {
   width: 100%;
   height: 50px;
-  background: #ececec;
+  background: #c0c0c0;
   font-size: 16px;
   font-weight: 500;
   border: none;
@@ -701,7 +701,7 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .input_submit:hover {
-  background: var(--second-color);
+  background: var(--primary-hover-color);
 }
 
 .register {

@@ -43,7 +43,7 @@ export default function Sentence({ sentence }) {
             <span>{sentence?.group}</span>
           </p>
           {sentence?.baseWord || sentence?.baseWordTranslation ? (
-            <p>
+            <p className="p-1">
               {type !== "" ? (
                 <span>
                   <i>{`(${type})`}</i>

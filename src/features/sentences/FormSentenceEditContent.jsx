@@ -81,134 +81,130 @@ export default function FormSentenceEditContent({ sentence, setEdit }) {
       onDelete={handleDelete}
       closeForm={setEdit}
     >
-      <div className="field_group">
-        <div className="field max-w-[25%]">
-          <label htmlFor="sentence_number" className="field__label">
-            Number
-          </label>
-          <input
-            id="sentence_number"
-            name="sentence_number"
-            type="number"
-            title="Number"
-            placeholder="Number"
-            min={0}
-            step={1}
-            value={sortIndex}
-            onChange={(e) => setSortIndex(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field max-w-[25%]">
-          <label htmlFor="level" className="field__label">
-            Level
-          </label>
-          <select
-            name="level"
-            id="level"
-            value={level}
-            onChange={(e) => setLevel(e.target.value)}
-            className="bg-transparent"
-          >
-            {new Array(10).fill("").map((item, idx) => (
-              <option value={idx + 1} key={idx}>
-                {idx + 1}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="sentence_baseWord" className="field__label">
-            Base Word
-          </label>
-          <input
-            id="sentence_baseWord"
-            name="sentence_baseWord"
-            type="text"
-            title="Base Word"
-            placeholder="Base Word"
-            value={baseWord}
-            onChange={(e) => setBaseWord(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="sentence_baseWordT" className="field__label">
-            Base Word Translation
-          </label>
-          <input
-            id="sentence_baseWordT"
-            name="sentence_baseWordT"
-            type="text"
-            title="Base Word Translation"
-            placeholder="Base Word Translation"
-            value={baseWordTranslation}
-            onChange={(e) => setBaseWordTranslation(e.target.value)}
-            className="field__input"
-          />
-        </div>
+      <div className="field">
+        <label htmlFor="sentence_number" className="field__label">
+          Number
+        </label>
+        <input
+          id="sentence_number"
+          name="sentence_number"
+          type="number"
+          title="Number"
+          placeholder="Number"
+          min={0}
+          step={1}
+          value={sortIndex}
+          onChange={(e) => setSortIndex(e.target.value)}
+          className="field__input"
+        />
       </div>
-      <div className="field_group">
-        <div className="field">
-          <label htmlFor="type" className="field__label">
-            Type
-          </label>
-          <input
-            id="type"
-            name="type"
-            type="text"
-            title="Type"
-            placeholder="Type"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="group" className="field__label">
-            Group
-          </label>
-          <input
-            id="group"
-            name="group"
-            type="text"
-            title="Group"
-            placeholder="Group"
-            value={group}
-            onChange={(e) => setGroup(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="caption" className="field__label">
-            Caption
-          </label>
-          <input
-            id="caption"
-            name="caption"
-            type="text"
-            title="Caption"
-            placeholder="Caption"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="tCaption" className="field__label">
-            Translation Caption
-          </label>
-          <input
-            id="tCaption"
-            name="tCaption"
-            type="text"
-            title="Translation Caption"
-            placeholder="Translation Caption"
-            value={tCaption}
-            onChange={(e) => setTCaption(e.target.value)}
-            className="field__input"
-          />
-        </div>
+      <div className="field">
+        <label htmlFor="level" className="field__label">
+          Level
+        </label>
+        <select
+          name="level"
+          id="level"
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
+          className="bg-transparent"
+        >
+          {new Array(10).fill("").map((item, idx) => (
+            <option value={idx + 1} key={idx}>
+              {idx + 1}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="field">
+        <label htmlFor="sentence_baseWord" className="field__label">
+          Base Word
+        </label>
+        <input
+          id="sentence_baseWord"
+          name="sentence_baseWord"
+          type="text"
+          title="Base Word"
+          placeholder="Base Word"
+          value={baseWord}
+          onChange={(e) => setBaseWord(e.target.value)}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="sentence_baseWordT" className="field__label">
+          Base Word Translation
+        </label>
+        <input
+          id="sentence_baseWordT"
+          name="sentence_baseWordT"
+          type="text"
+          title="Base Word Translation"
+          placeholder="Base Word Translation"
+          value={baseWordTranslation}
+          onChange={(e) => setBaseWordTranslation(e.target.value)}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="type" className="field__label">
+          Type
+        </label>
+        <input
+          id="type"
+          name="type"
+          type="text"
+          title="Type"
+          placeholder="Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="group" className="field__label">
+          Group
+        </label>
+        <input
+          id="group"
+          name="group"
+          type="text"
+          title="Group"
+          placeholder="Group"
+          value={group}
+          onChange={(e) => setGroup(e.target.value)}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="caption" className="field__label">
+          Caption
+        </label>
+        <input
+          id="caption"
+          name="caption"
+          type="text"
+          title="Caption"
+          placeholder="Caption"
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="tCaption" className="field__label">
+          Translation Caption
+        </label>
+        <input
+          id="tCaption"
+          name="tCaption"
+          type="text"
+          title="Translation Caption"
+          placeholder="Translation Caption"
+          value={tCaption}
+          onChange={(e) => setTCaption(e.target.value)}
+          className="field__input"
+        />
       </div>
       <div className="field">
         <label htmlFor="sentence_text" className="field__label">

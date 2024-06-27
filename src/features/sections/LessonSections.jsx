@@ -13,6 +13,7 @@ import TableCard from "../tables/TableCard";
 import { useGetTableWordsQuery } from "../tableWords/tableWordsSlice";
 import { useGetSectionListsQuery } from "../sectionList/sectionListSlice";
 import { useGetSentencesQuery } from "../sentences/sentencesSlice";
+import CardWord from "../words/CardWord";
 
 export default function LessonSections({ lesson, addSection, setAddSection }) {
   const editMode = useSelector(selectEditMode);
@@ -246,8 +247,8 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
   };
 
   return (
-    <div className="flex flex-1 w-full flex-col gap-3">
-      {editMode ? (
+    <div className="flex flex-1 w-full flex-col gap-3 h-full">
+      {/* {editMode ? (
         <div className="absolute top-24 right-4">
           <p>{`${definitions?.length} definitions`}</p>
           <p>{`${lists?.length} lists`}</p>
@@ -257,7 +258,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           <p>{`${sentences?.length} sentences`}</p>
           <p>{`${learningTime.hours} Hours ${learningTime.minutes} minutes`}</p>
         </div>
-      ) : null}
+      ) : null} */}
       {defsContent?.length !== 0 && (
         <div className="flex flex-col gap-3">{defsContent}</div>
       )}
@@ -269,15 +270,16 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
       {/* Lesson Words */}
       {lessonWords.length !== 0 && (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-row flex-wrap items-stretch gap-4">
           {words.length > lessonWords.length ? <br /> : null}
           {lessonWords.map((word, index) => {
             return (
-              <CardWordList
-                word={word}
-                key={index}
-                sectionsList={sectionsList}
-              />
+              <CardWord key={index} word={word} />
+              // <CardWordList
+              //   word={word}
+              //   key={index}
+              //   sectionsList={sectionsList}
+              // />
             );
           })}
         </div>

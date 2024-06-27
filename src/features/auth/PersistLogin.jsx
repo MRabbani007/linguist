@@ -22,7 +22,12 @@ const PersistLogin = () => {
         const userData = await refresh();
 
         if (userData) {
-          dispatch(setCredentials({ ...userData.data }));
+          dispatch(
+            setCredentials({
+              ...userData.data,
+              token: userData.data.accessToken,
+            })
+          );
         }
       } catch (err) {
         console.error(err);

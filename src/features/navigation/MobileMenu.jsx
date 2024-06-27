@@ -26,7 +26,7 @@ const items = [
     id: 2,
     label: "Learn",
     title: "Lessons",
-    url: "/chapters",
+    url: "/content/chapters",
     icon: <SlBookOpen size={34} />,
   },
   {

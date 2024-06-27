@@ -20,7 +20,7 @@ export default function SidebarSearch({
     <form
       onSubmit={handleSubmit}
       className={
-        "border-2 rounded-full flex flex-1 items-center justify-between gap-1 pr-3 py-1 " +
+        "border-2 rounded-full flex flex-1 items-center justify-between gap-1 pr-3 py-1 h-fit " +
         className
       }
     >

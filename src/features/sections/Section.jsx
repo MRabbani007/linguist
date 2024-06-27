@@ -16,6 +16,7 @@ import Sentence from "../sentences/Sentence";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
 import { Link } from "react-router-dom";
 import FormWordAdd from "../words/FormWordAdd";
+import CardWord from "../words/CardWord";
 
 export default function Section({
   section = {},
@@ -42,7 +43,8 @@ export default function Section({
   const [addSentence, setAddSentence] = useState(false);
 
   let content = words.map((word, index) => (
-    <CardWordList word={word} key={index} sectionsList={sectionsList} />
+    <CardWord key={index} word={word} />
+    // <CardWordList word={word} key={index} sectionsList={sectionsList} />
   ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
@@ -104,7 +106,9 @@ export default function Section({
         ) : null}
 
         {/* Words */}
-        <div className="flex flex-col gap-3">{content}</div>
+        <div className="flex flex-row flex-wrap items-stretch gap-2">
+          {content}
+        </div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
           <div className="flex flex-col gap-3 p-2">

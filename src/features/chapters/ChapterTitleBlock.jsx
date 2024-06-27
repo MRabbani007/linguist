@@ -37,7 +37,7 @@ const ChapterTitleBlock = ({ chapter, lessonCount = 0 }) => {
     isMounted.current = true;
     dispatch(setDisplayChapter(chapter));
     // setTemp(!temp);
-    navigate("/sections");
+    navigate("/content/sections");
   };
 
   // const [temp, setTemp] = useState(true);

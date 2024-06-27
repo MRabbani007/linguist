@@ -32,7 +32,7 @@ export default function SectionTitle({
     dispatch(setDisplayChapter(chapter));
     dispatch(setDisplayBlock(lesson));
     setViewSideBar(false);
-    navigate("/lesson");
+    navigate("/content/lesson");
   };
 
   return (

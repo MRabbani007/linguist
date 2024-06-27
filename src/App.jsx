@@ -60,6 +60,7 @@ import AdminSections from "./views/admin/AdminSections";
 import AdminDefinitions from "./views/admin/AdminDefinitions";
 import AdminSentences from "./views/admin/AdminSentences";
 import AdminWords from "./views/admin/AdminWords";
+import LayoutLearning from "./features/layout/LayoutLearning";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -97,9 +98,13 @@ function App() {
             <Route path="register" element={<SignupPage />} />
 
             <Route path="language" element={<LanguagePage />} />
-            <Route path="chapters" element={<ChapterPage />} />
-            <Route path="sections" element={<SectionsPage />} />
-            <Route path="lesson?/:lessonID" element={<LessonPage />} />
+
+            <Route path="content" element={<LayoutLearning />}>
+              <Route path="chapters" element={<ChapterPage />} />
+              <Route path="sections" element={<SectionsPage />} />
+              <Route path="lesson?/:lessonID" element={<LessonPage />} />
+            </Route>
+
             <Route path="search?/:search" element={<SearchPage />} />
             <Route path="sentences/:lessonID?" element={<SentencesPage />} />
 

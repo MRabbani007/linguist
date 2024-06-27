@@ -36,7 +36,7 @@ const EditorChapterCard = ({ chapter, index }) => {
 
   useEffect(() => {
     if (isMounted.current) {
-      navigate("/chapters");
+      navigate("/content/chapters");
     }
   }, [displayChapter]);
 

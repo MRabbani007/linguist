@@ -16,46 +16,37 @@ const globalsSlice = createSlice({
   name: "globals",
   initialState: initialState,
   reducers: {
-    setLanguage: (state, action) => {
-      state.language = action.payload;
-      return state;
+    setLanguage: (state = initialState, action) => {
+      return { ...state, language: action.payload };
     },
     setChapters: (state, action) => {
-      state.chapters = action.payload;
-      return state;
+      return { ...state, chapters: action.payload };
     },
     setLessons: (state, action) => {
-      state.lessons = action.payload;
-      return state;
+      return { ...state, lessons: action.payload };
     },
     setProgress: (state, action) => {
-      state.progress = action.payload;
-      return state;
+      return { ...state, progress: action.payload };
     },
     setSentenceSearchCount: (state, action) => {
-      state.sentenceSearchCount = action.payload;
-      return state;
+      return { ...state, sentenceSearchCount: action.payload };
     },
     setSiteLanguages: (state, action) => {
-      state.siteLanguages = action.payload;
-      return state;
+      return { ...state, siteLanguages: action.payload };
     },
     // called to open chapter
     setDisplayChapter: (state, action) => {
-      state.displayChapter = action.payload;
-      return state;
+      return { ...state, displayChapter: action.payload };
     },
     // called to open block
     setDisplayBlock: (state, action) => {
-      const displayBlock = action.payload;
-      state.displayBlock = displayBlock;
-      return state;
+      return { ...state, displayBlock: action.payload };
     },
     clearState: (state, action) => {
       return initialState;
     },
     toggleEditMode: (state, action) => {
-      state.editMode = !state.editMode;
+      return { ...state, editMode: !state.editMode };
     },
   },
 });

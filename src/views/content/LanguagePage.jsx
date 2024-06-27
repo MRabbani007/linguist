@@ -12,6 +12,7 @@ import LanguageCard from "../../features/languages/LanguageCard";
 import FormAddLanguage from "../../features/languages/FormAddLanguage";
 import { PROFILE } from "../../data/actions";
 import axios from "../../api/axios";
+import { selectCurrentToken } from "../../features/auth/authSlice";
 
 export default function LanguagePage() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export default function LanguagePage() {
   const editMode = useSelector(selectEditMode);
   const language = useSelector(selectLanguage);
   const siteLanguages = useSelector(selectSiteLanguages);
+  const token = useSelector(selectCurrentToken);
 
   const [add, setAdd] = useState(false);
 
@@ -27,11 +29,18 @@ export default function LanguagePage() {
   const handleSetLanguage = async (lang) => {
     dispatch(setLanguage(lang));
     await updateProfile({ type: PROFILE.LANGUAGE, data: lang?.id });
-    navigate("/chapters");
+    navigate("/content/chapters");
   };
 
   const getSummary = async () => {
-    const summary = await axios.get("/getsummary", { withCredentials: true });
+    const summary = await axios.get(
+      "/getsummary",
+      {},
+      { withCredentials: true },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   };
 
   useEffect(() => {

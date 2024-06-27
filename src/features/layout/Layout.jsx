@@ -108,8 +108,6 @@ const Layout = () => {
   return (
     <>
       <Navbar />
-      {/* <Header /> */}
-      {/* {onContentPage && <Sidebar />} */}
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />
       </Suspense>

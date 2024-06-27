@@ -26,7 +26,7 @@ export default function CardLesson({ lesson }) {
 
   const blockOpen = () => {
     dispatch(setDisplayBlock(lesson));
-    navigate("/lesson");
+    navigate("/content/lesson");
   };
 
   const handleDelete = async () => {
@@ -55,8 +55,10 @@ export default function CardLesson({ lesson }) {
           onClick={blockOpen}
         >
           <IoMdStar size={25} className={level} title={lesson?.level} />
-          <span className="whitespace-nowrap">{`Lesson ${lesson?.lessonNo}:`}</span>
-          <span className="font-medium">{lesson?.title}</span>
+          <p>
+            <span className="whitespace-nowrap">{`Lesson ${lesson?.lessonNo}: `}</span>
+            <span className="font-medium">{lesson?.title}</span>
+          </p>
         </div>
         {/* Body */}
         <div className="flex-1 flex flex-col justify-between gap-2 relative py-2 px-4">

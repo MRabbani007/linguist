@@ -39,10 +39,10 @@ export default function LessonPage() {
   useEffect(() => {
     if (isMounted.current) {
       if (!displayChapter) {
-        navigate("/chapters");
+        navigate("/content/chapters");
       }
       if (!displayBlock) {
-        navigate("/sections");
+        navigate("/content/sections");
       }
     }
   }, []);

@@ -78,7 +78,7 @@ export const GlobalProvider = ({ children }) => {
     setDisplayChapter(chapter);
     setViewTab("sections");
     // setDisplayBlock([]);
-    navigate("/chapters", { replace: true });
+    navigate("/content/chapters", { replace: true });
   };
 
   const handleChapterAdd = async (chapter = {}) => {

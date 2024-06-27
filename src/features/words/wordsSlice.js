@@ -38,11 +38,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: SERVER.WORD,
         method: "POST",
         body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.ADD_WORD,
-            payload: { userName: store.getState()?.auth?.user, word },
-          },
+          payload: word,
         },
       }),
       invalidatesTags: [{ type: "Word", id: "Word" }],
@@ -52,10 +48,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: SERVER.WORD,
         method: "PATCH",
         body: {
-          roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_WORD_CONTENT,
-            payload: { userName: store.getState()?.auth?.user, word },
+            payload: word,
           },
         },
       }),
@@ -66,10 +61,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: SERVER.WORD,
         method: "PATCH",
         body: {
-          roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_WORD_DETAILS,
-            payload: { userName: store.getState()?.auth?.user, word },
+            payload: { word },
           },
         },
       }),
@@ -122,11 +116,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: SERVER.WORD,
         method: "DELETE",
         body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.REMOVE_WORD,
-            payload: { userName: store.getState()?.auth?.user, id },
-          },
+          payload: id,
         },
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],

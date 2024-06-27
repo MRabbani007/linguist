@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useEditWordMutation } from "./wordsSlice";
+import { useEditWordMutation, useRemoveWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
@@ -17,6 +17,7 @@ const initialState = {
 
 export default function FormWordEdit({ word = initialState, setViewEdit }) {
   const [editWord, { isLoading }] = useEditWordMutation();
+  const [removeWord] = useRemoveWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
 
   const [state, setState] = useState({ ...word });
@@ -27,6 +28,15 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       ...prevProps,
       [name]: value,
     }));
+  };
+
+  const handleDelete = () => {
+    try {
+      removeWord(word.id);
+      toast.success("Word Saved");
+    } catch (err) {
+      toast.error("Error deleting word");
+    }
   };
 
   const canSave = !isLoading;
@@ -91,6 +101,8 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       submitButton="Save Word"
       onSubmit={handleSubmit}
       closeForm={setViewEdit}
+      deleteButton={true}
+      onDelete={handleDelete}
     >
       <div className="field">
         <label htmlFor="sortIndex" className="field__label">
@@ -139,13 +151,13 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       </div>
       {/* Second Word */}
       <div className="field">
-        <label htmlFor="secondWord" className="field__label">
+        <label htmlFor="second" className="field__label">
           {label_2}
         </label>
         <input
           type="text"
-          id="secondWord"
-          name="secondWord"
+          id="second"
+          name="second"
           placeholder={displayBlock?.secondLang || "Second Language"}
           className="field__input"
           value={state?.second}
@@ -162,6 +174,48 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           name="secondCaption"
           placeholder="Second Word Caption"
           value={state?.secondCaption}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="type" className="field__label">
+          Word Type
+        </label>
+        <input
+          type="text"
+          id="type"
+          name="type"
+          placeholder="Word Type: v,n,adj,adv,phrase"
+          value={state?.type}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="gender" className="field__label">
+          Gender
+        </label>
+        <input
+          type="text"
+          id="gender"
+          name="gender"
+          placeholder="Gender: m,f,n"
+          value={state?.gender}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="form" className="field__label">
+          Word Form
+        </label>
+        <input
+          type="text"
+          id="form"
+          name="form"
+          placeholder="Word Form"
+          value={state?.form}
           onChange={handleChange}
           className="field__input"
         />
@@ -200,6 +254,34 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           />
         </div>
       ) : null}
+      <div className="field">
+        <label htmlFor="image" className="field__label">
+          Word image
+        </label>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          placeholder="Word image"
+          value={state?.image}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="imageURL" className="field__label">
+          Word imageURL
+        </label>
+        <input
+          type="text"
+          id="imageURL"
+          name="imageURL"
+          placeholder="Word imageURL"
+          value={state?.imageURL}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
     </FormContainer>
   );
 }

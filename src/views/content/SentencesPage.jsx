@@ -142,14 +142,17 @@ export default function SentencesPage() {
           <div className="my-2">
             {displayBlock?.id ? (
               <Link
-                to={`/lesson/${displayBlock?.id}`}
+                to={`/content/lesson/${displayBlock?.id}`}
                 className="flex items-center gap-2"
               >
                 <span>Back to Lesson</span>
                 <MdOutlinePlayLesson size={32} />
               </Link>
             ) : (
-              <Link to={"/chapters"} className="flex items-center gap-2">
+              <Link
+                to={"/content/chapters"}
+                className="flex items-center gap-2"
+              >
                 <span>Go to lessons</span>
                 <MdOutlinePlayLesson size={32} />
               </Link>

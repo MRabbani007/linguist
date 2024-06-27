@@ -5,7 +5,7 @@ export default function ContentNavigator() {
   const navigate = useNavigate();
 
   const handleOverview = () => {
-    navigate("/chapters");
+    navigate("/content/chapters");
   };
 
   const handleChapterContent = () => {
