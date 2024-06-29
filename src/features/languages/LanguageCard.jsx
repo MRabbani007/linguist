@@ -21,8 +21,8 @@ export default function LanguageCard({
   };
 
   return (
-    <div className=" h-full">
-      <h2 className="bg-red-600 text-white rounded-t-md p-2 border-2 border-red-600 flex items-center justify-between">
+    <div className=" h-full bg-gradient-to-b from-red-500 to-red-700 text-white rounded-xl flex flex-col items-center justify-center w-[300px] min-h-[200px] ">
+      <h2 className="p-4 flex items-center justify-center font-semibold">
         {language?.title || "Title"}
         {editMode && (
           <button onClick={() => setEdit(true)}>
@@ -30,13 +30,13 @@ export default function LanguageCard({
           </button>
         )}
       </h2>
-      <div className="w-[300px] border-2 border-red-600 p-2 flex flex-col items-center justify-center">
-        {language?.image && (
+      <div className="p-4 ">
+        {/* {language?.image && (
           <img
             src={language.image === "russian.png" ? Russian : Arabic}
             className="object-contain h-[300px]"
           />
-        )}
+        )} */}
         {language?.subtitle ? <p className="">{language?.subtitle}</p> : null}
         {language?.id === selectedLang ? (
           <Link
@@ -47,7 +47,7 @@ export default function LanguageCard({
         ) : (
           <button
             className={
-              "py-2 px-8 text-xl text-white bg-red-600 hover:bg-red-500 duration-200 rounded-full mx-auto mt-auto"
+              "py-2 px-6 text-xl bg-zinc-100 font-medium text-red-600 hover:bg-white rounded-full duration-200  mx-auto mt-auto"
             }
             title={`Select ${language.name}`}
             onClick={handleSelect}
@@ -56,9 +56,9 @@ export default function LanguageCard({
           </button>
         )}
       </div>
-      <div className="p-2 bg-red-600 text-white rounded-b-md border-2 border-red-600">
+      {/* <div className="p-2 bg-red-600 text-white border-2 border-red-600">
         <p>{language.detail}</p>
-      </div>
+      </div> */}
       {edit ? <FormEditLanguage language={language} setEdit={setEdit} /> : null}
     </div>
   );

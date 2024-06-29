@@ -8,41 +8,62 @@ import { Link } from "react-router-dom";
 // import { TbTextGrammar } from "react-icons/tb";
 import { MdOutlineSpellcheck } from "react-icons/md";
 
+const EXERCISE_ITEMS = [
+  {
+    title: "Match Words",
+    url: "/exercise/matchwords",
+    icon: <TbArrowsJoin size={32} />,
+    style: "from-red-700 to-red-500",
+  },
+  {
+    title: "Flash Cards",
+    url: "/exercise/flashcards",
+    icon: <GiCardRandom size={32} />,
+    style: "from-sky-700 to-sky-500",
+  },
+  {
+    title: "Reading",
+    url: "/exercise/reading",
+    icon: <FaBookReader size={32} />,
+    style: "from-green-700 to-green-500",
+  },
+  {
+    title: "Spelling",
+    url: "/exercise/spelling",
+    icon: <BsSpellcheck size={32} />,
+    style: "from-yellow-600 to-yellow-400",
+  },
+];
+
 export default function Exercises() {
   return (
-    <ul className="dashboard-exercises">
-      <li>
+    <div>
+      <div className="flex items-center gap-4 rounded-lg py-2 px-4 bg-purple-600 text-white font-medium mb-4">
         <RiRunLine size={32} />
-        <span>Exercises</span>
-      </li>
-      <li>
-        <Link to={"/exercise/matchwords"} className="flex items-center gap-3">
-          <TbArrowsJoin size={32} />
-          <span>Match Words</span>
-        </Link>
-      </li>
-      <li>
-        <Link to={"/exercise/flashcards"} className="flex items-center gap-3">
-          <GiCardRandom size={32} />
-          <span>Flash Cards</span>
-        </Link>
-      </li>
-      <li>
-        <Link to={"/exercise/reading"} className="flex items-center gap-3">
-          <FaBookReader size={32} />
-          <span>Reading</span>
-        </Link>
-      </li>
-      <li>
-        <Link to={"/exercise/spelling"} className="flex items-center gap-3">
-          <BsSpellcheck size={32} />
-          <span>Spelling</span>
-        </Link>
-      </li>
-      {/* <li>
+        <span>Exercise</span>
+      </div>
+      <ul className="flex flex-wrap items-center gap-4">
+        {EXERCISE_ITEMS.map((item, index) => {
+          return (
+            <li key={index}>
+              <Link
+                to={item?.url}
+                className={
+                  "flex flex-col items-center gap-4 p-8 rounded-lg bg-gradient-to-b text-white w-48 " +
+                  item?.style
+                }
+              >
+                {item?.icon}
+                <span>{item?.title}</span>
+              </Link>
+            </li>
+          );
+        })}
+        {/* <li>
         <MdOutlineSpellcheck size={32} />
         <span>Grammar</span>
       </li> */}
-    </ul>
+      </ul>
+    </div>
   );
 }

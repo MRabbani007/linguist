@@ -49,7 +49,7 @@ export default function LanguagePage() {
 
   return (
     <main>
-      <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
+      <header className=" from-zinc-200 to-zinc-100 text-red-600">
         <h1>Select Language</h1>
       </header>
       <div>

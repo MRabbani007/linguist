@@ -15,12 +15,22 @@ import { CiSearch } from "react-icons/ci";
 import { useDebounce } from "use-debounce";
 import { FaPlus } from "react-icons/fa6";
 import FormSentenceAdd from "../../features/sentences/FormSentenceAdd";
-import { IoIosSearch } from "react-icons/io";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 import Pagination from "../../features/components/Pagination";
 import ReactLoading from "react-loading";
+import FilterSentences from "../../features/sentences/FilterSentences";
+import SortSentences from "../../features/sentences/SortSentences";
+import { toast } from "react-toastify";
+
+const SENTENCE_SORT = [
+  "createDate",
+  "translation",
+  "level",
+  "baseWordTranslation",
+  "lessonID",
+];
 
 const sortFunction = (type, payload) => {
   switch (type) {
@@ -58,6 +68,7 @@ export default function SentencesPage() {
   const [add, setAdd] = useState(false);
   const [search, setSearch] = useState("");
   const [value] = useDebounce(search, 1000);
+  const [sort, setSort] = useState("");
 
   const [page, setPage] = useState(1);
   const count = useSelector(selectSentenceCount);
@@ -73,11 +84,11 @@ export default function SentencesPage() {
 
   useEffect(() => {
     setPage(1);
-    getSentencesAll({ searchTerm: value, lessonID, page: 1 });
-  }, [value]);
+    getSentencesAll({ searchTerm: value, lessonID, page: 1, ...sort });
+  }, [value, sort]);
 
   useEffect(() => {
-    getSentencesAll({ searchTerm: value, lessonID, page });
+    getSentencesAll({ searchTerm: value, lessonID, page, ...sort });
   }, [page]);
 
   useEffect(() => {
@@ -108,16 +119,15 @@ export default function SentencesPage() {
   return (
     <>
       <main>
-        <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
+        {/* <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
           <h1>Sentences</h1>
-        </header>
+        </header> */}
         <div className="flex flex-col gap-4">
           {/* <p className="text-lg italic">{displayBlock?.title}</p> */}
           <div className="flex flex-wrap justify-center items-center gap-2">
-            <p>{isSuccess ? count + " results" : null}</p>
             <form
               onSubmit={handleSubmit}
-              className="flex items-center p-2 border-2 rounded-full border-zinc-600 text-zinc-600 pr-4"
+              className="flex items-center p-2 border-2 rounded-full border-zinc-600 text-zinc-600 pr-4 w-full"
             >
               <input
                 type="text"
@@ -125,6 +135,7 @@ export default function SentencesPage() {
                 placeholder="Search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                className="flex-1"
               />
               <button type="submit">
                 <IoSearchOutline size={32} />
@@ -136,6 +147,8 @@ export default function SentencesPage() {
               </button>
             ) : null}
           </div>
+          <p>{isSuccess ? count + " results" : null}</p>
+          <SortSentences sort={sort} setSort={setSort} />
           <Pagination currentPage={page} setPage={setPage} count={count} />
           <div className="w-full flex flex-col gap-4">{content}</div>
           <Pagination currentPage={page} setPage={setPage} count={count} />

@@ -178,9 +178,9 @@ export default function MatchWordsPage() {
 
   return (
     <main>
-      <header>
+      {/* <header>
         <h1>Match Words</h1>
-      </header>
+      </header> */}
       <div>
         <div className="w-fit mx-auto flex">
           {showFilter ? (

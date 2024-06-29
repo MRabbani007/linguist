@@ -61,6 +61,7 @@ import AdminDefinitions from "./views/admin/AdminDefinitions";
 import AdminSentences from "./views/admin/AdminSentences";
 import AdminWords from "./views/admin/AdminWords";
 import LayoutLearning from "./features/layout/LayoutLearning";
+import ImageUpload from "./views/admin/ImageUpload";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -152,6 +153,7 @@ function App() {
                 <Route path="words" element={<AdminWords />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="users" element={<AdminUsersPage />} />
+                <Route path="images/upload" element={<ImageUpload />} />
               </Route>
             </Route>
 

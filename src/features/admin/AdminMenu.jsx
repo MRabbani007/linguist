@@ -26,6 +26,14 @@ const AdminMenu = forwardRef(({ showMenu = false }, ref) => {
         <span className="font-semibold text-zinc-900">Admin</span>
       </div>
       <div>
+        <h3 className="py-2 px-4 font-semibold ">Pages</h3>
+        <ul>
+          <li className="py-2 px-8">
+            <Link to={"/admin/images/upload"}>Upload Images</Link>
+          </li>
+        </ul>
+      </div>
+      <div>
         <h3 className="py-2 px-4 font-semibold ">Content</h3>
         <ul className="flex flex-col">
           {CONTENT.map((item, index) => {

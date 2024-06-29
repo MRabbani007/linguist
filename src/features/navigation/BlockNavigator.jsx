@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLazyGetBlocksQuery } from "../blocks/blockSlice";
 import {
+  selectChapters,
   selectDisplayBlock,
   selectDisplayChapter,
   selectLanguage,
+  selectLessons,
   setDisplayBlock,
   setDisplayChapter,
 } from "../globals/globalsSlice";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 
 const BlockNavigator = ({ children }) => {
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
-  const language = useSelector(selectLanguage);
+
+  const chapters = useSelector(selectChapters);
+  const lessons = useSelector(selectLessons);
 
   const dispatch = useDispatch();
 
@@ -22,39 +24,17 @@ const BlockNavigator = ({ children }) => {
   const [chapterIndex, setChapterIndex] = useState(0);
   const [moveDirection, setMoveDirection] = useState("");
 
-  const [getBlocks, { data, isLoading, isSuccess, isError, error }] =
-    useLazyGetBlocksQuery(displayChapter?.id);
-
-  const [
-    getChapters,
-    {
-      data: chaptersData,
-      isLoading: isLoadingChapters,
-      isSuccess: isSuccessChapters,
-      isError: isErrorChapters,
-      error: errorChapters,
-    },
-  ] = useLazyGetChaptersQuery(displayChapter?.id);
-
   const [blocks, setBlocks] = useState([]);
-  const [chapters, setChapters] = useState([]);
-
-  // get chapters on first load
-  useEffect(() => {
-    getChapters(language?.id);
-  }, []);
-
-  // denoralize chapters data
-  useEffect(() => {
-    if (isSuccessChapters) {
-      setChapters(() => {
-        return chaptersData.ids.map((id) => chaptersData.entities[id]);
-      });
-    }
-  }, [chaptersData]);
 
   useEffect(() => {
-    getBlocks(displayChapter?.id);
+    setBlocks(() => {
+      return lessons
+        .filter((item) => item.chapterID === displayChapter?.id)
+        .sort((a, b) => (a.lessonNo > b.lessonNo ? 1 : -1));
+    });
+  }, [displayChapter]);
+
+  useEffect(() => {
     setChapterIndex(() => {
       const tempChapterIndex = chapters.findIndex(
         (item) => item.id === displayChapter.id
@@ -68,8 +48,10 @@ const BlockNavigator = ({ children }) => {
   useEffect(() => {
     if (moveDirection === "next") {
       dispatch(setDisplayBlock(blocks[0]));
+      setMoveDirection("");
     } else if (moveDirection === "prev") {
       dispatch(setDisplayBlock(blocks[blocks.length - 1]));
+      setMoveDirection("");
     }
   }, [blocks]);
 
@@ -84,25 +66,10 @@ const BlockNavigator = ({ children }) => {
     });
   }, [displayBlock, blocks]);
 
-  useEffect(() => {
-    if (isSuccess) {
-      let tempBlocks = data.ids.map((id) => data.entities[id]);
-      setBlocks(tempBlocks);
-
-      if (moveDirection === "next") {
-        dispatch(setDisplayBlock(tempBlocks[0]));
-        setMoveDirection("");
-      } else if (moveDirection === "prev") {
-        dispatch(setDisplayBlock(tempBlocks[tempBlocks.length - 1]));
-        setMoveDirection("");
-      }
-    }
-  }, [data]);
-
   const firstLesson = blockIndex === 0;
   const firstChapter = chapterIndex === 0;
-  const lastLesson = blockIndex === blocks.length - 1;
-  const lastChapter = chapterIndex === chapters.length - 1;
+  const lastLesson = blockIndex === blocks?.length - 1;
+  const lastChapter = chapterIndex === chapters?.length - 1;
 
   const handleNext = () => {
     if (blockIndex < blocks.length - 1) {

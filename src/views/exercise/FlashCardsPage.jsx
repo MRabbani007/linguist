@@ -84,9 +84,9 @@ export default function FlashCardsPage() {
 
   return (
     <main>
-      <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
+      {/* <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
         <h1 className="mx-auto font-bold text-2xl">Flash Cards</h1>
-      </header>
+      </header> */}
       <div>
         <button
           className="mt-auto mb-4 mx-auto py-2 px-6 bg-red-600 text-white font-medium hover:bg-red-700 duration-200 w-fit flex items-center gap-2"

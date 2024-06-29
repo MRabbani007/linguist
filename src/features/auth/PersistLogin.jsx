@@ -4,6 +4,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentToken, setCredentials } from "./authSlice";
 import { useRefreshMutation } from "./authApiSlice";
+import ReactLoading from "react-loading";
 
 const PersistLogin = () => {
   // const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,7 @@ const PersistLogin = () => {
           );
         }
       } catch (err) {
-        console.error(err);
+        // console.error(err);
       } finally {
         isMounted; //&& setIsLoading(false);
       }
@@ -54,11 +55,22 @@ const PersistLogin = () => {
         <Outlet />
       ) : isLoading ? (
         <main>
-          <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
-            <h1>Welcome to Lingo!</h1>
+          <header className=" text-zinc-800 font-medium">
+            <h1>
+              Welcome to <span className="text-red-700 font-bold">Lingo</span>!
+            </h1>
           </header>
           <div>
-            <p>Connecting to server...</p>
+            <div className="flex flex-col items-center justify-center gap-4 p-4">
+              <p>Connecting to server</p>
+              <ReactLoading
+                type={"spin"}
+                color={"#000"}
+                height={"50px"}
+                width={"50px"}
+                className="mx-auto"
+              />
+            </div>
           </div>
         </main>
       ) : (

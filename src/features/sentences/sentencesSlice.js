@@ -34,10 +34,16 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getSentencesAll: builder.query({
-      query: ({ searchTerm = "", lessonID = "", page }) => ({
+      query: ({
+        searchTerm = "",
+        lessonID = "",
+        page = 1,
+        sort,
+        asscending,
+      }) => ({
         url: "/sentences",
         method: "GET",
-        params: { searchTerm, lessonID, page },
+        params: { searchTerm, lessonID, page, sort, asscending },
       }),
       transformResponse: (responseData) => {
         store.dispatch(setSentenceSearchCount(responseData.count));

@@ -35,12 +35,12 @@ export default function Pagination({ count, currentPage, setPage }) {
   const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
 
   return (
-    <ul className="flex items-center text-center mx-auto">
+    <ul className="flex items-center text-center mx-auto gap-1 font-medium">
       <li
         onClick={handlePrev}
         className={
-          (isFirst ? "bg-zinc-400" : "cursor-pointer") +
-          " py-1 px-2 border-[1px] min-w-8 hidden sm:block"
+          (isFirst ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+          " py-1 px-2 rounded-md min-w-8 hidden sm:block"
         }
       >
         Prev
@@ -49,8 +49,8 @@ export default function Pagination({ count, currentPage, setPage }) {
         <li
           onClick={() => setPage(1)}
           className={
-            (isFirst ? "bg-zinc-400" : "cursor-pointer") +
-            " py-1 px-2 border-[1px] min-w-8"
+            (isFirst ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+            " py-1 px-2 rounded-md min-w-8"
           }
         >
           First
@@ -62,8 +62,8 @@ export default function Pagination({ count, currentPage, setPage }) {
             key={item}
             onClick={() => setPage(item)}
             className={
-              (item === currentPage ? "bg-yellow-300" : "") +
-              " py-1 px-2 border-[1px] cursor-pointer min-w-8"
+              (item === currentPage ? "bg-yellow-300" : "bg-zinc-200") +
+              " py-1 px-2 cursor-pointer rounded-md min-w-8"
             }
           >
             {item}
@@ -74,8 +74,8 @@ export default function Pagination({ count, currentPage, setPage }) {
         <li
           onClick={() => setPage(pages.length)}
           className={
-            (isLast ? "bg-zinc-400" : "cursor-pointer") +
-            " py-1 px-2 border-[1px] min-w-8"
+            (isLast ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+            " py-1 px-2 rounded-md min-w-8"
           }
         >
           Last
@@ -84,8 +84,8 @@ export default function Pagination({ count, currentPage, setPage }) {
       <li
         onClick={handleNext}
         className={
-          (isLast ? "bg-zinc-400" : "cursor-pointer") +
-          " py-1 px-2 border-[1px] min-w-8 hidden sm:block"
+          (isLast ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+          " py-1 px-2 min-w-8 hidden sm:block rounded-md"
         }
       >
         Next

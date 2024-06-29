@@ -30,9 +30,9 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
     }));
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      removeWord(word.id);
+      await removeWord(word.id);
       toast.success("Word Saved");
     } catch (err) {
       toast.error("Error deleting word");
@@ -216,6 +216,20 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           name="form"
           placeholder="Word Form"
           value={state?.form}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="note" className="field__label">
+          Word note
+        </label>
+        <input
+          type="text"
+          id="note"
+          name="note"
+          placeholder="Word note"
+          value={state?.note || ""}
           onChange={handleChange}
           className="field__input"
         />

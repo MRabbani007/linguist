@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import Navbar from "../navigation/Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
@@ -9,9 +9,13 @@ import { selectCurrentUser } from "../auth/authSlice";
 import { useLazyGetProfileQuery } from "../profile/profileSlice";
 import { axiosPrivate } from "../../api/axios";
 import {
+  selectDisplayBlock,
+  selectDisplayChapter,
   selectLanguage,
   selectSiteLanguages,
   setChapters,
+  setDisplayBlock,
+  setDisplayChapter,
   setLanguage,
   setLessons,
   setSiteLanguages,
@@ -19,22 +23,61 @@ import {
 import { useGetChaptersQuery } from "../chapters/chapterSlice";
 import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
 import Footer from "./Footer";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { useGetLanguagesQuery } from "../globals/globalsApiSlice";
 
 const Layout = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = useSelector(selectCurrentUser);
   const language = useSelector(selectLanguage);
   const siteLanguages = useSelector(selectSiteLanguages);
 
-  const getLangauges = async () => {
-    let response = await axiosPrivate.get("/languages");
+  const displayChapter = useSelector(selectDisplayChapter);
+  const displayBlock = useSelector(selectDisplayBlock);
 
-    if (Array.isArray(response?.data)) {
-      dispatch(setSiteLanguages(response.data));
+  const [lastChapter, setLastChapter] = useLocalStorage("displayChapter", null);
+  const [lastLesson, setLastLesson] = useLocalStorage("displayLesson", null);
+  const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
+
+  useEffect(() => {
+    if (lastPage) {
+      navigate(lastPage);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    setLastPage(location.pathname);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (displayChapter?.id) {
+      setLastChapter(displayChapter);
+    }
+  }, [displayChapter]);
+
+  useEffect(() => {
+    if (displayBlock?.id) {
+      setLastLesson(displayBlock);
+    }
+  }, [displayBlock]);
+
+  useEffect(() => {
+    if (!displayChapter?.id) {
+      dispatch(setDisplayChapter(lastChapter));
+      if (!displayChapter?.id && !lastLesson?.id) {
+        // navigate("/content/sections");
+      }
+    }
+    if (!displayBlock?.id) {
+      dispatch(setDisplayBlock(lastLesson));
+      // navigate("/content/lesson");
+    }
+  }, [lastChapter, lastLesson]);
+
+  const { data: langs } = useGetLanguagesQuery();
 
   const [getProfile, { data: userProfile, isLoading, isSuccess }] =
     useLazyGetProfileQuery();
@@ -49,10 +92,6 @@ const Layout = () => {
 
   const [getAllBlocks, { data: lessons, isSuccess: isSuccessLessons }] =
     useLazyGetAllBlocksQuery();
-
-  useEffect(() => {
-    getLangauges();
-  }, [user]);
 
   useEffect(() => {
     if (user) {

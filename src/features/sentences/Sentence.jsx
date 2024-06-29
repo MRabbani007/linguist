@@ -39,26 +39,13 @@ export default function Sentence({ sentence }) {
       <div className="w-full relative group flex items-stretch bg-zinc-100">
         <div className={"min-w-4 min-h-full shrink-0 " + color}></div>
         <div className="flex-1 p-4">
-          <p>
-            <span>{sentence?.group}</span>
-          </p>
-          {sentence?.baseWord || sentence?.baseWordTranslation ? (
-            <p className="p-1">
-              {type !== "" ? (
-                <span>
-                  <i>{`(${type})`}</i>
-                </span>
-              ) : null}
-              <span className="font-semibold">{sentence?.baseWord}</span>
-              {sentence?.baseWordTranslation ? (
-                <span>
-                  <i>{"- " + sentence?.baseWordTranslation}</i>
-                </span>
-              ) : null}
+          {editMode ? (
+            <p>
+              <span>{sentence?.group}</span>
             </p>
           ) : null}
           <p className="w-fit font-medium" title={sentence?.pronunce}>
-            <span className="font-semibold text-zinc-800">
+            <span className="font-semibold text-red-700 text-lg">
               {sentence?.text}
             </span>
             <span>{sentence?.caption}</span>
@@ -71,6 +58,21 @@ export default function Sentence({ sentence }) {
               <span>
                 <i>{sentence?.tCaption}</i>
               </span>
+            </p>
+          ) : null}
+          {sentence?.baseWord || sentence?.baseWordTranslation ? (
+            <p className="flex items-center gap-2">
+              {type !== "" ? (
+                <span>
+                  <i>{`(${type})`}</i>
+                </span>
+              ) : null}
+              <span className="font-semibold">{sentence?.baseWord}</span>
+              {sentence?.baseWordTranslation ? (
+                <span>
+                  <i>{"- " + sentence?.baseWordTranslation}</i>
+                </span>
+              ) : null}
             </p>
           ) : null}
           {editMode ? (

@@ -47,6 +47,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (word) => ({
         url: SERVER.WORD,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
           action: {
             type: ACTIONS.EDIT_WORD_CONTENT,

@@ -1,6 +1,7 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { store } from "../../app/store";
+import { setSiteLanguages } from "./globalsSlice";
 
 const globalsAdapter = createEntityAdapter({
   // select id if id is not default entity.id
@@ -29,7 +30,20 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         );
       },
     }),
+    getLanguages: builder.query({
+      query: () => ({ url: "/languages", method: "GET" }),
+      transformResponse: (responseData) => {
+        store.dispatch(setSiteLanguages(responseData));
+        return globalsAdapter.setAll(
+          initialState,
+          responseData.map((item) => {
+            return { id: item._id, ...item };
+          })
+        );
+      },
+    }),
   }),
 });
 
-export const { useGetChapterSummaryQuery } = globalsApiSlice;
+export const { useGetChapterSummaryQuery, useGetLanguagesQuery } =
+  globalsApiSlice;
