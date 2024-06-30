@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-import { useEditSectionIntroMutation } from "./sectionSlice";
+import {
+  useDeleteSectionIntroMutation,
+  useEditSectionIntroMutation,
+} from "./sectionSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
@@ -11,6 +14,7 @@ export default function SectionIntroItemEdit({
   setEdit,
 }) {
   const [editSectionIntro, { isLoading }] = useEditSectionIntroMutation();
+  const [deleteSectionIntro] = useDeleteSectionIntroMutation();
 
   const [input, setInput] = useState(intro);
 
@@ -25,11 +29,20 @@ export default function SectionIntroItemEdit({
     }
   };
 
+  const handleDelete = async () => {
+    if (confirm("Delete Intro Item")) {
+      await deleteSectionIntro({ id: section.id, index });
+      toast.success("Intro item deleted");
+    }
+  };
+
   return (
     <FormContainer
       type="edit"
       title="Edit Section Intro"
+      deleteButton={true}
       onSubmit={handleSubmit}
+      onDelete={handleDelete}
       closeForm={setEdit}
     >
       <div className="field">

@@ -7,7 +7,6 @@ const CONTENT = [
   { label: "Lessons", url: "/admin/lessons" },
   { label: "Sections", url: "/admin/sections" },
   { label: "Definitions", url: "/admin/definitions" },
-  { label: "Words", url: "/admin/definitions" },
   { label: "Words", url: "/admin/words" },
   { label: "Sentences", url: "/admin/sentences" },
 ];

@@ -13,7 +13,6 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
   const [deleteLessonIntro, { isLoading: isLoadingDelete }] =
     useDeleteBlockIntroMutation();
 
-  console.log(lesson);
   const [input, setInput] = useState(intro);
 
   const canSaveEdit = !isLoadingEdit && input !== "";
@@ -46,6 +45,7 @@ export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
       deleteButton={true}
       onDelete={handleDelete}
       onSubmit={handleSubmit}
+      closeForm={setEdit}
     >
       <div className="field">
         <label htmlFor="introduction">Intro Item</label>

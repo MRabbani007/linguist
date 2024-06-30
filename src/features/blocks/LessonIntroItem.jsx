@@ -11,14 +11,15 @@ export default function LessonIntroItem({ lesson, intro, index }) {
 
   return (
     <>
-      <p className="flex items-center gap-2 group relative w-fit">
-        <span className="">{intro}</span>
+      <p className="group relative bg-zinc-500 text-white p-4 min-w-[300px] flex-1">
+        <span className="text-wrap">{intro}</span>
         {editMode && (
-          <span className="invisble group-hover:visible w-fit whitespace-nowrap absolute -top-2 -right-7">
-            <button onClick={() => setEdit(true)}>
-              <CiEdit size={34} />
-            </button>
-          </span>
+          <button
+            onClick={() => setEdit(true)}
+            className="invisible group-hover:visible absolute top-0 right-0"
+          >
+            <CiEdit size={34} />
+          </button>
         )}
       </p>
       {edit ? (

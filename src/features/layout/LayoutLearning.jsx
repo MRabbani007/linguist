@@ -15,7 +15,7 @@ export default function LayoutLearning() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-start gap-4 p-2">
+    <div className="flex items-stretch w-full">
       <Sidebar />
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />

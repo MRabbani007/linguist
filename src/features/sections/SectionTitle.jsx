@@ -5,6 +5,7 @@ import { BsThreeDots } from "react-icons/bs";
 import SectionDropDown from "./SectionDropDown";
 import { TbPoint } from "react-icons/tb";
 import { IoIosArrowForward } from "react-icons/io";
+import { FaRegSquareMinus, FaRegSquarePlus } from "react-icons/fa6";
 
 export default function SectionTitle({
   section,
@@ -45,19 +46,18 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-2 group relative bg-gradient-to-r from-zinc-300 to-zinc-100 py-4 px-6 justify-between">
+    <div className="flex items-center gap-2 group relative bg-gradient-to-r from-zinc-800 to-zinc-700 py-4 px-6 justify-between">
       <div>
-        <h3 className="text-red-600 ">
-          <p className="font-semibold text-xl flex items-center gap-3 ">
-            <TbPoint className="inline" size={26} />
-            {section?.title}
-            <button onClick={() => setExpand(!expand)}>
-              <IoIosArrowForward
-                size={24}
-                className={(expand ? "rotate-90" : "") + " duration-200"}
-              />
-            </button>
-          </p>
+        <h3
+          onClick={() => setExpand(!expand)}
+          className="font-semibold text-xl flex items-center gap-3 text-white "
+        >
+          {expand ? (
+            <FaRegSquareMinus size={26} />
+          ) : (
+            <FaRegSquarePlus size={26} />
+          )}
+          <span>{section?.title}</span>
           {section?.subtitle && (
             <i className="text-zinc-900 pl-10">{section?.subtitle}</i>
           )}

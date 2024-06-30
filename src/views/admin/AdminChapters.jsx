@@ -23,7 +23,13 @@ export default function AdminChapters() {
   } else if (isSuccess) {
     const { ids, entities } = data;
     content = ids.map((id, index) => (
-      <EditorChapterCard key={id} chapter={entities[id]} index={index} />
+      // <EditorChapterCard key={id} chapter={entities[id]} index={index} />
+      <tr key={id}>
+        <td>{index + 1}</td>
+        <td>{entities[id]?.title}</td>
+        <td>{entities[id]?.subtitle}</td>
+        <td>{entities[id]?.detail}</td>
+      </tr>
     ));
   } else if (isError) {
     content = <p>{error}</p>;
@@ -32,9 +38,14 @@ export default function AdminChapters() {
   return (
     <>
       <Pagination count={count} currentPage={page} setPage={setPage} />
-      <table>
-        <thead>
-          <EditorChaptersHeader />
+      <table className="max-w-[1024px] border-none">
+        <thead className="bg-red-500 text-white">
+          <tr className="">
+            <th>SN</th>
+            <th>Title</th>
+            <th>Sub-Title</th>
+            <th>Detail</th>
+          </tr>
         </thead>
         <tbody>{isSuccess ? content : null}</tbody>
       </table>

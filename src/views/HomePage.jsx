@@ -17,7 +17,7 @@ const HomePage = () => {
           alt="World_Language"
           width={400}
           height={350}
-          className="w-full mx-auto p-2"
+          className="w-full max-w-[600px] mx-auto p-2"
         />
         <div className="flex-1 flex flex-col justify-center items-center">
           <p className="italic font-semibold text-xl">

@@ -13,7 +13,7 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
   const displayBlock = useSelector(selectDisplayBlock);
   const [expandedIndex, setExpandedIndex] = useState(0);
 
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
 
   useEffect(() => {
     setExpandedIndex(() => {
@@ -40,14 +40,14 @@ const ChapterListSideBar = ({ setViewSideBar }) => {
   ));
 
   return (
-    <div className="p-0 flex flex-col gap-2 overflow-y-auto px-4">
+    <div className="p-0 flex flex-col overflow-y-auto h-full">
       {content}
-      <button
+      {/* <button
         onClick={() => setShowMore((curr) => !curr)}
-        className="text-red-600 font-semibold"
+        className="text-red-600 font-semibold my-4"
       >
         {showMore ? "Show Less" : "Show More"}
-      </button>
+      </button> */}
     </div>
   );
 };

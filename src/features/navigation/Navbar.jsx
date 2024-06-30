@@ -68,7 +68,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="z-50 h-[80px] flex items-center flex-row w-full sm:px-4 px-2 text-red-600  bg-gradient-to-r from-zinc-100 to-white relative border-b-2 border-red-600">
+      <div className="z-50 h-[80px] flex items-center flex-row w-full sm:px-4 px-2 text-red-600  bg-gradient-to-t from-zinc-200 to-white relative">
         <div className="flex justify-between items-center flex-1">
           <span className="flex items-center justify-between sm:gap-4 gap-2">
             <Link to="/" title="Home">
@@ -115,7 +115,7 @@ const Navbar = () => {
               <button
                 ref={sideBarButtonRef}
                 onClick={() => handleSideBar(true)}
-                className=""
+                className="sm:hidden"
                 title="Chapters & Lessons"
               >
                 <PiBookOpenTextLight size={50} />

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import FormChapterAdd from "../../features/chapters/FormChapterAdd";
 import Loading from "../../features/components/Loading";
 import { useGetChapterSummaryQuery } from "../../features/globals/globalsApiSlice";
+import CardChapter from "../../features/chapters/CardChapter";
 // Imported components
 
 const ChapterPage = () => {
@@ -47,11 +48,13 @@ const ChapterPage = () => {
         : {};
       const lessonCount = foundItem?.total ?? 0;
       return (
-        <ChapterTitleBlock
-          key={id}
-          chapter={entities[id]}
-          lessonCount={lessonCount}
-        />
+        <>
+          <CardChapter
+            key={id}
+            chapter={entities[id]}
+            lessonCount={lessonCount}
+          />
+        </>
       );
     });
   } else if (isError) {
@@ -61,15 +64,13 @@ const ChapterPage = () => {
   return (
     <>
       <main>
-        <header className="from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
+        <header className="p-6 bg-zinc-500 text-white">
           <h1 className="mx-auto font-bold text-2xl">{language?.title}</h1>
         </header>
         <div>
-          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-            {content}
-          </div>
+          <div className="flex flex-wrap gap-4">{content}</div>
         </div>
-        {editMode ? (
+        {/* {editMode ? (
           <button
             onClick={() => setViewAddChapter(!viewAddChapter)}
             className="btn btn-red"
@@ -77,7 +78,7 @@ const ChapterPage = () => {
             Add Chapter
           </button>
         ) : null}
-        {viewAddChapter ? <FormChapterAdd setAdd={setViewAddChapter} /> : null}
+        {viewAddChapter ? <FormChapterAdd setAdd={setViewAddChapter} /> : null} */}
       </main>
     </>
   );

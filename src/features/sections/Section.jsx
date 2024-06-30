@@ -106,13 +106,13 @@ export default function Section({
         ) : null}
 
         {/* Words */}
-        <div className="flex flex-row flex-wrap items-stretch gap-2">
+        <div className="flex flex-row flex-wrap items-stretch gap-4">
           {content}
         </div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
-          <div className="flex flex-col gap-3 p-2">
-            <p className="underline italic bold text-xl">Examples: </p>
+          <div className="flex flex-col gap-4">
+            <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p>
             {temp.map((sentence) => {
               return <Sentence sentence={sentence} key={sentence?.id} />;
             })}

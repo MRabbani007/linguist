@@ -34,48 +34,51 @@ export default function CardWord({ word }) {
   const [viewEditType, setViewEditType] = useState(false);
   const [showPronunce, setShowPronunce] = useState(false);
 
-  const showPopup =
-    (displayBlock?.thirdLang && word?.third) || word?.type || word?.gender;
+  const showPopup = displayBlock?.thirdLang && word?.third;
 
   return (
     <>
-      <div className="text-center min-w-[150px] max-w-[250px] flex-1 relative">
-        <p className="py-2 px-4 bg-zinc-200 font-semibold text-red-700 relative group">
-          {/* <span title={WORD_TYPE[word?.type]}>{word?.type}</span> */}
-          <span
-            className="mx-2 cursor-pointer"
+      <div
+        className={
+          (word.type === "ph" ? "min-w-[400px]" : "min-w-[200px]") +
+          " flex flex-col items-center justify-center  h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 hover:scale-105 duration-200 group relative z-0"
+        }
+      >
+        <p className="py-2 px-4 flex items-center gap-2 justify-between absolute top-0 left-0 right-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 duration-200">
+          <span className="font-normal">{WORD_TYPE[word?.type]}</span>
+          {word?.gender ? (
+            <span className="font-light text-end">
+              <i>{WORD_GENDER_SHORT[word?.gender]}</i>
+            </span>
+          ) : null}
+        </p>
+        {/* <p className="flex items-center justify-evenly gap-8 absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 duration-200 text-nowrap">
+          {word?.third}
+        </p> */}
+        <div className="font-semibold text-red-700 relative group w-full text-center">
+          <p
+            className="cursor-pointer"
             onMouseOver={() => setShowPronunce(true)}
             onMouseOut={() => setShowPronunce(false)}
           >
             {word?.first}
-          </span>
+          </p>
           {showPopup ? (
-            <div
+            <p
               className={
                 showPronunce
-                  ? "absolute top-full left-1/2 -translate-x-1/2 bg-slate-50 border-[1px] border-red-400 z-10 text-start"
+                  ? "absolute top-full left-1/2 -translate-x-1/2 bg-zinc-50 text-start py-1 px-2 w-fit text-nowrap font-normal z-30"
                   : "hidden"
               }
             >
-              <p className="border-b-[1px] border-red-400 py-1 px-2 flex items-center gap-2 justify-between">
-                <span className="font-normal">{WORD_TYPE[word?.type]}</span>
-                {word?.gender ? (
-                  <span className="font-light text-end">
-                    <i>{WORD_GENDER_SHORT[word?.gender]}</i>
-                  </span>
-                ) : null}
-              </p>
-              <p className=" py-1 px-2 w-fit text-nowrap">{word?.third}</p>
-            </div>
+              {word?.third}
+            </p>
           ) : null}
-          <span>
-            <i>{word?.firstCaption}</i>
-          </span>
           {editMode ? (
             <button onClick={() => setViewEditType(true)}>
               <FiEdit2
                 size={20}
-                className="inline absolute top-1 left-1 invisible group-hover:visible"
+                className="absolute top-1 left-1 invisible group-hover:visible"
               />
             </button>
           ) : null}
@@ -83,20 +86,15 @@ export default function CardWord({ word }) {
             <button onClick={() => setViewEditWord(true)}>
               <FiEdit2
                 size={20}
-                className="inline absolute top-1 right-1 invisible group-hover:visible"
+                className="absolute top-1 right-1 invisible group-hover:visible"
               />
             </button>
           ) : null}
           {viewEditType ? (
             <CardWordType word={word} setEdit={setViewEditType} />
           ) : null}
-        </p>
-        <p className="py-2 px-4 bg-zinc-100 font-medium text-zinc-800">
-          <span>{word?.second}</span>
-          <span>
-            <i>{word?.secondCaption}</i>
-          </span>
-        </p>
+        </div>
+        <p className="font-medium text-zinc-800">{word?.second}</p>
       </div>
       {viewEditWord ? (
         <FormWordEdit word={word} setViewEdit={setViewEditWord} />

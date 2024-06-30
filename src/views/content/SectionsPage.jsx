@@ -77,29 +77,29 @@ export default function SectionsPage() {
           setEditChapter={setEditChapter}
         />
         <div>
-          <p className="w-full">{displayChapter?.detail}</p>
+          {/* <p className="w-full">{displayChapter?.detail}</p> */}
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 w-full h-full">
             {content}
           </div>
-          {editMode && (
+          {/* {editMode && (
             <button
               className="btn btn-yellow mx-auto"
               onClick={() => setAddLesson(true)}
             >
               Add Lesson
             </button>
-          )}
+          )} */}
           <ChapterNavigator />
-          <ContentNavigator />
+          {/* <ContentNavigator /> */}
         </div>
       </main>
-      {editChapter ? (
+      {/* {editChapter ? (
         <ChapterHeaderEdit
           chapter={displayChapter}
           setEditChapter={setEditChapter}
         />
       ) : null}
-      {addLesson ? <FormLessonAdd setAdd={setAddLesson} /> : null}
+      {addLesson ? <FormLessonAdd setAdd={setAddLesson} /> : null} */}
     </>
   );
 }

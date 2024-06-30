@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import FormLessonEditHeader from "./FormLessonEditHeader";
 import { IoMdStar } from "react-icons/io";
+import { IoTimerOutline } from "react-icons/io5";
 
 export default function CardLesson({ lesson }) {
   const [removeBlock] = useRemoveBlockMutation();
@@ -48,41 +49,22 @@ export default function CardLesson({ lesson }) {
 
   return (
     <>
-      <div className="group flex flex-1 w-full flex-col gap-2 bg-zinc-300 h-full">
-        {/* Header */}
-        <div
-          className="flex items-center justify-start bg-sky-800 text-yellow-100 hover:text-yellow-400 duration-200 py-2 px-4 cursor-pointer gap-2"
-          onClick={blockOpen}
-        >
-          <IoMdStar size={25} className={level} title={lesson?.level} />
-          <p>
-            <span className="whitespace-nowrap">{`Lesson ${lesson?.lessonNo}: `}</span>
-            <span className="font-medium">{lesson?.title}</span>
-          </p>
-        </div>
-        {/* Body */}
-        <div className="flex-1 flex flex-col justify-between gap-2 relative py-2 px-4">
-          <span>{lesson?.subtitle}</span>
-          <span>{lesson?.detail}</span>
-          {editMode && (
-            <span className="absolute bottom-2 right-2">
-              <CiEdit
-                className="icon invisible group-hover:visible "
-                onClick={toggleEdit}
-              />
-              <CiTrash
-                className="icon invisible group-hover:visible "
-                onClick={handleDelete}
-              />
-            </span>
-          )}
-        </div>
-        <div className="card__footer">
-          <span>{lesson?.firstLang + " / " + lesson?.secondLang}</span>
+      <div
+        onClick={blockOpen}
+        className="flex flex-col items-center justify-start min-w-[200px] h-[150px] bg-gradient-to-b from-sky-900 to-sky-600 text-white flex-1 text-center text-xl hover:shadow-lg hover:shadow-zinc-400 hover:scale-105 cursor-pointer duration-200 relative "
+      >
+        {/* <span className="whitespace-nowrap">{`Lesson ${lesson?.lessonNo}: `}</span> */}
+        <p className="p-4 font-semibold">{lesson?.title}</p>
+        <p className="">{lesson?.subtitle}</p>
+        <p className=" absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2">
+          <IoTimerOutline size={25} className="inline" />
           <span>{lesson?.learningTime}</span>
-        </div>
+        </p>
+        {/* <p>{lesson?.detail}</p> */}
+        {/* <div className="card__footer">
+          <span>{lesson?.learningTime}</span>
+        </div> */}
       </div>
-      {edit ? <FormLessonEditHeader lesson={lesson} setEdit={setEdit} /> : null}
     </>
   );
 }

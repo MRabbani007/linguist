@@ -25,16 +25,27 @@ export default function AdminLessons() {
   } else if (isSuccess) {
     const { ids, entities } = data;
     content = ids.map((id, index) => (
-      <EditorBlockTitle key={id} block={entities[id]} index={index} />
+      // <EditorBlockTitle key={id} block={entities[id]} index={index} />
+      <tr className="" key={id}>
+        <td>{index + 1}</td>
+        <td>{entities[id]?.title}</td>
+        <td>{entities[id]?.subtitle}</td>
+        <td>{entities[id]?.detail}</td>
+      </tr>
     ));
   }
 
   return (
     <>
       <Pagination count={count} currentPage={page} setPage={setPage} />
-      <table>
-        <thead>
-          <EditorBlocksHeader />
+      <table className="max-w-[1024px] border-none">
+        <thead className="bg-red-500 text-white">
+          <tr className="">
+            <th>SN</th>
+            <th>Title</th>
+            <th>Sub-Title</th>
+            <th>Detail</th>
+          </tr>
         </thead>
         <tbody>{isSuccess ? content : null}</tbody>
       </table>

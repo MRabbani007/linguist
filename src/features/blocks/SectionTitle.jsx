@@ -39,8 +39,8 @@ export default function SectionTitle({
     <li
       onClick={blockOpen}
       className={
-        (displayBlock?.id === lesson?.id ? "text-yellow-500" : "") +
-        " cursor-pointer duration-200"
+        (displayBlock?.id === lesson?.id ? "bg-red-500 text-white" : "") +
+        " cursor-pointer duration-200 border-b-2 border-white w-full py-2 px-8"
       }
     >
       {/* {isCompleted ? (

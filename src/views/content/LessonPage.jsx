@@ -67,7 +67,7 @@ export default function LessonPage() {
             setAddLessonIntro={setAddLessonIntro}
           />
 
-          {(displayBlock?.detail ||
+          {/* {(displayBlock?.detail ||
             displayBlock?.text ||
             displayBlock?.notes) && (
             <article>
@@ -75,7 +75,7 @@ export default function LessonPage() {
               {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
               {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
             </article>
-          )}
+          )} */}
 
           <LessonSections
             lesson={displayBlock}
@@ -99,7 +99,7 @@ export default function LessonPage() {
         </div>
 
         <BlockNavigator />
-        <ContentNavigator />
+        {/* <ContentNavigator /> */}
 
         {!!user ? <LessonCompleted /> : null}
       </main>

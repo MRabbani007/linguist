@@ -57,7 +57,10 @@ export default function ListSection({ list }) {
   } else {
     content = list.items.map((item, index) => {
       return (
-        <li key={index}>
+        <li
+          key={index}
+          className="py-2 px-4 bg-zinc-200 border-b-[1px] border-zinc-400"
+        >
           <span>{item}</span>
           {editMode && (
             <button onClick={() => setEditItem(index)}>
@@ -71,12 +74,10 @@ export default function ListSection({ list }) {
 
   return (
     <>
-      <div className="p-2 sm:px-[5%] ">
-        <div className="flex items-center gap-3 relative w-fit">
+      <div className="">
+        <div className="relative bg-zinc-500 text-white w-full py-2 px-4">
           {list?.title ? (
-            <strong className="text-xl text-red-600 font-light">
-              {list?.title}
-            </strong>
+            <strong className="text-xl font-light">{list?.title}</strong>
           ) : editMode ? (
             <strong>Title</strong>
           ) : null}
@@ -99,14 +100,18 @@ export default function ListSection({ list }) {
               setAddItem={setAddItem}
             />
           )}
+          <p>{list?.text}</p>
         </div>
-        <p>{list?.text}</p>
-        {list?.type === "OL" ? (
-          <ol className="list-decimal list-inside">{content}</ol>
-        ) : (
-          <ul className="list-disc list-inside">{content}</ul>
-        )}
-        <p>{list?.notes}</p>
+        <div className="">
+          {list?.type === "OL" ? (
+            <ol className="list-decimal list-inside">{content}</ol>
+          ) : (
+            <ul className="">{content}</ul>
+          )}
+          {list?.notes ? (
+            <p className="bg-zinc-300 py-2 px-4">{list.notes}</p>
+          ) : null}
+        </div>
       </div>
       {editContent && <ListEdit list={list} setEdit={setEditContent} />}
       {editLessonID && (

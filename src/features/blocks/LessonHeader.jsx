@@ -37,22 +37,20 @@ const LessonHeader = ({
   }, []);
 
   return (
-    <header className="flex relative group bg-gradient-to-r from-red-700 to-red-500 text-white min-h-[80px]">
-      <p
+    <header className="gap-4 group bg-gradient-to-r from-red-500 to-red-600 text-white min-h-[80px]">
+      {/* <p
         title={"Lesson " + lesson?.lessonNo}
-        className="absolute left-4 top-[50%] -translate-y-[50%] py-2 w-12 text-center border-2 border-white text-xl"
+        className="py-2 w-12 text-center border-2 border-white text-xl"
       >
         {lesson?.lessonNo}
-      </p>
-      <div className="text-center">
-        {/* "Lesson " + lesson?.lessonNo + ": " +  */}
-        <h1 className="font-medium text-2xl whitespace-break-spaces text-wrap">
-          {lesson?.title}
-        </h1>
-        {lesson?.subtitle ? (
+      </p> */}
+      <span className=" text-2xl font-bold">
+        {"Lesson " + lesson?.lessonNo + ": "}
+      </span>
+      <h1 className=" text-2xl font-bold text-wrap inline">{lesson?.title}</h1>
+      {/* {lesson?.subtitle ? (
           <p className="font-light text-wrap">{lesson?.subtitle}</p>
-        ) : null}
-      </div>
+        ) : null} */}
       {editMode && (
         <button
           className="absolute top-1/2 -translate-y-1/2 right-4 invisible group-hover:visible"

@@ -60,7 +60,7 @@ export default function Sentence({ sentence }) {
               </span>
             </p>
           ) : null}
-          {sentence?.baseWord || sentence?.baseWordTranslation ? (
+          {/* {sentence?.baseWord || sentence?.baseWordTranslation ? (
             <p className="flex items-center gap-2">
               {type !== "" ? (
                 <span>
@@ -74,7 +74,7 @@ export default function Sentence({ sentence }) {
                 </span>
               ) : null}
             </p>
-          ) : null}
+          ) : null} */}
           {editMode ? (
             <div className="absolute top-2 right-2 invisible group-hover:visible">
               <button onClick={() => setEditContent(true)} title="Edit">

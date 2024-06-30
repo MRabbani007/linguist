@@ -25,13 +25,9 @@ export default function AdminSections() {
     content = ids.map((id, index) => (
       <tr className="" key={id}>
         <th>{index + 1}</th>
-        <th>{entities[id]?.sortIndex}</th>
         <th>{entities[id]?.title}</th>
         <th>{entities[id]?.subtitle}</th>
         <th>{entities[id]?.detail}</th>
-        <th>{entities[id]?.lessonID}</th>
-        <th>{entities[id]?.chapterID}</th>
-        <th>Edit</th>
       </tr>
     ));
   }
@@ -39,17 +35,13 @@ export default function AdminSections() {
   return (
     <>
       <Pagination count={count} currentPage={page} setPage={setPage} />
-      <table>
-        <thead>
+      <table className="max-w-[1024px] border-none">
+        <thead className="bg-red-500 text-white">
           <tr className="">
             <th>SN</th>
-            <th>Sort Index</th>
             <th>Title</th>
             <th>Sub-Title</th>
             <th>Detail</th>
-            <th>Lesson ID</th>
-            <th>Chapter ID</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>{isSuccess ? content : null}</tbody>

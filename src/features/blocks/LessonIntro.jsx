@@ -10,7 +10,7 @@ export default function LessonIntro({
     <>
       {Array.isArray(lesson?.introduction) &&
       lesson?.introduction?.length !== 0 ? (
-        <article className="py-2 px-4 bg-orange-200 text-zinc-800 w-full font-medium">
+        <div className="text-zinc-800 w-full font-medium flex flex-wrap gap-4">
           {lesson.introduction.map((intro, index) => {
             return (
               <LessonIntroItem
@@ -21,7 +21,7 @@ export default function LessonIntro({
               />
             );
           })}
-        </article>
+        </div>
       ) : null}
       {addLessonIntro ? (
         <LessonIntroAdd lesson={lesson} setAdd={setAddLessonIntro} />

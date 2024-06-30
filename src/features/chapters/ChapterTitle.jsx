@@ -49,8 +49,9 @@ const ChapterTitle = ({
     <div>
       <div
         className={
-          (displayChapter?.id === chapter?.id ? "text-red-500" : "") +
-          " flex items-center justify-between cursor-pointer duration-200"
+          (displayChapter?.id === chapter?.id ? "bg-red-500 text-white " : "") +
+          (index === 0 ? " border-t-2 " : "") +
+          " flex items-center justify-between cursor-pointer duration-200 py-2 px-4 border-b-2 border-white"
         }
         onClick={handleOpen}
       >
@@ -59,16 +60,17 @@ const ChapterTitle = ({
         ) : (
           <PiCircleDashed size={25} />
         )} */}
-        <div className="flex-1">
-          <p className="font-bold">{chapter.title}</p>
-          <p>{chapter.subtitle}</p>
-        </div>
+        <p className="">{chapter.title}</p>
+        {/* <p>{chapter.subtitle}</p> */}
         <MdOutlineKeyboardArrowRight
-          size={34}
-          className={index === expandedIndex && "rotate-90 duration-200"}
+          size={30}
+          className={
+            (index === expandedIndex ? "rotate-90 duration-200" : "") +
+            " inline"
+          }
         />
       </div>
-      <ul className="flex flex-col items-start gap-0 list-inside list-disc">
+      <ul className="flex flex-col items-start">
         {index === expandedIndex && content}
       </ul>
     </div>
