@@ -36,7 +36,7 @@ export default function AdminWords() {
   }
 
   return (
-    <>
+    <main>
       <Pagination count={count} currentPage={page} setPage={setPage} />
       <table>
         <thead>
@@ -54,6 +54,6 @@ export default function AdminWords() {
       </table>
       {isLoading || isError ? content : null}
       <Pagination count={count} currentPage={page} setPage={setPage} />
-    </>
+    </main>
   );
 }

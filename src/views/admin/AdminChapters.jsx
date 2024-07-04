@@ -36,21 +36,23 @@ export default function AdminChapters() {
   }
 
   return (
-    <>
-      <Pagination count={count} currentPage={page} setPage={setPage} />
-      <table className="max-w-[1024px] border-none">
-        <thead className="bg-red-500 text-white">
-          <tr className="">
-            <th>SN</th>
-            <th>Title</th>
-            <th>Sub-Title</th>
-            <th>Detail</th>
-          </tr>
-        </thead>
-        <tbody>{isSuccess ? content : null}</tbody>
-      </table>
-      {isLoading || isError ? content : null}
-      <Pagination count={count} currentPage={page} setPage={setPage} />
-    </>
+    <main>
+      <div>
+        <Pagination count={count} currentPage={page} setPage={setPage} />
+        <table className="max-w-[1024px] border-none">
+          <thead className="bg-red-500 text-white">
+            <tr className="">
+              <th>SN</th>
+              <th>Title</th>
+              <th>Sub-Title</th>
+              <th>Detail</th>
+            </tr>
+          </thead>
+          <tbody>{isSuccess ? content : null}</tbody>
+        </table>
+        {isLoading || isError ? content : null}
+        <Pagination count={count} currentPage={page} setPage={setPage} />
+      </div>
+    </main>
   );
 }

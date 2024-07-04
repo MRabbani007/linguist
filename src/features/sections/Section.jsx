@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import SectionIntro from "./SectionIntro";
 import SectionEditTitle from "./SectionEditTitle";
 import SectionTitle from "./SectionTitle";
-import CardWordList from "../words/CardWordList";
 import DefinitionAdd from "../definitions/DefinitionAdd";
 import Definition from "../definitions/Definition";
 import { useSelector } from "react-redux";
@@ -21,7 +20,6 @@ import CardWord from "../words/CardWord";
 export default function Section({
   section = {},
   words = [],
-  sectionsList = [],
   definitions = [],
   sectionLists = [],
   tables = [],
@@ -106,7 +104,7 @@ export default function Section({
         ) : null}
 
         {/* Words */}
-        <div className="flex flex-row flex-wrap items-stretch gap-4">
+        <div className="flex flex-row flex-wrap items-stretch justify-center gap-4">
           {content}
         </div>
 

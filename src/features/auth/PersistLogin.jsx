@@ -55,7 +55,7 @@ const PersistLogin = () => {
         <Outlet />
       ) : isLoading ? (
         <main>
-          <header className=" text-zinc-800 font-medium">
+          <header className="text-zinc-800 font-medium justify-center">
             <h1>
               Welcome to <span className="text-red-700 font-bold">Lingo</span>!
             </h1>

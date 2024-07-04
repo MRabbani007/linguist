@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const initialState = {
   sortIndex: 0,
@@ -17,10 +18,12 @@ const initialState = {
 
 export default function FormWordAdd({ sectionID = "", setAdd }) {
   const displayBlock = useSelector(selectDisplayBlock);
+  const [value, setValue] = useLocalStorage("WordAdd", initialState);
 
   const [addWord, { isLoading }] = useAddWordMutation();
+  const [clearOnSubmit, setClearOnSubmit] = useState(false);
 
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState(value);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,6 +37,7 @@ export default function FormWordAdd({ sectionID = "", setAdd }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setValue(state);
     if (canSave) {
       try {
         let word = {
@@ -45,6 +49,9 @@ export default function FormWordAdd({ sectionID = "", setAdd }) {
         };
         const res = await addWord(word).unwrap();
         toast.success("Word Added");
+        if (clearOnSubmit) {
+          setState(initialState);
+        }
       } catch (err) {
         toast.error("Error");
       }
@@ -54,13 +61,21 @@ export default function FormWordAdd({ sectionID = "", setAdd }) {
     }
   };
 
+  const handleClear = () => {
+    setState(initialState);
+  };
+
   return (
     <FormContainer
       type="add"
       title="Add Word"
       submitButton="Add Word"
+      clearButton={true}
       onSubmit={handleSubmit}
       closeForm={setAdd}
+      handleClear={handleClear}
+      clearOnSubmit={clearOnSubmit}
+      setClearOnSubmit={setClearOnSubmit}
     >
       {/* Sort Index */}
       <div className="field">
@@ -118,7 +133,7 @@ export default function FormWordAdd({ sectionID = "", setAdd }) {
           name="second"
           placeholder={displayBlock?.secondLang || "Second Language"}
           className="field__input"
-          value={state?.secondInput}
+          value={state?.second}
           onChange={handleChange}
         />
       </div>

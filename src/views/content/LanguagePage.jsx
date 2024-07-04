@@ -49,7 +49,7 @@ export default function LanguagePage() {
 
   return (
     <main>
-      <header className=" from-zinc-200 to-zinc-100 text-red-600">
+      <header className=" from-zinc-200 to-zinc-100 text-red-600 justify-center">
         <h1>Select Language</h1>
       </header>
       <div>

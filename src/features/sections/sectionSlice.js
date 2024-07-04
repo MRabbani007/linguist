@@ -2,6 +2,7 @@ import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { ACTIONS, SERVER } from "../../data/actions";
 import { store } from "../../app/store";
+import { setSections } from "../globals/globalsSlice";
 
 const sectionsAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option
@@ -25,6 +26,7 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
         params: { lessonID },
       }),
       transformResponse: (responseData) => {
+        store.dispatch(setSections(responseData));
         return sectionsAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [

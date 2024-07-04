@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useEditWordMutation } from "./wordsSlice";
 import { BiCheck, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
+import FormContainer from "../components/FormContainer";
 
 const initialState = {
   type: "",
@@ -51,11 +52,7 @@ export default function CardWordType({ word, setEdit }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onReset={() => setEdit(false)}
-      className="absolute top-full left-0 bg-zinc-100 p-2 z-20"
-    >
+    <FormContainer type="edit" onSubmit={handleSubmit} closeForm={setEdit}>
       <div className="flex items-center gap-2">
         {Object.keys(WORD_TYPE).map((item, index) => {
           return (
@@ -92,12 +89,6 @@ export default function CardWordType({ word, setEdit }) {
           );
         })}
       </div>
-      <button type="submit">
-        <BiCheck size={32} />
-      </button>
-      <button type="reset">
-        <BiX size={32} />
-      </button>
-    </form>
+    </FormContainer>
   );
 }

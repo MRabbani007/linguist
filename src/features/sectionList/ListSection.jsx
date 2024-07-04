@@ -44,7 +44,10 @@ export default function ListSection({ list }) {
   if (list?.type === "OL") {
     content = list.items.map((item, index) => {
       return (
-        <li key={index}>
+        <li
+          key={index}
+          className="py-2 px-4 bg-zinc-200 border-b-[1px] border-zinc-400"
+        >
           <span>{item}</span>
           {editMode && (
             <button onClick={() => setEditItem(index)}>

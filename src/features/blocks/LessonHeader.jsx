@@ -37,7 +37,7 @@ const LessonHeader = ({
   }, []);
 
   return (
-    <header className="gap-4 group bg-gradient-to-r from-zinc-100 to-zinc-300 text-red-600 min-h-[80px] border-b-4 border-red-600">
+    <header className="gap-4 group relative bg-gradient-to-r from-zinc-100 to-zinc-300 text-red-600 min-h-[80px] border-b-4 border-red-600">
       {/* <p
         title={"Lesson " + lesson?.lessonNo}
         className="py-2 w-12 text-center border-2 border-white text-xl"

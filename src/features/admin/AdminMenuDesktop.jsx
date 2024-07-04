@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { RiAdminLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const CONTENT = [
   { label: "Chapters", url: "/admin/chapters" },
@@ -11,15 +11,9 @@ const CONTENT = [
   { label: "Sentences", url: "/admin/sentences" },
 ];
 
-const AdminMenu = forwardRef(({ showMenu = false }, ref) => {
+export default function AdminMenuDesktop() {
   return (
-    <nav
-      ref={ref}
-      className={
-        (showMenu ? "" : "-translate-x-14 opacity-0 ") +
-        "bg-zinc-100 mt-2 border-red-700 text-zinc-800 absolute top-full left-2 duration-200"
-      }
-    >
+    <div className="text-zinc-800 bg-zinc-100 hidden sm:inline-block">
       <div className="py-4 px-4 flex items-center gap-2 border-b-[1px] border-red-600">
         <RiAdminLine size={30} />
         <span className="font-semibold text-zinc-900">Admin</span>
@@ -34,10 +28,10 @@ const AdminMenu = forwardRef(({ showMenu = false }, ref) => {
       </div>
       <div>
         <h3 className="py-2 px-4 font-semibold border-b-2">Content</h3>
-        <ul className="flex flex-col">
+        <ul className="flex flex-col items-stretch">
           {CONTENT.map((item, index) => {
             return (
-              <li key={index} className="py-2 px-4 border-b-2">
+              <li key={index} className="py-2 px-4 border-b-2 w-full h-full">
                 <Link to={item.url}>{item.label}</Link>
               </li>
             );
@@ -47,13 +41,11 @@ const AdminMenu = forwardRef(({ showMenu = false }, ref) => {
       <div>
         <h3 className="py-2 px-4 font-semibold  border-b-2">Users</h3>
         <ul className="flex flex-col">
-          <li className="py-2 px-4 border-b-2">
+          <li className=" py-2 px-4 border-b-2 ">
             <Link to={"/admin/users"}>Users</Link>
           </li>
         </ul>
       </div>
-    </nav>
+    </div>
   );
-});
-
-export default AdminMenu;
+}

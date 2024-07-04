@@ -33,7 +33,7 @@ export default function AdminSections() {
   }
 
   return (
-    <>
+    <main>
       <Pagination count={count} currentPage={page} setPage={setPage} />
       <table className="max-w-[1024px] border-none">
         <thead className="bg-red-500 text-white">
@@ -48,6 +48,6 @@ export default function AdminSections() {
       </table>
       {isLoading || isError ? content : null}
       <Pagination count={count} currentPage={page} setPage={setPage} />
-    </>
+    </main>
   );
 }

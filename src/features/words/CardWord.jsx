@@ -3,7 +3,8 @@ import FormWordEdit from "./FormWordEdit";
 import { FiEdit2 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
-import CardWordType from "./CardWordType";
+import MoveWordSection from "./MoveWordSection";
+import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 
 const WORD_TYPE = {
   v: "Verb",
@@ -31,7 +32,7 @@ export default function CardWord({ word }) {
   const displayBlock = useSelector(selectDisplayBlock);
 
   const [viewEditWord, setViewEditWord] = useState(false);
-  const [viewEditType, setViewEditType] = useState(false);
+  const [viewMoveSection, setViewMoveSection] = useState(false);
   const [showPronunce, setShowPronunce] = useState(false);
 
   const showPopup = displayBlock?.thirdLang && word?.third;
@@ -41,9 +42,10 @@ export default function CardWord({ word }) {
       <div
         className={
           (word.type === "ph" ? "min-w-[400px]" : "min-w-[200px]") +
-          " flex flex-col items-center justify-center  h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
+          " w-fit flex flex-col items-center justify-center h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
         }
       >
+        {/* Word type */}
         <p className="py-2 px-4 flex items-center gap-2 justify-between absolute top-0 left-0 right-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 duration-200">
           <span className="font-normal">{WORD_TYPE[word?.type]}</span>
           {word?.gender ? (
@@ -52,12 +54,9 @@ export default function CardWord({ word }) {
             </span>
           ) : null}
         </p>
-        {/* <p className="flex items-center justify-evenly gap-8 absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 duration-200 text-nowrap">
-          {word?.third}
-        </p> */}
         <div className="font-semibold text-red-700 relative group w-full text-center">
           <p
-            className="cursor-pointer"
+            className="cursor-pointer px-2"
             onMouseOver={() => setShowPronunce(true)}
             onMouseOut={() => setShowPronunce(false)}
           >
@@ -74,31 +73,28 @@ export default function CardWord({ word }) {
               {word?.third}
             </p>
           ) : null}
-          {editMode ? (
-            <button onClick={() => setViewEditType(true)}>
-              <FiEdit2
-                size={20}
-                className="absolute top-1 left-1 invisible group-hover:visible"
-              />
-            </button>
-          ) : null}
-          {editMode ? (
-            <button onClick={() => setViewEditWord(true)}>
-              <FiEdit2
-                size={20}
-                className="absolute top-1 right-1 invisible group-hover:visible"
-              />
-            </button>
-          ) : null}
-          {viewEditType ? (
-            <CardWordType word={word} setEdit={setViewEditType} />
-          ) : null}
         </div>
-        <p className="font-medium text-zinc-800">{word?.second}</p>
+        <p className="font-medium text-zinc-800 px-4">{word?.second}</p>
+        {editMode ? (
+          <div className="absolute bottom-2 right-2 invisible group-hover:visible flex items-center gap-2">
+            <button
+              title="Move to Section"
+              onClick={() => setViewMoveSection(true)}
+            >
+              <HiOutlineArrowsPointingOut size={20} />
+            </button>
+            <button title="Edit Word" onClick={() => setViewEditWord(true)}>
+              <FiEdit2 size={20} />
+            </button>
+          </div>
+        ) : null}
       </div>
       {viewEditWord ? (
         <FormWordEdit word={word} setViewEdit={setViewEditWord} />
       ) : null}
+      {viewMoveSection && (
+        <MoveWordSection word={word} setViewMoveSection={setViewMoveSection} />
+      )}
     </>
   );
 }

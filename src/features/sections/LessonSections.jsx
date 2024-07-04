@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEditMode, setSections } from "../globals/globalsSlice";
 import { useGetSectionsQuery } from "./sectionSlice";
 import { useGetDefinitionsQuery } from "../definitions/definitionsSlice";
 import Section from "./Section";
@@ -17,6 +17,7 @@ import CardWord from "../words/CardWord";
 
 export default function LessonSections({ lesson, addSection, setAddSection }) {
   const editMode = useSelector(selectEditMode);
+  const dispatch = useDispatch();
 
   // List of sections to move words
   const [sectionsList, setSectionsList] = useState([]);
@@ -105,9 +106,10 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
   useEffect(() => {
     if (isSuccessSections) {
-      setSectionsList(() => {
-        return sectionsData?.ids.map((id) => sectionsData.entities[id]) ?? [];
-      });
+      const temp =
+        sectionsData?.ids.map((id) => sectionsData.entities[id]) ?? [];
+      dispatch(setSections(temp));
+      setSectionsList(temp);
     }
   }, [sectionsData]);
 
@@ -224,7 +226,6 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           tables={sectionTables}
           tableWords={tableWords}
           sectionLists={sectionLists}
-          sectionsList={sectionsList}
           sentences={sectionSentences}
         />
       );
@@ -270,19 +271,21 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
 
       {/* Lesson Words */}
       {lessonWords.length !== 0 && (
-        <div className="flex flex-row flex-wrap items-stretch gap-4">
+        <>
           {words.length > lessonWords.length ? <br /> : null}
-          {lessonWords.map((word, index) => {
-            return (
-              <CardWord key={index} word={word} />
-              // <CardWordList
-              //   word={word}
-              //   key={index}
-              //   sectionsList={sectionsList}
-              // />
-            );
-          })}
-        </div>
+          <div className="flex flex-row flex-wrap items-stretch justify-center gap-4">
+            {lessonWords.map((word, index) => {
+              return (
+                <CardWord key={index} word={word} />
+                // <CardWordList
+                //   word={word}
+                //   key={index}
+                //   sectionsList={sectionsList}
+                // />
+              );
+            })}
+          </div>
+        </>
       )}
 
       {/* Lesson Tables */}

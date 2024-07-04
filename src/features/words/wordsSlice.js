@@ -76,6 +76,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (word) => ({
         url: SERVER.WORD,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
           roles: store.getState()?.auth?.roles,
           action: {
@@ -90,11 +93,13 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (word) => ({
         url: SERVER.WORD,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
-          roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_WORD_SECTIONID,
-            payload: { userName: store.getState()?.auth?.user, word },
+            payload: word,
           },
         },
       }),
