@@ -41,7 +41,7 @@ export default function CardWord({ word }) {
       <div
         className={
           (word.type === "ph" ? "min-w-[400px]" : "min-w-[200px]") +
-          " flex flex-col items-center justify-center  h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 hover:scale-105 duration-200 group relative z-0"
+          " flex flex-col items-center justify-center  h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
         }
       >
         <p className="py-2 px-4 flex items-center gap-2 justify-between absolute top-0 left-0 right-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 duration-200">

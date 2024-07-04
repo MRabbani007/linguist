@@ -13,7 +13,7 @@ export default function Footer() {
           className="shrink-0 min-w-[100px]"
         />
       </Link>
-      <div className="flex flex-col gap-2 sm:px-8">
+      <div className="flex flex-col sm:gap-2 sm:px-8">
         <Link to={"/about"}>About</Link>
         <Link to={"/about"}>Contact Us</Link>
         <Link to={"/about"}>Report a bug or a problem</Link>

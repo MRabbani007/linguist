@@ -17,7 +17,7 @@ export default function UserLessonTracker() {
         <AiFillSignal size={32} />
         <span>Progress</span>
       </div>
-      <ul className="flex flex-wrap items-center gap-4 w-full">
+      <ul className="flex flex-wrap items-center justify-center gap-4 w-full">
         {PROGRESS.map((item, index) => {
           const style =
             item.status === "completed"

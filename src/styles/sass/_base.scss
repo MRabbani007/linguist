@@ -75,7 +75,7 @@ p {
 }
 
 main {
-  // padding: 0.5rem;
+  padding: 0.5rem;
   @include flexColStart;
   gap: 1rem;
   // max-width: 1024px;
@@ -101,7 +101,7 @@ main > div {
 
 header {
   @include flexStart;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem;
   width: 100%;
   height: fit-content;
 }
@@ -109,12 +109,15 @@ header {
 main header h1 {
   font-weight: 500;
   font-size: 1.5rem;
-  line-height: 2rem;
+  // line-height: 2rem;
 }
 
 @media screen and (min-width: 640px) {
   main {
     padding: 1rem;
+  }
+  header {
+    padding: 0.25rem 1.5rem;
   }
 }
 @media screen and (min-width: 768px) {

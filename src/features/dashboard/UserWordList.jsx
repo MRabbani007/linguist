@@ -16,7 +16,7 @@ export default function UserWordList() {
         <HiOutlineQueueList size={32} />
         <span>Review</span>
       </div>
-      <ul className="flex flex-wrap items-center gap-4 w-full">
+      <ul className="flex flex-wrap items-center justify-center gap-4 w-full">
         {REVIEW.map((item, index) => {
           return (
             <li key={index}>

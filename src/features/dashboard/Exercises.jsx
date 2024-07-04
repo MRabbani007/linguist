@@ -42,7 +42,7 @@ export default function Exercises() {
         <RiRunLine size={32} />
         <span>Exercise</span>
       </div>
-      <ul className="flex flex-wrap items-center gap-4">
+      <ul className="flex flex-wrap items-center justify-center gap-4">
         {EXERCISE_ITEMS.map((item, index) => {
           return (
             <li key={index}>

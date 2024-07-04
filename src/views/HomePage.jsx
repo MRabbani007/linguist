@@ -29,7 +29,7 @@ const HomePage = () => {
                 <Link
                   to="/content/chapters"
                   title={"Continue  " + language.name}
-                  className="py-4 px-10 text-2xl bg-gradient-to-tr from-blue-700 to-blue-600 text-white  hover:from-blue-600 hover:to-blue-500 duration-200 rounded-full md:my-4"
+                  className="py-4 px-10 md:my-4 text-2xl bg-gradient-to-tr from-blue-700 to-blue-600 text-white hover:from-blue-600 hover:to-blue-500 duration-200 hover:shadow-lg hover:shadow-zinc-700"
                 >
                   {"Continue  " + language.name}
                 </Link>
@@ -44,7 +44,7 @@ const HomePage = () => {
             <Link
               to="/language"
               title={!!language?.name ? "Select Language" : "Start Now"}
-              className="py-2 px-6 text-xl bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 rounded-full md:my-4"
+              className="py-2 px-6 text-xl bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 md:my-4 hover:shadow-lg hover:shadow-zinc-700"
             >
               {!!language?.name ? "Select Language" : "Start Now"}
             </Link>
