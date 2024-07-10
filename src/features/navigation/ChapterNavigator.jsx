@@ -70,7 +70,7 @@ const ChapterNavigator = () => {
   const lastChapter = chapterIndex === chapters.length - 1;
 
   return (
-    <section className="w-full max-h-fit flex flex-1 justify-between items-center">
+    <div className="w-full flex justify-between items-center">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}
@@ -87,7 +87,7 @@ const ChapterNavigator = () => {
         <span className="font-semibold hidden md:inline">Next Chapter</span>
         <FaChevronRight size={32} />
       </button>
-    </section>
+    </div>
   );
 };
 

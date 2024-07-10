@@ -4,13 +4,7 @@ import { selectEditMode } from "../globals/globalsSlice";
 import { BsThreeDots } from "react-icons/bs";
 import LessonDropDown from "../dropDowns/LessonDropDown";
 
-const LessonHeader = ({
-  lesson,
-  setAddLessonIntro,
-  setAddSection,
-  setEditLessonTitle,
-  setEditLessonDetails,
-}) => {
+const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
   const editMode = useSelector(selectEditMode);
 
   const [showDropDown, setShowDropDown] = useState(false);
@@ -65,8 +59,6 @@ const LessonHeader = ({
         showDropDown={showDropDown}
         setAddLessonIntro={setAddLessonIntro}
         setAddSection={setAddSection}
-        setEditLessonTitle={setEditLessonTitle}
-        setEditLessonDetails={setEditLessonDetails}
       />
     </header>
   );

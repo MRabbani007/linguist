@@ -64,7 +64,6 @@ p {
   padding: 0;
   margin: 0;
   text-wrap: wrap;
-  overflow-wrap: break-word;
 }
 
 main {
@@ -81,7 +80,7 @@ main {
   margin-right: auto;
 }
 
-main > div {
+section {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -255,28 +254,60 @@ main header h1 {
 .delete {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
+  color: white;
+  transition: all 0.2s linear;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.add span,
+.save span,
+.cancel span,
+.delete span {
+  display: none;
 }
 
 .add {
-  background-color: #075985;
-  color: white;
+  background-color: #3b82f6;
+}
+
+.add:hover {
+  background-color: #60a5fa;
 }
 
 .save {
-  background-color: rgb(64, 150, 64);
-  color: white;
+  background-color: #22c55e;
+}
+
+.save:hover {
+  background-color: #4ade80;
 }
 
 .cancel {
-  background-color: #fbbf24;
-  color: white;
+  background-color: #eab308;
+}
+
+.cancel:hover {
+  background-color: #facc15;
 }
 
 .delete {
-  background-color: #f87171;
-  color: white;
+  background-color: #dc2626;
 }
 
+.delete:hover {
+  background-color: #ef4444;
+}
+
+@media screen and (min-width: 640px) {
+  .add span,
+  .save span,
+  .cancel span,
+  .delete span {
+    display: inline;
+  }
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -394,7 +425,7 @@ tbody tr:nth-child(2n+1):hover {
 
 .section-dropdown {
   position: absolute;
-  top: 2rem;
+  top: 100%;
   right: 0;
   background-color: #f7fee7;
   border-radius: 0.375rem;
@@ -449,6 +480,7 @@ tbody tr:nth-child(2n+1):hover {
   outline: none;
   padding: 0.5rem 1.5rem;
   text-align: center;
+  transition: all 0.2s linear;
 }
 
 .btn-r {
@@ -465,7 +497,7 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .btn-yellow:hover {
-  background-color: #fbbf24;
+  background-color: #facc15;
 }
 
 .btn-red {
@@ -478,8 +510,12 @@ tbody tr:nth-child(2n+1):hover {
 }
 
 .btn-blue {
-  background-color: #60a5fa;
+  background-color: #3b82f6;
   color: #eff6ff;
+}
+
+.btn-blue:hover {
+  background-color: #60a5fa;
 }
 
 .mobile-menu {

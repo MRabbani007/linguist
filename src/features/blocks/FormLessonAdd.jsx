@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectDisplayChapter } from "../globals/globalsSlice";
+import { selectChapters } from "../globals/globalsSlice";
 import { useAddBlockMutation } from "./blockSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
 const initialState = {
+  chapterID: "",
   title: "",
   subtitle: "",
   detail: "",
@@ -26,7 +27,7 @@ const initialState = {
 const lastValues = {};
 
 export default function FormLessonAdd({ setAdd }) {
-  const displayChapter = useSelector(selectDisplayChapter);
+  const chapters = useSelector(selectChapters);
 
   const [addBlock, { isLoading }] = useAddBlockMutation();
 
@@ -49,7 +50,6 @@ export default function FormLessonAdd({ setAdd }) {
         let block = {
           ...state,
           id: crypto.randomUUID(),
-          chapterID: displayChapter.id,
           createDate: new Date(),
         };
         console.log(block);
@@ -61,6 +61,16 @@ export default function FormLessonAdd({ setAdd }) {
     }
   };
 
+  const menuOptions =
+    Array.isArray(chapters) &&
+    chapters.map((item, index) => {
+      return (
+        <option value={item?.id} key={index}>
+          {item?.title}
+        </option>
+      );
+    });
+
   return (
     <FormContainer
       onSubmit={handleSubmit}
@@ -69,22 +79,21 @@ export default function FormLessonAdd({ setAdd }) {
       submitButton="Add Lesson"
       closeForm={setAdd}
     >
-      {/* <div className="field_group">
-        <button
-          type="button"
-          className="btn btn-yellow"
-          onClick={() => setPage(1)}
+      <div className="field">
+        <label htmlFor="chapterID" className="field__label">
+          Chapter
+        </label>
+        <select
+          id="chapterID"
+          name="chapterID"
+          value={state?.chapterID}
+          onChange={handleChange}
+          className="field__input"
         >
-          1
-        </button>
-        <button
-          type="button"
-          className="btn btn-yellow"
-          onClick={() => setPage(2)}
-        >
-          2
-        </button>
-      </div> */}
+          <option value="">Select Chapter</option>
+          {menuOptions}
+        </select>
+      </div>
       <div className="field">
         <label htmlFor="lessonNo" className="field__label">
           Number

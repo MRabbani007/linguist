@@ -70,15 +70,6 @@ const ChapterPage = () => {
         <div>
           <div className="flex flex-wrap gap-4">{content}</div>
         </div>
-        {/* {editMode ? (
-          <button
-            onClick={() => setViewAddChapter(!viewAddChapter)}
-            className="btn btn-red"
-          >
-            Add Chapter
-          </button>
-        ) : null}
-        {viewAddChapter ? <FormChapterAdd setAdd={setViewAddChapter} /> : null} */}
       </main>
     </>
   );

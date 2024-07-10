@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useEditChapterMutation } from "./chapterSlice";
+import {
+  useEditChapterMutation,
+  useRemoveChapterMutation,
+} from "./chapterSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
-export default function ChapterHeaderEdit({ chapter, setEditChapter }) {
+export default function FormChapterEdit({ chapter, setEdit }) {
   const [editChapter, { isLoading }] = useEditChapterMutation();
+  const [removeChapter] = useRemoveChapterMutation();
 
   const [title, setTitle] = useState(chapter?.title || "");
   const [subtitle, setSubtitle] = useState(chapter?.subtitle || "");
@@ -30,7 +34,7 @@ export default function ChapterHeaderEdit({ chapter, setEditChapter }) {
         };
         await editChapter(newChapter).unwrap();
         toast.success("Chapter saved");
-        setEditChapter(false);
+        setEdit(false);
 
         // handleChapterEdit(newChapter);
       } catch (err) {
@@ -39,13 +43,25 @@ export default function ChapterHeaderEdit({ chapter, setEditChapter }) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (confirm("Delete this Chapter? !\nEither OK or Cancel.")) {
+        await removeChapter(chapter.id).unwrap();
+      }
+    } catch (err) {
+      console.error("Failed to delete the chapter", err);
+    }
+  };
+
   return (
     <FormContainer
       title="Edit Chapter"
       type="edit"
       submitButton="Save Chapter"
+      deleteButton={true}
+      onDelete={handleDelete}
       onSubmit={handleSubmit}
-      closeForm={setEditChapter}
+      closeForm={setEdit}
     >
       <div className="field">
         <label htmlFor="chapter_number" className="field__label">

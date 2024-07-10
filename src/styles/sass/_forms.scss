@@ -137,24 +137,53 @@
 .delete {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
+  color: white;
+  transition: all 0.2s linear;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.add span,
+.save span,
+.cancel span,
+.delete span {
+  display: none;
 }
 
 .add {
-  background-color: #075985;
-  color: white;
+  background-color: $clr-blue-500;
+}
+.add:hover {
+  background-color: $clr-blue-400;
 }
 
 .save {
-  background-color: rgb(64, 150, 64);
-  color: white;
+  background-color: $clr-green-500;
+}
+.save:hover {
+  background-color: $clr-green-400;
 }
 
 .cancel {
-  background-color: #fbbf24;
-  color: white;
+  background-color: $clr-yellow-500;
+}
+.cancel:hover {
+  background-color: $clr-yellow-400;
 }
 
 .delete {
-  background-color: #f87171;
-  color: white;
+  background-color: $clr-red-600;
+}
+.delete:hover {
+  background-color: $clr-red-500;
+}
+
+@media screen and (min-width: 640px) {
+  .add span,
+  .save span,
+  .cancel span,
+  .delete span {
+    display: inline;
+  }
 }

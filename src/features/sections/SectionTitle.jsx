@@ -46,15 +46,17 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-center gap-4 group relative bg-gradient-to-r from-zinc-700 to-zinc-600 py-4 px-6">
-      {expand ? (
-        <FaRegSquareMinus size={26} className="text-white" />
-      ) : (
-        <FaRegSquarePlus size={26} className="text-white" />
-      )}
+    <div className="flex items-stretch gap-4 group relative bg-gradient-to-r from-zinc-700 to-zinc-600 px-6">
+      <p className="py-4">
+        {expand ? (
+          <FaRegSquareMinus size={26} className="text-white" />
+        ) : (
+          <FaRegSquarePlus size={26} className="text-white" />
+        )}
+      </p>
       <h3
         onClick={() => setExpand(!expand)}
-        className=" flex flex-col text-white "
+        className=" flex flex-col text-white py-4 cursor-pointer"
       >
         <p className="font-semibold text-xl">{section?.title}</p>
         {section?.subtitle && <i className="">{section?.subtitle}</i>}
@@ -64,7 +66,7 @@ export default function SectionTitle({
           ref={dropDownButtonRef}
           title="Edit Section"
           onClick={() => setShowDropDown(true)}
-          className="ml-auto"
+          className="ml-auto px-2"
         >
           <BsThreeDots size={28} className="text-white" />
         </button>

@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../auth/authSlice";
 import { useLazyGetProfileQuery } from "../profile/profileSlice";
-import { axiosPrivate } from "../../api/axios";
 import {
   selectDisplayBlock,
   selectDisplayChapter,

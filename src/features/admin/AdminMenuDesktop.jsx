@@ -28,15 +28,15 @@ export default function AdminMenuDesktop() {
       </div>
       <div>
         <h3 className="py-2 px-4 font-semibold border-b-2">Content</h3>
-        <ul className="flex flex-col items-stretch">
+        <div className="flex flex-col">
           {CONTENT.map((item, index) => {
             return (
-              <li key={index} className="py-2 px-4 border-b-2 w-full h-full">
-                <Link to={item.url}>{item.label}</Link>
-              </li>
+              <Link key={index} to={item.url} className="py-2 px-4 border-b-2">
+                {item.label}
+              </Link>
             );
           })}
-        </ul>
+        </div>
       </div>
       <div>
         <h3 className="py-2 px-4 font-semibold  border-b-2">Users</h3>

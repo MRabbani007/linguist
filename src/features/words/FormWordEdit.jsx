@@ -240,7 +240,7 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       ) : null}
       <div className="field">
         <span className="field__label">Word Type</span>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {Object.keys(WORD_TYPE).map((item, index) => {
             return (
               <div className="flex items-center gap-1">
@@ -261,7 +261,7 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       </div>
       <div className="field">
         <span className="field__label">Word Gender</span>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {Object.keys(WORD_GENDER).map((item, index) => {
             return (
               <div className="flex items-center gap-1">

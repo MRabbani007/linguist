@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const ITEMS_PER_PAGE = 15;
 const PAG_LEN = 5;
@@ -35,7 +36,7 @@ export default function Pagination({ count, currentPage, setPage }) {
   const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
 
   return (
-    <ul className="flex items-center text-center mx-auto gap-1 font-medium">
+    <ul className="flex items-center text-center gap-1 font-medium">
       <li
         onClick={handlePrev}
         className={
@@ -43,7 +44,7 @@ export default function Pagination({ count, currentPage, setPage }) {
           " py-1 px-2 rounded-md min-w-8 hidden sm:block"
         }
       >
-        Prev
+        <IoIosArrowBack size={24} />
       </li>
       {isManyPages && currentPage > 2 ? (
         <li
@@ -88,7 +89,7 @@ export default function Pagination({ count, currentPage, setPage }) {
           " py-1 px-2 min-w-8 hidden sm:block rounded-md"
         }
       >
-        Next
+        <IoIosArrowForward size={24} />
       </li>
     </ul>
   );

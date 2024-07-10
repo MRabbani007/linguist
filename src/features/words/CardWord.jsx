@@ -41,8 +41,8 @@ export default function CardWord({ word }) {
     <>
       <div
         className={
-          (word.type === "ph" ? "min-w-[400px]" : "min-w-[200px]") +
-          " w-fit flex flex-col items-center justify-center h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
+          (word.type === "ph" ? "" : "") +
+          " min-w-[350px] lg:min-w-[400px] max-w-[600px] flex flex-col items-center justify-center h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
         }
       >
         {/* Word type */}

@@ -10,7 +10,7 @@ export default function DashboardPage() {
       {/* <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
         <h1>Dashboard</h1>
       </header> */}
-      <div>
+      <div className="w-full flex flex-col gap-4">
         <UserLessonTracker />
         <Exercises />
         <UserWordList />

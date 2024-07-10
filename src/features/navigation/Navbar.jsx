@@ -14,6 +14,7 @@ import SidebarSearch from "./SidebarSearch";
 import MobileMenu from "./MobileMenu";
 import MenuLessons from "./MenuLessons";
 import { AiOutlineUser } from "react-icons/ai";
+import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
@@ -109,9 +110,12 @@ const Navbar = () => {
                   {/* <IoBarbellOutline size={40} /> */}
                 </Link>
               </div>
-              <div className="hidden md:inline-block">
+              <button>
+                <IoIosSearch size={30} />
+              </button>
+              {/* <div className="hidden md:inline-block">
                 <SidebarSearch className="border-red-600 text-red-600" />
-              </div>
+              </div> */}
               <button
                 ref={sideBarButtonRef}
                 onClick={() => handleSideBar(true)}
@@ -126,7 +130,7 @@ const Navbar = () => {
                   title="User"
                   className="hidden sm:inline-block"
                 >
-                  <AiOutlineUser size={40} />
+                  <AiOutlineUser size={30} />
                 </Link>
               ) : (
                 <div
@@ -139,7 +143,7 @@ const Navbar = () => {
                     onClick={() => setViewUserDropDown(true)}
                     title="User"
                   >
-                    <AiOutlineUser size={40} />
+                    <AiOutlineUser size={30} />
                   </button>
                   {isAdmin ? (
                     <AdminDropDown

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { selectAllChapters } from "../chapters/chapterSlice";
-import { useEditBlockHeaderMutation } from "./blockSlice";
+import {
+  useEditBlockHeaderMutation,
+  useRemoveBlockMutation,
+} from "./blockSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import { selectChapters } from "../globals/globalsSlice";
 
 const initialState = {
   title: "",
@@ -24,9 +27,10 @@ const initialState = {
   langID: "",
 };
 
-export default function FormLessonEditHeader({ lesson, setEdit }) {
-  const chapters = useSelector(selectAllChapters);
+export default function FormLessonEdit({ lesson, setEdit }) {
+  const chapters = useSelector(selectChapters);
   const [editBlockHeader, { isLoading }] = useEditBlockHeaderMutation();
+  const [removeBlock] = useRemoveBlockMutation();
 
   const [state, setState] = useState({ ...initialState, ...lesson });
 
@@ -54,11 +58,21 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (confirm("Delete this block?")) {
+        await removeBlock(lesson?.id).unwrap();
+      }
+    } catch (err) {
+      console.error("Failed to delete the chapter", err);
+    }
+  };
+
   const menuOptions =
     Array.isArray(chapters) &&
-    chapters.map((item) => {
+    chapters.map((item, index) => {
       return (
-        <option value={item?.id} key={item?.id}>
+        <option value={item?.id} key={index}>
           {item?.title}
         </option>
       );
@@ -68,6 +82,8 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
     <FormContainer
       type="edit"
       title="Edit Lesson"
+      deleteButton={true}
+      onDelete={handleDelete}
       onSubmit={handleSubmit}
       closeForm={setEdit}
     >
@@ -102,13 +118,12 @@ export default function FormLessonEditHeader({ lesson, setEdit }) {
         />
       </div>
       <div className="field">
-        <label htmlFor="chapter_id" className="field__label">
+        <label htmlFor="chapterID" className="field__label">
           Chapter ID
         </label>
         <select
-          id="chapter_id"
-          name="chapter_id"
-          disabled
+          id="chapterID"
+          name="chapterID"
           value={state?.chapterID}
           onChange={handleChange}
           className="field__input"

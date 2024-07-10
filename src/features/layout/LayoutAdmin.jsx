@@ -29,27 +29,27 @@ export default function LayoutAdmin({ children }) {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="relative">
-        <h2 className="bg-zinc-200 py-4 px-8 w-full font-semibold border-b-[1px] border-red-600 flex items-center gap-4">
-          <button
-            onClick={() => setShowMenu((curr) => !curr)}
-            ref={menuButtonRef}
-          >
-            <IoMenuOutline size={32} />
-          </button>
-          <span>
-            {location?.pathname.replace("/", "").replaceAll("/", " / ")}
-          </span>
-        </h2>
-        <AdminMenu showMenu={showMenu} ref={menuRef} />
-      </div>
-      <div className="flex flex-row items-stretch gap-4 w-full">
-        <AdminMenuDesktop />
+    <div className="flex flex-row items-stretch w-full">
+      <AdminMenuDesktop />
+      <main className="">
+        <div className="relative w-full">
+          <h2 className="bg-zinc-200 py-4 px-8 w-full font-semibold flex items-center gap-4 uppercase">
+            {/* <button
+              onClick={() => setShowMenu((curr) => !curr)}
+              ref={menuButtonRef}
+            >
+              <IoMenuOutline size={32} />
+            </button> */}
+            <span>
+              {location?.pathname.replace("/", "").replaceAll("/", " / ")}
+            </span>
+          </h2>
+          <AdminMenu showMenu={showMenu} ref={menuRef} />
+        </div>
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />
         </Suspense>
-      </div>
+      </main>
     </div>
   );
 }

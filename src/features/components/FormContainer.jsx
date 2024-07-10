@@ -1,4 +1,11 @@
 import React, { useEffect } from "react";
+import { PiEmpty } from "react-icons/pi";
+import {
+  IoAddCircleOutline,
+  IoCheckmarkCircleOutline,
+  IoCloseCircleOutline,
+} from "react-icons/io5";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export default function FormContainer({
   children,
@@ -50,8 +57,9 @@ export default function FormContainer({
         <div>
           <div className="content">{children}</div>
         </div>
+        {/* Form Buttons */}
         <div className="flex items-center justify-between gap-4 px-4">
-          <div className="flex items-center gap-2">
+          <div className="md:flex items-center gap-2 hidden">
             <input
               type="checkbox"
               id="clearOnSubmit"
@@ -63,15 +71,18 @@ export default function FormContainer({
           <div className="form-buttons">
             {type === "add" ? (
               <button type="submit" title="Add" className="add">
-                {submitName}
+                <IoAddCircleOutline size={30} />
+                <span>{submitName}</span>
               </button>
             ) : type === "edit" ? (
               <button type="submit" title="Save" className="save">
-                {submitName}
+                <IoCheckmarkCircleOutline size={30} />
+                <span>{submitName}</span>
               </button>
             ) : null}
-            <button type="reset" title="Cancel" className="cancel">
-              Cancel
+            <button type="reset" title="Cancel" className="cancel text-center">
+              <IoCloseCircleOutline size={30} />
+              <span>Cancel</span>
             </button>
             {deleteButton ? (
               <button
@@ -80,7 +91,8 @@ export default function FormContainer({
                 className="delete"
                 onClick={onDelete}
               >
-                Delete
+                <AiOutlineDelete size={30} />
+                <span>Delete</span>
               </button>
             ) : null}
           </div>
@@ -92,7 +104,8 @@ export default function FormContainer({
                 className="cancel"
                 onClick={handleClear}
               >
-                Clear
+                <PiEmpty size={30} />
+                <span>Clear</span>
               </button>
             ) : null}
           </div>

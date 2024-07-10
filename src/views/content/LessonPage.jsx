@@ -16,8 +16,6 @@ import LessonCompleted from "../../features/blocks/LessonCompleted";
 import ContentNavigator from "../../features/navigation/ContentNavigator";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import FormWordAdd from "../../features/words/FormWordAdd";
-import FormLessonEditHeader from "../../features/blocks/FormLessonEditHeader";
-import FormLessonEditDetails from "../../features/blocks/FormLessonEditDetails";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -29,8 +27,6 @@ export default function LessonPage() {
   const [viewAddWord, setViewAddWord] = useState(false);
   const [addLessonIntro, setAddLessonIntro] = useState(false);
   const [addSection, setAddSection] = useState(false);
-  const [editLessonTitle, setEditLessonTitle] = useState(false);
-  const [editLessonDetails, setEditLessonDetails] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,8 +51,6 @@ export default function LessonPage() {
         <BlockNavigator />
         <LessonHeader
           lesson={displayBlock}
-          setEditLessonTitle={setEditLessonTitle}
-          setEditLessonDetails={setEditLessonDetails}
           setAddLessonIntro={setAddLessonIntro}
           setAddSection={setAddSection}
         />
@@ -83,15 +77,14 @@ export default function LessonPage() {
             setAddSection={setAddSection}
           />
 
-          {editMode && (
+          {/* {editMode && (
             <button
               className="btn btn-red w-fit mx-auto "
               onClick={() => setViewAddWord(true)}
             >
               Add Word
             </button>
-          )}
-
+          )} */}
           {displayBlock?.caption ? (
             <div className="">{displayBlock?.caption}</div>
           ) : null}
@@ -103,20 +96,6 @@ export default function LessonPage() {
 
         {!!user ? <LessonCompleted /> : null}
       </main>
-
-      {editLessonTitle ? (
-        <FormLessonEditHeader
-          lesson={displayBlock}
-          setEdit={setEditLessonTitle}
-        />
-      ) : null}
-
-      {editLessonDetails ? (
-        <FormLessonEditDetails
-          lesson={displayBlock}
-          setEdit={setEditLessonDetails}
-        />
-      ) : null}
 
       {viewAddWord && <FormWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
     </>

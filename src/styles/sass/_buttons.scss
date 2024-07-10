@@ -3,6 +3,7 @@
   outline: none;
   padding: 0.5rem 1.5rem;
   text-align: center;
+  transition: all 0.2s linear;
 }
 
 .btn-r {
@@ -32,6 +33,10 @@
 }
 
 .btn-blue {
-  background-color: $clr-blue-400;
+  background-color: $clr-blue-500;
   color: $clr-blue-50;
+}
+
+.btn-blue:hover {
+  background-color: $clr-blue-400;
 }
