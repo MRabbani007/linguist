@@ -24,7 +24,7 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
   return (
     <div
       onClick={handleOpen}
-      className="flex flex-col items-center justify-center min-w-[300px] sm:min-w-[400px] h-[150px] bg-gradient-to-b from-red-500 to-red-600 text-white flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 cursor-pointer duration-200 group relative"
+      className="flex flex-col items-center justify-center min-w-[300px] sm:min-w-[400px] min-h-[150px]  bg-gradient-to-b from-red-500 to-red-600 text-white flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 cursor-pointer duration-200 group relative"
     >
       <p className="opacity-0 invisible -translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible absolute top-2 left-1/2 -translate-x-1/2 duration-200">
         {"Chapter " + chapter?.chapterNo}

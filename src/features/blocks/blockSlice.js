@@ -2,6 +2,7 @@ import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 import { ACTIONS, SERVER } from "../../data/actions";
 import { store } from "../../app/store";
+import { setLessons } from "../globals/globalsSlice";
 
 const blocksAdapter = createEntityAdapter({
   // select id if id is not default entity.id
@@ -41,6 +42,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
         params: { langID },
       }),
       transformResponse: (responseData) => {
+        // store.dispatch(setLessons(responseData));
         return blocksAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [

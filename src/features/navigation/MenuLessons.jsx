@@ -17,7 +17,12 @@ const MenuLessons = forwardRef(({ viewDropDown }, ref) => {
       </li>
       <li>
         <Link to="/content/lessons" title="Lessons" className="dropdown-item">
-          <span>Lessons</span>
+          <span>Lesson</span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/review/words" title="Words" className="dropdown-item">
+          <span>Words</span>
         </Link>
       </li>
       <li>

@@ -43,7 +43,7 @@ const BlockNavigator = ({ children }) => {
         return tempChapterIndex;
       } else return 0;
     });
-  }, [displayChapter]);
+  }, [displayChapter, displayBlock]);
 
   useEffect(() => {
     if (moveDirection === "next") {

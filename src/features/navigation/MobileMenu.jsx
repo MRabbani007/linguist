@@ -16,13 +16,6 @@ import { BsTextParagraph } from "react-icons/bs";
 
 const items = [
   {
-    id: 1,
-    label: "Dashboard",
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: <IoGridOutline size={34} />,
-  },
-  {
     id: 2,
     label: "Learn",
     title: "Lessons",
@@ -43,13 +36,6 @@ const items = [
     url: "/exercise",
     icon: <IoBarbellOutline size={38} />,
   },
-  {
-    id: 5,
-    label: "Settings",
-    title: "Settings",
-    url: "/settings",
-    icon: <IoSettingsOutline size={36} />,
-  },
 ];
 
 const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
@@ -64,6 +50,26 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
 
   const isAdmin = roles && roles.includes(5150);
   const isLoggedIn = !!user;
+
+  const menuItems = isLoggedIn
+    ? [
+        {
+          id: 1,
+          label: "Dashboard",
+          title: "Dashboard",
+          url: "/dashboard",
+          icon: <IoGridOutline size={34} />,
+        },
+        ...items,
+        {
+          id: 5,
+          label: "Settings",
+          title: "Settings",
+          url: "/settings",
+          icon: <IoSettingsOutline size={36} />,
+        },
+      ]
+    : items;
 
   return (
     <ul
@@ -92,7 +98,7 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
           </li>
         </>
       ) : null}
-      {items.map((item) => (
+      {menuItems.map((item) => (
         <li key={item?.id}>
           <Link to={item.url} title={item?.title} className="dropdown-item">
             {item?.icon}

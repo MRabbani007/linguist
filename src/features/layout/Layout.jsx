@@ -19,7 +19,7 @@ import {
   setLessons,
   setSiteLanguages,
 } from "../globals/globalsSlice";
-import { useGetChaptersQuery } from "../chapters/chapterSlice";
+import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
 import Footer from "./Footer";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -36,6 +36,24 @@ const Layout = () => {
 
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
+
+  const [
+    getProfile,
+    { data: userProfile, isLoading: isLoadingProfile, isSuccess },
+  ] = useLazyGetProfileQuery();
+
+  const [
+    getChapters,
+    {
+      data: chapters,
+      isLoading: isLoadingChapters,
+      isSuccess: isSuccessChapters,
+    },
+  ] = useLazyGetChaptersQuery();
+  const [
+    getAllBlocks,
+    { data: lessons, isLoading: isLoadingLessons, isSuccess: isSuccessLessons },
+  ] = useLazyGetAllBlocksQuery();
 
   const [lastChapter, setLastChapter] = useLocalStorage("displayChapter", null);
   const [lastLesson, setLastLesson] = useLocalStorage("displayLesson", null);
@@ -78,20 +96,6 @@ const Layout = () => {
 
   const { data: langs } = useGetLanguagesQuery();
 
-  const [getProfile, { data: userProfile, isLoading, isSuccess }] =
-    useLazyGetProfileQuery();
-
-  const {
-    data: chapters,
-    isLoading: isLoadingChapters,
-    isSuccess: isSuccessChapters,
-    isError: isErrorChapters,
-    error: errorChapters,
-  } = useGetChaptersQuery(language?.id);
-
-  const [getAllBlocks, { data: lessons, isSuccess: isSuccessLessons }] =
-    useLazyGetAllBlocksQuery();
-
   useEffect(() => {
     if (user) {
       getProfile();
@@ -100,9 +104,24 @@ const Layout = () => {
 
   useEffect(() => {
     if (language?.id) {
+      getChapters(language?.id);
       getAllBlocks(language?.id);
     }
   }, [language?.id]);
+
+  useEffect(() => {
+    if (isSuccessChapters) {
+      const tempChapters = chapters.ids.map((id) => chapters.entities[id]);
+      dispatch(setChapters(tempChapters));
+    }
+  }, [chapters]);
+
+  useEffect(() => {
+    if (isSuccessLessons) {
+      const tempLessons = lessons.ids.map((id) => lessons.entities[id]);
+      dispatch(setLessons(tempLessons));
+    }
+  }, [lessons]);
 
   useEffect(() => {
     if (
@@ -116,22 +135,25 @@ const Layout = () => {
       if (temp?.id) {
         dispatch(setLanguage(temp));
       }
+    } else {
+      dispatch(
+        setLanguage({
+          createDate: "2024-05-12T14:48:04.293Z",
+          detail: "Russian / English",
+          id: "57f02183-67d1-4ffd-b9f8-a483561a284b",
+          image: "russian.png",
+          learningTime: "",
+          name: "Russian",
+          sortIndex: 99,
+          subtitle: "",
+          text: "",
+          title: "Learn the Russian Language",
+          userID: "",
+          visible: true,
+        })
+      );
     }
   }, [userProfile, siteLanguages, isSuccess]);
-
-  useEffect(() => {
-    if (isSuccessChapters) {
-      const temp = chapters.ids.map((id) => chapters.entities[id]);
-      dispatch(setChapters(temp));
-    }
-  }, [chapters]);
-
-  useEffect(() => {
-    if (isSuccessLessons) {
-      const temp = lessons.ids.map((id) => lessons.entities[id]);
-      dispatch(setLessons(temp));
-    }
-  }, [lessons]);
 
   const onAuthPage =
     location.pathname.includes("login") ||

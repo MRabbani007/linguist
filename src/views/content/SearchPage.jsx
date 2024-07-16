@@ -31,6 +31,10 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
+    setSearchTerm(params.search);
+  }, [params.search]);
+
+  useEffect(() => {
     if (searchTerm && searchTerm !== "") {
       handleSearch();
     }

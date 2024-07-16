@@ -6,7 +6,15 @@ const AdminPage = () => {
 
   let content;
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = (
+      <div className="flex items-center gap-2">
+        <p className="min-w-20 min-h-20 bg-lime-300 rounded-md animate-pulse"></p>
+        <p className="min-w-20 min-h-20 bg-lime-300 rounded-md animate-pulse"></p>
+        <p className="min-w-20 min-h-20 bg-lime-300 rounded-md animate-pulse"></p>
+        <p className="min-w-20 min-h-20 bg-lime-300 rounded-md animate-pulse"></p>
+        <p className="min-w-20 min-h-20 bg-lime-300 rounded-md animate-pulse"></p>
+      </div>
+    );
   } else if (isSuccess) {
     const count = data.entities[data.ids[0]].responseData;
     content = (
@@ -36,9 +44,9 @@ const AdminPage = () => {
   }
   return (
     <main>
-      <header>
+      {/* <header>
         <h1>Admin Page</h1>
-      </header>
+      </header> */}
       <div>{content}</div>
     </main>
   );

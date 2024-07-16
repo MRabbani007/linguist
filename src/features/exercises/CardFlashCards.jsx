@@ -45,35 +45,37 @@ export default function CardFlashCards({
   }, [status]);
 
   return (
-    <div className="border-2 border-red-600 min-w-[300px] min-h-[200px] w-fit h-fit mx-auto flex flex-col justify-items-stretch gap-4">
-      <div className="font-medium p-4 bg-red-600 text-white w-full text-center flex items-center">
-        <span className="flex-1">
-          {firstLang ? showWord?.second : showWord?.first}
-        </span>
-      </div>
-      <div className="w-full relative">
-        <span className="absolute top-0 left-2">
-          {status === "success" ? (
-            <BiCheck size={32} className="text-green-500" />
-          ) : status === "fail" ? (
-            <BiX size={32} className="text-red-600" />
-          ) : null}
-        </span>
-        <p
-          className={
-            (show ? "opacity-100" : "opacity-0") +
-            " duration-500 font-semibold text-xl text-center p-4 text-zinc-900 h-full w-full relative"
-          }
-        >
-          {!newWord ? (firstLang ? showWord?.first : showWord?.second) : ""}
-        </p>
+    <div className="min-w-[300px] min-h-[200px] w-fit h-fit mx-auto flex flex-col justify-items-stretch gap-4 relative px-10">
+      <span className="absolute top-0 left-2">
+        {status === "success" ? (
+          <BiCheck size={32} className="text-green-500" />
+        ) : status === "fail" ? (
+          <BiX size={32} className="text-red-600" />
+        ) : null}
+      </span>
+      <div className="w-fit mx-auto">
+        <div className="text-white text-center min-w-[300px] text-xl">
+          <p className="bg-orange-600 font-medium p-4 border-b-2 rounded-t-lg">
+            {firstLang ? showWord?.second : showWord?.first}
+          </p>
+          <p className="p-4 bg-yellow-500 rounded-b-lg min-h-[60px]">
+            <span
+              className={
+                (show ? "opacity-100" : "opacity-0") +
+                " duration-500 font-semibold"
+              }
+            >
+              {!newWord ? (firstLang ? showWord?.first : showWord?.second) : ""}
+            </span>
+          </p>
+        </div>
       </div>
       <div className="flex items-center gap-4 mx-auto p-4">
         {options.map((item, index) => {
           return (
             <button
               key={index}
-              className="btn btn-red"
+              className="py-2 px-4 bg-lime-700 text-white font-medium hover:bg-lime-600 duration-200 uppercase"
               onClick={() => setSelected(item)}
             >
               {item?.first}
@@ -86,7 +88,7 @@ export default function CardFlashCards({
           setNewWord(false);
           setShow((curr) => !curr);
         }}
-        className="mt-auto mb-4 mx-auto py-2 px-4 bg-red-600 text-white font-medium hover:bg-red-700 duration-200 w-fit"
+        className="mt-auto mb-4 mx-auto py-2 px-4 bg-sky-700 text-white font-medium hover:bg-sky-600 duration-200 w-fit"
       >
         {show ? "Hide" : "Show"}
       </button>
