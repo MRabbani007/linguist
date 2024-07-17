@@ -14,7 +14,13 @@ const adminAdapter = createEntityAdapter({
   // select id if id is not default entity.id
   selectId: (item) => item?.id,
   // TODO: change compare value to date or sort option
-  sortComparer: false,
+  sortComparer: (a, b) => {
+    // if (a?.lessonNo) {
+    //   return a.lessonNo > b.lessonNo ? 1 : -1;
+    // } else {
+    a?.sortIndex > b?.sortIndex ? 1 : -1;
+    // }
+  },
 });
 
 const initialState = adminAdapter.getInitialState();
@@ -37,10 +43,10 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     getAllLessons: builder.query({
-      query: (page) => ({
+      query: ({ page, chapter }) => ({
         url: "/admin/lessons",
         method: "GET",
-        params: { page },
+        params: { page, chapter },
       }),
       transformResponse: (responseData) => {
         store.dispatch(setLessonsCount(responseData?.count));

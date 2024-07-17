@@ -103,6 +103,23 @@ export default function FormLessonEdit({ lesson, setEdit }) {
         />
       </div>
       <div className="field">
+        <label htmlFor="sortIndex" className="field__label">
+          Sort Index
+        </label>
+        <input
+          type="number"
+          min={0}
+          step={1}
+          id="sortIndex"
+          name="sortIndex"
+          placeholder="Sort Index"
+          title="Sort Index"
+          className="field__input"
+          value={state?.sortIndex}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="field">
         <label htmlFor="title" className="field__label">
           Title
         </label>

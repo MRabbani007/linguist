@@ -42,7 +42,7 @@ export default function CardWord({ word }) {
       <div
         className={
           (word.type === "ph" ? "" : "") +
-          " min-w-[350px] lg:min-w-[400px] max-w-[600px] flex flex-col items-center justify-center h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-300 flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 duration-200 group relative z-0"
+          " min-w-[350px] lg:min-w-[400px] max-w-[600px] flex flex-col items-center justify-center h-[150px] bg-gradient-to-b from-zinc-100 to-zinc-100 flex-1 text-center text-xl gap-2 hover:shadow-md hover:shadow-zinc-300 duration-200 group relative z-0"
         }
       >
         {/* Word type */}
@@ -54,27 +54,29 @@ export default function CardWord({ word }) {
             </span>
           ) : null}
         </p>
-        <div className="font-semibold text-red-700 relative group w-full text-center">
-          <p
-            className="cursor-pointer px-2"
-            onMouseOver={() => setShowPronunce(true)}
-            onMouseOut={() => setShowPronunce(false)}
-          >
-            {word?.first}
-          </p>
-          {showPopup ? (
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="font-semibold text-red-600 relative group w-full text-center">
             <p
-              className={
-                showPronunce
-                  ? "absolute top-full left-1/2 -translate-x-1/2 bg-zinc-50 text-start py-1 px-2 w-fit text-nowrap font-normal z-30"
-                  : "hidden"
-              }
+              className="cursor-pointer px-2"
+              onMouseOver={() => setShowPronunce(true)}
+              onMouseOut={() => setShowPronunce(false)}
             >
-              {word?.third}
+              {word?.first}
             </p>
-          ) : null}
+            {showPopup ? (
+              <p
+                className={
+                  showPronunce
+                    ? "absolute top-full left-1/2 -translate-x-1/2 bg-zinc-50 text-start py-1 px-2 w-fit text-nowrap font-normal z-30"
+                    : "hidden"
+                }
+              >
+                {word?.third}
+              </p>
+            ) : null}
+          </div>
+          <p className="font-medium text-zinc-800 px-4">{word?.second}</p>
         </div>
-        <p className="font-medium text-zinc-800 px-4">{word?.second}</p>
         {editMode ? (
           <div className="absolute bottom-2 right-2 invisible group-hover:visible flex items-center gap-2">
             <button

@@ -9,7 +9,9 @@ const blocksAdapter = createEntityAdapter({
   // selectId: (block) => block.id,
   // TODO: change compare value to date or sort option
   sortComparer: (a, b) => {
-    if (a.lessonNo && b.lessonNo) {
+    if (a.sortIndex && b.sortIndex) {
+      return a.sortIndex > b.sortIndex ? 1 : -1;
+    } else if (a.lessonNo && b.lessonNo) {
       return a.lessonNo > b.lessonNo ? 1 : -1;
     } else {
       return a.title.localeCompare(b.title);

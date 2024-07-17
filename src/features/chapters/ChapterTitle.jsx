@@ -49,9 +49,11 @@ const ChapterTitle = ({
     <div>
       <div
         className={
-          (displayChapter?.id === chapter?.id ? "bg-red-500 text-white " : "") +
+          (displayChapter?.id === chapter?.id
+            ? "border-red-600 "
+            : "border-white ") +
           (index === 0 ? " border-t-2 " : "") +
-          " flex items-center justify-between cursor-pointer duration-200 py-2 px-4 border-b-2 border-white"
+          " flex items-center justify-between cursor-pointer duration-200 py-2 px-4 border-b-2 "
         }
         onClick={handleOpen}
       >

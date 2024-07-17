@@ -7,9 +7,7 @@ import {
   setDisplayBlock,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { IoCheckmarkDone } from "react-icons/io5";
-import { selectProfileResult } from "../profile/profileSlice";
-import { AiOutlineDash } from "react-icons/ai";
+import { IoArrowForwardOutline, IoCheckmarkDone } from "react-icons/io5";
 
 export default function SectionTitle({
   lesson,
@@ -21,12 +19,15 @@ export default function SectionTitle({
   const displayBlock = useSelector(selectDisplayBlock);
   const progress = useSelector(selectProgress);
 
-  const chap = progress.find((c) => c?.id === lesson?.chapterID);
+  const lessonProgress = progress.find((item) => item.lessonID === lesson?.id);
 
-  const lessonProgress =
-    chap?.lessons && chap?.lessons.find((l) => l.id === lesson?.id);
+  // const chap = progress.find((c) => c?.id === lesson?.chapterID);
 
-  const isCompleted = lessonProgress?.completed === true;
+  // const lessonProgress =
+  //   chap?.lessons && chap?.lessons.find((l) => l.id === lesson?.id);
+
+  const isCompleted =
+    lessonProgress?.completed && lessonProgress.completed === true;
 
   const blockOpen = () => {
     dispatch(setDisplayChapter(chapter));
@@ -39,16 +40,26 @@ export default function SectionTitle({
     <li
       onClick={blockOpen}
       className={
-        (displayBlock?.id === lesson?.id ? "bg-red-500 text-white" : "") +
-        " cursor-pointer duration-200 border-b-2 border-white w-full py-2 px-8"
+        (displayBlock?.id === lesson?.id ? "text-red-600" : "") +
+        " cursor-pointer duration-200 border-b-2 border-white w-full py-2 px-8 flex items-center gap-2 relative"
       }
     >
-      {/* {isCompleted ? (
-        <IoCheckmarkDone size={25} className="inline mr-2" />
-      ) : (
-        <AiOutlineDash size={25} className="inline mr-2" />
-      )} */}
-      {lesson?.title}
+      {displayBlock?.id === lesson?.id && (
+        <IoArrowForwardOutline className="absolute top-1/2 -translate-y-1/2 left-2" />
+      )}
+      <span>{lesson?.title}</span>
+      {
+        isCompleted ? (
+          <IoCheckmarkDone
+            size={25}
+            className="absolute top-1/2 -translate-y-1/2 right-2"
+          />
+        ) : null
+        // <AiOutlineDash
+        //   size={25}
+        //   className="absolute top-1/2 -translate-y-1/2 right-2"
+        // />
+      }
     </li>
   );
 }

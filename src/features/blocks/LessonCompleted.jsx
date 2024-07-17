@@ -1,32 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { IoCheckmarkDone } from "react-icons/io5";
 import {
-  selectProfileResult,
+  useGetProfileQuery,
   useUpdateProfileMutation,
 } from "../profile/profileSlice";
-import { useSelector } from "react-redux";
-import { PROFILE } from "../../data/actions";
-import { selectDisplayBlock } from "../globals/globalsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectDisplayBlock, setProgress } from "../globals/globalsSlice";
 
 export default function LessonCompleted() {
+  const dispatch = useDispatch();
   const displayBlock = useSelector(selectDisplayBlock);
   const [updateProfile] = useUpdateProfileMutation();
 
-  const { data: profile } = useSelector(selectProfileResult);
+  const { data: profile, isLoading, isSuccess } = useGetProfileQuery();
 
-  const chap =
-    Array.isArray(profile) &&
-    profile[0]?.chapters &&
-    profile[0]?.chapters.find((c) => c?.id === displayBlock?.chapterID);
+  useEffect(() => {
+    if (isSuccess && Array.isArray(profile) && profile[0]?.progress) {
+      dispatch(setProgress(profile[0].progress));
+    }
+  }, [profile]);
+
+  // const chap =
+  //   Array.isArray(profile) &&
+  //   profile[0]?.chapters &&
+  //   profile[0]?.chapters.find((c) => c?.id === displayBlock?.chapterID);
+
+  // const progress =
+  //   chap?.lessons && chap?.lessons.find((l) => l.id === displayBlock.id);
 
   const progress =
-    chap?.lessons && chap?.lessons.find((l) => l.id === displayBlock.id);
+    isSuccess &&
+    Array.isArray(profile) &&
+    profile[0]?.progress &&
+    profile[0].progress.find((item) => item?.lessonID === displayBlock.id);
 
   const [lessonCompleted, setLessonCompleted] = useState(false);
 
   const toggleLessonCompleted = async (completed) => {
     await updateProfile({
-      type: PROFILE.PROGRESS_LESSON,
+      type: "PROGRESS",
       data: {
         chapterID: displayBlock?.chapterID,
         lessonID: displayBlock?.id,

@@ -4,10 +4,35 @@ import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 import AdminMenu from "../admin/AdminMenu";
 import { IoMenuOutline } from "react-icons/io5";
 import AdminMenuDesktop from "../admin/AdminMenuDesktop";
+import { useDispatch } from "react-redux";
+import { setChapters } from "../admin/adminSlice";
+import { useLazyGetAllChaptersQuery } from "../admin/adminApiSlice";
 
 export default function LayoutAdmin({ children }) {
   const location = useLocation();
+  const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+
+  const [
+    getAllChapters,
+    {
+      data: chapters,
+      isLoading: isLoadingChapters,
+      isSuccess: isSuccessChapters,
+      isError: isErrorChapters,
+      error: errorChapters,
+    },
+  ] = useLazyGetAllChaptersQuery();
+
+  useEffect(() => {
+    getAllChapters(1);
+  }, []);
+
+  useEffect(() => {
+    if (isSuccessChapters) {
+      dispatch(setChapters(chapters.ids.map((id) => chapters.entities[id])));
+    }
+  }, [chapters]);
 
   const menuRef = useRef();
   const menuButtonRef = useRef();

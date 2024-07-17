@@ -11,7 +11,7 @@ export default function LessonIntroItem({ lesson, intro, index }) {
 
   return (
     <>
-      <p className="group relative bg-zinc-500 text-white p-4 min-w-[300px] flex-1">
+      <p className="group relative bg-zinc-300 text-zinc-900 text-pretty p-4 min-w-[300px] flex-1">
         <span className="text-wrap">{intro}</span>
         {editMode && (
           <button

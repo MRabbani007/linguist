@@ -12,7 +12,7 @@ export default function SectionIntroItem({ section, intro, index }) {
 
   return (
     <>
-      <p className="p-4 bg-zinc-200 text-zinc-700 font-medium flex-1 text-balance group relative">
+      <p className="p-4 bg-zinc-200 text-zinc-700 min-w-[300px] font-medium flex-1 text-balance group relative">
         {intro}
         {editMode && (
           <button

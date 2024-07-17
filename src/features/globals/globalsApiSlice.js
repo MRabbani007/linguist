@@ -7,7 +7,11 @@ const globalsAdapter = createEntityAdapter({
   // select id if id is not default entity.id
   selectId: (item) => item?.id,
   // TODO: change compare value to date or sort option
-  sortComparer: false,
+  sortComparer: (a, b) => {
+    if (a.sortIndex && b.sortIndex) {
+      a.sortIndex > b.sortIndex ? 1 : -1;
+    }
+  },
 });
 
 const initialState = globalsAdapter.getInitialState();

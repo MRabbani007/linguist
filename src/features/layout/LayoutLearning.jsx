@@ -2,13 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 import Sidebar from "../navigation/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectDisplayBlock,
-  selectDisplayChapter,
-  setDisplayChapter,
-} from "../globals/globalsSlice";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import { useDispatch } from "react-redux";
 
 export default function LayoutLearning() {
   const dispatch = useDispatch();

@@ -45,7 +45,7 @@ export default function FormChapterEdit({ chapter, setEdit }) {
 
   const handleDelete = async () => {
     try {
-      if (confirm("Delete this Chapter? !\nEither OK or Cancel.")) {
+      if (confirm("Delete this Chapter?")) {
         await removeChapter(chapter.id).unwrap();
       }
     } catch (err) {

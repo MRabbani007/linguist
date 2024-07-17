@@ -9,6 +9,8 @@ const initialState = {
   sentencesCount: 0,
   wordsCount: 0,
   usersCount: 0,
+  chapters: [],
+  lessons: [],
   allCount: {},
 };
 
@@ -16,6 +18,12 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: initialState,
   reducers: {
+    setChapters: (state, action) => {
+      return { ...state, chapters: action.payload };
+    },
+    setLessons: (state, action) => {
+      return { ...state, lessons: action.payload };
+    },
     setChaptersCount: (state, action) => {
       state.chaptersCount = action.payload;
       return state;
@@ -54,6 +62,8 @@ const adminSlice = createSlice({
 });
 
 export const {
+  setChapters,
+  setLessons,
   setChaptersCount,
   setLessonsCount,
   setSectionsCount,
@@ -74,3 +84,5 @@ export const selectDefinitionsCount = (state) => state.admin?.defintionsCount;
 export const selectWordsCount = (state) => state.admin?.wordsCount;
 export const selectSentencesCount = (state) => state.admin?.sentencesCount;
 export const selectAllCount = (state) => state.admin?.allCount;
+export const selectChapters = (state) => state.admin?.chapters;
+export const selectLessons = (state) => state.admin?.lessons;

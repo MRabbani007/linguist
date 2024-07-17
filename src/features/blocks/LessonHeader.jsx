@@ -31,7 +31,7 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
   }, []);
 
   return (
-    <header className="gap-4 group relative bg-gradient-to-r from-zinc-100 to-zinc-300 text-red-600 min-h-[80px] border-b-4 border-red-600">
+    <header className="gap-4 group relative bg-gradient-to-r from-gray-100 to-gray-100 text-red-600 min-h-[80px] border-b-4 border-red-600">
       {/* <p
         title={"Lesson " + lesson?.lessonNo}
         className="py-2 w-12 text-center border-2 border-white text-xl"
@@ -39,7 +39,7 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
         {lesson?.lessonNo}
       </p> */}
       <span className=" text-2xl font-bold">
-        {"Lesson " + lesson?.lessonNo + ": "}
+        {"Lesson " + lesson?.sortIndex + ": "}
       </span>
       <h1 className=" text-2xl font-bold text-wrap inline">{lesson?.title}</h1>
       {/* {lesson?.subtitle ? (

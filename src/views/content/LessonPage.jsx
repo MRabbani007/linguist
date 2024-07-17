@@ -54,7 +54,7 @@ export default function LessonPage() {
           setAddLessonIntro={setAddLessonIntro}
           setAddSection={setAddSection}
         />
-        <div>
+        <div className="flex flex-col gap-4">
           <LessonIntro
             lesson={displayBlock}
             addLessonIntro={addLessonIntro}
@@ -92,7 +92,7 @@ export default function LessonPage() {
         </div>
 
         <BlockNavigator />
-        {/* <ContentNavigator /> */}
+        <ContentNavigator />
 
         {!!user ? <LessonCompleted /> : null}
       </main>
