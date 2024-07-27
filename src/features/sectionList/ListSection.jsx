@@ -40,45 +40,26 @@ export default function ListSection({ list }) {
     };
   }, []);
 
-  let content;
-  if (list?.type === "OL") {
-    content = list.items.map((item, index) => {
-      return (
-        <li
-          key={index}
-          className="py-2 px-4 bg-zinc-200 border-b-[1px] border-zinc-400"
-        >
-          <span>{item}</span>
-          {editMode && (
-            <button onClick={() => setEditItem(index)}>
-              <CiEdit size={28} className="inline" />
-            </button>
-          )}
-        </li>
-      );
-    });
-  } else {
-    content = list.items.map((item, index) => {
-      return (
-        <li
-          key={index}
-          className="py-2 px-4 bg-zinc-200 border-b-[1px] border-zinc-400"
-        >
-          <span>{item}</span>
-          {editMode && (
-            <button onClick={() => setEditItem(index)}>
-              <CiEdit size={28} />
-            </button>
-          )}
-        </li>
-      );
-    });
-  }
+  let content = list.items.map((item, index) => {
+    return (
+      <li
+        key={index}
+        className={(index % 2 === 0 ? "" : "bg-zinc-50") + " py-2 px-4"}
+      >
+        <span>{item}</span>
+        {editMode && (
+          <button onClick={() => setEditItem(index)}>
+            <CiEdit size={28} className="inline" />
+          </button>
+        )}
+      </li>
+    );
+  });
 
   return (
     <>
       <div className="">
-        <div className="relative bg-zinc-500 text-white w-full py-2 px-4">
+        <div className="relative w-full py-2 px-4 bg-zinc-100">
           {list?.title ? (
             <strong className="text-xl font-light">{list?.title}</strong>
           ) : editMode ? (
@@ -107,13 +88,11 @@ export default function ListSection({ list }) {
         </div>
         <div className="">
           {list?.type === "OL" ? (
-            <ol className="list-decimal list-inside">{content}</ol>
+            <ol className="">{content}</ol>
           ) : (
             <ul className="">{content}</ul>
           )}
-          {list?.notes ? (
-            <p className="bg-zinc-300 py-2 px-4">{list.notes}</p>
-          ) : null}
+          {list?.notes ? <p className="py-2 px-4">{list.notes}</p> : null}
         </div>
       </div>
       {editContent && <ListEdit list={list} setEdit={setEditContent} />}

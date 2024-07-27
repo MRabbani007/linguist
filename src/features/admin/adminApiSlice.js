@@ -14,13 +14,13 @@ const adminAdapter = createEntityAdapter({
   // select id if id is not default entity.id
   selectId: (item) => item?.id,
   // TODO: change compare value to date or sort option
-  sortComparer: (a, b) => {
-    // if (a?.lessonNo) {
-    //   return a.lessonNo > b.lessonNo ? 1 : -1;
-    // } else {
-    a?.sortIndex > b?.sortIndex ? 1 : -1;
-    // }
-  },
+  // sortComparer: (a, b) => {
+  //   if (a?.sortIndex && b?.sortIndex) {
+  //     return a?.sortIndex > b?.sortIndex ? 1 : -1;
+  //   } else {
+  //     return a.lessonNo > b.lessonNo ? 1 : -1;
+  //   }
+  // },
 });
 
 const initialState = adminAdapter.getInitialState();

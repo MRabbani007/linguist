@@ -9,7 +9,7 @@ import {
   setDisplayBlock,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
 const BlockNavigator = ({ children }) => {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -107,10 +107,10 @@ const BlockNavigator = ({ children }) => {
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
-        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
+        className="flex items-center duration-200 text-red-600 hover:text-red-500 disabled:text-slate-600 group"
       >
-        <FaChevronLeft size={32} />
-        <span className="font-semibold hidden md:inline text-nowrap">
+        <FaCircleArrowLeft size={36} className="mr-2" />
+        <span className="font-semibold hidden md:inline -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200 text-nowrap">
           {firstLesson ? "Previous Chapter" : "Previous Lesson"}
         </span>
       </button>
@@ -118,12 +118,12 @@ const BlockNavigator = ({ children }) => {
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
-        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
+        className="flex items-center duration-200 text-red-600 hover:text-red-500 disabled:text-slate-600 group"
       >
-        <span className="font-semibold hidden md:inline text-nowrap">
+        <span className="font-semibold hidden md:inline translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200 text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}
         </span>
-        <FaChevronRight size={32} />
+        <FaCircleArrowRight size={36} className="ml-2" />
       </button>
     </div>
   );

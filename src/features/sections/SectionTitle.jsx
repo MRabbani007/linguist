@@ -3,9 +3,7 @@ import { selectEditMode } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import SectionDropDown from "./SectionDropDown";
-import { TbPoint } from "react-icons/tb";
-import { IoIosArrowForward } from "react-icons/io";
-import { FaRegSquareMinus, FaRegSquarePlus } from "react-icons/fa6";
+import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 export default function SectionTitle({
   section,
@@ -46,21 +44,21 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="flex items-stretch gap-4 group relative bg-gradient-to-r from-zinc-700 to-zinc-600 px-6">
-      <p className="py-4">
-        {expand ? (
-          <FaRegSquareMinus size={26} className="text-white" />
-        ) : (
-          <FaRegSquarePlus size={26} className="text-white" />
-        )}
+    <div className="w-full flex-1 flex items-center gap-4 group relative text-black my-6">
+      <p className="text-red-600">
+        {expand ? <FaCircleMinus size={40} /> : <FaCirclePlus size={40} />}
       </p>
-      <h3
+      <div
         onClick={() => setExpand(!expand)}
-        className=" flex flex-col text-white py-4 cursor-pointer"
+        className="flex flex-col cursor-pointer"
       >
-        <p className="font-semibold text-xl">{section?.title}</p>
-        {section?.subtitle && <i className="">{section?.subtitle}</i>}
-      </h3>
+        <h3 className="font-semibold text-2xl md:text-4xl border-b-[1px] border-red-600">
+          {section?.title}
+        </h3>
+        <p className="">
+          {section?.subtitle && <i className="">{section?.subtitle}</i>}
+        </p>
+      </div>
       {editMode && (
         <button
           ref={dropDownButtonRef}
@@ -68,7 +66,7 @@ export default function SectionTitle({
           onClick={() => setShowDropDown(true)}
           className="ml-auto px-2"
         >
-          <BsThreeDots size={28} className="text-white" />
+          <BsThreeDots size={28} className="" />
         </button>
       )}
       <SectionDropDown

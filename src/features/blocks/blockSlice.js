@@ -70,26 +70,27 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
       query: (lesson) => ({
         url: SERVER.LESSON,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
-          roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_LESSON_HEADER,
-            payload: { userName: store.getState()?.auth?.user, lesson },
+            payload: lesson,
           },
         },
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
-    editBlockDetails: builder.mutation({
-      query: (lesson) => ({
+    editLesson: builder.mutation({
+      query: ({ type, payload }) => ({
         url: SERVER.LESSON,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDIT_LESSON_DETAILS,
-            payload: { userName: store.getState()?.auth?.user, lesson },
-          },
+          action: { type, payload },
         },
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
@@ -160,7 +161,7 @@ export const {
   useLazyGetAllBlocksQuery,
   useAddBlockMutation,
   useEditBlockHeaderMutation,
-  useEditBlockDetailsMutation,
+  useEditLessonMutation,
   useRemoveBlockMutation,
   useAddBlockIntroMutation,
   useEditBlockIntroMutation,

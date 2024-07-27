@@ -9,8 +9,8 @@ export default function LayoutLearning() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-stretch w-full">
-      <Sidebar />
+    <div className="flex items-stretch w-full max-w-[1024px] mx-auto">
+      {/* <Sidebar /> */}
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />
       </Suspense>

@@ -19,6 +19,8 @@ export default function FormContainer({
   onSubmit = () => {},
   onDelete = () => {},
   handleClear = () => {},
+  showForm = true,
+  setShowForm = () => {},
   closeForm = () => {},
 }) {
   const handleEscape = (e) => {

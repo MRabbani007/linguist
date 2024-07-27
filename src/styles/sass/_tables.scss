@@ -16,20 +16,6 @@ table caption {
   padding: 0.25rem 0;
 }
 
-th {
-  align-items: center;
-  padding: 0.25rem 1rem;
-  font-weight: 600;
-}
-
-td {
-  text-align: center;
-  align-items: center;
-  // padding: 0.25rem 1rem;
-  padding: 0;
-  white-space: break-spaces;
-}
-
 .lesson-table thead {
   // background-color: $clr-red-600;
   // color: $clr-slate-50;
@@ -53,6 +39,7 @@ td {
 
 td,
 th {
+  text-align: center;
   border: 1px solid rgba(128, 128, 128, 0.5);
   padding: 0 0.5rem;
 }

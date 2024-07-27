@@ -1,35 +1,45 @@
 import React, { forwardRef } from "react";
 import { Link } from "react-router-dom";
 
+const items = [
+  {
+    label: "Chapters",
+    title: "Chapters",
+    url: "/content/chapters",
+  },
+  {
+    label: "Lessons",
+    title: "Lessons",
+    url: "/content/lessons",
+  },
+  {
+    label: "Words",
+    title: "Words",
+    url: "/review/words",
+  },
+  {
+    label: "Sentences",
+    title: "Sentences",
+    url: "/sentences",
+  },
+];
+
 const MenuLessons = forwardRef(({ viewDropDown }, ref) => {
   return (
     <ul
       ref={ref}
       className={
         (viewDropDown ? " " : " -translate-y-[20px] invisible opacity-0") +
-        " text-zinc-800 bg-slate-200 mobile-menu"
+        " text-zinc-800 bg-zinc-50 absolute top-full right-0 duration-200"
       }
     >
-      <li>
-        <Link to="/content/chapters" title="Chapters" className="dropdown-item">
-          <span>Chapters</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/content/lessons" title="Lessons" className="dropdown-item">
-          <span>Lesson</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/review/words" title="Words" className="dropdown-item">
-          <span>Words</span>
-        </Link>
-      </li>
-      <li>
-        <Link to="/sentences" title="Sentences" className="dropdown-item">
-          <span>Sentences</span>
-        </Link>
-      </li>
+      {items.map((item, index) => (
+        <li key={index} className="py-2 px-4 hover:bg-zinc-100 duration-200">
+          <Link to={item.url} title={item.title}>
+            <span>{item.label}</span>
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 });

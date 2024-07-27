@@ -24,13 +24,17 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
   return (
     <div
       onClick={handleOpen}
-      className="flex flex-col items-center justify-center min-w-[300px] sm:min-w-[400px] min-h-[150px]  bg-gradient-to-b from-red-500 to-red-600 text-white flex-1 text-center text-xl gap-2 hover:shadow-lg hover:shadow-zinc-400 cursor-pointer duration-200 group relative"
+      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative"
     >
-      <p className="opacity-0 invisible -translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 group-hover:visible absolute top-2 left-1/2 -translate-x-1/2 duration-200">
-        {"Chapter " + chapter?.chapterNo}
-      </p>
-      <p className=" font-semibold">{chapter?.title || ""}</p>
-      <p className="flex items-center justify-evenly gap-8 absolute bottom-2 left-1/2 -translate-x-1/2 opacity-0 invisible group-hover:opacity-100 group-hover:visible translate-y-2 group-hover:translate-y-0 duration-200 ">
+      <span className="bg-red-600 w-16 h-16 text-4xl shrink-0 flex items-center justify-center text-white rounded-full">
+        {chapter?.chapterNo}
+      </span>
+      <div className="flex flex-col">
+        <p className="text-6xl font-semibold">{chapter?.title || ""}</p>
+        <p className=" font-semibold">{chapter?.subtitle || ""}</p>
+        <p className=" font-semibold">{chapter?.details || ""}</p>
+      </div>
+      {/* <p className="flex items-center justify-evenly gap-8">
         <span title={`${lessonCount} Lessons`}>
           {lessonCount}
           <LuListTree size={25} className="inline" />
@@ -39,7 +43,7 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
           5
           <IoTimerOutline size={25} className="inline" />
         </span>
-      </p>
+      </p> */}
     </div>
   );
 }

@@ -63,10 +63,13 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (word) => ({
         url: SERVER.WORD,
         method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
           action: {
             type: ACTIONS.EDIT_WORD_DETAILS,
-            payload: { word },
+            payload: word,
           },
         },
       }),
@@ -80,10 +83,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${store.getState()?.auth?.token}`,
         },
         body: {
-          roles: store.getState()?.auth?.roles,
           action: {
             type: ACTIONS.EDIT_WORD_LESSONID,
-            payload: { userName: store.getState()?.auth?.user, word },
+            payload: word,
           },
         },
       }),
@@ -123,6 +125,9 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       query: (id) => ({
         url: SERVER.WORD,
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        },
         body: {
           payload: id,
         },

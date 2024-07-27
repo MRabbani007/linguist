@@ -22,19 +22,22 @@ export default function CardLesson({ lesson }) {
   return (
     <div
       onClick={blockOpen}
-      className="flex flex-col items-center justify-center min-w-[300px] md:min-w-[400px] min-h-[150px] bg-gradient-to-b from-sky-900 to-sky-600 text-white flex-1 text-center text-xl hover:shadow-lg hover:shadow-zinc-400 cursor-pointer duration-200 relative group"
+      className="flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group"
     >
-      {/* <span className="whitespace-nowrap">{`Lesson ${lesson?.lessonNo}: `}</span> */}
-      <p className="font-semibold">{lesson?.title}</p>
-      <p className="">{lesson?.subtitle}</p>
-      <p className=" absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 invisible opacity-0  translate-y-2 group-hover:visible group-hover:opacity-100  group-hover:translate-y-0 duration-200 ">
-        <IoTimerOutline size={25} className="inline" />
-        <span>{lesson?.learningTime}</span>
-      </p>
-      {/* <p>{lesson?.detail}</p> */}
-      {/* <div className="card__footer">
+      <span className="bg-red-700 w-10 h-10 shrink-0 flex items-center justify-center text-white rounded-full">
+        {lesson?.sortIndex}
+      </span>
+      <div className="flex flex-col">
+        <p className="font-semibold text-2xl">{lesson?.title}</p>
+        <div className="">
+          <p className="">{lesson?.subtitle}</p>
+          <p>{lesson?.detail}</p>
+        </div>
+        <p className="flex items-center gap-2">
+          <IoTimerOutline size={22} className="inline" />
           <span>{lesson?.learningTime}</span>
-        </div> */}
+        </p>
+      </div>
     </div>
   );
 }

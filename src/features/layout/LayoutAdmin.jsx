@@ -56,9 +56,9 @@ export default function LayoutAdmin({ children }) {
   return (
     <div className="flex flex-row items-stretch w-full">
       <AdminMenuDesktop />
-      <main className="">
+      <main className="py-0">
         <div className="relative w-full">
-          <h2 className="bg-zinc-200 py-4 px-8 w-full font-semibold flex items-center gap-4 uppercase">
+          <h2 className="py-4 px-8 w-full font-semibold flex items-center gap-4 uppercase">
             {/* <button
               onClick={() => setShowMenu((curr) => !curr)}
               ref={menuButtonRef}

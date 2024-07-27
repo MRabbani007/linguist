@@ -15,9 +15,9 @@ export default function ContentPage() {
     <main>
       {chapters.map((chapter, index) => {
         return (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 w-full">
             <CardChapter chapter={chapter} key={index} />
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col gap-4 w-full px-4">
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .map((lesson, idx) => {

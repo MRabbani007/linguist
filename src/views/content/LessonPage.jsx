@@ -24,7 +24,6 @@ export default function LessonPage() {
 
   const user = useSelector(selectCurrentUser);
 
-  const [viewAddWord, setViewAddWord] = useState(false);
   const [addLessonIntro, setAddLessonIntro] = useState(false);
   const [addSection, setAddSection] = useState(false);
 
@@ -46,58 +45,28 @@ export default function LessonPage() {
   isMounted.current = true;
 
   return (
-    <>
-      <main>
-        <BlockNavigator />
-        <LessonHeader
-          lesson={displayBlock}
-          setAddLessonIntro={setAddLessonIntro}
-          setAddSection={setAddSection}
-        />
-        <div className="flex flex-col gap-4">
-          <LessonIntro
-            lesson={displayBlock}
-            addLessonIntro={addLessonIntro}
-            setAddLessonIntro={setAddLessonIntro}
-          />
+    <main>
+      <LessonHeader
+        lesson={displayBlock}
+        setAddLessonIntro={setAddLessonIntro}
+        setAddSection={setAddSection}
+      />
+      <BlockNavigator />
+      <LessonIntro
+        lesson={displayBlock}
+        addLessonIntro={addLessonIntro}
+        setAddLessonIntro={setAddLessonIntro}
+      />
+      <LessonSections
+        lesson={displayBlock}
+        addSection={addSection}
+        setAddSection={setAddSection}
+      />
 
-          {/* {(displayBlock?.detail ||
-            displayBlock?.text ||
-            displayBlock?.notes) && (
-            <article>
-              {displayBlock?.detail ? <p>{displayBlock?.detail}</p> : null}
-              {displayBlock?.text ? <p>{displayBlock?.text}</p> : null}
-              {displayBlock?.notes ? <p>{displayBlock?.notes}</p> : null}
-            </article>
-          )} */}
+      <BlockNavigator />
+      <ContentNavigator />
 
-          <LessonSections
-            lesson={displayBlock}
-            addSection={addSection}
-            setAddSection={setAddSection}
-          />
-
-          {/* {editMode && (
-            <button
-              className="btn btn-red w-fit mx-auto "
-              onClick={() => setViewAddWord(true)}
-            >
-              Add Word
-            </button>
-          )} */}
-          {displayBlock?.caption ? (
-            <div className="">{displayBlock?.caption}</div>
-          ) : null}
-          {/* footer */}
-        </div>
-
-        <BlockNavigator />
-        <ContentNavigator />
-
-        {!!user ? <LessonCompleted /> : null}
-      </main>
-
-      {viewAddWord && <FormWordAdd add={viewAddWord} setAdd={setViewAddWord} />}
-    </>
+      {!!user ? <LessonCompleted /> : null}
+    </main>
   );
 }

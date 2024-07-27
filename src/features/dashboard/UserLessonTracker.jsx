@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsCheck2 } from "react-icons/bs";
 import { AiFillSignal } from "react-icons/ai";
+import { selectLessons, setProgress } from "../globals/globalsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetProfileQuery } from "../profile/profileSlice";
 
 const PROGRESS = [
   { lessonNo: 1.1, lesson: "Alphabets", status: "completed", id: "" },
@@ -11,6 +14,19 @@ const PROGRESS = [
 ];
 
 export default function UserLessonTracker() {
+  const dispatch = useDispatch();
+
+  const { data: profile, isLoading, isSuccess } = useGetProfileQuery();
+  const lessons = useSelector(selectLessons);
+
+  useEffect(() => {
+    if (isSuccess && Array.isArray(profile) && profile[0]?.progress) {
+      dispatch(setProgress(profile[0].progress));
+    }
+  }, [profile]);
+
+  console.log(profile[0].progress);
+
   return (
     <div className="w-full flex-1">
       <div className="flex items-center gap-4 rounded-lg py-2 px-4 bg-purple-600 text-white font-medium mb-4">
@@ -18,13 +34,16 @@ export default function UserLessonTracker() {
         <span>Progress</span>
       </div>
       <ul className="flex flex-wrap items-center justify-center gap-4 w-full">
-        {PROGRESS.map((item, index) => {
+        {lessons.map((item, index) => {
+          const lessonProgress = profile[0].progress.find(
+            (prog) => prog.lessonID === item.id
+          );
           const style =
-            item.status === "completed"
+            lessonProgress?.completed === true
               ? "from-green-400 to-green-500"
-              : item.status === "started"
+              : lessonProgress?.completed === false
               ? "from-sky-400 to-sky-500"
-              : "from-zinc-400 to-zinc-500";
+              : "from-zinc-400 to-zinc-400";
           return (
             <li
               key={index}
@@ -34,9 +53,9 @@ export default function UserLessonTracker() {
               }
             >
               <p className="absolute top-0 left-1/2 -translate-x-1/2 py-1 px-4 bg-red-400 rounded-b-md">
-                {item.lessonNo}
+                {item.sortIndex}
               </p>
-              <span className="text-pretty text-center">{item.lesson}</span>
+              <span className="text-pretty text-center">{item.title}</span>
               {item.status === "completed" ? (
                 <BsCheck2
                   size={40}

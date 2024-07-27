@@ -11,7 +11,7 @@ export default function SectionIntro({ section, add, setAdd }) {
     <>
       {Array.isArray(section?.introduction) &&
       section.introduction.length !== 0 ? (
-        <article className="flex items-stretch flex-wrap gap-4">
+        <article className="flex flex-col gap-0 px-4">
           {section.introduction.map((intro, index) => {
             return (
               <SectionIntroItem

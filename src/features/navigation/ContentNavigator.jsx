@@ -51,16 +51,19 @@ export default function ContentNavigator() {
       </button> */}
       <div className="flex flex-wrap gap-4 items-center">
         {displayLessons.map((lesson, idx) => (
-          <div
-            key={idx}
-            className={
-              (lesson.id === displayBlock.id
-                ? "border-yellow-500"
-                : "border-zinc-400") + " py-2 px-6 border-2 rounded-md"
-            }
-          >
-            <p>{"Lesson " + lesson.sortIndex + ": "}</p>
-            <p>{lesson.title}</p>
+          <div key={idx} className="flex items-center gap-2 ">
+            <p className="bg-red-600 text-white w-8 h-8 rounded-full font-medium flex items-center justify-center">
+              {lesson.sortIndex}
+            </p>
+            <p
+              className={
+                (lesson.id === displayBlock.id
+                  ? "border-yellow-500 border-b-2"
+                  : "border-zinc-400") + ""
+              }
+            >
+              {lesson.title}
+            </p>
           </div>
         ))}
       </div>

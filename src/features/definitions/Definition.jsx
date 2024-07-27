@@ -22,11 +22,11 @@ export default function Definition({ definition }) {
   };
 
   return (
-    <article className="bg-neutral-200">
-      <div className="group px-3 bg-red-500 text-white  flex items-center gap-3">
-        <p className="py-2">
-          <strong>Definition: </strong>
-          <strong>{definition?.title}</strong>
+    <article className=" p-4 bg-zinc-50 w-full rounded-lg  border-l-8 border-red-600">
+      <div className="group flex items-center gap-4 pb-2">
+        <p className="text-lg font-medium">
+          <span>Definition: </span>
+          <span>{definition?.title}</span>
         </p>
         {editMode && (
           <p className="invisible group-hover:visible flex items-center gap-3">
@@ -47,7 +47,7 @@ export default function Definition({ definition }) {
       ) : move ? (
         <DefinitionMove definition={definition} setMove={setMove} />
       ) : (
-        <div className="py-2 px-3">
+        <div className="text-sm">
           <p>{definition?.text}</p>
           <p>{definition?.notes}</p>
           <p>{definition?.caption}</p>

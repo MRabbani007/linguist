@@ -60,8 +60,9 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
 
   const handleDelete = async () => {
     try {
-      await removeWord(word.id);
-      toast.success("Word Saved");
+      await removeWord(word?.id);
+      toast.success("Word Deleted");
+      setViewEdit(false);
     } catch (err) {
       toast.error("Error deleting word");
     }

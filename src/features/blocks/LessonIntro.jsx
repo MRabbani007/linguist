@@ -10,7 +10,7 @@ export default function LessonIntro({
     <>
       {Array.isArray(lesson?.introduction) &&
       lesson?.introduction?.length !== 0 ? (
-        <div className="w-full flex flex-wrap gap-4">
+        <div className="w-full flex flex-col">
           {lesson.introduction.map((intro, index) => {
             return (
               <LessonIntroItem

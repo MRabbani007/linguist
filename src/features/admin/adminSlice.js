@@ -9,6 +9,8 @@ const initialState = {
   sentencesCount: 0,
   wordsCount: 0,
   usersCount: 0,
+  imageFolder: "images",
+  imagesFetch: {},
   chapters: [],
   lessons: [],
   allCount: {},
@@ -23,6 +25,12 @@ const adminSlice = createSlice({
     },
     setLessons: (state, action) => {
       return { ...state, lessons: action.payload };
+    },
+    setImageFolder: (state, action) => {
+      return { ...state, imageFolder: action.payload };
+    },
+    setImagesFetch: (state, action) => {
+      return { ...state, imagesFetch: action.payload };
     },
     setChaptersCount: (state, action) => {
       state.chaptersCount = action.payload;
@@ -64,6 +72,8 @@ const adminSlice = createSlice({
 export const {
   setChapters,
   setLessons,
+  setImageFolder,
+  setImagesFetch,
   setChaptersCount,
   setLessonsCount,
   setSectionsCount,
@@ -86,3 +96,5 @@ export const selectSentencesCount = (state) => state.admin?.sentencesCount;
 export const selectAllCount = (state) => state.admin?.allCount;
 export const selectChapters = (state) => state.admin?.chapters;
 export const selectLessons = (state) => state.admin?.lessons;
+export const selectImageFolder = (state) => state?.admin?.imageFolder;
+export const selectImagesFetch = (state) => state?.admin?.imagesFetch;

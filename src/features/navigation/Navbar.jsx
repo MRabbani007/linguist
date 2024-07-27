@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 // Imported Icons
 import { FiUser } from "react-icons/fi";
 import { IoMenu } from "react-icons/io5";
@@ -21,6 +21,7 @@ const Navbar = () => {
   const user = useSelector(selectCurrentUser);
   const roles = useSelector(selectCurrentRoles);
   const isAdmin = !!roles?.find((role) => role === 5150);
+  const location = useLocation();
 
   const [viewMobileMenu, setViewMobileMenu] = useState(false);
   const [viewUserDropDown, setViewUserDropDown] = useState(false);
@@ -42,6 +43,8 @@ const Navbar = () => {
   const handleUserDropDown = (val = false) => {
     setViewUserDropDown(val);
   };
+
+  const isActive = (page) => location.pathname.includes(page);
 
   const closeSideBar = (e) => {
     if (!sideBarRef.current?.contains(e.target)) {
@@ -71,111 +74,112 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="z-50 h-[80px] flex items-center flex-row w-full sm:px-4 px-2 text-red-600  bg-gradient-to-t from-zinc-200 to-white relative">
-        <div className="flex justify-between items-center flex-1">
-          <span className="flex items-center justify-between sm:gap-4 gap-2">
-            <Link to="/" title="Home">
-              <img
-                src={Logo}
-                alt="Linguist"
-                width={100}
-                className="shrink-0 min-w-[100px]"
-              />
-            </Link>
-          </span>
-          <div className="bg-transparent h-full">
-            <div className="flex items-center justify-between sm:gap-4 gap-2">
-              <div className="sm:flex flex-row items-center justify-between hidden sm:gap-4 gap-2 border-green-300">
-                <Link to="/dashboard" title="Dashboard" className="">
-                  Dashboard
-                  {/* <IoGridOutline size={40} /> */}
-                </Link>
-                <div
-                  className="relative py-2"
-                  onMouseOver={() => setViewLessonsMenu(true)}
-                  onMouseLeave={() => setViewLessonsMenu(false)}
-                >
-                  <button
-                    title="Learning"
-                    onClick={() => setViewLessonsMenu(true)}
-                  >
-                    Learning
-                    {/* <SlBookOpen size={40} /> */}
-                  </button>
-                  <MenuLessons
-                    ref={dropDownRefLessons}
-                    viewDropDown={viewLessonsMenu}
-                  />
-                </div>
-                <Link to="/exercise" title="Exercise">
-                  Practice
-                  {/* <IoBarbellOutline size={40} /> */}
-                </Link>
-              </div>
-              <button onClick={() => setViewSearch((curr) => !curr)}>
-                <IoIosSearch size={30} />
-              </button>
-              <NavbarSearch viewSearch={viewSearch} />
-              {/* <div className="hidden md:inline-block">
-                <SidebarSearch className="border-red-600 text-red-600" />
-              </div> */}
-              <button
-                ref={sideBarButtonRef}
-                onClick={() => handleSideBar(true)}
-                className="sm:hidden"
-                title="Chapters & Lessons"
+      <div className="z-50 w-full text-red-600 relative font-medium ">
+        <div className="flex justify-between items-center flex-1 max-w-[1024px] mx-auto py-4 px-4 md:px-0">
+          <Link to="/" title="Home" className="font-bold text-2xl">
+            Lingo
+          </Link>
+          <div className="flex items-center justify-between sm:gap-4 gap-2">
+            <div className="sm:flex flex-row items-center justify-between hidden sm:gap-4 gap-2 border-green-300">
+              <Link
+                to="/dashboard"
+                title="Dashboard"
+                className={
+                  (isActive("dashboard") ? "bg-zinc-100" : "") +
+                  " p-2 rounded-lg duration-200"
+                }
               >
-                <PiBookOpenTextLight size={50} />
-              </button>
-              {!user ? (
-                <Link
-                  to="/login"
-                  title="User"
-                  className="hidden sm:inline-block"
-                >
-                  <AiOutlineUser size={30} />
-                </Link>
-              ) : (
-                <div
-                  className="relative"
-                  onMouseOver={() => setViewUserDropDown(true)}
-                  onMouseLeave={() => setViewUserDropDown(false)}
-                >
-                  <button
-                    className="hidden sm:flex items-center gap-0"
-                    onClick={() => setViewUserDropDown(true)}
-                    title="User"
-                  >
-                    <AiOutlineUser size={30} />
-                  </button>
-                  {isAdmin ? (
-                    <AdminDropDown
-                      ref={dropDownRefUser}
-                      viewUserDropDown={viewUserDropDown}
-                    />
-                  ) : !!user ? (
-                    <UserDropDown ref={dropDownRefAdmin} />
-                  ) : null}
-                </div>
-              )}
+                Dashboard
+                {/* <IoGridOutline size={40} /> */}
+              </Link>
               <div
-                className="relative"
-                onMouseOver={() => setViewMobileMenu(true)}
-                onMouseLeave={() => setViewMobileMenu(false)}
+                className={
+                  (isActive("content") ? "bg-zinc-100" : "") +
+                  " p-2 rounded-lg duration-200 relative"
+                }
+                onMouseOver={() => setViewLessonsMenu(true)}
+                onMouseLeave={() => setViewLessonsMenu(false)}
               >
                 <button
-                  onClick={() => setViewMobileMenu(true)}
-                  className="sm:hidden"
+                  title="Learning"
+                  onClick={() => setViewLessonsMenu(true)}
                 >
-                  <IoMenu size={40} />
+                  Learning
+                  {/* <SlBookOpen size={40} /> */}
                 </button>
-                <MobileMenu
-                  ref={dropDownRefMobile}
-                  viewDropDown={viewMobileMenu}
+                <MenuLessons
+                  ref={dropDownRefLessons}
+                  viewDropDown={viewLessonsMenu}
                 />
               </div>
+              <Link
+                to="/exercise"
+                title="Exercise"
+                className={
+                  (isActive("exercise") ? "bg-zinc-100" : "") +
+                  " p-2 rounded-lg duration-200"
+                }
+              >
+                Practice
+                {/* <IoBarbellOutline size={40} /> */}
+              </Link>
+            </div>
+            <button onClick={() => setViewSearch((curr) => !curr)}>
+              <IoIosSearch size={30} />
+            </button>
+            {/* <button
+              ref={sideBarButtonRef}
+              onClick={() => handleSideBar(true)}
+              className="sm:hidden"
+              title="Chapters & Lessons"
+            >
+              <PiBookOpenTextLight size={50} />
+            </button> */}
+            {!user ? (
+              <Link to="/login" title="User" className="hidden sm:inline-block">
+                <AiOutlineUser size={30} />
+              </Link>
+            ) : (
+              <div
+                className="relative"
+                onMouseOver={() => setViewUserDropDown(true)}
+                onMouseLeave={() => setViewUserDropDown(false)}
+              >
+                <button
+                  className="hidden sm:flex items-center gap-0"
+                  onClick={() => setViewUserDropDown(true)}
+                  title="User"
+                >
+                  <AiOutlineUser size={30} />
+                </button>
+                {isAdmin ? (
+                  <AdminDropDown
+                    ref={dropDownRefUser}
+                    viewUserDropDown={viewUserDropDown}
+                  />
+                ) : !!user ? (
+                  <UserDropDown ref={dropDownRefAdmin} />
+                ) : null}
+              </div>
+            )}
+            <div
+              className="relative"
+              onMouseOver={() => setViewMobileMenu(true)}
+              onMouseLeave={() => setViewMobileMenu(false)}
+            >
+              <button
+                onClick={() => setViewMobileMenu(true)}
+                className="sm:hidden"
+              >
+                <IoMenu size={40} />
+              </button>
+              <MobileMenu
+                ref={dropDownRefMobile}
+                viewDropDown={viewMobileMenu}
+              />
             </div>
           </div>
+          <NavbarSearch viewSearch={viewSearch} />
         </div>
         <Offcanvas
           viewSideBar={viewSideBar}
