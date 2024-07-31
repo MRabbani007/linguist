@@ -51,12 +51,13 @@ export default function TableCard({ table, tableWords }) {
 
   return (
     <div className="flex flex-col gap-1 items-center">
-      {viewEditTitle ? (
-        <TableEditContent table={table} setEdit={setViewEditTitle} />
-      ) : editLessonID ? (
-        <TableEditLessonID table={table} setEdit={setEditLessonID} />
-      ) : null}
-      <TableTitle table={table} />
+      <div className="w-full">
+        <div className="group relative">
+          <p>{table?.title}</p>
+          <p>{table?.subtitle}</p>
+        </div>
+        <div>{table?.text}</div>
+      </div>
       {editHeaders ? (
         <TableEditHeaders table={table} setEdit={setEditHeaders} />
       ) : (
@@ -95,7 +96,6 @@ export default function TableCard({ table, tableWords }) {
                         key={index}
                         scope="col"
                         colSpan={table?.colsTitlesColSpan[index]}
-                        className=""
                       >
                         {colTitle}
                       </th>
@@ -168,6 +168,11 @@ export default function TableCard({ table, tableWords }) {
       <div>{table?.notes}</div>
       {addWord !== null ? (
         <FormTableWordAdd table={table} index={addWord} setAdd={setAddWord} />
+      ) : null}
+      {viewEditTitle ? (
+        <TableEditContent table={table} setEdit={setViewEditTitle} />
+      ) : editLessonID ? (
+        <TableEditLessonID table={table} setEdit={setEditLessonID} />
       ) : null}
       {editWord !== null ? (
         <FormTableWordEdit

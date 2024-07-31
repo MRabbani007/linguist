@@ -52,7 +52,7 @@ export default function ContentNavigator() {
       <div className="flex flex-wrap gap-4 items-center">
         {displayLessons.map((lesson, idx) => (
           <div key={idx} className="flex items-center gap-2 ">
-            <p className="bg-red-600 text-white w-8 h-8 rounded-full font-medium flex items-center justify-center">
+            <p className="bg-accent text-accent_foreground w-8 h-8 rounded-full font-medium flex items-center justify-center">
               {lesson.sortIndex}
             </p>
             <p

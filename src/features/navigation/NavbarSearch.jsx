@@ -19,7 +19,7 @@ export default function NavbarSearch({ viewSearch, setViewSearch }) {
       onSubmit={handleSubmit}
       className={
         (viewSearch ? "" : "-translate-y-4 opacity-0 invisible h-0") +
-        " absolute top-full left-0 right-0 border-2 flex flex-1 items-center justify-between gap-1 pr-3 py-2 h-fit bg-zinc-800/90 text-white font-semibold duration-200"
+        " absolute top-full left-0 right-0 flex flex-1 items-center justify-between gap-1 pr-3 py-2 h-fit bg-zinc-800/90 text-white font-semibold duration-200"
       }
     >
       <input

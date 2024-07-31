@@ -1,15 +1,10 @@
 import React from "react";
-import { BsHourglass } from "react-icons/bs";
-import { LuListTree } from "react-icons/lu";
-import { PiTreeViewThin } from "react-icons/pi";
-import { RiAlignItemLeftLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDisplayChapter,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { useNavigate } from "react-router-dom";
-import { IoTimerOutline } from "react-icons/io5";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 export default function CardChapter({ chapter, lessonCount = 0 }) {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -18,19 +13,26 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
 
   const handleOpen = async () => {
     dispatch(setDisplayChapter(chapter));
-    navigate("/content/sections");
+    // navigate(`/title=${}&id=${}`,{});
+    navigate({
+      pathname: "/content/chapter",
+      search: `?${createSearchParams({
+        title: chapter?.title,
+        id: chapter?.id,
+      })}`,
+    });
   };
 
   return (
     <div
       onClick={handleOpen}
-      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative"
+      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative my-4"
     >
-      <span className="bg-red-600 w-16 h-16 text-4xl shrink-0 flex items-center justify-center text-white rounded-full">
+      <span className="bg-red-600 w-10 h-10 text-xl shrink-0 flex items-center justify-center text-white rounded-full">
         {chapter?.chapterNo}
       </span>
       <div className="flex flex-col">
-        <p className="text-6xl font-semibold">{chapter?.title || ""}</p>
+        <p className="text-4xl font-semibold">{chapter?.title || ""}</p>
         <p className=" font-semibold">{chapter?.subtitle || ""}</p>
         <p className=" font-semibold">{chapter?.details || ""}</p>
       </div>

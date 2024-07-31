@@ -102,9 +102,9 @@ function App() {
             <Route path="language" element={<LanguagePage />} />
 
             <Route path="content" element={<LayoutLearning />}>
-              <Route path="chapters" element={<ContentPage />} />
-              <Route path="sections" element={<SectionsPage />} />
-              <Route path="lesson?/:lessonID" element={<LessonPage />} />
+              <Route index element={<ContentPage />} />
+              <Route path="chapter?/:chapterID" element={<ChapterPage />} />
+              <Route path="lesson" element={<LessonPage />} />
             </Route>
 
             <Route path="search?/:search" element={<SearchPage />} />

@@ -60,17 +60,15 @@ const PersistLogin = () => {
               Welcome to <span className="text-red-700 font-bold">Lingo</span>!
             </h1>
           </header>
-          <div>
-            <div className="flex flex-col items-center justify-center gap-4 p-4">
-              <p>Connecting to server</p>
-              <ReactLoading
-                type={"spin"}
-                color={"#000"}
-                height={"50px"}
-                width={"50px"}
-                className="mx-auto"
-              />
-            </div>
+          <div className="flex-1 border-2">
+            <p>Connecting to server</p>
+            <ReactLoading
+              type={"spin"}
+              color={"#000"}
+              height={"50px"}
+              width={"50px"}
+              className="mx-auto"
+            />
           </div>
         </main>
       ) : (

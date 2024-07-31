@@ -44,18 +44,22 @@ export default function SectionTitle({
   }, []);
 
   return (
-    <div className="w-full flex-1 flex items-center gap-4 group relative text-black my-6">
-      <p className="text-red-600">
-        {expand ? <FaCircleMinus size={40} /> : <FaCirclePlus size={40} />}
+    <div className="flex items-stretch group relative my-6">
+      <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center text-xl md:text-2xl font-medium px-4">
+        {/* {expand ? <FaCircleMinus size={40} /> : <FaCirclePlus size={40} />} */}
+        {(section?.sortIndex ? section?.sortIndex : 0).toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        })}
       </p>
       <div
         onClick={() => setExpand(!expand)}
-        className="flex flex-col cursor-pointer"
+        className="flex flex-col cursor-pointer flex-1 bg-destructive text-destructive_foreground"
       >
-        <h3 className="font-semibold text-2xl md:text-4xl border-b-[1px] border-red-600">
+        <h3 className="font-semibold text-2xl md:text-4xl px-4 py-2 border-b-[1px] border-accent ">
           {section?.title}
         </h3>
-        <p className="">
+        <p className=" px-4 py-1">
           {section?.subtitle && <i className="">{section?.subtitle}</i>}
         </p>
       </div>

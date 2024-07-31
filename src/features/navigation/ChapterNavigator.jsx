@@ -5,7 +5,7 @@ import {
   selectLanguage,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 
 const ChapterNavigator = () => {
@@ -70,22 +70,22 @@ const ChapterNavigator = () => {
   const lastChapter = chapterIndex === chapters.length - 1;
 
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="p-4 flex justify-between items-center bg-destructive">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}
-        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
       >
-        <FaChevronLeft size={32} />
+        <FaArrowLeft size={24} />
         <span className="font-semibold hidden md:inline">Previous Chapter</span>
       </button>
       <button
         onClick={handleNext}
         disabled={lastChapter}
-        className="flex items-center text-red-600 hover:text-red-500 disabled:text-slate-600 duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
       >
         <span className="font-semibold hidden md:inline">Next Chapter</span>
-        <FaChevronRight size={32} />
+        <FaArrowRight size={24} />
       </button>
     </div>
   );

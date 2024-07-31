@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import MatchWords from "../../features/exercises/MatchWords";
 import Filter from "../../features/exercises/Filter";
 import MatchWordsScore from "../../features/exercises/MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { useLazyGetRandomWordsQuery } from "../../features/randomWords/randomWordsSlice";
 import { toast } from "react-toastify";
+import useGetExerciseWords from "../../hooks/useGetExerciseWords";
 
 // helper function to shuffle words
 function shuffle(array) {
@@ -26,12 +25,26 @@ function shuffle(array) {
   return array;
 }
 
+const status = {
+  isLoading: false,
+  isPlaying: false,
+};
+
 export default function MatchWordsPage() {
+  const {
+    handleFetch,
+    data: words,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetExerciseWords();
+
   const [selectedLessons, setSelectedLessons] = useState([]);
   const [showFilter, setShowFilter] = useState(false);
 
   const [value, setValue] = useLocalStorage("highscore", 0);
-  const [words, setWords] = useState([]);
+  // const [words, setWords] = useState([]);
 
   const [highestScore, setHighestScore] = useState(0);
   const [score, setScore] = useState(0);
@@ -51,14 +64,14 @@ export default function MatchWordsPage() {
   // Status & Result message
   const [result, setResult] = useState("");
 
-  const [
-    getRandomWords,
-    { data: wordsData, isLoading, isSuccess, isError, error },
-  ] = useLazyGetRandomWordsQuery();
+  // const [
+  //   getRandomWords,
+  //   { data: wordsData, isLoading, isSuccess, isError, error },
+  // ] = useLazyGetRandomWordsQuery();
 
   // Load Words on first render
   useEffect(() => {
-    getRandomWords(selectedLessons);
+    handleFetch(selectedLessons);
   }, [selectedLessons]);
 
   useEffect(() => {
@@ -70,15 +83,6 @@ export default function MatchWordsPage() {
   useEffect(() => {
     setValue(highestScore);
   }, [highestScore]);
-
-  // de-normalize words
-  useEffect(() => {
-    if (isSuccess) {
-      let { ids, entities } = wordsData;
-      let temp = ids.map((id) => entities[id]);
-      setWords(temp);
-    }
-  }, [wordsData]);
 
   // set first and second words
   useEffect(() => {
@@ -172,79 +176,64 @@ export default function MatchWordsPage() {
   // re-load words when completed
   useEffect(() => {
     if (allWordsCompleted && confirm("Success! Load new words?")) {
-      getRandomWords(selectedLessons);
+      handleFetch(selectedLessons);
     }
   }, [allWordsCompleted]);
 
   return (
-    <main>
-      {/* <header>
-        <h1>Match Words</h1>
-      </header> */}
-      <div>
-        <div className="w-fit mx-auto flex">
-          {showFilter ? (
-            <Filter
-              selectedLessons={selectedLessons}
-              setSelectedLessons={setSelectedLessons}
-              setShowFilter={setShowFilter}
-            />
-          ) : null}
-          <div>
-            <div className="flex gap-2 relative">
-              <MatchWordsScore
-                score={score}
-                lives={lives}
-                highestScore={highestScore}
-                setShowFilter={setShowFilter}
-              />
-            </div>
-            <div className="flex gap-2">
-              <div className="word_col">
-                {firstWord.map((word, index) => {
-                  return (
-                    <button
-                      disabled={word.selected}
-                      onClick={() => handleSelect("first", index)}
-                      key={index}
-                      className={
-                        (word.selected
-                          ? "from-zinc-500 to-zinc-300"
-                          : index === firstWordIndex
-                          ? "from-lime-500 to-lime-400"
-                          : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
-                        " word bg-gradient-to-br "
-                      }
-                    >
-                      {word.word}
-                    </button>
-                  );
-                })}
-              </div>
-              <div className="word_col">
-                {secondWord.map((word, index) => {
-                  return (
-                    <button
-                      key={index}
-                      disabled={word.selected}
-                      onClick={() => handleSelect("second", index)}
-                      className={
-                        (word.selected
-                          ? "from-zinc-500 to-zinc-400"
-                          : index === secondWordIndex
-                          ? "from-lime-500 to-lime-400"
-                          : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
-                        " word bg-gradient-to-br "
-                      }
-                    >
-                      {word.word}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+    <main className="">
+      <MatchWordsScore
+        score={score}
+        lives={lives}
+        highestScore={highestScore}
+        setShowFilter={setShowFilter}
+      />
+      <div className="w-fit mx-auto flex flex-1">
+        <div className="flex gap-2">
+          <div className="word_col">
+            {firstWord.map((word, index) => {
+              return (
+                <button
+                  disabled={word.selected}
+                  onClick={() => handleSelect("first", index)}
+                  key={index}
+                  className={
+                    (word.selected
+                      ? "from-zinc-500 to-zinc-300"
+                      : index === firstWordIndex
+                      ? "from-lime-500 to-lime-400"
+                      : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
+                    " word bg-gradient-to-br "
+                  }
+                >
+                  {word.word}
+                </button>
+              );
+            })}
           </div>
-          {/* <p
+          <div className="word_col">
+            {secondWord.map((word, index) => {
+              return (
+                <button
+                  key={index}
+                  disabled={word.selected}
+                  onClick={() => handleSelect("second", index)}
+                  className={
+                    (word.selected
+                      ? "from-zinc-500 to-zinc-400"
+                      : index === secondWordIndex
+                      ? "from-lime-500 to-lime-400"
+                      : "border-sky-700 from-sky-500 to-sky-400 cursor-pointer ") +
+                    " word bg-gradient-to-br "
+                  }
+                >
+                  {word.word}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        {/* <p
         className={
           (result === "Success"
             ? " bg-lime-200 border-lime-400 "
@@ -256,7 +245,7 @@ export default function MatchWordsPage() {
       >
         {result === "Success" ? "Success" : result === "Failed" ? "Wrong!" : ""}
       </p> */}
-          {/* <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
         {!allWordsCompleted ? (
           <button className="btn btn-red mx-auto my-2" onClick={handleCheck}>
             Check
@@ -265,8 +254,14 @@ export default function MatchWordsPage() {
           <button onClick={getRandomWords}>Reload</button>
         )}
       </div> */}
-        </div>
       </div>
+      {showFilter ? (
+        <Filter
+          selectedLessons={selectedLessons}
+          setSelectedLessons={setSelectedLessons}
+          setShowFilter={setShowFilter}
+        />
+      ) : null}
     </main>
   );
 }

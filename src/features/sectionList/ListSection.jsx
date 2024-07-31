@@ -42,10 +42,7 @@ export default function ListSection({ list }) {
 
   let content = list.items.map((item, index) => {
     return (
-      <li
-        key={index}
-        className={(index % 2 === 0 ? "" : "bg-zinc-50") + " py-2 px-4"}
-      >
+      <li key={index} className={(index % 2 === 0 ? "" : "") + ""}>
         <span>{item}</span>
         {editMode && (
           <button onClick={() => setEditItem(index)}>
@@ -59,7 +56,7 @@ export default function ListSection({ list }) {
   return (
     <>
       <div className="">
-        <div className="relative w-full py-2 px-4 bg-zinc-100">
+        <div className="relative w-full py-2 px-4 bg-destructive">
           {list?.title ? (
             <strong className="text-xl font-light">{list?.title}</strong>
           ) : editMode ? (
@@ -86,14 +83,12 @@ export default function ListSection({ list }) {
           )}
           <p>{list?.text}</p>
         </div>
-        <div className="">
-          {list?.type === "OL" ? (
-            <ol className="">{content}</ol>
-          ) : (
-            <ul className="">{content}</ul>
-          )}
-          {list?.notes ? <p className="py-2 px-4">{list.notes}</p> : null}
-        </div>
+        {list?.type === "OL" ? (
+          <ol className="px-4">{content}</ol>
+        ) : (
+          <ul className="px-4 list-disc list-inside">{content}</ul>
+        )}
+        {list?.notes ? <p className="py-2 px-4">{list.notes}</p> : null}
       </div>
       {editContent && <ListEdit list={list} setEdit={setEditContent} />}
       {editLessonID && (

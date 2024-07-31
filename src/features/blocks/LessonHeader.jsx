@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
+import { selectDisplayChapter, selectEditMode } from "../globals/globalsSlice";
 import { BsThreeDots } from "react-icons/bs";
 import LessonDropDown from "../dropDowns/LessonDropDown";
 import FormLessonImage from "./FormLessonImage";
 
 const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
   const editMode = useSelector(selectEditMode);
+  const displayChapter = useSelector(selectDisplayChapter);
 
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -31,39 +32,80 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
     };
   }, []);
 
-  return (
-    <header className="group relative min-h-[80px] w-full flex flex-wrap items-center justify-start gap-4">
-      <div className="flex items-center justify-start gap-2 md:gap-6 md:w-full">
-        {/* Lesson No */}
+  const temp1 = (
+    <header className="group relative bg-destructive pt-8 px-4 md:mt-4">
+      <div className="flex items-stretch">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-16 h-16 md:w-24 md:h-24 text-white bg-red-600 rounded-full shrink-0 flex items-center justify-center text-2xl md:text-4xl font-bold"
+          className="w-20 h-[80px] text-accent_foreground bg-accent flex flex-col items-center justify-center text-2xl md:text-4xl font-bold border-b-4 border-accent_foreground"
         >
-          {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-          })}
+          <span>
+            {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
+              "en-US",
+              {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              }
+            )}
+          </span>
         </p>
-        <div className="flex flex-col gap-1">
-          <h1 className="text-4xl md:text-7xl font-semibold text-wrap inline text-zinc-900 border-red-600 border-b-4">
+        <h1 className="text-4xl md:text-7xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1">
+          {lesson?.title}
+        </h1>
+      </div>
+      <div className="flex items-stretch">
+        <p
+          title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
+          className="w-20 h-[40px] text-accent_foreground bg-accent flex flex-col items-center justify-center text-xl md:text-xl font-base"
+        >
+          <span>
+            {(displayChapter?.chapterNo ?? "").toLocaleString("en-US", {
+              minimumIntegerDigits: 2,
+              useGrouping: false,
+            })}
+          </span>
+        </p>
+        <p className="flex items-center px-4">{displayChapter?.title}</p>
+      </div>
+    </header>
+  );
+
+  const temp2 = (
+    <header className="group relative bg-destructive pt-8 px-4 mt-4">
+      <div className="flex items-stretch justify-start">
+        {/* Lesson No */}
+        {/* w-16 h-16 md:w-24 md:h-24 */}
+        <p
+          title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
+          className="w-20 h-[120px] text-accent_foreground bg-accent flex flex-col items-center justify-center text-2xl md:text-4xl font-bold"
+        >
+          <span>
+            {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
+              "en-US",
+              {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              }
+            )}
+          </span>
+          <span>{displayChapter?.chapterNo || ""}</span>
+        </p>
+        <div className="flex flex-col gap-1 text-destructive_foreground flex-1">
+          <h1 className="text-4xl md:text-7xl font-semibold text-wrap inline py-1 px-2 border-accent border-b-4">
             {lesson?.title}
           </h1>
-          <p className="text-zinc-800">{lesson?.subtitle}</p>
+          <p className="py-1 px-2">{lesson?.subtitle}</p>
         </div>
       </div>
-      {lesson?.lessonImage ? (
-        <div className="overflow-hidden w-fit mx-auto">
-          <img
-            src={lesson?.lessonImage}
-            alt="alphabet"
-            className="max-w-md max-h-52"
-          />
-        </div>
-      ) : null}
+      {/* {lesson?.lessonImage ? (
+    <div className="h-[200px] w-[300px] mx-auto">
+      <img src={lesson?.lessonImage} alt="alphabet" className="h-full" />
+    </div>
+  ) : null} */}
       {/* <p>{lesson?.details}</p> */}
       {/* {lesson?.subtitle ? (
-          <p className="font-light text-wrap">{lesson?.subtitle}</p>
-        ) : null} */}
+      <p className="font-light text-wrap">{lesson?.subtitle}</p>
+    ) : null} */}
       {editMode && (
         <div className="absolute top-1/2 -translate-y-1/2 right-4 invisible group-hover:visible flex items-center gap-4">
           <FormLessonImage lesson={lesson} />
@@ -80,6 +122,8 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
       />
     </header>
   );
+
+  return temp1;
 };
 
 export default LessonHeader;

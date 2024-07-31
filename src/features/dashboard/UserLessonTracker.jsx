@@ -25,8 +25,6 @@ export default function UserLessonTracker() {
     }
   }, [profile]);
 
-  console.log(profile[0].progress);
-
   return (
     <div className="w-full flex-1">
       <div className="flex items-center gap-4 rounded-lg py-2 px-4 bg-purple-600 text-white font-medium mb-4">

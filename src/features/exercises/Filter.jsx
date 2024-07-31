@@ -1,61 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
-import axios from "../../api/axios";
-
-const initialStatus = {
-  isLoading: true,
-  isSuccess: false,
-  isError: false,
-};
+import useGetExerciseLessons from "../../hooks/useGetExerciseLessons";
 
 export default function Filter({
   selectedLessons,
   setSelectedLessons,
   setShowFilter,
 }) {
-  const [allLessons, setAllLessons] = useState([]);
-  const [status, setStatus] = useState(initialStatus);
+  const { fetchLessons, data, isLoading, isSuccess, isError, error } =
+    useGetExerciseLessons();
 
-  const getLessons = async () => {
-    try {
-      setStatus({
-        isLoading: true,
-        isSuccess: false,
-        isError: false,
-      });
-      const response = await axios.get("/exercises");
-      if (response.status !== 200) {
-      }
-      if (Array.isArray(response.data)) {
-        setStatus({
-          isLoading: false,
-          isSuccess: true,
-          isError: false,
-        });
-        setAllLessons(() =>
-          response.data.map((item) => {
-            const lesson = selectedLessons.find((l) => l.id === item.id);
-            return {
-              id: item.id,
-              title: item.title,
-              lessonSelected: lesson?.lessonSelected === true ? true : false,
-            };
-          })
-        );
-      }
-    } catch (err) {
-      setStatus({
-        isLoading: false,
-        isSuccess: false,
-        isError: true,
-      });
-    }
-  };
+  const [allLessons, setAllLessons] = useState([]);
 
   useEffect(() => {
-    getLessons();
+    fetchLessons();
   }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAllLessons(() =>
+        data.map((item) => {
+          const lesson = selectedLessons.find((l) => l.id === item.id);
+          return {
+            id: item.id,
+            title: item.title,
+            lessonSelected: lesson?.lessonSelected === true ? true : false,
+          };
+        })
+      );
+    }
+  }, [data]);
 
   const newSelectedLessons = allLessons.filter(
     (lesson) => lesson.lessonSelected === true
@@ -85,11 +60,11 @@ export default function Filter({
   };
 
   let lessonContent = null;
-  if (status.isLoading === true) {
+  if (isLoading === true) {
     lessonContent = <p>Loading...</p>;
-  } else if (status.isError === true) {
+  } else if (isError === true) {
     lessonContent = <p>Error Loading Lessons</p>;
-  } else if (status.isSuccess === true) {
+  } else if (isSuccess === true) {
     lessonContent = (
       <ul className="h-full overflow-y-scroll">
         {allLessons.map((block, index) => (

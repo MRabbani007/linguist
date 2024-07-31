@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useLazyGetRandomWordsQuery } from "../../features/randomWords/randomWordsSlice";
 import CardFlashCards from "../../features/exercises/CardFlashCards";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { IoArrowForward } from "react-icons/io5";
+import { TbCardsFilled } from "react-icons/tb";
+import useGetExerciseWords from "../../hooks/useGetExerciseWords";
 
 export default function FlashCardsPage() {
+  const {
+    handleFetch,
+    data: words,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetExerciseWords();
+
   const [selectedLessons, setSelectedLessons] = useState([]);
-  const [words, setWords] = useState([]);
   const [wordIndex, setWordIndex] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [count, setCount] = useState(0);
@@ -40,27 +49,13 @@ export default function FlashCardsPage() {
     }
   };
 
-  const [
-    getRandomWords,
-    { data: wordsData, isLoading, isSuccess, isError, error },
-  ] = useLazyGetRandomWordsQuery();
-
   // Load Words on first render
   useEffect(() => {
     setCompleted(false);
     setCount(0);
     setWordIndex(0);
-    getRandomWords(selectedLessons);
+    handleFetch(selectedLessons);
   }, [selectedLessons, completed]);
-
-  // de-normalize words
-  useEffect(() => {
-    if (isSuccess) {
-      let { ids, entities } = wordsData;
-      let temp = ids.map((id) => entities[id]);
-      setWords(temp);
-    }
-  }, [wordsData]);
 
   const isFirst = wordIndex === 0;
   const isLast = wordIndex === words.length - 1;
@@ -84,12 +79,13 @@ export default function FlashCardsPage() {
 
   return (
     <main>
-      {/* <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
-        <h1 className="mx-auto font-bold text-2xl">Flash Cards</h1>
-      </header> */}
+      <header className="flex items-center justify-center gap-4 bg-destructive text-accent p-8">
+        <TbCardsFilled size={50} />
+        <h1 className="font-bold text-2xl">Flash Cards</h1>
+      </header>
       <div>
         <button
-          className="mt-auto mb-4 mx-auto py-2 px-6 bg-red-600 text-white font-medium hover:bg-red-700 duration-200 w-fit flex items-center gap-2"
+          className="mt-auto mb-4 mx-auto py-2 px-6 bg-accent text-accent_foreground font-medium duration-200 w-fit flex items-center gap-2"
           onClick={() => setFirstLang((curr) => !curr)}
         >
           {firstLang ? (

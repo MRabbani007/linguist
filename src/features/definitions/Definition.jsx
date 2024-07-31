@@ -22,8 +22,8 @@ export default function Definition({ definition }) {
   };
 
   return (
-    <article className=" p-4 bg-zinc-50 w-full rounded-lg  border-l-8 border-red-600">
-      <div className="group flex items-center gap-4 pb-2">
+    <article className="bg-accent_foreground w-full border-l-[12px] border-accent">
+      <div className="group flex items-center gap-4 px-4 py-2 border-b-[1px] border-accent">
         <p className="text-lg font-medium">
           <span>Definition: </span>
           <span>{definition?.title}</span>
@@ -47,7 +47,7 @@ export default function Definition({ definition }) {
       ) : move ? (
         <DefinitionMove definition={definition} setMove={setMove} />
       ) : (
-        <div className="text-sm">
+        <div className="text-sm p-4">
           <p>{definition?.text}</p>
           <p>{definition?.notes}</p>
           <p>{definition?.caption}</p>

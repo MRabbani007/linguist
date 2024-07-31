@@ -5,21 +5,16 @@ table {
 }
 
 table caption {
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  // background-color: $clr-red-600;
-  color: $clr-red-600;
+  color: var(--accent);
+  background-color: var(--destructive);
   text-align: center;
   font-weight: 600;
-  // border-radius: 0.375rem 0.375rem 0 0;
   padding: 0.25rem 0;
 }
 
 .lesson-table thead {
-  // background-color: $clr-red-600;
-  // color: $clr-slate-50;
-  color: $clr-red-600;
+  color: var(--accent);
+  background-color: var(--destructive);
 }
 
 .word-table tbody tr {
@@ -33,24 +28,17 @@ table caption {
   color: white;
 }
 
-.word-table tr:last-child {
-  // border-radius: 0 0 0.375rem 0.375rem;
-}
-
 td,
 th {
   text-align: center;
-  border: 1px solid rgba(128, 128, 128, 0.5);
   padding: 0 0.5rem;
 }
 
-tbody tr:nth-child(2n + 1) {
-  // background-color: rgb(240, 240, 240);
+tbody tr:nth-child(2n) {
+  background-color: var(--destructive);
 }
 
 tbody tr:nth-child(2n):hover {
-  background-color: rgba(180, 180, 180, 0.3);
 }
 tbody tr:nth-child(2n + 1):hover {
-  background-color: rgba(180, 180, 180, 0.3);
 }

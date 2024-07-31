@@ -8,8 +8,10 @@ export default function LayoutLearning() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // max-w-[1024px]
+
   return (
-    <div className="flex items-stretch w-full max-w-[1024px] mx-auto">
+    <div className="flex items-stretch w-full mx-auto">
       {/* <Sidebar /> */}
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />

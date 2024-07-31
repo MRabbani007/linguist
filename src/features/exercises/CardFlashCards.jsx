@@ -54,11 +54,11 @@ export default function CardFlashCards({
         ) : null}
       </span>
       <div className="w-fit mx-auto">
-        <div className="text-white text-center min-w-[300px] text-xl">
-          <p className="bg-orange-600 font-medium p-4 border-b-2 rounded-t-lg">
+        <div className="text-destructive_foreground text-center min-w-[300px] text-xl">
+          <p className="bg-destructive font-medium p-4 border-b-2 rounded-t-lg">
             {firstLang ? showWord?.second : showWord?.first}
           </p>
-          <p className="p-4 bg-yellow-500 rounded-b-lg min-h-[60px]">
+          <p className="p-4 bg-accent_foreground text-accent rounded-b-lg min-h-[60px]">
             <span
               className={
                 (show ? "opacity-100" : "opacity-0") +
@@ -75,10 +75,10 @@ export default function CardFlashCards({
           return (
             <button
               key={index}
-              className="py-2 px-4 bg-lime-700 text-white font-medium hover:bg-lime-600 duration-200 uppercase"
+              className="py-2 px-4 bg-destructive text-destructive_foreground font-medium  duration-200 uppercase"
               onClick={() => setSelected(item)}
             >
-              {item?.first}
+              {firstLang ? item?.first : item?.second}
             </button>
           );
         })}

@@ -248,7 +248,9 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           <p>{`${learningTime.hours} Hours ${learningTime.minutes} minutes`}</p>
         </div>
       ) : null} */}
-      {defsContent?.length !== 0 && <>{defsContent}</>}
+      {defsContent?.length !== 0 && (
+        <div className="px-4 flex flex-col gap-4">{defsContent}</div>
+      )}
 
       {/* Sections */}
       {content?.length !== 0 && <>{content}</>}

@@ -1,67 +1,61 @@
 import { useSelector } from "react-redux";
-import { useGetChaptersQuery } from "../../features/chapters/chapterSlice";
-import { selectLanguage } from "../../features/globals/globalsSlice";
-import { useNavigate } from "react-router-dom";
+import { selectDisplayChapter } from "../../features/globals/globalsSlice";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Loading from "../../features/components/Loading";
-import { useGetChapterSummaryQuery } from "../../features/globals/globalsApiSlice";
-import CardChapter from "../../features/chapters/CardChapter";
+import { useGetBlocksQuery } from "../../features/blocks/blockSlice";
+import CardLesson from "../../features/blocks/CardLesson";
+import ChapterHeader from "../../features/chapters/ChapterHeader";
+import ChapterNavigator from "../../features/navigation/ChapterNavigator";
+import ReactLoading from "react-loading";
 // Imported components
 
 const ChapterPage = () => {
-  const language = useSelector(selectLanguage);
+  const displayChapter = useSelector(selectDisplayChapter);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!language?.id) {
-      navigate("/language");
+    if (!displayChapter) {
+      navigate("/content/chapters");
     }
-  }, [language]);
+  }, [displayChapter]);
 
   const {
-    data: chapters,
+    data: blocks,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetChaptersQuery(language?.id || "language");
-
-  const { data: chapterSummary, isSuccess: isSuccessSummary } =
-    useGetChapterSummaryQuery(language?.id || "language");
+  } = useGetBlocksQuery(displayChapter?.id);
 
   let content;
   if (isLoading) {
-    content = <Loading />;
+    content = (
+      <ReactLoading
+        type={"bubbles"}
+        color={"#000"}
+        height={"10%"}
+        width={"10%"}
+        className="mx-auto"
+      />
+    );
   } else if (isSuccess) {
-    const { ids, entities } = chapters;
-    content = ids.map((id) => {
-      const foundItem = isSuccessSummary
-        ? chapterSummary.entities[entities[id].id]
-        : {};
-      const lessonCount = foundItem?.total ?? 0;
-      return (
-        <CardChapter
-          key={id}
-          chapter={entities[id]}
-          lessonCount={lessonCount}
-        />
-      );
-    });
+    // destructure blocks from normalized object
+    const { ids, entities } = blocks;
+    content = ids.map((id) => <CardLesson key={id} lesson={entities[id]} />);
   } else if (isError) {
-    content = <p>{JSON.stringify(error)}</p>;
+    content = <p>{error}</p>;
   }
 
   return (
-    <>
-      <main>
-        <header className="p-6 bg-zinc-500 text-white">
-          <h1 className="mx-auto font-bold text-2xl">{language?.title}</h1>
-        </header>
-        <div>
-          <div className="flex flex-wrap gap-4">{content}</div>
-        </div>
-      </main>
-    </>
+    <main>
+      <div className="w-full">
+        <ChapterHeader chapter={displayChapter} />
+        <ChapterNavigator />
+      </div>
+      {/* <p className="w-full">{displayChapter?.detail}</p> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">{content}</div>
+      <ChapterNavigator />
+    </main>
   );
 };
 

@@ -53,12 +53,12 @@ export default function SectionsPage() {
 
   return (
     <main>
-      <ChapterNavigator />
-      <ChapterHeader chapter={displayChapter} />
-      {/* <p className="w-full">{displayChapter?.detail}</p> */}
-      <div className="flex flex-wrap items-stretch gap-4 w-full h-full">
-        {content}
+      <div className="w-full">
+        <ChapterHeader chapter={displayChapter} />
+        <ChapterNavigator />
       </div>
+      {/* <p className="w-full">{displayChapter?.detail}</p> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">{content}</div>
       <ChapterNavigator />
     </main>
   );

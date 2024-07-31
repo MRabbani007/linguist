@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectChapters,
+  selectLessons,
   selectDisplayBlock,
   selectDisplayChapter,
-  selectLanguage,
-  selectLessons,
   setDisplayBlock,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const BlockNavigator = ({ children }) => {
   const displayChapter = useSelector(selectDisplayChapter);
@@ -103,14 +102,14 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <div className="w-full flex flex-1 justify-between items-center">
+    <div className="p-4 flex justify-between items-center bg-destructive ">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
-        className="flex items-center duration-200 text-red-600 hover:text-red-500 disabled:text-slate-600 group"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
       >
-        <FaCircleArrowLeft size={36} className="mr-2" />
-        <span className="font-semibold hidden md:inline -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200 text-nowrap">
+        <FaArrowLeft size={24} />
+        <span className="font-semibold hidden md:inline text-nowrap">
           {firstLesson ? "Previous Chapter" : "Previous Lesson"}
         </span>
       </button>
@@ -118,15 +117,18 @@ const BlockNavigator = ({ children }) => {
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
-        className="flex items-center duration-200 text-red-600 hover:text-red-500 disabled:text-slate-600 group"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
       >
-        <span className="font-semibold hidden md:inline translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200 text-nowrap">
+        <span className="font-semibold hidden md:inline duration-200 text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}
         </span>
-        <FaCircleArrowRight size={36} className="ml-2" />
+        <FaArrowRight size={24} />
       </button>
     </div>
   );
 };
 
 export default BlockNavigator;
+
+// -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200
+// translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible

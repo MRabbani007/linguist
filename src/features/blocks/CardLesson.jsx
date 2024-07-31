@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setDisplayBlock } from "../globals/globalsSlice";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { IoTimerOutline } from "react-icons/io5";
 
 export default function CardLesson({ lesson }) {
@@ -9,7 +9,10 @@ export default function CardLesson({ lesson }) {
 
   const blockOpen = () => {
     dispatch(setDisplayBlock(lesson));
-    navigate("/content/lesson");
+    navigate({
+      pathname: "/content/lesson",
+      search: `${createSearchParams({ title: lesson?.title, id: lesson?.id })}`,
+    });
   };
 
   const level =
@@ -24,7 +27,7 @@ export default function CardLesson({ lesson }) {
       onClick={blockOpen}
       className="flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group"
     >
-      <span className="bg-red-700 w-10 h-10 shrink-0 flex items-center justify-center text-white rounded-full">
+      <span className="bg-accent w-10 h-10 shrink-0 flex items-center justify-center text-accent_foreground rounded-full">
         {lesson?.sortIndex}
       </span>
       <div className="flex flex-col">

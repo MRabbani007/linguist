@@ -50,7 +50,7 @@ export default function Section({
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
   return (
-    <div className="flex flex-col gap-4 flex-1 w-full">
+    <section>
       <SectionTitle
         section={section}
         expand={expand}
@@ -64,7 +64,6 @@ export default function Section({
         setAddWord={setAddWord}
         setAddSentence={setAddSentence}
       />
-
       <div
         className={
           (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
@@ -106,7 +105,9 @@ export default function Section({
         ) : null}
 
         {/* Words */}
-        <div className="flex flex-wrap items-stretch gap-4">{content}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {content}
+        </div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
           <div className="flex flex-col gap-4">
@@ -171,6 +172,6 @@ export default function Section({
       {editMode && addSentence ? (
         <FormSentenceAdd section={section} setAdd={setAddSentence} />
       ) : null}
-    </div>
+    </section>
   );
 }

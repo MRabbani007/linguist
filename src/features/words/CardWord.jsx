@@ -43,15 +43,19 @@ export default function CardWord({ word }) {
 
   const showPopup = displayBlock?.thirdLang && word?.third;
 
+  // min-w-[350px] lg:min-w-[400px] max-w-[600px]
+
   return (
     <>
       <div
         className={
           (word.type === "ph" ? "" : "") +
-          " min-w-[350px] lg:min-w-[400px] max-w-[600px] flex flex-col min-h-[150px] flex-1 text-xl  duration-200 group relative z-0  border-red-600"
+          "  flex flex-col min-h-[150px] flex-1 text-xl duration-200 group relative z-0 bg-destructive"
         }
       >
+        {/* Word Body */}
         <div className="flex-1 flex items-stretch gap-4 relative py-4 px-6">
+          {/* Word Image */}
           {word?.imageURL ? (
             <img
               src={word.imageURL}
@@ -59,11 +63,9 @@ export default function CardWord({ word }) {
               className="max-h-28 max-w-24"
             />
           ) : null}
-          {/* <div className="p-4 flex flex-col items-center">
-            <input type="checkbox" />
-          </div> */}
+          {/* Word first, second */}
           <div className="flex flex-col justify-center flex-1">
-            <div className="font-semibold text-red-600 relative group w-fit">
+            <div className="font-semibold text-accent relative group w-fit">
               <p
                 className="cursor-pointer text-2xl"
                 onMouseOver={() => setShowPronunce(true)}
@@ -74,16 +76,15 @@ export default function CardWord({ word }) {
               {showPopup ? (
                 <p
                   className={
-                    showPronunce
-                      ? "absolute top-0 left-full bg-zinc-50 text-start py-1 px-2 w-fit text-nowrap font-normal z-30"
-                      : "hidden"
+                    (showPronunce ? "" : "invisible opacity-0 -translate-y-4") +
+                    " absolute top-full left-0 text-start py-1 px-2 w-fit text-nowrap font-normal z-30 bg-destructive duration-200"
                   }
                 >
                   {word?.third}
                 </p>
               ) : null}
             </div>
-            <p className="font-medium text-zinc-800 text-base">
+            <p className="font-medium text-destructive_foreground text-base">
               {word?.second}
             </p>
           </div>
@@ -104,8 +105,8 @@ export default function CardWord({ word }) {
             </div>
           ) : null}
         </div>
-        <div className="py-2 px-4 flex items-center gap-4 text-sm  border-red-600 bg-red-100">
-          <button className="text-zinc-700">
+        <div className="py-2 px-4 flex items-center gap-4 text-sm border-t-[1px] border-accent bg-destructive text-destructive_foreground">
+          <button className="">
             <FaPlus size={20} />
           </button>
           {/* Word type */}
