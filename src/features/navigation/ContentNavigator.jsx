@@ -36,7 +36,7 @@ export default function ContentNavigator() {
   };
 
   return (
-    <section className="flex justify-center items-center flex-1 p-2 my-4 gap-8 w-full">
+    <section className="flex justify-center items-center flex-1 p-4 gap-8 w-full bg-destructive">
       {/* <button
         onClick={() => handleNavigate("/content/chapters")}
         className="text-start py-4 px-8 w-fit font-semibold text-white bg-red-600 hover:bg-red-500 duration-200 "
@@ -59,7 +59,7 @@ export default function ContentNavigator() {
               className={
                 (lesson.id === displayBlock.id
                   ? "border-yellow-500 border-b-2"
-                  : "border-zinc-400") + ""
+                  : "border-zinc-400") + " text-destructive_foreground"
               }
             >
               {lesson.title}

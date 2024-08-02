@@ -64,9 +64,10 @@ export default function LessonPage() {
         addSection={addSection}
         setAddSection={setAddSection}
       />
-
-      <BlockNavigator />
-      <ContentNavigator />
+      <div className="w-full">
+        <BlockNavigator />
+        <ContentNavigator />
+      </div>
 
       {!!user ? <LessonCompleted /> : null}
     </main>

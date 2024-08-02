@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { BiCheck, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
 export default function CardFlashCards({
   word,
   firstLang = true,
   options = [],
+  handlePrev = () => {},
+  handleNext = () => {},
+  isFirst = false,
+  isLast = false,
 }) {
   const [show, setShow] = useState(false);
   const [newWord, setNewWord] = useState(true);
@@ -70,7 +75,7 @@ export default function CardFlashCards({
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-4 mx-auto p-4">
+      <div className="flex flex-wrap items-center gap-4 mx-auto p-4">
         {options.map((item, index) => {
           return (
             <button
@@ -83,15 +88,32 @@ export default function CardFlashCards({
           );
         })}
       </div>
-      <button
-        onClick={() => {
-          setNewWord(false);
-          setShow((curr) => !curr);
-        }}
-        className="mt-auto mb-4 mx-auto py-2 px-4 bg-sky-700 text-white font-medium hover:bg-sky-600 duration-200 w-fit"
-      >
-        {show ? "Hide" : "Show"}
-      </button>
+      <div className="mt-auto flex items-center justify-between gap-4">
+        <button
+          title="Previous"
+          onClick={handlePrev}
+          disabled={isFirst}
+          className="text-red-600 disabled:text-zinc-500"
+        >
+          <BiChevronLeft size={40} />
+        </button>
+        <button
+          onClick={() => {
+            setNewWord(false);
+            setShow((curr) => !curr);
+          }}
+          className="py-2 px-4 bg-sky-700 text-white font-medium hover:bg-sky-600 duration-200 w-fit"
+        >
+          {show ? "Hide" : "Show"}
+        </button>
+        <button
+          title="Next"
+          onClick={handleNext}
+          className="text-red-600 disabled:text-zinc-500"
+        >
+          <BiChevronRight size={40} />
+        </button>
+      </div>
     </div>
   );
 }

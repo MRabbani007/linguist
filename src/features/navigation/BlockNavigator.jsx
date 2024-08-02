@@ -9,15 +9,17 @@ import {
   setDisplayChapter,
 } from "../globals/globalsSlice";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const BlockNavigator = ({ children }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
 
   const chapters = useSelector(selectChapters);
   const lessons = useSelector(selectLessons);
-
-  const dispatch = useDispatch();
 
   const [blockIndex, setBlockIndex] = useState(0);
   const [chapterIndex, setChapterIndex] = useState(0);
@@ -31,9 +33,6 @@ const BlockNavigator = ({ children }) => {
         .filter((item) => item.chapterID === displayChapter?.id)
         .sort((a, b) => (a.lessonNo > b.lessonNo ? 1 : -1));
     });
-  }, [displayChapter]);
-
-  useEffect(() => {
     setChapterIndex(() => {
       const tempChapterIndex = chapters.findIndex(
         (item) => item.id === displayChapter.id
@@ -42,15 +41,29 @@ const BlockNavigator = ({ children }) => {
         return tempChapterIndex;
       } else return 0;
     });
-  }, [displayChapter, displayBlock]);
+  }, [displayChapter, chapters, lessons]);
 
   useEffect(() => {
     if (moveDirection === "next") {
       dispatch(setDisplayBlock(blocks[0]));
       setMoveDirection("");
+      navigate({
+        pathname: "/content/lesson",
+        search: `${createSearchParams({
+          title: blocks[0]?.title,
+          id: blocks[0]?.id,
+        })}`,
+      });
     } else if (moveDirection === "prev") {
       dispatch(setDisplayBlock(blocks[blocks.length - 1]));
       setMoveDirection("");
+      navigate({
+        pathname: "/content/lesson",
+        search: `${createSearchParams({
+          title: blocks[blocks.length - 1]?.title,
+          id: blocks[blocks.length - 1]?.id,
+        })}`,
+      });
     }
   }, [blocks]);
 
@@ -63,7 +76,7 @@ const BlockNavigator = ({ children }) => {
         return tempBlockIndex;
       } else return 0;
     });
-  }, [displayBlock, blocks]);
+  }, [displayBlock, blocks, lessons]);
 
   const firstLesson = blockIndex === 0;
   const firstChapter = chapterIndex === 0;
@@ -72,10 +85,19 @@ const BlockNavigator = ({ children }) => {
 
   const handleNext = () => {
     if (blockIndex < blocks.length - 1) {
-      setMoveDirection("next");
-      setBlockIndex((curr) => curr + 1);
+      // setMoveDirection("next");
+      // setBlockIndex((curr) => curr + 1);
+
       dispatch(setDisplayBlock(blocks[blockIndex + 1]));
       window.scrollTo(0, 0);
+
+      navigate({
+        pathname: "/content/lesson",
+        search: `${createSearchParams({
+          title: blocks[blockIndex + 1]?.title,
+          id: blocks[blockIndex + 1]?.id,
+        })}`,
+      });
     } else {
       if (lastChapter) {
       } else {
@@ -92,6 +114,14 @@ const BlockNavigator = ({ children }) => {
       setBlockIndex((curr) => curr - 1);
       dispatch(setDisplayBlock(blocks[blockIndex - 1]));
       window.scrollTo(0, 0);
+
+      navigate({
+        pathname: "/content/lesson",
+        search: `${createSearchParams({
+          title: blocks[blockIndex - 1]?.title,
+          id: blocks[blockIndex - 1]?.id,
+        })}`,
+      });
     } else {
       if (chapterIndex > 0) {
         setMoveDirection("prev");

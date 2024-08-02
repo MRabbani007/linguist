@@ -13,16 +13,16 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    --background: #c2c2c2;
+    --background: white;
     --foreground: #0a0a0a;
     --card: #ffffff;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: #fef1f1;
-    --primary-foreground: #d92626;
-    --secondary: #f7f7f7;
-    --secondary-foreground: #171717;
+    --primary: #dc2626;
+    --primary-foreground: #fafafa;
+    --secondary: #171717;
+    --secondary-foreground: #f7f7f7;
     --muted: #f5f5f5;
     --muted-foreground: #737373;
     --accent: #dc2626;
@@ -40,22 +40,22 @@
     --chart-5: 27 87% 67%;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: #0a0a0a;
+    --foreground: #c2c2c2;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 72.2% 50.6%;
-    --primary-foreground: 0 85.7% 97.3%;
+    --primary: #dc2626;
+    --primary-foreground: #fafafa;
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: #dc2626;
+    --accent-foreground: #fafafa;
+    --destructive: #000000;
+    --destructive-foreground: #ececec;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 72.2% 50.6%;
@@ -82,7 +82,6 @@ body {
   font-family: var(--font-poppins);
   font-style: normal;
   min-height: 100vh;
-  background-color: var(--background);
 }
 
 menu {
@@ -90,17 +89,12 @@ menu {
   top: 0.5rem;
   left: 0.5rem;
   right: 0.5rem;
-  padding: 0.5rem 1.5rem;
   border-radius: 9999px;
   box-shadow: 0px 2px 2px 2px rgb(170, 170, 170);
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 50;
-}
-
-.navbar-red {
-  color: #f7fee7;
 }
 
 input {
@@ -119,15 +113,19 @@ p {
 }
 
 main {
-  padding: 1rem;
+  padding: 0rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: stretch;
   gap: 1rem;
-  width: 100%;
   margin-left: auto;
   margin-right: auto;
-  background-color: #fff;
+  flex: 1 0 0%;
+  min-height: calc(60vh - 10px);
+  background-color: var(--background);
+  width: 100%;
+  height: 100%;
 }
 
 section {
@@ -141,7 +139,7 @@ section {
 
 @media screen and (min-width: 1024px) {
   main {
-    padding: 1rem 2rem;
+    padding: 2rem;
   }
 }
 .form_input {

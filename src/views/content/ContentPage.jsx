@@ -16,14 +16,14 @@ export default function ContentPage() {
 
   return (
     <main>
-      <header className="p-8 bg-destructive">
+      <header className="p-8 bg-destructive text-destructive_foreground">
         <h1 className="text-4xl font-semibold">Content Overview</h1>
       </header>
       {chapters.map((chapter, index) => {
         return (
           <div className="flex flex-col gap-4 w-full" key={index}>
             <CardChapter chapter={chapter} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full ">
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .map((lesson, idx) => {

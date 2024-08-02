@@ -20,7 +20,7 @@ const HomePage = () => {
           className="w-full max-w-[600px] mx-auto p-2"
         />
         <div className="flex-1 flex flex-col justify-center items-center">
-          <p className="italic font-semibold text-xl">
+          <p className="italic font-semibold text-xl text-destructive_foreground">
             Learn languages fast & easy
           </p>
           <div className="flex flex-col md:flex-row flex-wrap items-center md:gap-4 gap-2 mt-2">

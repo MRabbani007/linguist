@@ -49,10 +49,10 @@ export default function LanguagePage() {
 
   return (
     <main>
-      <header className=" from-zinc-200 to-zinc-100 text-red-600 justify-center">
+      <header className="text-primary justify-center">
         <h1>Select Language</h1>
       </header>
-      <div>
+      <div className="flex-1 h-full">
         <div className="flex flex-wrap items-stretch justify-center gap-3">
           {Array.isArray(siteLanguages) &&
             siteLanguages.map((lang) => {

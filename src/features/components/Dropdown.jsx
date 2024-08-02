@@ -20,7 +20,10 @@ export default function Dropdown({ label, url, icon, items }) {
       onMouseOver={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <button onClick={handleClick} className="flex items-stretch gap-2">
+      <button
+        onClick={handleClick}
+        className="flex items-center gap-2 h-full border-b-4 border-destructive hover:border-yellow-500 duration-200"
+      >
         <span>{label}</span>
         {icon ? icon : null}
       </button>

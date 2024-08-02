@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CardFlashCards from "../../features/exercises/CardFlashCards";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import { IoArrowForward } from "react-icons/io5";
 import { TbCardsFilled } from "react-icons/tb";
 import useGetExerciseWords from "../../hooks/useGetExerciseWords";
@@ -63,14 +62,18 @@ export default function FlashCardsPage() {
   let content;
   if (isLoading) {
     content = <p>Loading</p>;
-  } else if (isError) {
+  } else if (false && isError) {
     content = <p>Error Loading Words</p>;
-  } else if (isSuccess) {
+  } else if (true || isSuccess) {
     content = (
       <CardFlashCards
         word={words[wordIndex]}
         firstLang={firstLang}
         options={options}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+        isFirst={isFirst}
+        isLast={isLast}
       />
     );
   } else {
@@ -79,7 +82,7 @@ export default function FlashCardsPage() {
 
   return (
     <main>
-      <header className="flex items-center justify-center gap-4 bg-destructive text-accent p-8">
+      <header className="flex items-center justify-center gap-4 bg-destructive text-accent p-4 md:p-8">
         <TbCardsFilled size={50} />
         <h1 className="font-bold text-2xl">Flash Cards</h1>
       </header>
@@ -103,22 +106,7 @@ export default function FlashCardsPage() {
           )}
         </button>
         <div className="flex items-center justify-center w-fit mx-auto">
-          <button
-            title="Previous"
-            onClick={handlePrev}
-            disabled={isFirst}
-            className="text-red-600 disabled:text-zinc-500"
-          >
-            <BiChevronLeft size={40} />
-          </button>
           {content}
-          <button
-            title="Next"
-            onClick={handleNext}
-            className="text-red-600 disabled:text-zinc-500"
-          >
-            <BiChevronRight size={40} />
-          </button>
         </div>
       </div>
     </main>

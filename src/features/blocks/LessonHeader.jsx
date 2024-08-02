@@ -33,11 +33,11 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
   }, []);
 
   const temp1 = (
-    <header className="group relative bg-destructive pt-8 px-4 md:mt-4">
+    <header className="group relative bg-destructive md:pt-8 px-4">
       <div className="flex items-stretch">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-20 h-[80px] text-accent_foreground bg-accent flex flex-col items-center justify-center text-2xl md:text-4xl font-bold border-b-4 border-accent_foreground"
+          className="w-20 h-[80px] bg-accent flex flex-col items-center justify-center text-2xl md:text-4xl font-bold border-b-4 border-accent_foreground text-accent_foreground"
         >
           <span>
             {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
@@ -49,7 +49,7 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
             )}
           </span>
         </p>
-        <h1 className="text-4xl md:text-7xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1">
+        <h1 className="text-4xl md:text-7xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1 text-destructive_foreground">
           {lesson?.title}
         </h1>
       </div>

@@ -1,4 +1,9 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import Navbar from "../navigation/Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
@@ -60,14 +65,14 @@ const Layout = () => {
   const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
 
   useEffect(() => {
-    if (lastPage) {
-      navigate(lastPage);
+    if (lastPage?.pathname) {
+      navigate(`${lastPage?.pathname}${lastPage?.search ?? ""}`);
     }
   }, []);
 
   useEffect(() => {
-    setLastPage(location.pathname);
-  }, [location.pathname]);
+    setLastPage(location);
+  }, [location]);
 
   useEffect(() => {
     if (displayChapter?.id) {

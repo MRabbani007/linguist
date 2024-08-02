@@ -25,7 +25,7 @@ export default function CardLesson({ lesson }) {
   return (
     <div
       onClick={blockOpen}
-      className="flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group"
+      className="p-4 flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group bg-destructive text-destructive_foreground"
     >
       <span className="bg-accent w-10 h-10 shrink-0 flex items-center justify-center text-accent_foreground rounded-full">
         {lesson?.sortIndex}

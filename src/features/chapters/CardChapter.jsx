@@ -26,7 +26,7 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
   return (
     <div
       onClick={handleOpen}
-      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative my-4"
+      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative my-4 bg-destructive text-destructive_foreground p-4 md:p-8"
     >
       <span className="bg-red-600 w-10 h-10 text-xl shrink-0 flex items-center justify-center text-white rounded-full">
         {chapter?.chapterNo}
