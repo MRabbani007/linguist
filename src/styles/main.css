@@ -170,6 +170,28 @@ section {
   border-radius: 0.25rem;
 }
 
+.field__row {
+  width: 100%;
+  min-width: fit-content;
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  gap: 1rem;
+}
+
+.field__input__row {
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  font-weight: 400;
+  font-size: 1rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  border: 2px solid #e2e8f0;
+}
+
 .field__label {
   color: rgb(94, 94, 94);
   font-size: 1rem;
@@ -220,61 +242,6 @@ section {
   gap: 0.5rem;
 }
 
-.form-container {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: rgba(63, 63, 70, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 60;
-}
-
-.form-container form {
-  background-color: #f1f5f9;
-  min-width: fit-content;
-  width: 70vw;
-  max-width: 1000px;
-  margin-right: 1rem;
-  margin-left: 1rem;
-}
-
-.form-container form h2 {
-  background-color: #ef4444;
-  color: #f7fee7;
-  flex: 1 1 0%;
-  width: 100%;
-  font-weight: 500;
-  text-align: center;
-  padding: 0.5rem 1rem;
-}
-
-.form-container form > div {
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.form-container form .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.form-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.5rem;
-}
-
 .add,
 .save,
 .cancel,
@@ -304,11 +271,11 @@ section {
 }
 
 .save {
-  background-color: #22c55e;
+  background-color: #16a34a;
 }
 
 .save:hover {
-  background-color: #4ade80;
+  background-color: #22c55e;
 }
 
 .cancel {

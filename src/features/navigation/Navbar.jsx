@@ -1,23 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 // Imported Icons
-import { FiUser } from "react-icons/fi";
 import { IoGridOutline, IoMenu, IoMoon, IoSunny } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 import { useEffect, useRef, useState } from "react";
 import Offcanvas from "./Offcanvas";
 import UserDropDown from "./UserDropDown";
 import AdminDropDown from "./AdminDropDown";
-import { PiBookOpenTextLight } from "react-icons/pi";
-import Logo from "../../assets/logo-red.png";
-import SidebarSearch from "./SidebarSearch";
 import MobileMenu from "./MobileMenu";
-import MenuLessons from "./MenuLessons";
-import { AiOutlineUser } from "react-icons/ai";
 import { IoIosSearch } from "react-icons/io";
 import NavbarSearch from "./NavbarSearch";
 import { FaRegUserCircle } from "react-icons/fa";
 import Dropdown from "../components/Dropdown";
+import { LuUser2 } from "react-icons/lu";
+import { AiOutlineUser } from "react-icons/ai";
 
 const lessonsDropDown = [
   {
@@ -63,6 +59,19 @@ const exerciseDropDown = [
   },
 ];
 
+const TextDialogueDropDown = [
+  {
+    label: "Texts",
+    title: "Texts",
+    url: "/content/text",
+  },
+  {
+    label: "Dialogues",
+    title: "Dialogues",
+    url: "/content/dialogue",
+  },
+];
+
 const Navbar = () => {
   const user = useSelector(selectCurrentUser);
   const roles = useSelector(selectCurrentRoles);
@@ -79,7 +88,6 @@ const Navbar = () => {
   const [viewMobileMenu, setViewMobileMenu] = useState(false);
   const [viewUserDropDown, setViewUserDropDown] = useState(false);
   const [viewSideBar, setViewSideBar] = useState(false);
-  const [viewLessonsMenu, setViewLessonsMenu] = useState(false);
   const [viewSearch, setViewSearch] = useState(false);
 
   const sideBarRef = useRef();
@@ -87,7 +95,6 @@ const Navbar = () => {
   const dropDownRefUser = useRef();
   const dropDownRefAdmin = useRef();
   const dropDownRefMobile = useRef();
-  const dropDownRefLessons = useRef();
 
   const handleSideBar = (val = false) => {
     setViewSideBar(val);
@@ -143,7 +150,7 @@ const Navbar = () => {
             items={lessonsDropDown}
           />
           <Dropdown label={"Words & Phases"} items={wordsDropDown} />
-          <Dropdown label={"Text & Dialogue"} items={[]} />
+          <Dropdown label={"Text & Dialogue"} items={TextDialogueDropDown} />
           <Dropdown
             label={"Practice"}
             url={"/exercise"}
@@ -183,7 +190,6 @@ const Navbar = () => {
                   " p-2 rounded-lg duration-200"
                 }
               >
-                {/* Dashboard */}
                 <IoGridOutline size={30} />
               </Link>
               {/* User menu */}
@@ -197,8 +203,7 @@ const Navbar = () => {
                   onClick={() => setViewUserDropDown(true)}
                   title="User"
                 >
-                  <FaRegUserCircle size={40} />
-                  {/* <AiOutlineUser  /> */}
+                  <AiOutlineUser size={40} />
                 </button>
                 {isAdmin ? (
                   <AdminDropDown
@@ -211,13 +216,12 @@ const Navbar = () => {
               </div>
             </div>
           )}
-
           <div
-            className="relative lg:hidden "
+            className="relative lg:hidden flex items-center justify-center"
             onMouseOver={() => setViewMobileMenu(true)}
             onMouseLeave={() => setViewMobileMenu(false)}
           >
-            <button onClick={() => setViewMobileMenu(true)}>
+            <button className="my-auto" onClick={() => setViewMobileMenu(true)}>
               <IoMenu size={40} />
             </button>
             <MobileMenu ref={dropDownRefMobile} viewDropDown={viewMobileMenu} />

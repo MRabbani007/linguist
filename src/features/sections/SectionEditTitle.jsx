@@ -23,6 +23,8 @@ export default function SectionEditTitle({ section, setEdit }) {
     }
   };
 
+  console.log(section);
+
   return (
     <FormContainer
       type="edit"

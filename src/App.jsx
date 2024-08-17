@@ -63,6 +63,9 @@ import AdminWords from "./views/admin/AdminWords";
 import LayoutLearning from "./features/layout/LayoutLearning";
 import ImageUpload from "./views/admin/ImageUpload";
 import ContentPage from "./views/content/ContentPage";
+import TextsPage from "./views/content/TextsPage";
+import DialoguePage from "./views/content/DialoguePage";
+import DialogueID from "./views/content/DialogueID";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -105,6 +108,9 @@ function App() {
               <Route index element={<ContentPage />} />
               <Route path="chapter?/:chapterID" element={<ChapterPage />} />
               <Route path="lesson" element={<LessonPage />} />
+              <Route path="text" element={<TextsPage />} />
+              <Route path="dialogue/id" element={<DialogueID />} />
+              <Route path="dialogue" element={<DialoguePage />} />
             </Route>
 
             <Route path="search?/:search" element={<SearchPage />} />

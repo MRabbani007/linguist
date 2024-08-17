@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function CardExerciseTitle({ exercise }) {
   return (
-    <div className=" text-center text-white ">
-      <h2 className="font-extrabold bg-lime-600 p-4 text-2xl rounded-t-lg">
+    <div className=" text-center ">
+      <h2 className="font-bold bg-zinc-400 p-4 text-2xl text-zinc-900 rounded-t-lg">
         <Link to={exercise.link}>{exercise?.title}</Link>
       </h2>
-      <div className="p-8 bg-lime-500 text-xl rounded-b-lg">
+      <div className="p-8 bg-zinc-200 text-xl rounded-b-lg">
         {exercise?.text}
       </div>
     </div>

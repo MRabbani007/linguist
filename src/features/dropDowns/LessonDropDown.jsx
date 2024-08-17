@@ -13,36 +13,33 @@ const LessonDropDown = forwardRef(
       }
     };
 
-    const handleAddIntro = () => {
-      setAddLessonIntro((curr) => !curr);
-    };
-
-    const handleAddSection = () => {
-      setAddSection((curr) => !curr);
-    };
-
     return (
-      <ul
+      <div
         ref={ref}
         className={
           (showDropDown ? "" : "-translate-y-2 opacity-0 invisible") +
-          " section-dropdown text-zinc-900"
+          " absolute top-full right-0 bg-zinc-200 text-zinc-900"
         }
       >
-        <li className="dropdown-title">Add...</li>
-        <li>
-          <button title="Add Introduction" onClick={handleAddIntro}>
-            <RxTextAlignLeft size={32} />
-            <span>Introduction</span>
-          </button>
-        </li>
-        <li>
-          <button title="Add Section" onClick={handleAddSection}>
-            <RxSection size={32} />
-            <span>Section</span>
-          </button>
-        </li>
-      </ul>
+        <p className="py-2 px-4 bg-zinc-300 font-semibold">Add...</p>
+        <ul className="flex items-center">
+          <li className="py-2 px-4">
+            <button
+              title="Add Introduction"
+              onClick={() => setAddLessonIntro(true)}
+            >
+              <RxTextAlignLeft size={32} />
+              {/* <span>Introduction</span> */}
+            </button>
+          </li>
+          <li className="py-2 px-4">
+            <button title="Add Section" onClick={() => setAddSection(true)}>
+              <RxSection size={32} />
+              {/* <span>Section</span> */}
+            </button>
+          </li>
+        </ul>
+      </div>
     );
   }
 );

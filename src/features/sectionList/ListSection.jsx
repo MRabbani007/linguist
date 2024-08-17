@@ -42,10 +42,13 @@ export default function ListSection({ list }) {
 
   let content = list.items.map((item, index) => {
     return (
-      <li key={index} className={(index % 2 === 0 ? "" : "") + ""}>
+      <li key={index} className="group">
         <span>{item}</span>
         {editMode && (
-          <button onClick={() => setEditItem(index)}>
+          <button
+            className="invisible group-hover:visible"
+            onClick={() => setEditItem(index)}
+          >
             <CiEdit size={28} className="inline" />
           </button>
         )}
@@ -56,7 +59,7 @@ export default function ListSection({ list }) {
   return (
     <>
       <div className="">
-        <div className="relative w-full py-2 px-4 bg-destructive">
+        <div className="relative w-full py-2 px-4 flex items-center">
           {list?.title ? (
             <strong className="text-xl font-light">{list?.title}</strong>
           ) : editMode ? (
@@ -81,8 +84,8 @@ export default function ListSection({ list }) {
               setAddItem={setAddItem}
             />
           )}
-          <p>{list?.text}</p>
         </div>
+        {list?.text ? <p>{list?.text}</p> : null}
         {list?.type === "OL" ? (
           <ol className="px-4">{content}</ol>
         ) : (

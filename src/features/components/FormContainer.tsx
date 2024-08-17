@@ -1,4 +1,11 @@
-import React, { useEffect } from "react";
+import React, {
+  Dispatch,
+  FormEvent,
+  KeyboardEvent,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+} from "react";
 import { PiEmpty } from "react-icons/pi";
 import {
   IoAddCircleOutline,
@@ -6,6 +13,22 @@ import {
   IoCloseCircleOutline,
 } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BiX } from "react-icons/bi";
+
+interface Props {
+  children: ReactNode;
+  title?: string;
+  type?: "add" | "edit";
+  submitButton?: string;
+  deleteButton?: boolean;
+  clearButton?: boolean;
+  clearOnSubmit?: boolean;
+  setClearOnSubmit?: Dispatch<SetStateAction<boolean>>;
+  onSubmit: (event: FormEvent) => void;
+  onDelete?: () => void;
+  handleClear?: () => void;
+  closeForm: Dispatch<SetStateAction<boolean>>;
+}
 
 export default function FormContainer({
   children,
@@ -19,12 +42,10 @@ export default function FormContainer({
   onSubmit = () => {},
   onDelete = () => {},
   handleClear = () => {},
-  showForm = true,
-  setShowForm = () => {},
-  closeForm = () => {},
-}) {
-  const handleEscape = (e) => {
-    if (e.key === "Escape") {
+  closeForm,
+}: Props) {
+  const handleEscape = (ev: globalThis.KeyboardEvent) => {
+    if (ev.key === "Escape") {
       closeForm(false);
     }
   };
@@ -53,11 +74,22 @@ export default function FormContainer({
       : "Submit";
 
   return (
-    <div className="form-container">
-      <form onSubmit={onSubmit} onReset={handleReset}>
-        <h2>{title}</h2>
-        <div>
-          <div className="content">{children}</div>
+    <div className="fixed top-0 left-0 right-0 bottom-0 bg-zinc-700/70 flex justify-center items-center z-[60]">
+      <form
+        onSubmit={onSubmit}
+        onReset={handleReset}
+        className="bg-zinc-100 min-w-fit w-[70vw] max-w-[1024px] mx-4"
+      >
+        <div className="py-2 px-4 bg-red-600 text-white flex items-center gap-4">
+          <h2 className="flex-1 text-center">{title}</h2>
+          <button type="button" onClick={() => closeForm(false)}>
+            <BiX size={24} />
+          </button>
+        </div>
+        <div className="max-h-[80vh] min-h-[70vh] overscroll-y-auto">
+          <div className="flex flex-col flex-1 items-stretch gap-4 p-4">
+            {children}
+          </div>
         </div>
         {/* Form Buttons */}
         <div className="flex items-center justify-between gap-4 px-4">
@@ -70,7 +102,7 @@ export default function FormContainer({
             />
             <label htmlFor="clearOnSubmit">Clear On Submit</label>
           </div>
-          <div className="form-buttons">
+          <div className="flex flex-wrap items-center gap-4 p-4">
             {type === "add" ? (
               <button type="submit" title="Add" className="add">
                 <IoAddCircleOutline size={30} />

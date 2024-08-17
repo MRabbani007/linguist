@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddBlockIntroMutation } from "./blockSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";

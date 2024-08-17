@@ -3,7 +3,6 @@ import { selectEditMode } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
 import SectionDropDown from "./SectionDropDown";
-import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 export default function SectionTitle({
   section,
@@ -52,40 +51,44 @@ export default function SectionTitle({
           useGrouping: false,
         })}
       </p>
-      <div
-        onClick={() => setExpand(!expand)}
-        className="flex flex-col cursor-pointer flex-1 bg-destructive text-destructive_foreground"
-      >
-        <h3 className="font-semibold text-2xl md:text-4xl px-4 py-2 border-b-[1px] border-accent ">
-          {section?.title}
-        </h3>
-        <p className=" px-4 py-1">
-          {section?.subtitle && <i className="">{section?.subtitle}</i>}
-        </p>
+      <div className="flex flex-col cursor-pointer flex-1 bg-destructive text-destructive_foreground">
+        <div className="border-b-[1px] border-accent flex items-center gap-4">
+          <h3
+            onClick={() => setExpand(!expand)}
+            className="font-semibold text-xl md:text-2xl px-4 py-2 flex-1"
+          >
+            {section?.title}
+          </h3>
+          {editMode && (
+            <button
+              ref={dropDownButtonRef}
+              title="Edit Section"
+              onClick={() => setShowDropDown(true)}
+              className="ml-auto px-2 "
+            >
+              <BsThreeDots size={28} className="" />
+            </button>
+          )}
+          <SectionDropDown
+            section={section}
+            showDropDown={showDropDown}
+            ref={dropDownRef}
+            setEditTitle={setEditTitle}
+            setEditLessonID={setEditLessonID}
+            setAddIntro={setAddIntro}
+            setAddDef={setAddDef}
+            setAddTable={setAddTable}
+            setAddList={setAddList}
+            setAddWord={setAddWord}
+            setAddSentence={setAddSentence}
+          />
+        </div>
+        {section?.subtitle && (
+          <p className=" px-4 py-1">
+            <i className="">{section?.subtitle}</i>
+          </p>
+        )}
       </div>
-      {editMode && (
-        <button
-          ref={dropDownButtonRef}
-          title="Edit Section"
-          onClick={() => setShowDropDown(true)}
-          className="ml-auto px-2"
-        >
-          <BsThreeDots size={28} className="" />
-        </button>
-      )}
-      <SectionDropDown
-        section={section}
-        showDropDown={showDropDown}
-        ref={dropDownRef}
-        setEditTitle={setEditTitle}
-        setEditLessonID={setEditLessonID}
-        setAddIntro={setAddIntro}
-        setAddDef={setAddDef}
-        setAddTable={setAddTable}
-        setAddList={setAddList}
-        setAddWord={setAddWord}
-        setAddSentence={setAddSentence}
-      />
     </div>
   );
 }

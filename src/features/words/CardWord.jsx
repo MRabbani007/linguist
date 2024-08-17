@@ -45,6 +45,15 @@ export default function CardWord({ word }) {
 
   // min-w-[350px] lg:min-w-[400px] max-w-[600px]
 
+  const WORD_LEVEL = {
+    1: "text-green-600",
+    2: "text-green-600",
+    3: "text-orange-600",
+    4: "text-orange-600",
+    5: "text-red-600",
+    6: "text-red-600",
+  };
+
   return (
     <>
       <div
@@ -115,7 +124,11 @@ export default function CardWord({ word }) {
             <i>{WORD_GENDER_SHORT[word?.gender]}</i>
           </span>
           <IoStarOutline className="ml-auto" size={20} />
-          <PiCrownSimpleThin size={24} title={word?.level} />
+          <PiCrownSimpleThin
+            size={24}
+            title={word?.level}
+            className={word?.level && WORD_LEVEL[word.level]}
+          />
         </div>
       </div>
       {viewEditWord ? (

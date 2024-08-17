@@ -15,7 +15,6 @@ import LessonHeader from "../../features/blocks/LessonHeader";
 import LessonCompleted from "../../features/blocks/LessonCompleted";
 import ContentNavigator from "../../features/navigation/ContentNavigator";
 import { selectCurrentUser } from "../../features/auth/authSlice";
-import FormWordAdd from "../../features/words/FormWordAdd";
 
 export default function LessonPage() {
   const displayChapter = useSelector(selectDisplayChapter);

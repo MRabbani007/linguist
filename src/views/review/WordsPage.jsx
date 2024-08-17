@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { axiosPrivate } from "../../api/axios";
+import CardWord from "../../features/words/CardWord";
 
 const levels = [
   "Beginner - A1",
@@ -30,6 +33,29 @@ const items = [
 ];
 
 export default function WordsPage() {
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const subject = searchParams.get("subject");
+  const level = searchParams.get("level");
+
+  const [words, setWords] = useState([]);
+
+  const fetchWords = async () => {
+    try {
+      const response = await axiosPrivate.get("/word/filter", {
+        params: { subject, level },
+      });
+      if (response?.status === 200 && Array.isArray(response.data)) {
+        setWords(response.data);
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchWords();
+  }, [subject, level]);
+
   return (
     <main className="">
       {/* <header className="">
@@ -51,11 +77,23 @@ export default function WordsPage() {
                   key={idx}
                   className="py-2 px-4 bg-zinc-100 hover:bg-zinc-200 duration-200"
                 >
-                  {i}
+                  <Link
+                    to={{
+                      pathname: "/review/words",
+                      search: "?subject=Numbers",
+                    }}
+                  >
+                    {i}
+                  </Link>
                 </div>
               ))}
             </div>
           </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-3 gap-4">
+        {words.map((word, index) => (
+          <CardWord word={word} key={index} />
         ))}
       </div>
     </main>
