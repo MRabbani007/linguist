@@ -8,12 +8,14 @@
   top: 100%;
   right: 0;
   width: fit-content;
-  background-color: $clr-slate-50;
+  background-color: $clr-zinc-50;
   z-index: 40;
   transition: all 0.3s ease-in-out;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.mobile-menu .dropdown-item {
+.dropdown-item {
   padding: 0.5rem 1rem;
   display: flex;
   flex-direction: row;
@@ -22,6 +24,7 @@
   justify-content: flex-start;
 }
 
-.mobile-menu .dropdown-item span {
+.dropdown-item span {
   white-space: nowrap;
+  // display: none;
 }

@@ -19,7 +19,7 @@ const AdminDropDown = forwardRef(({ viewUserDropDown }, ref) => {
       ref={ref}
       className={
         (viewUserDropDown ? " " : " -translate-y-[20px] invisible opacity-0") +
-        " text-zinc-800 bg-slate-200 mobile-menu"
+        " text-zinc-800 bg-zinc-100 absolute top-full right-0"
       }
     >
       <li>

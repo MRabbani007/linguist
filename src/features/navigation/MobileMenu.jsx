@@ -4,37 +4,68 @@ import { IoIosLogOut } from "react-icons/io";
 import {
   IoAddCircleOutline,
   IoBarbellOutline,
+  IoDocumentTextOutline,
   IoGridOutline,
   IoSettingsOutline,
+  IoTextOutline,
 } from "react-icons/io5";
 import { SlBookOpen } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectEditMode, toggleEditMode } from "../globals/globalsSlice";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
-import { BsTextParagraph } from "react-icons/bs";
+import { BsBlockquoteLeft, BsTextParagraph } from "react-icons/bs";
+import { LuScrollText, LuText } from "react-icons/lu";
 
 const items = [
   {
-    id: 2,
-    label: "Learn",
-    title: "Lessons",
-    url: "/content/chapters",
-    icon: <SlBookOpen size={34} />,
+    id: 16,
+    label: "Exercise",
+    title: "Exercise",
+    url: "/exercise",
+    icon: <IoBarbellOutline size={38} />,
   },
   {
-    id: 3,
+    id: 10,
+    label: "Chapters",
+    title: "Chapters",
+    url: "/content/chapters",
+    icon: <LuScrollText size={30} />,
+  },
+  {
+    id: 11,
+    label: "Lessons",
+    title: "Lessons",
+    url: "/content/lesson",
+    icon: <LuText size={30} />,
+  },
+  {
+    id: 12,
+    label: "Words",
+    title: "Words",
+    url: "/review/words",
+    icon: <IoTextOutline size={32} />,
+  },
+  {
+    id: 13,
     label: "Sentences",
     title: "Sentences",
     url: "/sentences",
     icon: <BsTextParagraph size={32} />,
   },
   {
-    id: 4,
-    label: "Exercise",
-    title: "Exercise",
-    url: "/exercise",
-    icon: <IoBarbellOutline size={38} />,
+    id: 14,
+    label: "Texts",
+    title: "Texts",
+    url: "/content/text",
+    icon: <IoDocumentTextOutline size={32} />,
+  },
+  {
+    id: 15,
+    label: "Dialogues",
+    title: "Dialogues",
+    url: "/content/dialogue",
+    icon: <BsBlockquoteLeft size={32} />,
   },
 ];
 
@@ -76,7 +107,7 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
       ref={ref}
       className={
         (viewDropDown ? " " : " -translate-y-[20px] invisible opacity-0") +
-        " text-zinc-800 bg-slate-200 mobile-menu sm:hidden"
+        " text-zinc-800 bg-slate-200 mobile-menu"
       }
     >
       {isAdmin ? (

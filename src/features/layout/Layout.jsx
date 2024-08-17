@@ -28,7 +28,6 @@ import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
 import Footer from "./Footer";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { useGetLanguagesQuery } from "../globals/globalsApiSlice";
 
 const Layout = () => {
   const location = useLocation();
@@ -65,9 +64,9 @@ const Layout = () => {
   const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
 
   useEffect(() => {
-    if (lastPage?.pathname) {
-      navigate(`${lastPage?.pathname}${lastPage?.search ?? ""}`);
-    }
+    // if (lastPage?.pathname) {
+    //   navigate(`${lastPage?.pathname}${lastPage?.search ?? ""}`);
+    // }
   }, []);
 
   useEffect(() => {
@@ -99,8 +98,6 @@ const Layout = () => {
     }
   }, [lastChapter, lastLesson]);
 
-  const { data: langs } = useGetLanguagesQuery();
-
   useEffect(() => {
     if (user) {
       getProfile();
@@ -114,6 +111,7 @@ const Layout = () => {
     }
   }, [language?.id]);
 
+  // Set Chapters
   useEffect(() => {
     if (isSuccessChapters) {
       const tempChapters = chapters.ids.map((id) => chapters.entities[id]);
@@ -121,6 +119,7 @@ const Layout = () => {
     }
   }, [chapters]);
 
+  // Set Lessons
   useEffect(() => {
     if (isSuccessLessons) {
       const tempLessons = lessons.ids.map((id) => lessons.entities[id]);
@@ -128,9 +127,12 @@ const Layout = () => {
     }
   }, [lessons]);
 
+  // Set Language
   useEffect(() => {
     if (
       isSuccess &&
+      siteLanguages &&
+      siteLanguages?.length !== 0 &&
       userProfile[0]?.selectedLanguage &&
       userProfile[0].selectedLanguage !== ""
     ) {
@@ -158,7 +160,7 @@ const Layout = () => {
         })
       );
     }
-  }, [userProfile, siteLanguages, isSuccess]);
+  }, [userProfile, siteLanguages]);
 
   const onAuthPage =
     location.pathname.includes("login") ||

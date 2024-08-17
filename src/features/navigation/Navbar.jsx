@@ -187,7 +187,7 @@ const Navbar = () => {
                 title="Dashboard"
                 className={
                   (isActive("dashboard") ? "" : "") +
-                  " p-2 rounded-lg duration-200"
+                  " p-2 rounded-lg duration-200 hidden lg:inline-block"
                 }
               >
                 <IoGridOutline size={30} />

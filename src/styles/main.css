@@ -499,12 +499,14 @@ tbody tr:nth-child(2n) {
   top: 100%;
   right: 0;
   width: fit-content;
-  background-color: #f7fee7;
+  background-color: #fafafa;
   z-index: 40;
   transition: all 0.3s ease-in-out;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.mobile-menu .dropdown-item {
+.dropdown-item {
   padding: 0.5rem 1rem;
   display: flex;
   flex-direction: row;
@@ -513,7 +515,7 @@ tbody tr:nth-child(2n) {
   justify-content: flex-start;
 }
 
-.mobile-menu .dropdown-item span {
+.dropdown-item span {
   white-space: nowrap;
 }
 
