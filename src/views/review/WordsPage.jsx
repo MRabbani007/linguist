@@ -53,7 +53,7 @@ export default function WordsPage() {
   };
 
   useEffect(() => {
-    fetchWords();
+    // fetchWords();
   }, [subject, level]);
 
   return (
@@ -65,9 +65,9 @@ export default function WordsPage() {
         <p className="mx-auto font-bold text-2xl">Search</p>
         <input type="text" className="bg-zinc-400/10 w-full py-2 px-4" />
       </form>
-      <div className="flex items-stretch gap-8 w-full">
+      <div className="flex flex-wrap items-stretch gap-8">
         {items.map((item, index) => (
-          <div key={index} className="flex-1">
+          <div key={index} className="w-full sm:flex-1">
             <p className="font-bold text-3xl py-6 px-8 bg-zinc-200 text-center">
               {item.title}
             </p>

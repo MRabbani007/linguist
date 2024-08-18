@@ -6,7 +6,7 @@ const ChapterHeader = ({ chapter, setEditChapter }) => {
   const editMode = useSelector(selectEditMode);
 
   return (
-    <header className="group relative bg-destructive pt-8 px-4 mt-4">
+    <header className="group relative bg-destructive pt-8 px-4">
       <div className="flex items-stretch justify-start">
         <p
           title={`Chapter ${chapter?.chapterNo ? chapter?.chapterNo : 0}`}

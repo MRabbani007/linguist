@@ -9,7 +9,7 @@ export default function LessonIntro({
   return (
     <>
       {lesson?.lessonImage ? (
-        <div className="mx-auto max-h-[300px] max-w-[50vw] overflow-hidden">
+        <div className="mx-auto max-h-[300px] lg:max-w-[50vw] overflow-hidden">
           <img
             src={lesson?.lessonImage}
             alt=""
@@ -19,7 +19,7 @@ export default function LessonIntro({
       ) : null}
       {Array.isArray(lesson?.introduction) &&
       lesson?.introduction?.length !== 0 ? (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4">
           {lesson.introduction.map((intro, index) => {
             return (
               <LessonIntroItem

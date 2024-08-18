@@ -73,7 +73,7 @@ export default function Section({
         <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
 
         {Array.isArray(definitions) && definitions.length !== 0 ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {definitions.map((definition) => {
               return (
                 <Definition definition={definition} key={definition?.id} />
@@ -83,7 +83,7 @@ export default function Section({
         ) : null}
 
         {Array.isArray(sectionLists) && sectionLists.length !== 0 ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {sectionLists.map((list) => {
               return <ListSection list={list} key={list?.id} />;
             })}
@@ -91,7 +91,7 @@ export default function Section({
         ) : null}
 
         {Array.isArray(tables) && tables.length !== 0 ? (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {/* Tables */}
             {tables.map((table) => {
               const words = tableWords.filter(

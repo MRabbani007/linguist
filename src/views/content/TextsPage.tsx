@@ -6,7 +6,7 @@ export default function TextsPage() {
   return (
     <main>
       <header>
-        <h1>Texts</h1>
+        <h1 className="font-bold text-3xl">Reading Texts</h1>
       </header>
       <div className="space-y-4">Coming Soon!</div>
     </main>

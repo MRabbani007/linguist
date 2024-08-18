@@ -40,7 +40,7 @@ export default function DialoguePage() {
                 state={{ id: item.id }}
                 className="text-2xl font-semibold"
               >
-                <span className="mr-2">{item.sortIndex}.</span>
+                <span className="mr-2">{index + 1}.</span>
                 <span>{item?.title}</span>
               </Link>
               <p className="text-sm">{item?.subtitle}</p>

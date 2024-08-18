@@ -249,7 +249,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
         </div>
       ) : null} */}
       {defsContent?.length !== 0 && (
-        <div className="px-4 flex flex-col gap-4">{defsContent}</div>
+        <div className="flex flex-col gap-4">{defsContent}</div>
       )}
 
       {/* Sections */}
