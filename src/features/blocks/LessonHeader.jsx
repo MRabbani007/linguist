@@ -25,19 +25,19 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleDropDown);
-    return () => {
-      document.removeEventListener("mousedown", handleDropDown);
-    };
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleDropDown);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleDropDown);
+  //   };
+  // }, []);
 
   const temp1 = (
-    <header className="group relative bg-destructive md:pt-8 px-4">
-      <div className="flex items-stretch">
+    <header className="group bg-destructive md:pt-8 md:px-4">
+      <div className="flex items-stretch relative">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-10 md:w-20 min-h-[50px] lg:min-h-[80px] bg-accent flex flex-col items-center justify-center text-xl md:text-2xl lg:text-4xl font-light lg:font-bold border-b-4 border-accent_foreground text-accent_foreground"
+          className="w-10 md:w-20 min-h-[50px] lg:min-h-[80px] bg-accent flex flex-col items-center justify-center text-xl md:text-2xl lg:text-4xl font-light lg:font-bold border-b-4 border-destructive text-accent_foreground"
         >
           <span>
             {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
@@ -53,20 +53,26 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
           {lesson?.title}
         </h1>
         {editMode && (
-          <div className="relative">
-            <button
-              title="Edit Lesson"
-              className="invisible group-hover:visible absolute top-1/2 -translate-y-1/2 right-4 "
-              onClick={() => setShowDropDown(true)}
+          <div className="absolute top-1/2 right-4">
+            <div
+              className="relative invisible group-hover:visible "
+              onMouseLeave={() => setShowDropDown(false)}
             >
-              <BsThreeDots size={28} />
-            </button>
-            <LessonDropDown
-              lesson={lesson}
-              showDropDown={showDropDown}
-              setAddLessonIntro={setAddLessonIntro}
-              setAddSection={setAddSection}
-            />
+              <button
+                title="Edit Lesson"
+                className=""
+                // onClick={() => setShowDropDown(true)}
+                onMouseEnter={() => setShowDropDown(true)}
+              >
+                <BsThreeDots size={28} />
+              </button>
+              <LessonDropDown
+                lesson={lesson}
+                showDropDown={showDropDown}
+                setAddLessonIntro={setAddLessonIntro}
+                setAddSection={setAddSection}
+              />
+            </div>
           </div>
         )}
       </div>

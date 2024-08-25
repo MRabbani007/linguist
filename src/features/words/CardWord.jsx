@@ -7,9 +7,11 @@ import MoveWordSection from "./MoveWordSection";
 import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { PiCrownSimpleThin } from "react-icons/pi";
-import { IoStarOutline } from "react-icons/io5";
+import { IoChevronForwardOutline, IoStarOutline } from "react-icons/io5";
 import { CiImageOn } from "react-icons/ci";
 import WordImageEdit from "./WordImageEdit";
+import { BiMinus } from "react-icons/bi";
+import FormWordImage from "./FormWordImage";
 
 const WORD_TYPE = {
   v: "Verb",
@@ -43,6 +45,7 @@ export default function CardWord({ word }) {
 
   const showPopup = displayBlock?.thirdLang && word?.third;
 
+  const [expand, setExpand] = useState(false);
   // min-w-[350px] lg:min-w-[400px] max-w-[600px]
 
   const WORD_LEVEL = {
@@ -59,11 +62,19 @@ export default function CardWord({ word }) {
       <div
         className={
           (word.type === "ph" ? "" : "") +
-          "  flex flex-col min-h-[150px] flex-1 text-xl duration-200 group relative z-0 bg-destructive"
+          "  flex flex-col flex-1 text-xl duration-200 group relative z-10 bg-destructive"
         }
       >
         {/* Word Body */}
-        <div className="flex-1 flex items-stretch gap-4 relative py-4 px-6">
+        <div className="flex-1 flex items-stretch gap-4 relative py-2 px-4 md:py-4 md:px-6">
+          <button onClick={() => setExpand((curr) => !curr)}>
+            <IoChevronForwardOutline
+              className={
+                (expand ? "rotate-90" : "") +
+                " absolute top-2 left-2 invisible group-hover:visible duration-200"
+              }
+            />
+          </button>
           {/* Word Image */}
           {word?.imageURL ? (
             <img
@@ -73,7 +84,7 @@ export default function CardWord({ word }) {
             />
           ) : null}
           {/* Word first, second */}
-          <div className="flex flex-col justify-center flex-1">
+          <div className="flex flex-row flex-wrap items-center gap-4 flex-1">
             <div className="font-semibold text-accent relative group w-fit">
               <p
                 className="cursor-pointer text-2xl"
@@ -85,8 +96,10 @@ export default function CardWord({ word }) {
               {showPopup ? (
                 <p
                   className={
-                    (showPronunce ? "" : "invisible opacity-0 -translate-y-4") +
-                    " absolute top-full left-0 text-start py-1 px-2 w-fit text-nowrap font-normal z-30 bg-destructive duration-200"
+                    (showPronunce
+                      ? ""
+                      : "invisible opacity-0 -translate-y-4 ") +
+                    " absolute top-full left-0 text-start py-1 px-2 w-fit text-nowrap font-normal z-50 bg-zinc-300 duration-200"
                   }
                 >
                   {word?.third}
@@ -114,7 +127,13 @@ export default function CardWord({ word }) {
             </div>
           ) : null}
         </div>
-        <div className="py-2 px-4 flex items-center gap-4 text-sm border-t-[1px] border-accent bg-destructive text-destructive_foreground">
+        {/* Word Footer */}
+        <div
+          className={
+            (expand ? "py-2 px-4 " : "h-0 invisible opacity-0 ") +
+            " flex items-center gap-4 text-sm border-t-[1px] border-accent bg-destructive text-destructive_foreground duration-200"
+          }
+        >
           <button className="">
             <FaPlus size={20} />
           </button>
@@ -137,8 +156,11 @@ export default function CardWord({ word }) {
       {viewMoveSection && (
         <MoveWordSection word={word} setViewMoveSection={setViewMoveSection} />
       )}
-      {viewEditImage ? (
+      {/* {viewEditImage ? (
         <WordImageEdit word={word} setEdit={setViewEditImage} />
+      ) : null} */}
+      {viewEditImage ? (
+        <FormWordImage word={word} setShowForm={setViewEditImage} type="edit" />
       ) : null}
     </>
   );

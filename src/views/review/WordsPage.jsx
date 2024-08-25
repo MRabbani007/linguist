@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios";
 import CardWord from "../../features/words/CardWord";
+import { SUBJECT } from "../../data/data";
 
 const levels = [
   "Beginner - A1",
@@ -27,7 +28,7 @@ const types = ["Nouns", "Verbs", "Adjectives", "Adverbs"];
 const wordLists = ["Basic Words", "Most Common", "Emergency Russian"];
 
 const items = [
-  { title: "Words by Subject", url: "", children: subjects },
+  // { title: "Words by Subject", url: "", children: subjects },
   { title: "Words by Level", url: "", children: levels },
   { title: "Words by Type", url: "", children: types },
 ];
@@ -36,24 +37,51 @@ export default function WordsPage() {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
+  const [subjects, setSubjects] = useState([]);
   const subject = searchParams.get("subject");
   const level = searchParams.get("level");
 
   const [words, setWords] = useState([]);
 
+  const fetchSubjects = async () => {
+    try {
+      const response = await axiosPrivate.get("/word/subjects");
+
+      // && Array.isArray(response.data)
+      if (response?.status === 200) {
+        setSubjects(
+          response.data.subjects
+          // response.data.map((item) => {
+          //   if (item === "") return null;
+          //   return {
+          //     [item]: SUBJECT[item],
+          //   };
+          // })
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(subjects);
   const fetchWords = async () => {
     try {
       const response = await axiosPrivate.get("/word/filter", {
         params: { subject, level },
       });
+      console.log(response);
       if (response?.status === 200 && Array.isArray(response.data)) {
         setWords(response.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    // fetchWords();
+    fetchSubjects();
+    fetchWords();
   }, [subject, level]);
 
   return (
@@ -65,8 +93,17 @@ export default function WordsPage() {
         <p className="mx-auto font-bold text-2xl">Search</p>
         <input type="text" className="bg-zinc-400/10 w-full py-2 px-4" />
       </form>
+
+      <div className="grid grid-cols-3 gap-4">
+        {words.map((word, index) => (
+          <CardWord word={word} key={index} />
+        ))}
+      </div>
       <div className="flex flex-wrap items-stretch gap-8">
-        {items.map((item, index) => (
+        {[
+          { title: "Words by Subject", url: "", children: subjects },
+          ...items,
+        ].map((item, index) => (
           <div key={index} className="w-full sm:flex-1">
             <p className="font-bold text-3xl py-6 px-8 bg-zinc-200 text-center">
               {item.title}
@@ -80,7 +117,7 @@ export default function WordsPage() {
                   <Link
                     to={{
                       pathname: "/review/words",
-                      search: "?subject=Numbers",
+                      search: `?subject=${i}`,
                     }}
                   >
                     {i}
@@ -89,11 +126,6 @@ export default function WordsPage() {
               ))}
             </div>
           </div>
-        ))}
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        {words.map((word, index) => (
-          <CardWord word={word} key={index} />
         ))}
       </div>
     </main>

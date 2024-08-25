@@ -46,45 +46,6 @@ export async function fetchDB() {
   }
 }
 
-export async function uploadImage(file, foldername) {
-  try {
-    console.log(file, foldername);
-    const filename = file.name;
-
-    // create reference
-    const storageRef = ref(firebaseStorage, `${foldername}/${filename}`);
-
-    // upload file
-    const res = await uploadBytes(storageRef, file);
-
-    const path = res.metadata.fullPath;
-
-    // create file reference
-    const fileRef = ref(firebaseStorage, path);
-
-    // get download url
-    const imageURL = await getDownloadURL(fileRef);
-
-    // store to firestore db
-
-    // collection ref
-    const colRef = collection(firestoreDB, "images");
-
-    // create document
-    const image = {
-      id: crypto.randomUUID(),
-      foldername,
-      filename,
-      imageURL,
-    };
-
-    // adding docs
-    await addDoc(colRef, image);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function deleteImage(imageDoc) {
   try {
     // collection ref

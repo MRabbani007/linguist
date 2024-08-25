@@ -1,7 +1,6 @@
 import React, {
   Dispatch,
   FormEvent,
-  KeyboardEvent,
   ReactNode,
   SetStateAction,
   useEffect,
@@ -86,7 +85,7 @@ export default function FormContainer({
             <BiX size={24} />
           </button>
         </div>
-        <div className="max-h-[80vh] min-h-[70vh] overscroll-y-auto">
+        <div className="max-h-[80vh] min-h-[70vh] flex items-stretch overscroll-y-auto">
           <div className="flex flex-col flex-1 items-stretch gap-4 p-4">
             {children}
           </div>

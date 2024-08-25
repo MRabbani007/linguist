@@ -132,7 +132,7 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <div className="p-4 flex justify-between items-center bg-destructive ">
+    <div className="p-2 md:p-4 flex justify-between items-center bg-destructive ">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}

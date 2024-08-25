@@ -7,3 +7,19 @@ export const WORD_TYPES = {
   phrase: "Phrase",
   sentence: "Sentence",
 };
+
+export const SUBJECT = {
+  Animals: "Animals",
+  Food: "Food",
+  TimeDate: "Time & Date",
+  DaysMonths: "Days & months",
+  Weather: "Weather",
+  Health: "Health",
+  Numbers: "Numbers",
+  People: "People",
+  Professions: "Professions",
+  Communication: "Communication",
+  Sports: "Sports",
+  Home: "Home",
+  Vehicles: "Vehicles",
+};

@@ -36,19 +36,19 @@ const WORD_GENDER = {
 };
 
 const SUBJECT = {
-  Animals: "",
-  Food: "",
-  TimeDate: "",
-  DaysMonths: "",
-  Weather: "",
-  Health: "",
-  Numbers: "",
-  People: "",
-  Professions: "",
-  Communication: "",
-  Sports: "",
-  Home: "",
-  Vehicles: "",
+  Animals: "Animals",
+  Food: "Food",
+  TimeDate: "Time & Date",
+  DaysMonths: "Days & months",
+  Weather: "Weather",
+  Health: "Health",
+  Numbers: "Numbers",
+  People: "People",
+  Professions: "Professions",
+  Communication: "Communication",
+  Sports: "Sports",
+  Home: "Home",
+  Vehicles: "Vehicles",
 };
 
 const LEVEL = {

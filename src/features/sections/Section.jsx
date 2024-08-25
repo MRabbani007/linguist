@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SectionIntro from "./SectionIntro";
-import SectionEditTitle from "./SectionEditTitle";
+import SectionEdit from "./SectionEdit";
 import SectionTitle from "./SectionTitle";
 import DefinitionAdd from "../definitions/DefinitionAdd";
 import Definition from "../definitions/Definition";
@@ -16,7 +16,7 @@ import FormSentenceAdd from "../sentences/FormSentenceAdd";
 import { Link } from "react-router-dom";
 import FormWordAdd from "../words/FormWordAdd";
 import CardWord from "../words/CardWord";
-import CardWordTable from "../words/CardWordTable";
+import FormSectionImage from "./FormSectionImage";
 
 export default function Section({
   section = {},
@@ -30,9 +30,11 @@ export default function Section({
   const editMode = useSelector(selectEditMode);
 
   const [expand, setExpand] = useState(true);
+
   const [editTitle, setEditTitle] = useState(false);
   const [editLessonID, setEditLessonID] = useState(false);
   const [expandSentences, setExpandSentences] = useState(false);
+  const [editImage, setEditImage] = useState(false);
 
   const [addIntro, setAddIntro] = useState(false);
   const [addDef, setAddDef] = useState(false);
@@ -40,6 +42,20 @@ export default function Section({
   const [addTable, setAddTable] = useState(false);
   const [addWord, setAddWord] = useState(false);
   const [addSentence, setAddSentence] = useState(false);
+
+  const stateObj = {
+    setExpand,
+    setEditTitle,
+    setEditLessonID,
+    setExpandSentences,
+    setEditImage,
+    setAddIntro,
+    setAddDef,
+    setAddList,
+    setAddTable,
+    setAddWord,
+    setAddSentence,
+  };
 
   let content = words.map((word, index) => (
     <CardWord word={word} key={index} index={index} />
@@ -51,19 +67,7 @@ export default function Section({
 
   return (
     <section>
-      <SectionTitle
-        section={section}
-        expand={expand}
-        setExpand={setExpand}
-        setEditTitle={setEditTitle}
-        setEditLessonID={setEditLessonID}
-        setAddIntro={setAddIntro}
-        setAddDef={setAddDef}
-        setAddTable={setAddTable}
-        setAddList={setAddList}
-        setAddWord={setAddWord}
-        setAddSentence={setAddSentence}
-      />
+      <SectionTitle section={section} expand={expand} {...stateObj} />
       <div
         className={
           (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
@@ -71,6 +75,16 @@ export default function Section({
         }
       >
         <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
+
+        {section?.image && (
+          <div className="max-w-full h-[100vh] overflow-hidden">
+            <img
+              src={section.image}
+              alt="section image"
+              className="mx-auto h-full object-fill"
+            />
+          </div>
+        )}
 
         {Array.isArray(definitions) && definitions.length !== 0 ? (
           <div className="flex flex-col gap-4">
@@ -131,7 +145,7 @@ export default function Section({
       </div>
 
       {editTitle ? (
-        <SectionEditTitle section={section} setEdit={setEditTitle} />
+        <SectionEdit section={section} setEdit={setEditTitle} />
       ) : null}
 
       {editLessonID ? (
@@ -171,6 +185,14 @@ export default function Section({
 
       {editMode && addSentence ? (
         <FormSentenceAdd section={section} setAdd={setAddSentence} />
+      ) : null}
+
+      {editMode && editImage ? (
+        <FormSectionImage
+          section={section}
+          type={"edit"}
+          setShowForm={setEditImage}
+        />
       ) : null}
     </section>
   );

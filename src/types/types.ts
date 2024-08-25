@@ -42,3 +42,76 @@ export type DialogueStatement = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type Section = {
+  id: string;
+  userID?: string;
+  chapterID: string;
+  lessonID: string;
+
+  sectionNo?: number;
+  sortIndex?: number;
+
+  title: string;
+  subtitle?: string;
+  introduction?: string[];
+  text?: string[];
+  summary?: string[];
+  notes?: string[];
+
+  subject?: string;
+  display?: string;
+
+  image?: string;
+  imageCaption?: string;
+
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type Word = {
+  id: string;
+  // Header
+  userID?: string;
+  chapterID?: string;
+  blockID?: string;
+  sectionID?: string;
+  // Content
+  // main language
+  first: string;
+  firstCaption: string;
+  // second language
+  second: string;
+  secondCaption: string;
+  // pronunciation
+  third: string;
+  fourth: string;
+  image: string;
+  imageURL: string;
+  // example sentences
+  sentences: string[];
+  sentencesTranslation: string[];
+  baseWord: string;
+
+  // flag for using word in exercises
+  exercises: string;
+
+  // Grammatical type of word: verb, noun, pronoun, proverb, phrase
+  type: string;
+  gender: string;
+  form: string;
+  note: string;
+
+  level: string;
+  subject: string;
+
+  group: string;
+
+  // display type of word: list or card
+  display: string;
+  // show or hide word
+  showWord: boolean;
+  // for sorting
+  sortIndex: number;
+  createDate?: Date | string;
+};

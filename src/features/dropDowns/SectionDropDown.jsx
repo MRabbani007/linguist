@@ -1,15 +1,6 @@
 import { forwardRef } from "react";
 import copy from "copy-to-clipboard";
-import {
-  CiCirclePlus,
-  CiEdit,
-  CiHashtag,
-  CiTextAlignLeft,
-  CiTrash,
-  CiViewTable,
-} from "react-icons/ci";
-import { useRemoveSectionMutation } from "./sectionSlice";
-import { CgDetailsMore } from "react-icons/cg";
+import { CiEdit, CiImageOn, CiTrash, CiViewTable } from "react-icons/ci";
 import { toast } from "react-toastify";
 import {
   BsBoxArrowUpRight,
@@ -28,6 +19,7 @@ const SectionDropDown = forwardRef(
       showDropDown,
       setEditTitle,
       setEditLessonID,
+      setEditImage,
       setAddIntro,
       setAddDef,
       setAddTable,
@@ -37,19 +29,10 @@ const SectionDropDown = forwardRef(
     },
     ref
   ) => {
-    const [removeSection, { isLoading }] = useRemoveSectionMutation();
-
     const copyIDtoClipboard = () => {
       const isCopy = copy(section?.id);
       if (isCopy) {
         toast.success("Section ID Copied");
-      }
-    };
-
-    const handleDelete = async () => {
-      if (confirm("Delete this section?")) {
-        await removeSection(section?.id);
-        toast.success("Section Deleted");
       }
     };
 
@@ -92,6 +75,10 @@ const SectionDropDown = forwardRef(
             <CiEdit size={32} />
             <span>Title</span>
           </button>
+          <button title="Edit Image" onClick={() => setEditImage(true)}>
+            <CiImageOn size={32} />
+            <span>Image</span>
+          </button>
           <button title="Move Section" onClick={() => setEditLessonID(true)}>
             <BsBoxArrowUpRight size={25} />
             <span>Move</span>
@@ -99,10 +86,6 @@ const SectionDropDown = forwardRef(
           <button title="Copy Section ID" onClick={copyIDtoClipboard}>
             <IoCopyOutline size={30} />
             <span>Copy ID</span>
-          </button>
-          <button title="Delete Section" onClick={handleDelete}>
-            <CiTrash size={32} />
-            <span>Delete</span>
           </button>
         </li>
       </ul>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { selectEditMode } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
 import { BsThreeDots } from "react-icons/bs";
-import SectionDropDown from "./SectionDropDown";
+import SectionDropDown from "../dropDowns/SectionDropDown";
 
 export default function SectionTitle({
   section,
@@ -10,6 +10,7 @@ export default function SectionTitle({
   setExpand,
   setEditTitle,
   setEditLessonID,
+  setEditImage,
   setAddIntro,
   setAddDef,
   setAddList,
@@ -18,29 +19,7 @@ export default function SectionTitle({
   setAddSentence,
 }) {
   const editMode = useSelector(selectEditMode);
-
   const [showDropDown, setShowDropDown] = useState(false);
-
-  const dropDownRef = useRef();
-  const dropDownButtonRef = useRef();
-
-  const handleDropDown = (e) => {
-    if (!dropDownRef?.current?.contains(e.target)) {
-      setShowDropDown(false);
-      if (dropDownButtonRef.current?.contains(e.target)) {
-        setShowDropDown(true);
-      } else {
-        setShowDropDown(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleDropDown);
-    return () => {
-      document.removeEventListener("mousedown", handleDropDown);
-    };
-  }, []);
 
   return (
     <div className="flex items-stretch group relative my-6">
@@ -60,28 +39,29 @@ export default function SectionTitle({
             {section?.title}
           </h3>
           {editMode && (
-            <button
-              ref={dropDownButtonRef}
-              title="Edit Section"
-              onClick={() => setShowDropDown(true)}
-              className="ml-auto px-2 "
-            >
-              <BsThreeDots size={28} className="" />
-            </button>
+            <div className="relative" onBlur={() => setShowDropDown(false)}>
+              <button
+                title="Edit Section"
+                onMouseOver={() => setShowDropDown(true)}
+                className="ml-auto px-2 "
+              >
+                <BsThreeDots size={28} className="" />
+              </button>
+              <SectionDropDown
+                section={section}
+                showDropDown={showDropDown}
+                setEditTitle={setEditTitle}
+                setEditLessonID={setEditLessonID}
+                setAddIntro={setAddIntro}
+                setAddDef={setAddDef}
+                setAddTable={setAddTable}
+                setAddList={setAddList}
+                setAddWord={setAddWord}
+                setAddSentence={setAddSentence}
+                setEditImage={setEditImage}
+              />
+            </div>
           )}
-          <SectionDropDown
-            section={section}
-            showDropDown={showDropDown}
-            ref={dropDownRef}
-            setEditTitle={setEditTitle}
-            setEditLessonID={setEditLessonID}
-            setAddIntro={setAddIntro}
-            setAddDef={setAddDef}
-            setAddTable={setAddTable}
-            setAddList={setAddList}
-            setAddWord={setAddWord}
-            setAddSentence={setAddSentence}
-          />
         </div>
         {section?.subtitle && (
           <p className=" px-4 py-1">
