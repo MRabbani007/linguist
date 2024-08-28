@@ -28,6 +28,7 @@ import { useLazyGetChaptersQuery } from "../chapters/chapterSlice";
 import { useLazyGetAllBlocksQuery } from "../blocks/blockSlice";
 import Footer from "./Footer";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { useGetLanguagesQuery } from "../globals/globalsApiSlice";
 
 const Layout = () => {
   const location = useLocation();
@@ -36,7 +37,13 @@ const Layout = () => {
 
   const user = useSelector(selectCurrentUser);
   const language = useSelector(selectLanguage);
-  const siteLanguages = useSelector(selectSiteLanguages);
+  // const siteLanguages = useSelector(selectSiteLanguages);
+
+  const {
+    data: siteLanguages,
+    isLoading: isLoadingSiteLanguages,
+    isSuccess: isSuccessSiteLangauges,
+  } = useGetLanguagesQuery();
 
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
@@ -64,6 +71,16 @@ const Layout = () => {
   const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
 
   useEffect(() => {
+    if (isSuccessSiteLangauges) {
+      dispatch(
+        setSiteLanguages(
+          siteLanguages.ids.map((id) => siteLanguages.entities[id])
+        )
+      );
+    }
+  }, [siteLanguages]);
+
+  useEffect(() => {
     // if (lastPage?.pathname) {
     //   navigate(`${lastPage?.pathname}${lastPage?.search ?? ""}`);
     // }
@@ -86,13 +103,13 @@ const Layout = () => {
   }, [displayBlock]);
 
   useEffect(() => {
-    if (!displayChapter?.id) {
+    if (!displayChapter?.id && lastChapter?.id) {
       dispatch(setDisplayChapter(lastChapter));
       if (!displayChapter?.id && !lastLesson?.id) {
         // navigate("/content/sections");
       }
     }
-    if (!displayBlock?.id) {
+    if (!displayBlock?.id && lastLesson?.id) {
       dispatch(setDisplayBlock(lastLesson));
       // navigate("/content/lesson");
     }
@@ -131,14 +148,13 @@ const Layout = () => {
   useEffect(() => {
     if (
       isSuccess &&
-      siteLanguages &&
-      siteLanguages?.length !== 0 &&
+      isSuccessSiteLangauges &&
       userProfile[0]?.selectedLanguage &&
       userProfile[0].selectedLanguage !== ""
     ) {
-      let temp = siteLanguages.find(
-        (lang) => lang.id === userProfile[0].selectedLanguage
-      );
+      let temp = siteLanguages.ids
+        .map((id) => siteLanguages.entities[id])
+        .find((lang) => lang.id === userProfile[0].selectedLanguage);
       if (temp?.id) {
         dispatch(setLanguage(temp));
       }

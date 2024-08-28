@@ -27,12 +27,20 @@ export default function DialoguePage() {
   return (
     <main>
       <header>
-        <h1 className="font-bold text-3xl">Dialogues</h1>
+        <h1 className="font-bold text-3xl p-4 bg-primary_foreground">
+          Dialogues
+        </h1>
       </header>
-      <div className="space-y-4">
+      <div className="flex flex-wrap flex-col sm:flex-row items-stretch gap-4">
         {dialogues.map((item, index) => {
           return (
-            <div key={index} className="bg-zinc-200 py-4 px-8 rounded-lg">
+            <div
+              key={index}
+              className="bg-zinc-200 py-4 px-8 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1"
+            >
+              <div>
+                <img src={"/assets/dialogue.png"} />
+              </div>
               <Link
                 to={{
                   pathname: "/content/dialogue/id",

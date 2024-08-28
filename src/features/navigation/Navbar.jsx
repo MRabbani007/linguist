@@ -226,9 +226,9 @@ const Navbar = () => {
             </button>
             <MobileMenu ref={dropDownRefMobile} viewDropDown={viewMobileMenu} />
           </div>
-          <button onClick={() => darkModeHandler()}>
+          {/* <button onClick={() => darkModeHandler()}>
             {dark ? <IoSunny size={30} /> : <IoMoon size={30} />}
-          </button>
+          </button> */}
         </div>
         <NavbarSearch viewSearch={viewSearch} />
       </div>
