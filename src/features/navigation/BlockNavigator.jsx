@@ -132,11 +132,11 @@ const BlockNavigator = ({ children }) => {
   };
 
   return (
-    <div className="p-2 md:p-4 flex justify-between items-center bg-destructive ">
+    <div className="p-2 md:p-4 flex justify-between items-center ">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
         <FaArrowLeft size={24} />
         <span className="font-semibold hidden md:inline text-nowrap">
@@ -147,7 +147,7 @@ const BlockNavigator = ({ children }) => {
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
         <span className="font-semibold hidden md:inline duration-200 text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}

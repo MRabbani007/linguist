@@ -33,11 +33,11 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
   // }, []);
 
   const temp1 = (
-    <header className="group bg-destructive md:pt-8 md:px-4">
+    <header className="group">
       <div className="flex items-stretch relative">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-10 md:w-20 min-h-[50px] lg:min-h-[80px] bg-accent flex flex-col items-center justify-center text-xl md:text-2xl lg:text-4xl font-light lg:font-bold border-b-4 border-destructive text-accent_foreground"
+          className="w-12 lg:min-h-[80px] bg-accent flex flex-col items-center justify-center text-base md:text-2xl font-semibold border-b-4 border-destructive text-accent_foreground"
         >
           <span>
             {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
@@ -49,7 +49,7 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
             )}
           </span>
         </p>
-        <h1 className="text-2xl md:text-4xl lg:text-7xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1 text-destructive_foreground">
+        <h1 className="text-2xl md:text-4xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1 text-destructive_foreground">
           {lesson?.title}
         </h1>
         {editMode && (
@@ -78,8 +78,10 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
       </div>
       <div className="flex items-stretch">
         <p
-          title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-10 md:w-20 h-[40px] text-accent_foreground bg-accent flex flex-col items-center justify-center text-base md:text-xl font-light lg:font-normal"
+          title={`Chapter ${
+            displayChapter?.chapterNo ? displayChapter?.chapterNo : 0
+          }`}
+          className="w-12 py-1 text-accent_foreground bg-accent flex flex-col items-center justify-center text-base font-semibold"
         >
           <span>
             {(displayChapter?.chapterNo ?? "").toLocaleString("en-US", {

@@ -135,15 +135,19 @@ const Navbar = () => {
   // max-w-[1024px]
 
   return (
-    <div className="z-50 h-20 w-full text-accent relative font-medium bg-destructive">
+    <div className="z-50 py-2 w-full relative font-medium bg-destructive">
       <div className="h-full flex items-stretch mx-auto px-4 relative">
         {/* Left Logo */}
-        <Link to="/" title="Home" className="font-bold text-4xl my-auto">
+        <Link
+          to="/"
+          title="Home"
+          className="font-semibold text-2xl my-auto text-accent"
+        >
           Lingo
         </Link>
 
         {/* Middle Block */}
-        <div className="hidden lg:flex mx-auto flex-row items-center sm:gap-4 gap-2 ml-auto">
+        <div className="hidden lg:flex mx-auto flex-row items-center sm:gap-4 gap-2 ml-auto text-zinc-900">
           <Dropdown
             label={"Lessons"}
             url={"/content/chapters"}

@@ -70,11 +70,11 @@ const ChapterNavigator = () => {
   const lastChapter = chapterIndex === chapters.length - 1;
 
   return (
-    <div className="p-4 flex justify-between items-center bg-destructive">
+    <div className="p-4 flex justify-between items-center">
       <button
         onClick={handlePrevious}
         disabled={firstChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
         <FaArrowLeft size={24} />
         <span className="font-semibold hidden md:inline">Previous Chapter</span>
@@ -82,7 +82,7 @@ const ChapterNavigator = () => {
       <button
         onClick={handleNext}
         disabled={lastChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground bg-destructive group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
         <span className="font-semibold hidden md:inline">Next Chapter</span>
         <FaArrowRight size={24} />

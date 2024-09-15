@@ -30,7 +30,7 @@ export default function SectionTitle({
           useGrouping: false,
         })}
       </p>
-      <div className="flex flex-col cursor-pointer flex-1 bg-destructive text-destructive_foreground">
+      <div className="flex flex-col cursor-pointer flex-1 text-destructive_foreground">
         <div className="border-b-[1px] border-accent flex items-center gap-4">
           <h3
             onClick={() => setExpand(!expand)}

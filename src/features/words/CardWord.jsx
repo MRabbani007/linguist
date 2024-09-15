@@ -80,14 +80,14 @@ export default function CardWord({ word }) {
             <img
               src={word.imageURL}
               alt={word.first}
-              className="max-h-28 max-w-24"
+              className="object-contain max-h-24 max-w-20"
             />
           ) : null}
           {/* Word first, second */}
-          <div className="flex flex-row flex-wrap items-center gap-4 flex-1">
-            <div className="font-semibold text-accent relative group w-fit">
+          <div className="flex flex-col flex-wrap items-start justify-start gap-2 flex-1">
+            <div className="font-semibold relative group w-fit">
               <p
-                className="cursor-pointer text-2xl"
+                className="cursor-pointer text-xl"
                 onMouseOver={() => setShowPronunce(true)}
                 onMouseOut={() => setShowPronunce(false)}
               >
@@ -99,7 +99,7 @@ export default function CardWord({ word }) {
                     (showPronunce
                       ? ""
                       : "invisible opacity-0 -translate-y-4 ") +
-                    " absolute top-full left-0 text-start py-1 px-2 w-fit text-nowrap font-normal z-50 bg-zinc-300 duration-200"
+                    " absolute top-full left-0 py-1 px-2 w-fit text-nowrap font-normal z-50 bg-white rounded-lg duration-200 text-sm"
                   }
                 >
                   {word?.third}

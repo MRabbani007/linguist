@@ -13,7 +13,7 @@ interface Props {
   foldername: string;
 }
 
-export default function useFileUpload({ file, foldername }) {
+export default function useFileUpload({ file, foldername }: Props) {
   const [progress, setProgress] = useState<number>(0);
   const [error, setError] = useState<StorageError | null>(null);
   const [url, setUrl] = useState<string | null>(null);
