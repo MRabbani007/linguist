@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="w-full border-t-2 border-accent bg-destructive text-destructive_foreground px-4 py-4 sm:px-10 sm:py-10 flex flex-col sm:flex-row sm:justify-between flex-wrap">
+    <div className="w-full border-t-2 border-accent bg-destructive text-destructive_foreground px-4 py-4 flex flex-col sm:flex-row sm:justify-between flex-wrap">
       <Link to="/" title="Home" className="font-bold text-2xl text-accent">
         Lingo
       </Link>

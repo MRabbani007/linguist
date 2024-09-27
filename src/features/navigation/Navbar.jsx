@@ -1,18 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
-// Imported Icons
-import { IoGridOutline, IoMenu, IoMoon, IoSunny } from "react-icons/io5";
+import { IoGridOutline, IoMenu } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
-import { useEffect, useRef, useState } from "react";
-import Offcanvas from "./Offcanvas";
+import { useRef, useState } from "react";
 import UserDropDown from "./UserDropDown";
 import AdminDropDown from "./AdminDropDown";
 import MobileMenu from "./MobileMenu";
 import { IoIosSearch } from "react-icons/io";
 import NavbarSearch from "./NavbarSearch";
-import { FaRegUserCircle } from "react-icons/fa";
 import Dropdown from "../components/Dropdown";
-import { LuUser2 } from "react-icons/lu";
 import { AiOutlineUser } from "react-icons/ai";
 
 const lessonsDropDown = [
@@ -87,18 +83,11 @@ const Navbar = () => {
 
   const [viewMobileMenu, setViewMobileMenu] = useState(false);
   const [viewUserDropDown, setViewUserDropDown] = useState(false);
-  const [viewSideBar, setViewSideBar] = useState(false);
   const [viewSearch, setViewSearch] = useState(false);
 
-  const sideBarRef = useRef();
-  const sideBarButtonRef = useRef();
   const dropDownRefUser = useRef();
   const dropDownRefAdmin = useRef();
   const dropDownRefMobile = useRef();
-
-  const handleSideBar = (val = false) => {
-    setViewSideBar(val);
-  };
 
   const handleUserDropDown = (val = false) => {
     setViewUserDropDown(val);
@@ -106,37 +95,9 @@ const Navbar = () => {
 
   const isActive = (page) => location.pathname.includes(page);
 
-  const closeSideBar = (e) => {
-    if (!sideBarRef.current?.contains(e.target)) {
-      if (!sideBarButtonRef.current?.contains(e.target)) {
-        handleSideBar(false);
-      } else {
-        handleSideBar(!viewSideBar);
-      }
-    }
-    if (!dropDownRefUser?.current?.contains(e.target)) {
-      handleUserDropDown();
-    }
-    if (!dropDownRefAdmin?.current?.contains(e.target)) {
-      // handleUserDropDown();
-    }
-    if (!dropDownRefMobile?.current?.contains(e.target)) {
-      setViewMobileMenu(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", closeSideBar);
-    return () => {
-      document.removeEventListener("mousedown", closeSideBar);
-    };
-  }, []);
-
-  // max-w-[1024px]
-
   return (
-    <div className="z-50 py-2 w-full relative font-medium bg-destructive">
-      <div className="h-full flex items-stretch mx-auto px-4 relative">
+    <div className="z-50 w-full relative font-medium bg-destructive">
+      <div className="flex items-stretch justify-between py-2 px-4 relative">
         {/* Left Logo */}
         <Link
           to="/"
@@ -147,7 +108,7 @@ const Navbar = () => {
         </Link>
 
         {/* Middle Block */}
-        <div className="hidden lg:flex mx-auto flex-row items-center sm:gap-4 gap-2 ml-auto text-zinc-900">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden justify-center lg:flex my-auto flex-row items-stretch sm:gap-4 gap-2 text-zinc-900">
           <Dropdown
             label={"Lessons"}
             url={"/content/chapters"}
@@ -161,13 +122,13 @@ const Navbar = () => {
             items={exerciseDropDown}
           />
           {/* Search Button */}
-          <button className="" onClick={() => setViewSearch((curr) => !curr)}>
+          <button onClick={() => setViewSearch((curr) => !curr)}>
             <IoIosSearch size={30} />
           </button>
         </div>
 
         {/* Right Block */}
-        <div className="flex items-center sm:gap-4 gap-2 ml-auto">
+        <div className="flex items-center sm:gap-4 gap-2">
           {!user ? (
             <div className="hidden lg:flex items-center gap-4">
               <Link to="/login" title="Sign In" className="">
@@ -179,7 +140,6 @@ const Navbar = () => {
                 title="Register"
                 className="bg-accent text-accent_foreground py-2 px-4 rounded-md"
               >
-                {/* <AiOutlineUser size={30} /> */}
                 Register
               </Link>
             </div>
@@ -194,7 +154,7 @@ const Navbar = () => {
                   " p-2 rounded-lg duration-200 hidden lg:inline-block"
                 }
               >
-                <IoGridOutline size={30} />
+                <IoGridOutline size={26} />
               </Link>
               {/* User menu */}
               <div
@@ -207,7 +167,7 @@ const Navbar = () => {
                   onClick={() => setViewUserDropDown(true)}
                   title="User"
                 >
-                  <AiOutlineUser size={40} />
+                  <AiOutlineUser size={30} />
                 </button>
                 {isAdmin ? (
                   <AdminDropDown
@@ -236,12 +196,6 @@ const Navbar = () => {
         </div>
         <NavbarSearch viewSearch={viewSearch} />
       </div>
-      <Offcanvas
-        viewSideBar={viewSideBar}
-        handleSideBar={handleSideBar}
-        ref={sideBarRef}
-        setViewSideBar={setViewSideBar}
-      />
     </div>
   );
 };

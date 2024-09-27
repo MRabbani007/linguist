@@ -16,16 +16,15 @@ export default function Dropdown({ label, url, icon, items }) {
 
   return (
     <div
-      className="relative"
+      className="relative my-auto"
       onMouseOver={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
       <button
         onClick={handleClick}
-        className="flex items-center gap-2 h-full border-b-4 border-destructive hover:border-yellow-500 duration-200"
+        className="border-b-2 pt-0.5 border-destructive hover:border-yellow-500 duration-200"
       >
-        <span>{label}</span>
-        {icon ? icon : null}
+        {label}
       </button>
       <ul
         className={

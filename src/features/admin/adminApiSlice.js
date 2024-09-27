@@ -50,6 +50,9 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (responseData) => {
         store.dispatch(setLessonsCount(responseData?.count));
+        // const temp = responseData?.data.sort((a, b) =>
+        //   a.sortIndex - b.sortIndex > 0 ? 1 : -1
+        // );
         return adminAdapter.setAll(initialState, responseData?.data);
       },
       providesTags: (result, error, arg) => [

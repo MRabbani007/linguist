@@ -1,4 +1,3 @@
-import { useState } from "react";
 import SectionIntroItem from "./SectionIntroItem";
 import SectionIntroAdd from "./SectionIntroAdd";
 import { useSelector } from "react-redux";
@@ -11,7 +10,7 @@ export default function SectionIntro({ section, add, setAdd }) {
     <>
       {Array.isArray(section?.introduction) &&
       section.introduction.length !== 0 ? (
-        <article className="flex flex-col gap-0 px-4">
+        <article className="flex flex-col gap-4">
           {section.introduction.map((intro, index) => {
             return (
               <SectionIntroItem

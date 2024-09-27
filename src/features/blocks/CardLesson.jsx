@@ -25,9 +25,9 @@ export default function CardLesson({ lesson }) {
   return (
     <div
       onClick={blockOpen}
-      className="p-4 flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group bg-destructive text-destructive_foreground"
+      className="flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group"
     >
-      <span className="bg-accent w-10 h-10 shrink-0 flex items-center justify-center text-accent_foreground rounded-full">
+      <span className="bg-red-600 shrink-0 w-10 h-10 flex items-center justify-center text-accent_foreground rounded-full text-sm">
         {lesson?.sortIndex}
       </span>
       <div className="flex flex-col">
@@ -36,10 +36,10 @@ export default function CardLesson({ lesson }) {
           <p className="">{lesson?.subtitle}</p>
           <p>{lesson?.detail}</p>
         </div>
-        <p className="flex items-center gap-2">
+        {/* <p className="flex items-center gap-2">
           <IoTimerOutline size={22} className="inline" />
           <span>{lesson?.learningTime}</span>
-        </p>
+        </p> */}
       </div>
     </div>
   );

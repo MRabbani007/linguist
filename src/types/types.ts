@@ -1,4 +1,4 @@
-export type Dialogue = {
+type Dialogue = {
   id: string;
   sortIndex: number;
 
@@ -15,7 +15,7 @@ export type Dialogue = {
   updatedAt?: Date;
 };
 
-export type DialogueStatement = {
+type DialogueStatement = {
   id: string;
   dialogueID: string;
 
@@ -43,7 +43,7 @@ export type DialogueStatement = {
   updatedAt?: Date;
 };
 
-export type Section = {
+type Section = {
   id: string;
   userID?: string;
   chapterID: string;
@@ -69,7 +69,7 @@ export type Section = {
   updatedAt?: Date | string;
 };
 
-export type Word = {
+declare type Word = {
   id: string;
   // Header
   userID?: string;
@@ -114,4 +114,17 @@ export type Word = {
   // for sorting
   sortIndex: number;
   createDate?: Date | string;
+};
+
+type Definition = {};
+
+declare type SectionList = {
+  id: string;
+  lessonID: string;
+  sectionID: string;
+  type: string;
+  title: string;
+  text: string;
+  notes: string;
+  sortIndex: number;
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayChapter, selectEditMode } from "../globals/globalsSlice";
 import { BsThreeDots } from "react-icons/bs";
@@ -11,45 +11,19 @@ const LessonHeader = ({ lesson, setAddLessonIntro, setAddSection }) => {
 
   const [showDropDown, setShowDropDown] = useState(false);
 
-  const dropDownRef = useRef();
-  const dropDownButtonRef = useRef();
-
-  const handleDropDown = (e) => {
-    if (!dropDownRef?.current?.contains(e.target)) {
-      setShowDropDown(false);
-      if (dropDownButtonRef.current?.contains(e.target)) {
-        setShowDropDown(true);
-      } else {
-        setShowDropDown(false);
-      }
-    }
-  };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleDropDown);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleDropDown);
-  //   };
-  // }, []);
-
   const temp1 = (
     <header className="group">
       <div className="flex items-stretch relative">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-12 lg:min-h-[80px] bg-accent flex flex-col items-center justify-center text-base md:text-2xl font-semibold border-b-4 border-destructive text-accent_foreground"
+          className="w-12 bg-accent flex flex-col items-center justify-center text-base md:text-2xl font-semibold border-b-4 border-destructive text-accent_foreground"
         >
-          <span>
-            {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString(
-              "en-US",
-              {
-                minimumIntegerDigits: 2,
-                useGrouping: false,
-              }
-            )}
-          </span>
+          {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
         </p>
-        <h1 className="text-2xl md:text-4xl font-semibold text-wrap flex items-center px-4 border-accent border-b-4 flex-1 text-destructive_foreground">
+        <h1 className="text-2xl md:text-4xl font-semibold text-wrap flex items-center px-4 py-2 border-accent border-b-4 flex-1 text-destructive_foreground">
           {lesson?.title}
         </h1>
         {editMode && (

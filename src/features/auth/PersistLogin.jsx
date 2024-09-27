@@ -54,14 +54,14 @@ const PersistLogin = () => {
       {!persist ? (
         <Outlet />
       ) : isLoading ? (
-        <main className="items-center justify-center">
+        <main className="flex-1 items-center justify-center">
           <header className="text-zinc-800 font-medium justify-center">
             <h1>
               Welcome to <span className="text-red-700 font-bold">Lingo</span>!
             </h1>
           </header>
           <div className="flex-1">
-            <p>Connecting to server</p>
+            <p className="mb-6">Connecting to server</p>
             <ReactLoading
               type={"spin"}
               color={"#000"}

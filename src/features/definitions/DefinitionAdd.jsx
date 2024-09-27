@@ -1,34 +1,41 @@
 import { useState } from "react";
-import { CiCirclePlus, CiSquarePlus, CiSquareRemove } from "react-icons/ci";
 import { useAddDefinitionMutation } from "./definitionsSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import { DefinitionTemplate } from "../../data/templates";
 
 export default function DefinitionAdd({ lessonID, sectionID = "", setAdd }) {
   const [addDefinition, { isLoading }] = useAddDefinitionMutation();
 
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [caption, setCaption] = useState("");
-  const [notes, setNotes] = useState("");
+  const [state, setState] = useState(DefinitionTemplate);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setState((prevProps) => ({
+      ...prevProps,
+      [name]: value,
+    }));
+  };
 
   const canSave = !isLoading;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const definition = {
       id: crypto.randomUUID(),
       lessonID,
       sectionID,
-      title,
-      text,
-      caption,
-      notes,
+      ...state,
     };
+
     if (canSave) {
-      await addDefinition(definition);
-      toast.success("Definition Created");
-      setAdd(false);
+      const response = await addDefinition(definition);
+      if (response?.data) {
+        toast.success("Definition Created");
+        setAdd(false);
+      } else {
+        toast.error("Failed to create definition");
+      }
     }
   };
 
@@ -41,46 +48,63 @@ export default function DefinitionAdd({ lessonID, sectionID = "", setAdd }) {
       closeForm={setAdd}
     >
       <div className="field">
+        <label htmlFor="title" className="field__label">
+          Title
+        </label>
         <input
           type="text"
+          id="title"
+          name="title"
           title="Title"
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={state?.title}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="text" className="field__label">
+          Text
+        </label>
+        <input
+          id="text"
+          name="text"
+          type="text"
+          title="Def. Text"
+          placeholder="Def. Text"
+          value={state?.text}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="caption" className="field__label">
+          Caption
+        </label>
+        <input
+          id="caption"
+          name="caption"
+          type="text"
+          placeholder="Caption"
+          value={state?.caption}
+          onChange={handleChange}
           className="field__input"
         />
       </div>
       <div className="field w-full">
+        <label htmlFor="note" className="field__label">
+          Note
+        </label>
         <input
+          id="note"
+          name="note"
           type="text"
-          title="Def. Text"
-          placeholder="Def. Text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          title="Note"
+          placeholder="Note"
+          value={state?.notes}
+          onChange={handleChange}
           className="field__input"
         />
-      </div>
-      <div className="field_group">
-        <div className="field w-full">
-          <input
-            type="text"
-            title="Caption"
-            placeholder="Caption"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field w-full">
-          <input
-            type="text"
-            title="Note"
-            placeholder="Note"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="field__input"
-          />
-        </div>
       </div>
     </FormContainer>
   );

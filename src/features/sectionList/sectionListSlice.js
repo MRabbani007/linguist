@@ -62,22 +62,6 @@ export const sectionListsApiSlice = apiSlice.injectEndpoints({
         { type: "SectionList", id: arg.id },
       ],
     }),
-    editSectionListLessonID: builder.mutation({
-      query: (sectionList) => ({
-        url: SERVER.SECTION_LIST,
-        method: "PATCH",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.SECTION_LIST_EDIT_LESSONID,
-            payload: { userName: store.getState()?.auth?.user, sectionList },
-          },
-        },
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "SectionList", id: arg.id },
-      ],
-    }),
     removeSectionList: builder.mutation({
       query: (id) => ({
         url: SERVER.SECTION_LIST,
@@ -143,7 +127,6 @@ export const {
   useGetSectionListsQuery,
   useAddSectionListMutation,
   useEditSectionListContentMutation,
-  useEditSectionListLessonIDMutation,
   useRemoveSectionListMutation,
   useAddSectionListItemMutation,
   useEditSectionListItemMutation,

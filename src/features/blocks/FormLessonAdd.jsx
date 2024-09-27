@@ -52,7 +52,7 @@ export default function FormLessonAdd({ setAdd }) {
           id: crypto.randomUUID(),
           createDate: new Date(),
         };
-        console.log(block);
+
         const res = await addBlock(block).unwrap();
         toast.success("Lesson Added");
       } catch (err) {

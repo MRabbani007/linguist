@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SectionIntro from "./SectionIntro";
 import SectionEdit from "./SectionEdit";
 import SectionTitle from "./SectionTitle";
@@ -9,7 +9,7 @@ import { selectEditMode } from "../globals/globalsSlice";
 import TableAdd from "../tables/TableAdd";
 import TableCard from "../tables/TableCard";
 import ListSection from "../sectionList/ListSection";
-import ListAdd from "../sectionList/ListAdd";
+import FormListAdd from "../sectionList/FormListAdd";
 import SectionMoveToLesson from "./SectionMoveToLesson";
 import Sentence from "../sentences/Sentence";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
@@ -70,18 +70,18 @@ export default function Section({
       <SectionTitle section={section} expand={expand} {...stateObj} />
       <div
         className={
-          (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
-          " flex flex-col gap-3 duration-200"
+          // (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
+          " flex flex-col gap-4 duration-200"
         }
       >
         <SectionIntro section={section} add={addIntro} setAdd={setAddIntro} />
 
         {section?.image && (
-          <div className="max-w-full h-[100vh] overflow-hidden">
+          <div className="h-[70vh]">
             <img
               src={section.image}
               alt="section image"
-              className="mx-auto h-full object-fill"
+              className="mx-auto w-full h-full object-contain"
             />
           </div>
         )}
@@ -172,7 +172,7 @@ export default function Section({
       ) : null}
 
       {editMode && addList ? (
-        <ListAdd
+        <FormListAdd
           lessonID={section?.lessonID}
           sectionID={section?.id}
           setAdd={setAddList}

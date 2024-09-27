@@ -73,12 +73,7 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
         headers: {
           Authorization: `Bearer ${store.getState()?.auth?.token}`,
         },
-        body: {
-          action: {
-            type: ACTIONS.EDIT_LESSON_HEADER,
-            payload: lesson,
-          },
-        },
+        body: { lesson },
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),

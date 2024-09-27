@@ -22,15 +22,14 @@ export default function SectionTitle({
   const [showDropDown, setShowDropDown] = useState(false);
 
   return (
-    <div className="flex items-stretch group relative my-6">
-      <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center text-xl md:text-2xl font-medium px-4">
-        {/* {expand ? <FaCircleMinus size={40} /> : <FaCirclePlus size={40} />} */}
+    <div className="flex items-stretch group relative">
+      <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg">
         {(section?.sortIndex ? section?.sortIndex : 0).toLocaleString("en-US", {
           minimumIntegerDigits: 2,
           useGrouping: false,
         })}
       </p>
-      <div className="flex flex-col cursor-pointer flex-1 text-destructive_foreground">
+      <div className="flex flex-col flex-1 text-destructive_foreground">
         <div className="border-b-[1px] border-accent flex items-center gap-4">
           <h3
             onClick={() => setExpand(!expand)}

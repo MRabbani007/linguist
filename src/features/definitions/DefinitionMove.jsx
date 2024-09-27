@@ -3,6 +3,7 @@ import { CiSquareCheck, CiSquareRemove } from "react-icons/ci";
 import { useEditDefinitionLessonIDMutation } from "./definitionsSlice";
 import { toast } from "react-toastify";
 
+// TODO: Move to edit definition
 export default function DefinitionMove({ definition, setMove }) {
   const [editDefinitionLessonID, { isLoading }] =
     useEditDefinitionLessonIDMutation();

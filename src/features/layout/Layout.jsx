@@ -61,6 +61,7 @@ const Layout = () => {
       isSuccess: isSuccessChapters,
     },
   ] = useLazyGetChaptersQuery();
+
   const [
     getAllBlocks,
     { data: lessons, isLoading: isLoadingLessons, isSuccess: isSuccessLessons },

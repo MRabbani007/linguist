@@ -77,7 +77,7 @@ export default function FormContainer({
       <form
         onSubmit={onSubmit}
         onReset={handleReset}
-        className="bg-zinc-100 min-w-fit w-[70vw] max-w-[1024px] mx-4"
+        className="bg-zinc-100 min-w-fit w-[70vw] max-w-[1024px] mx-4 flex flex-col"
       >
         <div className="py-2 px-4 bg-red-600 text-white flex items-center gap-4">
           <h2 className="flex-1 text-center">{title}</h2>
@@ -85,8 +85,8 @@ export default function FormContainer({
             <BiX size={24} />
           </button>
         </div>
-        <div className="max-h-[80vh] min-h-[70vh] flex items-stretch overscroll-y-auto">
-          <div className="flex flex-col flex-1 items-stretch gap-4 p-4">
+        <div className="max-h-[80vh] min-h-[60vh] h-full overflow-y-auto">
+          <div className="flex flex-col justify-start items-stretch gap-4 p-4">
             {children}
           </div>
         </div>

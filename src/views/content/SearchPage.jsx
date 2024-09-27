@@ -41,32 +41,27 @@ export default function SearchPage() {
   }, [searchTerm]);
 
   return (
-    <main>
-      <header className="bg-gradient-to-r from-zinc-600 to-zinc-400 text-white">
-        <h1>Search</h1>
-      </header>
-      <div>
-        <form
-          className="border-2 border-red-600 text-red-600 rounded-full flex items-center justify-between gap-1 pr-3 py-1 max-w-[800px] mx-auto"
-          onSubmit={handleSubmit}
-        >
-          <input
-            type="text"
-            id="searchParam"
-            name="searchParam"
-            placeholder="Search"
-            className="bg-transparent m-0"
-            value={searchTerm}
-            required
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button type="submit">
-            <IoIosSearch size={26} className="" />
-          </button>
-        </form>
-        <div className="flex flex-col flex-1 gap-4 p-4 w-full">
-          {wordsContent}
-        </div>
+    <main className="flex-1">
+      <form
+        className="border-2 border-red-600/70 text-red-600 rounded-full flex items-center gap-1 pr-3 py-1"
+        onSubmit={handleSubmit}
+      >
+        <input
+          type="text"
+          id="searchParam"
+          name="searchParam"
+          placeholder="Search"
+          className="bg-transparent m-0 flex-1"
+          value={searchTerm}
+          required
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type="submit">
+          <IoIosSearch size={26} className="" />
+        </button>
+      </form>
+      <div className="flex flex-col flex-1 gap-4 p-4 w-full">
+        {wordsContent}
       </div>
     </main>
   );

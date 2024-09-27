@@ -1,44 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectEditMode } from "../globals/globalsSlice";
-import ListEdit from "./ListEdit";
-import ListDropDown from "../dropDowns/ListDropDown";
-import ListEditLessonID from "./ListEditLessonID";
 import ListItemAdd from "./ListItemAdd";
 import ListItemEdit from "./ListItemEdit";
-import { BsThreeDots } from "react-icons/bs";
 import { CiEdit } from "react-icons/ci";
+import FormListEdit from "./FormListEdit";
+import { BiPlus } from "react-icons/bi";
 
 export default function ListSection({ list }) {
   const editMode = useSelector(selectEditMode);
-  const [editContent, setEditContent] = useState(false);
-  const [editLessonID, setEditLessonID] = useState(false);
+
+  const [edit, setEdit] = useState(false);
 
   const [addItem, setAddItem] = useState(false);
   const [editItem, setEditItem] = useState(null);
-
-  const [showDropDown, setShowDropDown] = useState(false);
-
-  const dropDownRef = useRef();
-  const dropDownButtonRef = useRef();
-
-  const handleDropDown = (e) => {
-    if (!dropDownRef?.current?.contains(e.target)) {
-      setShowDropDown(false);
-      if (dropDownButtonRef.current?.contains(e.target)) {
-        setShowDropDown(true);
-      } else {
-        setShowDropDown(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleDropDown);
-    return () => {
-      document.removeEventListener("mousedown", handleDropDown);
-    };
-  }, []);
 
   let content = list.items.map((item, index) => {
     return (
@@ -58,47 +33,44 @@ export default function ListSection({ list }) {
 
   return (
     <>
-      <div className="">
-        <div className="relative w-full py-2 px-4 flex items-center">
+      <article className="flex flex-col gap-4">
+        {/* title */}
+        <div className="relative flex items-center">
           {list?.title ? (
-            <strong className="text-xl font-light">{list?.title}</strong>
+            <p>
+              <strong className="text-xl font-light">{list?.title}</strong>
+            </p>
           ) : editMode ? (
-            <strong>Title</strong>
+            <p>
+              <strong>Title</strong>
+            </p>
           ) : null}
+
           {editMode && (
-            <button
-              ref={dropDownButtonRef}
-              title="Edit List"
-              onClick={() => setShowDropDown(true)}
-            >
-              <BsThreeDots size={28} />
-            </button>
-          )}
-          {showDropDown && (
-            <ListDropDown
-              ref={dropDownRef}
-              list={list}
-              showDropDown={showDropDown}
-              setEditContent={setEditContent}
-              setEditLessonID={setEditLessonID}
-              setAddItem={setAddItem}
-            />
+            <>
+              <button title="Edit List" onClick={() => setEdit(true)}>
+                <CiEdit size={24} />
+              </button>
+              <button title="Add Item" onClick={() => setAddItem(true)}>
+                <BiPlus size={24} />
+              </button>
+            </>
           )}
         </div>
-        {list?.text ? <p>{list?.text}</p> : null}
+
+        {list?.text ? <p className="">{list?.text}</p> : null}
+
         {list?.type === "OL" ? (
-          <ol className="px-4">{content}</ol>
+          <ol className="list-decimal list-inside space-y-1">{content}</ol>
         ) : (
-          <ul className="px-4 list-disc list-inside">{content}</ul>
+          <ul className="list-disc list-inside space-y-1">{content}</ul>
         )}
-        {list?.notes ? <p className="py-2 px-4">{list.notes}</p> : null}
-      </div>
-      {editContent && <ListEdit list={list} setEdit={setEditContent} />}
-      {editLessonID && (
-        <ListEditLessonID list={list} setEdit={setEditLessonID} />
-      )}
+
+        {list?.notes ? <p className="">{list.notes}</p> : null}
+      </article>
+      {edit && <FormListEdit list={list} setEdit={setEdit} />}
       {addItem ? <ListItemAdd list={list} setAdd={setAddItem} /> : null}
-      {editItem !== null ? (
+      {editItem !== null && editItem !== false ? (
         <ListItemEdit list={list} editItem={editItem} setEdit={setEditItem} />
       ) : null}
     </>

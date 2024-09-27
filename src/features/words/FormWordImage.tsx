@@ -3,7 +3,6 @@ import FormContainer from "../components/FormContainer";
 import { useDropzone } from "react-dropzone";
 import UploadProgressBar from "../components/UploadProgressBar";
 import { toast } from "react-toastify";
-import { Word } from "../../types/types";
 import { useEditWordDetailsMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
@@ -63,25 +62,20 @@ export default function FormWordImage({ word, type, setShowForm }: Props) {
     >
       <div
         {...getRootProps()}
-        className="w-full h-full flex-1 border-2 border-dashed border-zinc-600 flex flex-col gap-4 items-center"
+        className="min-h-32 h-[60vh] border-2 border-dashed border-zinc-600 flex flex-col gap-4 items-center justify-center"
       >
-        <div className="w-full h-full overflow-hidden flex items-center">
+        <div className="w-full h-full overflow-hidden flex flex-col items-center justify-center">
           {file ? (
             <img
               src={URL.createObjectURL(file)}
-              className="w-full h-full object-fill"
+              className="h-full object-fill"
             />
           ) : url ? (
-            <img src={url} className={"w-full h-full object-cover"} />
+            <img src={url} className={"h-full object-fill"} />
           ) : word?.imageURL ? (
-            <img
-              src={word?.imageURL}
-              className={"w-full h-full object-cover"}
-            />
+            <img src={word?.imageURL} className={"h-full object-fill"} />
           ) : (
-            <p className="w-fit mx-auto my-auto">
-              Drag and drop files here or click to browse.
-            </p>
+            <p className="">Drag and drop files here or click to browse.</p>
           )}
         </div>
         <input {...getInputProps()} />

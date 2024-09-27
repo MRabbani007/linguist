@@ -22,17 +22,32 @@ export default function SectionIntroItemEdit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (canSave) {
-      await editSectionIntro({ id: section?.id, introduction: input, index });
-      toast.success("Intro item saved");
-      setEdit(false);
+      const response = await editSectionIntro({
+        id: section?.id,
+        introduction: input,
+        index,
+      });
+      if (response?.data) {
+        toast.success("Intro item saved");
+        setEdit(false);
+      } else {
+        toast.error("Failed to save introduction item");
+      }
     }
   };
 
   const handleDelete = async () => {
     if (confirm("Delete Intro Item")) {
-      await deleteSectionIntro({ id: section.id, index });
-      toast.success("Intro item deleted");
+      const response = await deleteSectionIntro({ id: section.id, index });
+
+      if (response?.data) {
+        toast.success("Intro item deleted");
+        setEdit(false);
+      } else {
+        toast.error("Failed to delete introduction item");
+      }
     }
   };
 
@@ -46,20 +61,18 @@ export default function SectionIntroItemEdit({
       closeForm={setEdit}
     >
       <div className="field">
-        <label htmlFor="edit_intro_item" className="field__label">
+        <label htmlFor="introduction" className="field__label">
           Introduction
         </label>
-        <input
-          id="edit_intro_item"
-          name="edit_intro_item"
-          type="text"
-          value={input}
+        <textarea
+          id="introduction"
+          name="introduction"
           autoFocus
-          required
+          className="field__input line-clamp-2 min-h-32"
           title="Introduction"
           placeholder="Introduction"
+          value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="field__input"
         />
       </div>
     </FormContainer>

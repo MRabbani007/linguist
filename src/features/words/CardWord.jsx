@@ -9,8 +9,6 @@ import { FaPlus } from "react-icons/fa6";
 import { PiCrownSimpleThin } from "react-icons/pi";
 import { IoChevronForwardOutline, IoStarOutline } from "react-icons/io5";
 import { CiImageOn } from "react-icons/ci";
-import WordImageEdit from "./WordImageEdit";
-import { BiMinus } from "react-icons/bi";
 import FormWordImage from "./FormWordImage";
 
 const WORD_TYPE = {
@@ -67,24 +65,24 @@ export default function CardWord({ word }) {
       >
         {/* Word Body */}
         <div className="flex-1 flex items-stretch gap-4 relative py-2 px-4 md:py-4 md:px-6">
-          <button onClick={() => setExpand((curr) => !curr)}>
+          {/* <button onClick={() => setExpand((curr) => !curr)}>
             <IoChevronForwardOutline
               className={
                 (expand ? "rotate-90" : "") +
                 " absolute top-2 left-2 invisible group-hover:visible duration-200"
               }
             />
-          </button>
+          </button> */}
           {/* Word Image */}
           {word?.imageURL ? (
             <img
               src={word.imageURL}
               alt={word.first}
-              className="object-contain max-h-24 max-w-20"
+              className="object-contain max-h-24 max-w-20 my-auto"
             />
           ) : null}
           {/* Word first, second */}
-          <div className="flex flex-col flex-wrap items-start justify-start gap-2 flex-1">
+          <div className="flex flex-col flex-wrap items-start justify-start gap-2 flex-1 my-auto">
             <div className="font-semibold relative group w-fit">
               <p
                 className="cursor-pointer text-xl"
@@ -128,9 +126,10 @@ export default function CardWord({ word }) {
           ) : null}
         </div>
         {/* Word Footer */}
+        {/* expand ? "py-2 px-4 " : */}
         <div
           className={
-            (expand ? "py-2 px-4 " : "h-0 invisible opacity-0 ") +
+            "h-0 invisible opacity-0 " +
             " flex items-center gap-4 text-sm border-t-[1px] border-accent bg-destructive text-destructive_foreground duration-200"
           }
         >

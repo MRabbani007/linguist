@@ -45,7 +45,7 @@ export default function LessonPage() {
 
   return (
     <main>
-      <div className="w-full">
+      <div className="">
         <LessonHeader
           lesson={displayBlock}
           setAddLessonIntro={setAddLessonIntro}

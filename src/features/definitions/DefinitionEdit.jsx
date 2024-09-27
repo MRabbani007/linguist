@@ -1,36 +1,48 @@
-import React, { useState } from "react";
-import { CiSquarePlus, CiSquareRemove } from "react-icons/ci";
-import { useEditDefinitionConentMutation } from "./definitionsSlice";
+import { useState } from "react";
+import {
+  useEditDefinitionConentMutation,
+  useRemoveDefinitionMutation,
+} from "./definitionsSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import { DefinitionTemplate } from "../../data/templates";
 
-export default function DefinitionEdit({ definition, setEdit }) {
+export default function DefinitionEdit({ definition = {}, setEdit }) {
   const [editDefinitionContent, { isLoading }] =
     useEditDefinitionConentMutation();
 
-  const [title, setTitle] = useState(definition?.title);
-  const [text, setText] = useState(definition?.text);
-  const [caption, setCaption] = useState(definition?.caption);
-  const [notes, setNotes] = useState(definition?.notes);
-  const [sortIndex, setSortIndex] = useState(definition?.sortIndex);
+  const [removeDefinition] = useRemoveDefinitionMutation();
+
+  const [state, setState] = useState({ ...DefinitionTemplate, ...definition });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setState((prevProps) => ({
+      ...prevProps,
+      [name]: value,
+    }));
+  };
 
   const canSave = !isLoading;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newDefinition = {
-      ...definition,
-      title,
-      text,
-      caption,
-      notes,
-      sortIndex,
-    };
-    console.log(newDefinition);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     if (canSave) {
-      await editDefinitionContent(newDefinition);
-      toast.success("Definition Modified");
-      setEdit(false);
+      await editDefinitionContent(state);
+      if (response?.data) {
+        toast.success("Definition Saved");
+        setEdit(false);
+      } else {
+        toast.error("Failed to save definition");
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    if (confirm("Delete this item?")) {
+      await removeDefinition(definition?.id);
+      alert("Item Deleted");
     }
   };
 
@@ -39,86 +51,84 @@ export default function DefinitionEdit({ definition, setEdit }) {
       type="edit"
       title="Edit Definition"
       onSubmit={handleSubmit}
+      deleteButton={true}
+      onDelete={handleDelete}
       closeForm={setEdit}
     >
-      <div className="field_group">
-        <div className="field max-w-[25%]">
-          <label htmlFor="def_sortindex" className="field__label">
-            Sort Index
-          </label>
-          <input
-            id="def_sortindex"
-            name="def_sortindex"
-            type="text"
-            title="Sort Index"
-            placeholder="Sort Index"
-            value={sortIndex}
-            onChange={(e) => setSortIndex(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="def_title" className="field__label">
-            Title
-          </label>
-          <input
-            id="def_title"
-            name="def_title"
-            type="text"
-            title="Title"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="field__input"
-          />
-        </div>
-      </div>
-      <div className="field w-full">
-        <label htmlFor="def_text" className="field__label">
-          Text
+      <div className="field">
+        <label htmlFor="sortindex" className="field__label">
+          Sort Index
         </label>
         <input
-          id="def_text"
-          name="def_text"
+          id="sortindex"
+          name="sortindex"
           type="text"
-          title="Def. Text"
-          placeholder="Def. Text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          title="Sort Index"
+          placeholder="Sort Index"
+          value={state?.sortIndex}
+          onChange={handleChange}
           className="field__input"
         />
       </div>
-      <div className="field_group">
-        <div className="field">
-          <label htmlFor="def_caption" className="field__label">
-            Caption
-          </label>
-          <input
-            id="def_caption"
-            name="def_caption"
-            type="text"
-            title="Caption"
-            placeholder="Caption"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="field__input"
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="def_note" className="field__label">
-            Note
-          </label>
-          <input
-            id="def_note"
-            name="def_note"
-            type="text"
-            title="Note"
-            placeholder="Note"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="field__input"
-          />
-        </div>
+      <div className="field">
+        <label htmlFor="title" className="field__label">
+          Title
+        </label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          title="Title"
+          placeholder="Title"
+          value={state?.title}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="text" className="field__label">
+          Text
+        </label>
+        <input
+          id="text"
+          name="text"
+          type="text"
+          title="Definition Text"
+          placeholder="Definition Text"
+          value={state?.text}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="caption" className="field__label">
+          Caption
+        </label>
+        <input
+          id="caption"
+          name="caption"
+          type="text"
+          title="Caption"
+          placeholder="Caption"
+          value={state?.caption}
+          onChange={handleChange}
+          className="field__input"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="note" className="field__label">
+          Note
+        </label>
+        <input
+          id="note"
+          name="note"
+          type="text"
+          title="Note"
+          placeholder="Note"
+          value={state?.notes}
+          onChange={handleChange}
+          className="field__input"
+        />
       </div>
     </FormContainer>
   );

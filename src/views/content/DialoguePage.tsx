@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
-import { Dialogue } from "../../types/types";
 import FormCreateDialogue from "../../features/dialogue/FormCreateDialogue";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";

@@ -48,12 +48,16 @@ export default function FormLessonEdit({ lesson, setEdit }) {
     e.preventDefault();
     if (canSave) {
       try {
-        let newBlock = { ...state };
-        await editBlockHeader(newBlock).unwrap();
-        setEdit(false);
-        toast.success("Lesson Saved");
+        const response = await editBlockHeader(state).unwrap();
+
+        if (response) {
+          toast.success("Lesson Saved");
+          setEdit(false);
+        } else {
+          toast.error("Failed to save the Lesson");
+        }
       } catch (err) {
-        toast.error("Failed to save the Lesson");
+        toast.error("Error: Failed to save the Lesson");
       }
     }
   };
@@ -64,7 +68,7 @@ export default function FormLessonEdit({ lesson, setEdit }) {
         await removeBlock(lesson?.id).unwrap();
       }
     } catch (err) {
-      console.error("Failed to delete the chapter", err);
+      console.error("Failed to delete this lesson", err);
     }
   };
 

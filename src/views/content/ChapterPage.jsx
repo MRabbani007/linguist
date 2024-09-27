@@ -48,7 +48,7 @@ const ChapterPage = () => {
 
   return (
     <main>
-      <div className="w-full">
+      <div className="">
         <ChapterHeader chapter={displayChapter} />
         <ChapterNavigator />
       </div>

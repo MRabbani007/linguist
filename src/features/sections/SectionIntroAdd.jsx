@@ -12,10 +12,18 @@ export default function SectionIntroAdd({ section, setAdd }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (canSave) {
-      await addSectionIntro({ id: section?.id, introduction: input });
-      toast.success("Intro item added");
-      setAdd(false);
+      const response = await addSectionIntro({
+        id: section?.id,
+        introduction: input,
+      });
+      if (response?.data) {
+        toast.success("Intro item added");
+        setAdd(false);
+      } else {
+        toast.error("Failed to add introduction item");
+      }
     }
   };
 
@@ -27,21 +35,19 @@ export default function SectionIntroAdd({ section, setAdd }) {
       onSubmit={handleSubmit}
       closeForm={setAdd}
     >
-      <div className="field w-full">
-        <label htmlFor="add_intro_item" className="field__label">
+      <div className="field">
+        <label htmlFor="introduction" className="field__label">
           Introduction
         </label>
-        <input
-          id="add_intro_item"
-          name="add_intro_item"
-          type="text"
-          value={input}
+        <textarea
+          id="introduction"
+          name="introduction"
           autoFocus
-          required
+          className="field__input line-clamp-2 min-h-32"
           title="Introduction"
           placeholder="Introduction"
+          value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="field__input"
         />
       </div>
     </FormContainer>

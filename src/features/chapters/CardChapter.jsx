@@ -26,26 +26,19 @@ export default function CardChapter({ chapter, lessonCount = 0 }) {
   return (
     <div
       onClick={handleOpen}
-      className="flex items-start justify-start gap-4 min-w-[300px] sm:min-w-[400px] flex-1 cursor-pointer duration-200 group relative my-4 bg-destructive text-destructive_foreground p-4 md:p-8"
+      className="flex items-stretch cursor-pointer duration-200 group relative"
     >
-      <span className="bg-red-600 w-10 h-10 text-xl shrink-0 flex items-center justify-center text-white rounded-full">
+      {/* Chapter Number */}
+      <p className="bg-red-600 w-10 text-lg flex items-center justify-center text-white">
         {chapter?.chapterNo}
-      </span>
-      <div className="flex flex-col">
-        <p className="text-4xl font-semibold">{chapter?.title || ""}</p>
-        <p className=" font-semibold">{chapter?.subtitle || ""}</p>
-        <p className=" font-semibold">{chapter?.details || ""}</p>
+      </p>
+      <div className="px-4 py-2 flex-1 flex flex-col bg-zinc-200">
+        <p className="text-2xl md:text-4xl font-semibold">
+          {chapter?.title || ""}
+        </p>
+        <p className="font-normal">{chapter?.subtitle || ""}</p>
+        <p className="font-normal">{chapter?.details || ""}</p>
       </div>
-      {/* <p className="flex items-center justify-evenly gap-8">
-        <span title={`${lessonCount} Lessons`}>
-          {lessonCount}
-          <LuListTree size={25} className="inline" />
-        </span>
-        <span title={`5 Hours`}>
-          5
-          <IoTimerOutline size={25} className="inline" />
-        </span>
-      </p> */}
     </div>
   );
 }

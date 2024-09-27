@@ -52,3 +52,11 @@ export const tableTemplateAdjective = {
   showRows: false,
   sortIndex: 9,
 };
+
+export const DefinitionTemplate = {
+  sortIndex: 0,
+  title: "",
+  text: "",
+  caption: "",
+  notes: "",
+};

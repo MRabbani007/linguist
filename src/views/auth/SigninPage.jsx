@@ -29,6 +29,7 @@ const SigninPage = () => {
   const [errMsg, setErrMsg] = useState("");
   const [check, toggleCheck] = useToggle("persist", false);
 
+  const [type, setType] = useState("password");
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -111,7 +112,7 @@ const SigninPage = () => {
         </div>
         <div className="input_box">
           <input
-            type="password"
+            type={type}
             id="password"
             placeholder="Password"
             className="input_field"
@@ -122,7 +123,14 @@ const SigninPage = () => {
           <label htmlFor="password" className="label">
             Password
           </label>
-          <i className="bx bx-lock-alt icon"></i>
+          <button
+            type="button"
+            onClick={() =>
+              setType((curr) => (curr === "password" ? "text" : "password"))
+            }
+          >
+            <i className="bx bx-lock-alt icon"></i>
+          </button>
         </div>
         <div className="remember_forgot">
           <div className="remember_me">

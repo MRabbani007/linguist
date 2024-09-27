@@ -249,7 +249,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
         </div>
       ) : null} */}
       {defsContent?.length !== 0 && (
-        <div className="flex flex-col gap-4">{defsContent}</div>
+        <div className="flex flex-wrap items-stretch gap-4">{defsContent}</div>
       )}
 
       {/* Sections */}
@@ -261,14 +261,7 @@ export default function LessonSections({ lesson, addSection, setAddSection }) {
           {words.length > lessonWords.length ? <br /> : null}
           <>
             {lessonWords.map((word, index) => {
-              return (
-                <CardWord key={index} word={word} />
-                // <CardWordList
-                //   word={word}
-                //   key={index}
-                //   sectionsList={sectionsList}
-                // />
-              );
+              return <CardWord key={index} word={word} />;
             })}
           </>
         </>
