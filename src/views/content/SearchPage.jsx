@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { useParams } from "react-router-dom";
+import { createSearchParams, useNavigate, useParams } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios";
-import CardWordList from "../../features/words/CardWordList";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 
 export default function SearchPage() {
   let params = useParams();
@@ -22,7 +22,7 @@ export default function SearchPage() {
   };
 
   const wordsContent = words.map((word) => (
-    <CardWordList word={word} key={word?.id} />
+    <RenderWord word={word} key={word?.id} />
   ));
 
   const handleSubmit = (e) => {
@@ -64,5 +64,40 @@ export default function SearchPage() {
         {wordsContent}
       </div>
     </main>
+  );
+}
+
+function RenderWord({ word }) {
+  const navigate = useNavigate();
+
+  const handleOpenLesson = () => {
+    navigate({
+      pathname: "/content/lesson",
+      search: `${createSearchParams({ id: word?.blockID })}`,
+    });
+  };
+
+  return (
+    <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex  items-stretch">
+      <div className="flex-1 space-y-2">
+        <div className="">
+          <span
+            className="mx-2 text-lg font-medium cursor-pointer"
+            onMouseOver={() => setShowPronunce(true)}
+            onMouseOut={() => setShowPronunce(false)}
+          >
+            {word?.first}
+          </span>
+          <span className="text-sm italic">{word?.firstCaption}</span>
+        </div>
+        <div className="">
+          <span className="mx-2 font-normal">{word?.second}</span>
+          <span className="text-sm italic">{word?.secondCaption}</span>
+        </div>
+      </div>
+      <button title="Go to Lesson" onClick={handleOpenLesson}>
+        <BsBoxArrowUpRight size={25} className="text-zinc-800" />
+      </button>
+    </div>
   );
 }

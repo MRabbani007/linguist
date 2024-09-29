@@ -9,7 +9,11 @@ import {
   setDisplayChapter,
 } from "../globals/globalsSlice";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 
 const BlockNavigator = ({ children }) => {
   const dispatch = useDispatch();
@@ -18,8 +22,21 @@ const BlockNavigator = ({ children }) => {
   const displayChapter = useSelector(selectDisplayChapter);
   const displayBlock = useSelector(selectDisplayBlock);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const chapters = useSelector(selectChapters);
   const lessons = useSelector(selectLessons);
+
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (displayBlock?.id !== id) {
+      const lesson = lessons.find((item) => item?.id === id);
+      if (lesson) {
+        setSearchParams({ title: lesson?.title, id });
+        dispatch(setDisplayBlock(lesson));
+      }
+    }
+  }, []);
 
   const [blockIndex, setBlockIndex] = useState(0);
   const [chapterIndex, setChapterIndex] = useState(0);
@@ -31,7 +48,7 @@ const BlockNavigator = ({ children }) => {
     setBlocks(() => {
       return lessons
         .filter((item) => item.chapterID === displayChapter?.id)
-        .sort((a, b) => (a.lessonNo > b.lessonNo ? 1 : -1));
+        .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1));
     });
     setChapterIndex(() => {
       const tempChapterIndex = chapters.findIndex(
@@ -130,6 +147,8 @@ const BlockNavigator = ({ children }) => {
       }
     }
   };
+
+  console.log(displayBlock?.sortIndex);
 
   return (
     <div className="p-2 md:p-4 flex justify-between items-center ">

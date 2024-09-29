@@ -44,7 +44,6 @@ export const blocksApiSlice = apiSlice.injectEndpoints({
         params: { langID },
       }),
       transformResponse: (responseData) => {
-        // store.dispatch(setLessons(responseData));
         return blocksAdapter.setAll(initialState, responseData);
       },
       providesTags: (result, error, arg) => [
