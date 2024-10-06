@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { IoGridOutline, IoMenu } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UserDropDown from "./UserDropDown";
 import AdminDropDown from "./AdminDropDown";
 import MobileMenu from "./MobileMenu";
@@ -94,6 +94,10 @@ const Navbar = () => {
   };
 
   const isActive = (page) => location.pathname.includes(page);
+
+  useEffect(() => {
+    setViewSearch(false);
+  }, [location.pathname]);
 
   return (
     <div className="z-50 w-full relative font-medium bg-destructive">

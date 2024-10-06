@@ -69,7 +69,7 @@ type Section = {
   updatedAt?: Date | string;
 };
 
-declare type Word = {
+type Word = {
   id: string;
   // Header
   userID?: string;
@@ -118,7 +118,7 @@ declare type Word = {
 
 type Definition = {};
 
-declare type SectionList = {
+type SectionList = {
   id: string;
   lessonID: string;
   sectionID: string;

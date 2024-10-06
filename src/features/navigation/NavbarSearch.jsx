@@ -12,6 +12,8 @@ export default function NavbarSearch({ viewSearch, setViewSearch }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search/${search}`);
+
+    setViewSearch(false);
   };
 
   return (
@@ -26,9 +28,10 @@ export default function NavbarSearch({ viewSearch, setViewSearch }) {
         type="text"
         id={"search-btn" + id}
         placeholder="Search"
-        className="bg-transparent focus:bg-transparent m-0 flex-1 flex-shrink w-full"
+        autoFocus
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className="bg-transparent focus:bg-transparent m-0 flex-1 flex-shrink w-full"
       />
       <button type="submit">
         <IoIosSearch size={26} className="" />

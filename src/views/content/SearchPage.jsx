@@ -12,6 +12,10 @@ export default function SearchPage() {
   const [words, setWords] = useState([]);
 
   const handleSearch = async () => {
+    if (!searchTerm || searchTerm === "") {
+      return null;
+    }
+
     const { data } = await axiosPrivate.get("/search", {
       params: { searchTerm, match },
     });
@@ -25,8 +29,9 @@ export default function SearchPage() {
     <RenderWord word={word} key={word?.id} />
   ));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     handleSearch();
   };
 
@@ -34,11 +39,9 @@ export default function SearchPage() {
     setSearchTerm(params.search);
   }, [params.search]);
 
-  useEffect(() => {
-    if (searchTerm && searchTerm !== "") {
-      handleSearch();
-    }
-  }, [searchTerm]);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [searchTerm]);
 
   return (
     <main className="flex-1">

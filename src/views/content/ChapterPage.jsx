@@ -53,7 +53,9 @@ const ChapterPage = () => {
         <ChapterNavigator />
       </div>
       {/* <p className="w-full">{displayChapter?.detail}</p> */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{content}</div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
+        {content}
+      </div>
       <ChapterNavigator />
     </main>
   );

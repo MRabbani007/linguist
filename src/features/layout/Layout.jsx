@@ -190,14 +190,14 @@ const Layout = () => {
     location.pathname.includes("lesson");
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />
       </Suspense>
       <ToastContainer autoClose={1000} />
       <Footer />
-    </>
+    </div>
   );
 };
 export default Layout;

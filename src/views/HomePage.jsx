@@ -7,19 +7,18 @@ const HomePage = () => {
   const language = useSelector(selectLanguage);
 
   return (
-    <main>
-      {/* <div className=" top-0 left-0 w-full h-[40vh] flex justify-center items-center bg-gradient-to-br from-orange-600/70 to-yellow-400/30">
-        <img src={Linguist} alt="Linguist" width={300} height={150} />
-      </div> */}
-      <div>
-        <img
-          src={WorldLang}
-          alt="World_Language"
-          width={400}
-          height={350}
-          className="w-full max-w-[600px] mx-auto p-2"
-        />
-        <div className="flex-1 flex flex-col justify-center items-center">
+    <main className="p-0 m-0">
+      <div className="flex-1 flex flex-col md:flex-row-reverse items-center justify-center gap-4">
+        <div className="">
+          <img
+            src={WorldLang}
+            alt="World_Language"
+            width={400}
+            height={350}
+            className="w-full max-w-[600px] mx-auto"
+          />
+        </div>
+        <div className="flex flex-col justify-center items-center">
           <p className="italic font-semibold text-xl text-destructive_foreground">
             Learn languages fast & easy
           </p>
@@ -29,7 +28,7 @@ const HomePage = () => {
                 <Link
                   to="/content/chapters"
                   title={"Continue  " + language.name}
-                  className="py-2 px-4 md:py-4 md:px-10 md:my-4 text-xl md:text-2xl bg-gradient-to-tr from-blue-700 to-blue-600 text-white hover:from-blue-600 hover:to-blue-500 duration-200 hover:shadow-md hover:shadow-zinc-700"
+                  className="py-2 px-4 text-base bg-gradient-to-tr from-blue-700 to-blue-600 text-white hover:from-blue-600 hover:to-blue-500 duration-200 hover:shadow-md hover:shadow-zinc-700"
                 >
                   {"Continue  " + language.name}
                 </Link>
@@ -44,7 +43,7 @@ const HomePage = () => {
             <Link
               to="/language"
               title={!!language?.name ? "Select Language" : "Start Now"}
-              className="py-2 px-4 md:px-6 text-base md:text-xl bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 md:my-4 hover:shadow-md hover:shadow-zinc-700"
+              className="py-2 px-4 text-base bg-gradient-to-tr from-red-800 to-red-600 text-white  hover:from-red-700 hover:to-red-500 duration-200 md:my-4 hover:shadow-md hover:shadow-zinc-700"
             >
               {!!language?.name ? "Select Language" : "Start Now"}
             </Link>

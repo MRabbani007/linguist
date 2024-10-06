@@ -12,7 +12,6 @@ import {
 } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Section } from "../../types/types";
 import FormContainer from "../components/FormContainer";
 
 const template: Section = {
@@ -83,8 +82,7 @@ export default function SectionAdd({ setAdd }: Props) {
           type="number"
           title="Number"
           placeholder="Number"
-          min={0}
-          step={1}
+          autoComplete="off"
           value={state?.sortIndex || 1}
           onChange={onChange}
           className="field__input__row"

@@ -11,7 +11,6 @@ import {
 } from "./sectionSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
-import { Section } from "../../types/types";
 
 interface Props {
   section: Section;
@@ -70,7 +69,6 @@ export default function SectionEdit({ section, setEdit }: Props) {
           type="text"
           title="Number"
           placeholder="Number"
-          step={1}
           value={state?.sortIndex}
           onChange={onChange}
           className="field__input__row"
