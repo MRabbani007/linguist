@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { setDisplayBlock } from "../globals/globalsSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { IoTimerOutline } from "react-icons/io5";
 
 export default function CardLesson({ lesson }) {
   const dispatch = useDispatch();
@@ -10,7 +9,7 @@ export default function CardLesson({ lesson }) {
   const blockOpen = () => {
     dispatch(setDisplayBlock(lesson));
     navigate({
-      pathname: "/content/lesson",
+      pathname: "/learn/lesson",
       search: `${createSearchParams({ title: lesson?.title, id: lesson?.id })}`,
     });
   };

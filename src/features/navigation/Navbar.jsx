@@ -25,7 +25,7 @@ const lessonsDropDown = [
   {
     label: "Content",
     title: "Content Overview",
-    url: "/content",
+    url: "/learn",
   },
 ];
 
@@ -113,11 +113,7 @@ const Navbar = () => {
 
         {/* Middle Block */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden justify-center lg:flex my-auto flex-row items-stretch sm:gap-4 gap-2 text-zinc-900">
-          <Dropdown
-            label={"Lessons"}
-            url={"/content/chapters"}
-            items={lessonsDropDown}
-          />
+          <Dropdown label={"Learn"} url={"/learn"} items={[]} />
           <Dropdown label={"Words & Phases"} items={wordsDropDown} />
           <Dropdown label={"Text & Dialogue"} items={TextDialogueDropDown} />
           <Dropdown

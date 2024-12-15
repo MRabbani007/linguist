@@ -43,6 +43,7 @@ const SUBJECT = {
   Weather: "Weather",
   Health: "Health",
   Numbers: "Numbers",
+  Colors: "Colors",
   People: "People",
   Professions: "Professions",
   Communication: "Communication",
@@ -121,13 +122,10 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
       ? "EN"
       : displayBlock?.thirdLang === "Pronunciation"
       ? "Pronunced"
-      : displayBlock?.thirdLang;
+      : "Third Language " + displayBlock?.thirdLang;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // const data = Object.fromEntries(new FormData(e.target).entries());
-    // console.log(data);
 
     if (canSave) {
       try {
@@ -135,11 +133,6 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           ...word,
           ...state,
         };
-
-        // if (selected !== "") {
-        //   newWord.sectionID = sections[selected]?.id;
-        // }
-
         await editWord(newWord).unwrap();
         toast.success("Word Saved");
         setViewEdit(false);
@@ -152,16 +145,6 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
   useEffect(() => {
     setState({ ...word });
   }, [word]);
-
-  // useEffect(() => {
-  //   setSelected(() => {
-  //     const idx = sections.findIndex(
-  //       (section) => section?.id === word?.sectionID
-  //     );
-  //     if (idx >= 0) return idx;
-  //     return "";
-  //   });
-  // }, [word, sections]);
 
   return (
     <FormContainer
@@ -178,7 +161,7 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           type="button"
           onClick={() => setPage("content")}
           className={
-            (page === "content" ? "bg-green-600/50" : "") +
+            (page === "content" ? "bg-zinc-200" : "") +
             " py-2 px-4 rounded-md duration-200"
           }
         >
@@ -188,7 +171,7 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           type="button"
           onClick={() => setPage("headers")}
           className={
-            (page === "headers" ? "bg-green-600/50" : "") +
+            (page === "headers" ? "bg-zinc-200" : "") +
             " py-2 px-4 rounded-md duration-200"
           }
         >
@@ -198,7 +181,7 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           type="button"
           onClick={() => setPage("image")}
           className={
-            (page === "image" ? "bg-green-600/50" : "") +
+            (page === "image" ? "bg-zinc-200" : "") +
             " py-2 px-4 rounded-md duration-200"
           }
         >
@@ -287,39 +270,38 @@ export default function FormWordEdit({ word = initialState, setViewEdit }) {
           />
         </div>
         {/* Third Word */}
-        {displayBlock?.thirdLang ? (
-          <div className="field__row">
-            <label htmlFor="third" className="field__label">
-              {label_3}
-            </label>
-            <input
-              type="text"
-              id="third"
-              name="third"
-              placeholder={displayBlock.thirdLang || "Third Language"}
-              value={state?.third}
-              onChange={handleChange}
-              className="field__input__row"
-            />
-          </div>
-        ) : null}
+        <div className="field__row">
+          <label htmlFor="third" className="field__label">
+            {label_3}
+          </label>
+          <input
+            type="text"
+            id="third"
+            name="third"
+            placeholder={displayBlock.thirdLang || "Third Language"}
+            value={state?.third}
+            onChange={handleChange}
+            className="field__input__row"
+          />
+        </div>
         {/* Fourth Word */}
-        {displayBlock?.fourthLang ? (
-          <div className="field__row">
-            <label htmlFor="fourth" className="field__label">
-              {displayBlock?.fourthLang}:
-            </label>
-            <input
-              type="text"
-              id="fourth"
-              name="fourth"
-              value={state?.fourth}
-              placeholder={displayBlock?.fourthLang || "Fourth Language"}
-              onChange={handleChange}
-              className="field__input__row"
-            />
-          </div>
-        ) : null}
+        {displayBlock?.fourthLang ||
+          (true && (
+            <div className="field__row">
+              <label htmlFor="fourth" className="field__label">
+                {"Fourth Lang: " + displayBlock?.fourthLang}:
+              </label>
+              <input
+                type="text"
+                id="fourth"
+                name="fourth"
+                value={state?.fourth}
+                placeholder={displayBlock?.fourthLang || "Fourth Language"}
+                onChange={handleChange}
+                className="field__input__row"
+              />
+            </div>
+          ))}
       </div>
       <div
         className={

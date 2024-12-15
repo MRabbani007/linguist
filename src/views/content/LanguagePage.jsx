@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
-  selectEditMode,
   selectLanguage,
   selectSiteLanguages,
   setLanguage,
 } from "../../features/globals/globalsSlice";
 import { useUpdateProfileMutation } from "../../features/profile/profileSlice";
 import LanguageCard from "../../features/languages/LanguageCard";
-import FormAddLanguage from "../../features/languages/FormAddLanguage";
 import { PROFILE } from "../../data/actions";
 import axios from "../../api/axios";
 import { selectCurrentToken } from "../../features/auth/authSlice";
@@ -18,18 +16,15 @@ export default function LanguagePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const editMode = useSelector(selectEditMode);
   const language = useSelector(selectLanguage);
   const siteLanguages = useSelector(selectSiteLanguages);
   const token = useSelector(selectCurrentToken);
-
-  const [add, setAdd] = useState(false);
 
   const [updateProfile] = useUpdateProfileMutation();
   const handleSetLanguage = async (lang) => {
     dispatch(setLanguage(lang));
     await updateProfile({ type: PROFILE.LANGUAGE, data: lang?.id });
-    navigate("/content/chapters");
+    navigate("/learn");
   };
 
   const getSummary = async () => {
@@ -50,33 +45,23 @@ export default function LanguagePage() {
   return (
     <main>
       <header className="text-primary justify-center">
-        <h1>Select Language</h1>
+        <h1 className="text-2xl md:text-4xl font-semibold text-wrap inline py-1 px-2 ">
+          Select Language
+        </h1>
       </header>
-      <div className="flex-1 h-full">
-        <div className="flex flex-wrap items-stretch justify-center gap-3">
-          {Array.isArray(siteLanguages) &&
-            siteLanguages.map((lang) => {
-              return (
-                <LanguageCard
-                  language={lang}
-                  key={lang.id}
-                  selectedLang={language?.id}
-                  handleSetLanguage={handleSetLanguage}
-                />
-              );
-            })}
-        </div>
-        {editMode && (
-          <button
-            title="Add Language"
-            onClick={() => setAdd(true)}
-            className="btn btn-red w-fit mx-auto"
-          >
-            Add Language
-          </button>
-        )}
+      <div className="flex-1 flex flex-wrap items-stretch justify-center gap-4">
+        {Array.isArray(siteLanguages) &&
+          siteLanguages.map((lang) => {
+            return (
+              <LanguageCard
+                language={lang}
+                key={lang.id}
+                selectedLang={language?.id}
+                handleSetLanguage={handleSetLanguage}
+              />
+            );
+          })}
       </div>
-      {add && <FormAddLanguage setAdd={setAdd} />}
     </main>
   );
 }

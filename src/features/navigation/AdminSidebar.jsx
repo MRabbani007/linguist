@@ -1,7 +1,6 @@
 import React from "react";
 import { RiAdminLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import AdminMenuBlock from "./AdminMenuBlock";
 
 const CONTENT = [
   { label: "Chapters", url: "/admin/chapters" },
@@ -22,16 +21,35 @@ const items = [
   { label: "Pages", url: "#", children: PAGES },
 ];
 
-export default function AdminMenuDesktop() {
+export default function AdminSidebar() {
   return (
-    <div className="text-zinc-800 hidden sm:inline-block">
+    <nav className="text-zinc-800 hidden sm:inline-block">
       <div className="py-4 px-4 flex items-center gap-2 border-b-[1px] border-red-600">
         <RiAdminLine size={30} />
         <span className="font-semibold text-zinc-900">Admin</span>
       </div>
       {items.map((menuBlock, index) => {
-        return <AdminMenuBlock menuBlock={menuBlock} key={index} />;
+        return <MenuBlock menuBlock={menuBlock} key={index} />;
       })}
+    </nav>
+  );
+}
+
+function MenuBlock({ menuBlock }) {
+  return (
+    <div>
+      <div className="py-2 px-2 font-semibold">{menuBlock.label}</div>
+      <div className="flex flex-col">
+        {Array.isArray(menuBlock?.children) && menuBlock.children.length !== 0
+          ? menuBlock.children.map((item, index) => {
+              return (
+                <Link key={index} to={item.url} className="py-2 px-4">
+                  {item.label}
+                </Link>
+              );
+            })
+          : null}
+      </div>
     </div>
   );
 }

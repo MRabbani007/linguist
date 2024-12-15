@@ -42,7 +42,7 @@ export default function AdminLessons() {
     content = ids.map((id, index) => (
       <div
         key={id}
-        className="flex items-center flex-1 text-center bg-zinc-200 p-2"
+        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
       >
         <span className="w-[2%]">{(page - 1) * 15 + index + 1}</span>
         <span className="w-[5%]">{entities[id]?.lessonNo}</span>
@@ -62,53 +62,49 @@ export default function AdminLessons() {
   return (
     <>
       <div className="flex flex-wrap items-center gap-4">
-        <div className="field">
-          <select
-            name="chapter"
-            id="chapter"
-            value={chapter}
-            onChange={(e) => setChapter(e.target.value)}
-          >
-            <option value="">Select Chapter</option>
-            {chapters.map((item, idx) => (
-              <option key={idx} value={item.id}>
-                {item.title}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select
+          name="chapter"
+          id="chapter"
+          value={chapter}
+          onChange={(e) => setChapter(e.target.value)}
+        >
+          <option value="">Select Chapter</option>
+          {chapters.map((item, idx) => (
+            <option key={idx} value={item.id}>
+              {item.title}
+            </option>
+          ))}
+        </select>
       </div>
-      <div className="flex-1 w-full">
-        <div className="flex items-center flex-1 p-4 bg-zinc-400 text-center font-semibold">
-          <span className="w-[2%]" title="Serial Number">
-            #
-          </span>
-          <span className="w-[5%]" title="Lesson Number">
-            LN
-          </span>
-          <span className="w-[5%]" title="Sort Index">
-            SI
-          </span>
-          <span className="w-[20%]" title="Lesson Title">
-            Title
-          </span>
-          <span className="w-[20%]" title="Lesson Sub-title">
-            Sub-Title
-          </span>
-          <span className="flex-1" title="Lesson Detail">
-            Detail
-          </span>
-          <span className="w-[5%]" title="Edit Lesson">
-            Edit
-          </span>
-        </div>
-        <div className="flex flex-col gap-2 py-2">{content}</div>
-        <div className="p-4 flex items-center justify-between bg-zinc-400">
-          <button className="btn btn-yellow" onClick={() => setAdd(true)}>
-            Add Lesson
-          </button>
-          <Pagination count={count} currentPage={page} setPage={setPage} />
-        </div>
+      <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
+        <span className="w-[2%]" title="Serial Number">
+          #
+        </span>
+        <span className="w-[5%]" title="Lesson Number">
+          LN
+        </span>
+        <span className="w-[5%]" title="Sort Index">
+          SI
+        </span>
+        <span className="w-[20%]" title="Lesson Title">
+          Title
+        </span>
+        <span className="w-[20%]" title="Lesson Sub-title">
+          Sub-Title
+        </span>
+        <span className="flex-1" title="Lesson Detail">
+          Detail
+        </span>
+        <span className="w-[5%]" title="Edit Lesson">
+          Edit
+        </span>
+      </div>
+      <div className="flex-1">{content}</div>
+      <div className="flex items-center justify-between">
+        <button className="btn-r btn-red" onClick={() => setAdd(true)}>
+          Add Lesson
+        </button>
+        <Pagination count={count} currentPage={page} setPage={setPage} />
       </div>
       {edit !== false ? (
         <FormLessonEdit lesson={edit} setEdit={setEdit} />

@@ -1,21 +1,25 @@
 import { useSelector } from "react-redux";
 import { selectDisplayChapter } from "../../features/globals/globalsSlice";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import { useGetBlocksQuery } from "../../features/blocks/blockSlice";
 import CardLesson from "../../features/blocks/CardLesson";
 import ChapterHeader from "../../features/chapters/ChapterHeader";
 import ChapterNavigator from "../../features/navigation/ChapterNavigator";
 import ReactLoading from "react-loading";
-// Imported components
 
-const ChapterPage = () => {
+export default function ChapterPage() {
+  const [searchParams] = useSearchParams();
+
+  const id = searchParams.get("id");
+  // const title = searchParams.get("title");
+
   const displayChapter = useSelector(selectDisplayChapter);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!displayChapter) {
-      navigate("/content/chapters");
+    if (!id) {
+      navigate("/learn");
     }
   }, [displayChapter]);
 
@@ -25,7 +29,7 @@ const ChapterPage = () => {
     isSuccess,
     isError,
     error,
-  } = useGetBlocksQuery(displayChapter?.id);
+  } = useGetBlocksQuery(id);
 
   let content;
   if (isLoading) {
@@ -59,6 +63,4 @@ const ChapterPage = () => {
       <ChapterNavigator />
     </main>
   );
-};
-
-export default ChapterPage;
+}

@@ -26,7 +26,7 @@ const HomePage = () => {
             {!!language?.name ? (
               <>
                 <Link
-                  to="/content/chapters"
+                  to="/learn"
                   title={"Continue  " + language.name}
                   className="py-2 px-4 text-base bg-gradient-to-tr from-blue-700 to-blue-600 text-white hover:from-blue-600 hover:to-blue-500 duration-200 hover:shadow-md hover:shadow-zinc-700"
                 >

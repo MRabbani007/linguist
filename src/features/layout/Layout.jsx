@@ -1,9 +1,4 @@
-import {
-  createSearchParams,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
 import Navbar from "../navigation/Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
@@ -16,7 +11,6 @@ import {
   selectDisplayBlock,
   selectDisplayChapter,
   selectLanguage,
-  selectSiteLanguages,
   setChapters,
   setDisplayBlock,
   setDisplayChapter,

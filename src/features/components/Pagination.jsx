@@ -36,30 +36,30 @@ export default function Pagination({ count, currentPage, setPage }) {
   const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
 
   return (
-    <ul className="flex items-center text-center gap-1 font-medium">
-      <li
+    <div className="flex items-center text-center gap-1 font-medium">
+      <button
         onClick={handlePrev}
         className={
-          (isFirst ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+          (isFirst ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
           " py-1 px-2 rounded-md min-w-8 hidden sm:block"
         }
       >
         <IoIosArrowBack size={24} />
-      </li>
+      </button>
       {isManyPages && currentPage > 2 ? (
-        <li
+        <button
           onClick={() => setPage(1)}
           className={
-            (isFirst ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+            (isFirst ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
             " py-1 px-2 rounded-md min-w-8"
           }
         >
           First
-        </li>
+        </button>
       ) : null}
       {pagesToRender.map((item) => {
         return (
-          <li
+          <button
             key={item}
             onClick={() => setPage(item)}
             className={
@@ -68,29 +68,29 @@ export default function Pagination({ count, currentPage, setPage }) {
             }
           >
             {item}
-          </li>
+          </button>
         );
       })}
       {isManyPages && currentPage < pages.length - 2 ? (
-        <li
+        <button
           onClick={() => setPage(pages.length)}
           className={
-            (isLast ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+            (isLast ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
             " py-1 px-2 rounded-md min-w-8"
           }
         >
           Last
-        </li>
+        </button>
       ) : null}
-      <li
+      <button
         onClick={handleNext}
         className={
-          (isLast ? "bg-zinc-400" : "cursor-pointer bg-zinc-200") +
+          (isLast ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
           " py-1 px-2 min-w-8 hidden sm:block rounded-md"
         }
       >
         <IoIosArrowForward size={24} />
-      </li>
-    </ul>
+      </button>
+    </div>
   );
 }

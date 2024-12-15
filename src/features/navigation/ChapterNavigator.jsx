@@ -44,7 +44,7 @@ const ChapterNavigator = () => {
   useEffect(() => {
     setChapterIndex(() => {
       const tempChapterIndex = chapters.findIndex(
-        (item) => item.id === displayChapter.id
+        (item) => item.id === displayChapter?.id
       );
       if (tempChapterIndex >= 0) {
         return tempChapterIndex;

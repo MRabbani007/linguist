@@ -12,9 +12,6 @@ export default function ContentPage() {
   const chapters = useSelector(selectChapters);
   const lessons = useSelector(selectLessons);
 
-  // const { data: chapterSummary, isSuccess: isSuccessSummary } =
-  //   useGetChapterSummaryQuery(language?.id || "language");
-
   return (
     <main>
       <header className="flex items-center gap-4 border-b-2 border-red-700 pb-2 mb-4">

@@ -104,10 +104,14 @@ function App() {
 
             <Route path="language" element={<LanguagePage />} />
 
-            <Route path="content" element={<LayoutLearning />}>
+            <Route path="learn">
               <Route index element={<ContentPage />} />
-              <Route path="chapter?/:chapterID" element={<ChapterPage />} />
+              <Route path="chapter" element={<ChapterPage />} />
               <Route path="lesson" element={<LessonPage />} />
+              {/* ?/:chapterID */}
+            </Route>
+
+            <Route path="content" element={<LayoutLearning />}>
               <Route path="text" element={<TextsPage />} />
               <Route path="dialogue/id" element={<DialogueID />} />
               <Route path="dialogue" element={<DialoguePage />} />

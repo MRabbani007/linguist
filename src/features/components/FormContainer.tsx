@@ -25,6 +25,7 @@ interface Props {
   setClearOnSubmit?: Dispatch<SetStateAction<boolean>>;
   onSubmit: (event: FormEvent) => void;
   onDelete?: () => void;
+  onReset?: Dispatch<SetStateAction<boolean>>;
   handleClear?: () => void;
   closeForm: Dispatch<SetStateAction<boolean>>;
 }
@@ -39,6 +40,7 @@ export default function FormContainer({
   clearOnSubmit = false,
   setClearOnSubmit = () => {},
   onSubmit = () => {},
+  onReset = () => {},
   onDelete = () => {},
   handleClear = () => {},
   closeForm,
@@ -51,6 +53,7 @@ export default function FormContainer({
 
   const handleReset = () => {
     closeForm(false);
+    onReset(false);
   };
 
   useEffect(() => {

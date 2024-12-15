@@ -2,11 +2,10 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 import AdminMenu from "../admin/AdminMenu";
-import { IoMenuOutline } from "react-icons/io5";
-import AdminMenuDesktop from "../admin/AdminMenuDesktop";
 import { useDispatch } from "react-redux";
 import { setChapters } from "../admin/adminSlice";
 import { useLazyGetAllChaptersQuery } from "../admin/adminApiSlice";
+import AdminSidebar from "../navigation/AdminSidebar";
 
 export default function LayoutAdmin({ children }) {
   const location = useLocation();
@@ -54,20 +53,12 @@ export default function LayoutAdmin({ children }) {
   }, []);
 
   return (
-    <div className="flex flex-row items-stretch w-full">
-      <AdminMenuDesktop />
+    <div className="flex flex-row items-stretch flex-1">
+      <AdminSidebar />
       <main className="">
-        <div className="relative w-full">
-          <h2 className="py-4 px-8 w-full font-semibold flex items-center gap-4 uppercase">
-            {/* <button
-              onClick={() => setShowMenu((curr) => !curr)}
-              ref={menuButtonRef}
-            >
-              <IoMenuOutline size={32} />
-            </button> */}
-            <span>
-              {location?.pathname.replace("/", "").replaceAll("/", " / ")}
-            </span>
+        <div className="relative">
+          <h2 className="font-semibold flex items-center gap-4 uppercase">
+            {location?.pathname.replace("/", "").replaceAll("/", " / ")}
           </h2>
           <AdminMenu showMenu={showMenu} ref={menuRef} />
         </div>

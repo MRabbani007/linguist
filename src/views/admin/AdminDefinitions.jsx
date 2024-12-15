@@ -8,16 +8,19 @@ export default function AdminDefinitions() {
   const content = null;
 
   return (
-    <main>
-      <div className="flex items-center w-full p-4 bg-zinc-400 text-center">
+    <>
+      <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
         <span className="w-[5%] text-nowrap">SN</span>
         <span className="w-[20%] text-nowrap">Title</span>
         <span className="w-[20%] text-nowrap">Sub-Title</span>
         <span className="w-[50%] text-nowrap">Detail</span>
         <span className="w-[5%] text-nowrap">Edit</span>
       </div>
-      <div className="flex-1 flex flex-col gap-2 py-2">{content}</div>
-      <Pagination count={count} currentPage={page} setPage={setPage} />
-    </main>
+      <div className="flex-1">{content}</div>
+      <div className="flex items-center justify-between">
+        <span></span>
+        <Pagination count={count} currentPage={page} setPage={setPage} />
+      </div>
+    </>
   );
 }

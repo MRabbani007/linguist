@@ -15,7 +15,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 
-const BlockNavigator = ({ children }) => {
+export default function BlockNavigator({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -65,7 +65,7 @@ const BlockNavigator = ({ children }) => {
       dispatch(setDisplayBlock(blocks[0]));
       setMoveDirection("");
       navigate({
-        pathname: "/content/lesson",
+        pathname: "/learn/lesson",
         search: `${createSearchParams({
           title: blocks[0]?.title,
           id: blocks[0]?.id,
@@ -75,7 +75,7 @@ const BlockNavigator = ({ children }) => {
       dispatch(setDisplayBlock(blocks[blocks.length - 1]));
       setMoveDirection("");
       navigate({
-        pathname: "/content/lesson",
+        pathname: "/learn/lesson",
         search: `${createSearchParams({
           title: blocks[blocks.length - 1]?.title,
           id: blocks[blocks.length - 1]?.id,
@@ -109,7 +109,7 @@ const BlockNavigator = ({ children }) => {
       window.scrollTo(0, 0);
 
       navigate({
-        pathname: "/content/lesson",
+        pathname: "/learn/lesson",
         search: `${createSearchParams({
           title: blocks[blockIndex + 1]?.title,
           id: blocks[blockIndex + 1]?.id,
@@ -133,7 +133,7 @@ const BlockNavigator = ({ children }) => {
       window.scrollTo(0, 0);
 
       navigate({
-        pathname: "/content/lesson",
+        pathname: "/learn/lesson",
         search: `${createSearchParams({
           title: blocks[blockIndex - 1]?.title,
           id: blocks[blockIndex - 1]?.id,
@@ -147,8 +147,6 @@ const BlockNavigator = ({ children }) => {
       }
     }
   };
-
-  console.log(displayBlock?.sortIndex);
 
   return (
     <div className="p-2 md:p-4 flex justify-between items-center ">
@@ -175,9 +173,4 @@ const BlockNavigator = ({ children }) => {
       </button>
     </div>
   );
-};
-
-export default BlockNavigator;
-
-// -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible duration-200
-// translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 invisible group-hover:visible
+}
