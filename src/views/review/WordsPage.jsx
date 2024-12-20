@@ -71,9 +71,9 @@ export default function WordsPage() {
   }, [subject, level]);
 
   const items = [
-    { title: "Words by Subject", url: "", children: subjects },
-    { title: "Words by Level", url: "", children: levels },
-    { title: "Words by Type", url: "", children: types },
+    { title: "Words by Subject", url: "subject", children: subjects },
+    { title: "Words by Level", url: "level", children: levels },
+    { title: "Words by Type", url: "type", children: types },
   ];
 
   return (
@@ -107,7 +107,7 @@ export default function WordsPage() {
                   <Link
                     to={{
                       pathname: "/review/words",
-                      search: `?subject=${i}`,
+                      search: `?${item.url}=${encodeURIComponent(i)}`,
                     }}
                   >
                     {i}

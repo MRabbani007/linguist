@@ -1,36 +1,15 @@
 import React, { useState } from "react";
-import FormWordEdit from "./FormWordEdit";
+// import FormWordEdit from "./FormWordEdit";
 import { FiEdit2 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
-import MoveWordSection from "./MoveWordSection";
+// import MoveWordSection from "./MoveWordSection";
 import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { PiCrownSimpleThin } from "react-icons/pi";
-import { IoChevronForwardOutline, IoStarOutline } from "react-icons/io5";
+import { IoStarOutline } from "react-icons/io5";
 import { CiImageOn } from "react-icons/ci";
-import FormWordImage from "./FormWordImage";
-
-const WORD_TYPE = {
-  v: "Verb",
-  n: "Noun",
-  p: "Pronoun",
-  adj: "Adjective",
-  adv: "Adverb",
-  ph: "Phrase",
-};
-
-const WORD_GENDER = {
-  m: "Masculine",
-  f: "Feminine",
-  n: "Neuter",
-};
-
-const WORD_GENDER_SHORT = {
-  m: "masc",
-  f: "fem",
-  n: "neut",
-};
+// import FormWordImage from "./FormWordImage";
 
 export default function CardWord({ word }) {
   const editMode = useSelector(selectEditMode);
@@ -42,9 +21,6 @@ export default function CardWord({ word }) {
   const [showPronunce, setShowPronunce] = useState(false);
 
   const showPopup = displayBlock?.thirdLang && word?.third;
-
-  const [expand, setExpand] = useState(false);
-  // min-w-[350px] lg:min-w-[400px] max-w-[600px]
 
   const WORD_LEVEL = {
     1: "text-green-600",
@@ -65,14 +41,6 @@ export default function CardWord({ word }) {
       >
         {/* Word Body */}
         <div className="flex-1 flex items-stretch gap-4 relative py-2 px-4 md:py-4 md:px-6">
-          {/* <button onClick={() => setExpand((curr) => !curr)}>
-            <IoChevronForwardOutline
-              className={
-                (expand ? "rotate-90" : "") +
-                " absolute top-2 left-2 invisible group-hover:visible duration-200"
-              }
-            />
-          </button> */}
           {/* Word Image */}
           {word?.imageURL ? (
             <img
@@ -126,7 +94,6 @@ export default function CardWord({ word }) {
           ) : null}
         </div>
         {/* Word Footer */}
-        {/* expand ? "py-2 px-4 " : */}
         <div
           className={
             "h-0 invisible opacity-0 " +
@@ -137,10 +104,10 @@ export default function CardWord({ word }) {
             <FaPlus size={20} />
           </button>
           {/* Word type */}
-          <span className="font-normal">{WORD_TYPE[word?.type]}</span>
+          {/* <span className="font-normal">{WORD_TYPE[word?.type]}</span>
           <span className="font-light">
             <i>{WORD_GENDER_SHORT[word?.gender]}</i>
-          </span>
+          </span> */}
           <IoStarOutline className="ml-auto" size={20} />
           <PiCrownSimpleThin
             size={24}
@@ -149,18 +116,18 @@ export default function CardWord({ word }) {
           />
         </div>
       </div>
-      {viewEditWord ? (
+      {/* {viewEditWord ? (
         <FormWordEdit word={word} setViewEdit={setViewEditWord} />
-      ) : null}
-      {viewMoveSection && (
+      ) : null} */}
+      {/* {viewMoveSection && (
         <MoveWordSection word={word} setViewMoveSection={setViewMoveSection} />
-      )}
+      )} */}
       {/* {viewEditImage ? (
         <WordImageEdit word={word} setEdit={setViewEditImage} />
       ) : null} */}
-      {viewEditImage ? (
+      {/* {viewEditImage ? (
         <FormWordImage word={word} setShowForm={setViewEditImage} type="edit" />
-      ) : null}
+      ) : null} */}
     </>
   );
 }

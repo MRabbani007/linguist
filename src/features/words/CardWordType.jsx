@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useEditWordMutation } from "./wordsSlice";
-import { BiCheck, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 

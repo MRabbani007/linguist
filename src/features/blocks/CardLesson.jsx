@@ -1,12 +1,13 @@
 import { useDispatch } from "react-redux";
-import { setDisplayBlock } from "../globals/globalsSlice";
+import { setDisplayBlock, setDisplayChapter } from "../globals/globalsSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
-export default function CardLesson({ lesson }) {
+export default function CardLesson({ lesson, chapter }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const blockOpen = () => {
+    dispatch(setDisplayChapter(chapter));
     dispatch(setDisplayBlock(lesson));
     navigate({
       pathname: "/learn/lesson",

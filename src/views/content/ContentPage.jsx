@@ -26,7 +26,9 @@ export default function ContentPage() {
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .map((lesson, idx) => {
-                  return <CardLesson lesson={lesson} key={idx} />;
+                  return (
+                    <CardLesson lesson={lesson} chapter={chapter} key={idx} />
+                  );
                 })}
             </div>
           </div>

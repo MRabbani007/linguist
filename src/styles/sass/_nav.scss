@@ -3,18 +3,6 @@
 // Menu, sidebar, offcanvas
 //
 
-.mobile-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: fit-content;
-  background-color: $clr-zinc-50;
-  z-index: 40;
-  transition: all 0.3s ease-in-out;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
 .dropdown-item {
   padding: 0.5rem 1rem;
   display: flex;
@@ -22,6 +10,10 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: flex-start;
+}
+
+.dropdown-item:hover {
+  background-color: grey;
 }
 
 .dropdown-item span {

@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from "react";
 import UserDropDown from "./UserDropDown";
 import AdminDropDown from "./AdminDropDown";
 import MobileMenu from "./MobileMenu";
-import { IoIosSearch } from "react-icons/io";
 import NavbarSearch from "./NavbarSearch";
 import Dropdown from "../components/Dropdown";
 import { AiOutlineUser } from "react-icons/ai";
@@ -83,7 +82,6 @@ const Navbar = () => {
 
   const [viewMobileMenu, setViewMobileMenu] = useState(false);
   const [viewUserDropDown, setViewUserDropDown] = useState(false);
-  const [viewSearch, setViewSearch] = useState(false);
 
   const dropDownRefUser = useRef();
   const dropDownRefAdmin = useRef();
@@ -95,13 +93,9 @@ const Navbar = () => {
 
   const isActive = (page) => location.pathname.includes(page);
 
-  useEffect(() => {
-    setViewSearch(false);
-  }, [location.pathname]);
-
   return (
-    <div className="z-50 w-full relative font-medium bg-destructive">
-      <div className="flex items-stretch justify-between py-2 px-4 relative">
+    <div className="z-50 relative font-medium bg-destructive">
+      <div className="flex items-stretch justify-between px-4 py-2 my-0 relative">
         {/* Left Logo */}
         <Link
           to="/"
@@ -112,7 +106,7 @@ const Navbar = () => {
         </Link>
 
         {/* Middle Block */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden justify-center lg:flex my-auto flex-row items-stretch sm:gap-4 gap-2 text-zinc-900">
+        <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 -translate-y-0 hidden justify-center lg:flex flex-row items-stretch sm:gap-4 gap-2 text-zinc-900">
           <Dropdown label={"Learn"} url={"/learn"} items={[]} />
           <Dropdown label={"Words & Phases"} items={wordsDropDown} />
           <Dropdown label={"Text & Dialogue"} items={TextDialogueDropDown} />
@@ -121,10 +115,7 @@ const Navbar = () => {
             url={"/exercise"}
             items={exerciseDropDown}
           />
-          {/* Search Button */}
-          <button onClick={() => setViewSearch((curr) => !curr)}>
-            <IoIosSearch size={30} />
-          </button>
+          <NavbarSearch />
         </div>
 
         {/* Right Block */}
@@ -180,6 +171,9 @@ const Navbar = () => {
               </div>
             </div>
           )}
+          <div className="lg:hidden h-full my-auto flex items-center">
+            <NavbarSearch />
+          </div>
           <div
             className="relative lg:hidden flex items-center justify-center"
             onMouseOver={() => setViewMobileMenu(true)}
@@ -190,11 +184,7 @@ const Navbar = () => {
             </button>
             <MobileMenu ref={dropDownRefMobile} viewDropDown={viewMobileMenu} />
           </div>
-          {/* <button onClick={() => darkModeHandler()}>
-            {dark ? <IoSunny size={30} /> : <IoMoon size={30} />}
-          </button> */}
         </div>
-        <NavbarSearch viewSearch={viewSearch} />
       </div>
     </div>
   );

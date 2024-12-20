@@ -1,22 +1,10 @@
 import { useEffect, useState } from "react";
 import { useEditWordMutation, useRemoveWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import { selectDisplayBlock, selectSections } from "../globals/globalsSlice";
+import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
-
-const initialState = {
-  sortIndex: 0,
-  first: "",
-  second: "",
-  third: "",
-  fourth: "",
-  firstCaption: "",
-  secondCaption: "",
-  type: "",
-  gender: "",
-  sectionID: "",
-};
+import { T_WORD } from "../../data/templates";
 
 const WORD_TYPE = {
   Verb: "v",
@@ -61,21 +49,13 @@ const LEVEL = {
   6: "C2",
 };
 
-export default function FormWordEdit({ word = initialState, setViewEdit }) {
+export default function FormWordEdit({ word = T_WORD, setViewEdit }) {
   const [editWord, { isLoading }] = useEditWordMutation();
   const [removeWord] = useRemoveWordMutation();
   const displayBlock = useSelector(selectDisplayBlock);
-  // const sections = useSelector(selectSections);
 
   const [page, setPage] = useState("content");
   const [state, setState] = useState({ ...word });
-  // const [selected, setSelected] = useState({ ...word });
-
-  // const sectionOptions = sections.map((section, index) => (
-  //   <option value={index} key={index}>
-  //     {section?.title}
-  //   </option>
-  // ));
 
   const handleChange = (event) => {
     const { name, value } = event.target;

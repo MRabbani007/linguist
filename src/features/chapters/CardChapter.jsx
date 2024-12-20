@@ -4,12 +4,11 @@ import {
   selectDisplayChapter,
   setDisplayChapter,
 } from "../globals/globalsSlice";
-import { Link, createSearchParams, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function CardChapter({ chapter }) {
   const displayChapter = useSelector(selectDisplayChapter);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleOpen = async () => {
     dispatch(setDisplayChapter(chapter));

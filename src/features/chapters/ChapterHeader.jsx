@@ -1,10 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
 
-const ChapterHeader = ({ chapter, setEditChapter }) => {
-  const editMode = useSelector(selectEditMode);
-
+const ChapterHeader = ({ chapter }) => {
   return (
     <header className="group relative">
       <div className="flex items-stretch justify-start">
@@ -27,7 +23,6 @@ const ChapterHeader = ({ chapter, setEditChapter }) => {
           <p className="py-1 px-2">{chapter?.subtitle}</p>
         </div>
       </div>
-      {/* <p className="font-light text-wrap">{chapter?.subtitle}</p> */}
     </header>
   );
 };

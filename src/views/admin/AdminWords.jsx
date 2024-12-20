@@ -32,15 +32,28 @@ export default function AdminWords() {
         key={id}
         className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
       >
-        <span className="w-[5%]">{(page - 1) * 15 + index + 1}</span>
-        <span className="w-[10%]">{entities[id]?.first}</span>
-        <span className="w-[10%]">{entities[id]?.second}</span>
-        <span className="w-[10%]">{entities[id]?.third}</span>
-        <span className="w-[10%]">{entities[id]?.fourth}</span>
-        <span className="w-[10%]">{entities[id]?.type}</span>
-        <span className="w-[10%]">{entities[id]?.gender}</span>
-        <span className="flex-1">{entities[id]?.image}</span>
-        <span className="w-[5%]">
+        <p className="w-[5%]">{(page - 1) * 15 + index + 1}</p>
+        <div className="w-[15%]">
+          <p title="Word">{entities[id]?.first}</p>
+          <p title="Translation">{entities[id]?.second}</p>
+        </div>
+        <div className="w-[15%]">
+          <p title="Pronounced">{entities[id]?.third}</p>
+          <p title="Other">{entities[id]?.fourth}</p>
+        </div>
+        <div className="w-[15%]">
+          <p title="Type">{entities[id]?.type}</p>
+          <p title="Gender">{entities[id]?.gender}</p>
+        </div>
+        <div className="w-[15%]">
+          <p>{entities[id]?.subject}</p>
+          <p>{entities[id]?.level}</p>
+        </div>
+        <div className="flex-1">
+          <p>{entities[id]?.image}</p>
+          <p>{entities[id]?.imageURL?.substr(0, 20)}</p>
+        </div>
+        <div className="w-[5%]">
           <button
             onClick={() => {
               setEditItem(entities[id]);
@@ -49,7 +62,7 @@ export default function AdminWords() {
           >
             <CiEdit size={20} />
           </button>
-        </span>
+        </div>
       </div>
     ));
   }
@@ -58,12 +71,10 @@ export default function AdminWords() {
     <>
       <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
         <span className="w-[5%]">SN</span>
-        <span className="w-[10%]">First</span>
-        <span className="w-[10%]">Second</span>
-        <span className="w-[10%]">Third</span>
-        <span className="w-[10%]">Fourth</span>
-        <span className="w-[10%]">Type</span>
-        <span className="w-[10%]">Gender</span>
+        <span className="w-[15%]">Word / Translation</span>
+        <span className="w-[15%]">Pronounce / Other</span>
+        <span className="w-[15%]">Type / Gender</span>
+        <span className="w-[15%]">Subject / Level</span>
         <span className="flex-1">Image</span>
         <span className="w-[5%]">Edit</span>
       </div>

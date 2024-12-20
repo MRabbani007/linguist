@@ -118,7 +118,7 @@ type Word = {
 
 type Definition = {};
 
-type SectionList = {
+declare type SectionList = {
   id: string;
   lessonID: string;
   sectionID: string;
@@ -127,4 +127,14 @@ type SectionList = {
   text: string;
   notes: string;
   sortIndex: number;
+};
+
+declare type Chapter = {
+  id: string;
+  title: string;
+  subtitle: string;
+  detail: string;
+  chapterNo: number;
+  level: string;
+  learningTime: number;
 };

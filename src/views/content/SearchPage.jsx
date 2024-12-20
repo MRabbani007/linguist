@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { createSearchParams, useNavigate, useParams } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 
 export default function SearchPage() {
-  let params = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const query = queryParams.get("q") ?? "";
 
-  const [searchTerm, setSearchTerm] = useState(params?.search || "");
+  const [searchTerm, setSearchTerm] = useState(query);
+
   const [match, setMatch] = useState(false);
   const [words, setWords] = useState([]);
 
@@ -32,16 +36,18 @@ export default function SearchPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    handleSearch();
+    if (searchTerm.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
+    }
   };
 
   useEffect(() => {
-    setSearchTerm(params.search);
-  }, [params.search]);
+    setSearchTerm(query);
+  }, [query]);
 
-  // useEffect(() => {
-  //   handleSearch();
-  // }, [searchTerm]);
+  useEffect(() => {
+    handleSearch();
+  }, [query]);
 
   return (
     <main className="flex-1">
@@ -84,11 +90,7 @@ function RenderWord({ word }) {
     <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex  items-stretch">
       <div className="flex-1 space-y-2">
         <div className="">
-          <span
-            className="mx-2 text-lg font-medium cursor-pointer"
-            onMouseOver={() => setShowPronunce(true)}
-            onMouseOut={() => setShowPronunce(false)}
-          >
+          <span className="mx-2 text-lg font-medium cursor-pointer">
             {word?.first}
           </span>
           <span className="text-sm italic">{word?.firstCaption}</span>

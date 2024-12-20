@@ -60,3 +60,26 @@ export const DefinitionTemplate = {
   caption: "",
   notes: "",
 };
+
+export const T_WORD = {
+  sortIndex: 0,
+  first: "",
+  second: "",
+  third: "",
+  fourth: "",
+  firstCaption: "",
+  secondCaption: "",
+  type: "",
+  gender: "",
+  sectionID: "",
+};
+
+export const T_CHAPTER: Chapter = {
+  id: "",
+  title: "",
+  subtitle: "",
+  detail: "",
+  chapterNo: 0,
+  level: "",
+  learningTime: 0,
+};

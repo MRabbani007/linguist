@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAddWordMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 import useLocalStorage from "../../hooks/useLocalStorage";
-
-const initialState = {
-  sortIndex: 0,
-  first: "",
-  second: "",
-  third: "",
-  fourth: "",
-  firstCaption: "",
-  secondCaption: "",
-};
+import { T_WORD } from "../../data/templates";
 
 export default function FormWordAdd({ sectionID = "", setAdd }) {
   const displayBlock = useSelector(selectDisplayBlock);
-  const [value, setValue] = useLocalStorage("WordAdd", initialState);
+  const [value, setValue] = useLocalStorage("WordAdd", T_WORD);
 
   const [addWord, { isLoading }] = useAddWordMutation();
   const [clearOnSubmit, setClearOnSubmit] = useState(false);

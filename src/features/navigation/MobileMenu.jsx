@@ -9,7 +9,6 @@ import {
   IoSettingsOutline,
   IoTextOutline,
 } from "react-icons/io5";
-import { SlBookOpen } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectEditMode, toggleEditMode } from "../globals/globalsSlice";
@@ -29,16 +28,16 @@ const items = [
     id: 10,
     label: "Chapters",
     title: "Chapters",
-    url: "/content/chapters",
+    url: "/learn",
     icon: <LuScrollText size={30} />,
   },
-  {
-    id: 11,
-    label: "Lessons",
-    title: "Lessons",
-    url: "/content/lesson",
-    icon: <LuText size={30} />,
-  },
+  // {
+  //   id: 11,
+  //   label: "Lessons",
+  //   title: "Lessons",
+  //   url: "/content/lesson",
+  //   icon: <LuText size={30} />,
+  // },
   {
     id: 12,
     label: "Words",
@@ -103,51 +102,48 @@ const MobileMenu = forwardRef(({ viewDropDown }, ref) => {
     : items;
 
   return (
-    <ul
+    <div
       ref={ref}
       className={
         (viewDropDown ? " " : " -translate-y-[20px] invisible opacity-0") +
-        " text-zinc-800 bg-slate-200 mobile-menu"
+        " text-zinc-800 bg-zinc-100 absolute top-full right-0 z-40"
       }
     >
       {isAdmin ? (
         <>
-          <li>
-            <button
-              onClick={handleToggleEditMode}
-              className={(editMode ? "text-green-600" : "") + " dropdown-item"}
-            >
-              <IoAddCircleOutline size={32} />
-              <span>Toggle Edit</span>
-            </button>
-          </li>
-          <li>
-            <Link to="/admin" className="dropdown-item">
-              <FaUserGear size={32} />
-              <span>Admin Page</span>
-            </Link>
-          </li>
+          <button
+            onClick={handleToggleEditMode}
+            className={(editMode ? "text-green-600" : "") + " dropdown-item"}
+          >
+            <IoAddCircleOutline size={32} />
+            <span>Toggle Edit</span>
+          </button>
+          <Link to="/admin" className="dropdown-item">
+            <FaUserGear size={32} />
+            <span>Admin Page</span>
+          </Link>
         </>
       ) : null}
       {menuItems.map((item) => (
-        <li key={item?.id}>
-          <Link to={item.url} title={item?.title} className="dropdown-item">
-            {item?.icon}
-            <span>{item?.label}</span>
-          </Link>
-        </li>
-      ))}
-      <li>
         <Link
-          to={"/login"}
-          title={isLoggedIn ? "Sign Out" : "Sign In"}
+          key={item?.id}
+          to={item.url}
+          title={item?.title}
           className="dropdown-item"
         >
-          <IoIosLogOut size={36} />
-          <span>{isLoggedIn ? "Sign Out" : "Sign In"}</span>
+          {item?.icon}
+          <span>{item?.label}</span>
         </Link>
-      </li>
-    </ul>
+      ))}
+      <Link
+        to={"/login"}
+        title={isLoggedIn ? "Sign Out" : "Sign In"}
+        className="dropdown-item"
+      >
+        <IoIosLogOut size={36} />
+        <span>{isLoggedIn ? "Sign Out" : "Sign In"}</span>
+      </Link>
+    </div>
   );
 });
 

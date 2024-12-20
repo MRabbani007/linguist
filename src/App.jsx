@@ -117,7 +117,7 @@ function App() {
               <Route path="dialogue" element={<DialoguePage />} />
             </Route>
 
-            <Route path="search?/:search" element={<SearchPage />} />
+            <Route path="search" element={<SearchPage />} />
             <Route path="sentences/:lessonID?" element={<SentencesPage />} />
 
             <Route path="exercise">
