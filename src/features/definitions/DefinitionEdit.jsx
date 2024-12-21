@@ -17,8 +17,8 @@ export default function DefinitionEdit({ definition = {}, setEdit }) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setState((prevProps) => ({
-      ...prevProps,
+    setState((curr) => ({
+      ...curr,
       [name]: value,
     }));
   };
@@ -125,7 +125,7 @@ export default function DefinitionEdit({ definition = {}, setEdit }) {
           type="text"
           title="Note"
           placeholder="Note"
-          value={state?.notes}
+          value={state?.note}
           onChange={handleChange}
           className="field__input"
         />

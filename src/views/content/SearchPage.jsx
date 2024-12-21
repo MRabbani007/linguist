@@ -78,9 +78,7 @@ export default function SearchPage() {
               page * 15
             } of ${count} results for "${query}"`}
       </div>
-      <div className="flex flex-col flex-1 gap-4 p-4 w-full">
-        {wordsContent}
-      </div>
+      <div className="flex flex-col flex-1 gap-4">{wordsContent}</div>
       <Pagination count={count} currentPage={+page} className={"mx-auto"} />
     </main>
   );

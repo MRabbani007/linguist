@@ -67,9 +67,11 @@ export default function FormWordEdit({ word = T_WORD, setViewEdit }) {
 
   const handleDelete = async () => {
     try {
-      await removeWord(word?.id);
-      toast.success("Word Deleted");
-      setViewEdit(false);
+      if (confirm("Delete this word?")) {
+        await removeWord(word?.id);
+        toast.success("Word Deleted");
+        setViewEdit(false);
+      }
     } catch (err) {
       toast.error("Error deleting word");
     }
@@ -269,7 +271,7 @@ export default function FormWordEdit({ word = T_WORD, setViewEdit }) {
           (true && (
             <div className="field__row">
               <label htmlFor="fourth" className="field__label">
-                {"Fourth Lang: " + displayBlock?.fourthLang}:
+                {"Fourth Lang" + displayBlock?.fourthLang}
               </label>
               <input
                 type="text"

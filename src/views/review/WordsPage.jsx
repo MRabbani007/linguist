@@ -147,7 +147,7 @@ export default function WordsPage() {
         )}
         {count}
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {loading ? (
           <p>Loading...</p>
         ) : words.length === 0 ? (

@@ -18,9 +18,6 @@ export default function SectionTitle({
   setAddWord,
   setAddSentence,
 }) {
-  const editMode = useSelector(selectEditMode);
-  const [showDropDown, setShowDropDown] = useState(false);
-
   return (
     <div className="flex items-stretch group relative">
       <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg">
@@ -37,30 +34,18 @@ export default function SectionTitle({
           >
             {section?.title}
           </h3>
-          {editMode && (
-            <div className="relative" onBlur={() => setShowDropDown(false)}>
-              <button
-                title="Edit Section"
-                onMouseOver={() => setShowDropDown(true)}
-                className="ml-auto px-2 "
-              >
-                <BsThreeDots size={28} className="" />
-              </button>
-              <SectionDropDown
-                section={section}
-                showDropDown={showDropDown}
-                setEditTitle={setEditTitle}
-                setEditLessonID={setEditLessonID}
-                setAddIntro={setAddIntro}
-                setAddDef={setAddDef}
-                setAddTable={setAddTable}
-                setAddList={setAddList}
-                setAddWord={setAddWord}
-                setAddSentence={setAddSentence}
-                setEditImage={setEditImage}
-              />
-            </div>
-          )}
+          <SectionDropDown
+            section={section}
+            setEditTitle={setEditTitle}
+            setEditLessonID={setEditLessonID}
+            setAddIntro={setAddIntro}
+            setAddDef={setAddDef}
+            setAddTable={setAddTable}
+            setAddList={setAddList}
+            setAddWord={setAddWord}
+            setAddSentence={setAddSentence}
+            setEditImage={setEditImage}
+          />
         </div>
         {section?.subtitle && (
           <p className=" px-4 py-1">

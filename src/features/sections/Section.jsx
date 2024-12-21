@@ -28,6 +28,7 @@ export default function Section({
   sentences = [],
 }) {
   const editMode = useSelector(selectEditMode);
+  const [showForm, setShowForm] = useState("");
 
   const [expand, setExpand] = useState(true);
 

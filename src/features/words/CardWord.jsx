@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-// import FormWordEdit from "./FormWordEdit";
+import FormWordEdit from "./FormWordEdit";
 import { FiEdit2 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { selectDisplayBlock, selectEditMode } from "../globals/globalsSlice";
-// import MoveWordSection from "./MoveWordSection";
+import MoveWordSection from "./MoveWordSection";
 import { HiOutlineArrowsPointingOut } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { PiCrownSimpleThin } from "react-icons/pi";
 import { IoStarOutline } from "react-icons/io5";
 import { CiImageOn } from "react-icons/ci";
-// import FormWordImage from "./FormWordImage";
+import FormWordImage from "./FormWordImage";
 
 export default function CardWord({ word }) {
   const editMode = useSelector(selectEditMode);
@@ -57,7 +57,10 @@ export default function CardWord({ word }) {
                 onMouseOver={() => setShowPronunce(true)}
                 onMouseOut={() => setShowPronunce(false)}
               >
-                {word?.first}
+                <span>{word?.first}</span>
+                <span className="font-light text-sm italic ml-2">
+                  {word.firstCaption}
+                </span>
               </p>
               {showPopup ? (
                 <p
@@ -73,7 +76,10 @@ export default function CardWord({ word }) {
               ) : null}
             </div>
             <p className="font-medium text-destructive_foreground text-base">
-              {word?.second}
+              <span>{word?.second}</span>
+              <span className="font-light text-sm italic ml-2">
+                {word.secondCaption}
+              </span>
             </p>
           </div>
           {editMode ? (
@@ -116,18 +122,18 @@ export default function CardWord({ word }) {
           />
         </div>
       </div>
-      {/* {viewEditWord ? (
+      {viewEditWord ? (
         <FormWordEdit word={word} setViewEdit={setViewEditWord} />
-      ) : null} */}
-      {/* {viewMoveSection && (
+      ) : null}
+      {viewMoveSection && (
         <MoveWordSection word={word} setViewMoveSection={setViewMoveSection} />
-      )} */}
+      )}
       {/* {viewEditImage ? (
         <WordImageEdit word={word} setEdit={setViewEditImage} />
       ) : null} */}
-      {/* {viewEditImage ? (
+      {viewEditImage ? (
         <FormWordImage word={word} setShowForm={setViewEditImage} type="edit" />
-      ) : null} */}
+      ) : null}
     </>
   );
 }
