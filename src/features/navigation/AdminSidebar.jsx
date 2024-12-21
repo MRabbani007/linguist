@@ -9,6 +9,7 @@ const CONTENT = [
   { label: "Definitions", url: "/admin/definitions" },
   { label: "Words", url: "/admin/words" },
   { label: "Sentences", url: "/admin/sentences" },
+  { label: "Dialogues", url: "/admin/dialogues" },
 ];
 
 const PAGES = [

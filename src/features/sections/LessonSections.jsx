@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectEditMode, setSections } from "../globals/globalsSlice";
+import { useDispatch } from "react-redux";
+import { setSections } from "../globals/globalsSlice";
 import { useGetSectionsQuery } from "./sectionSlice";
 import { useGetDefinitionsQuery } from "../definitions/definitionsSlice";
 import Section from "./Section";
 import SectionAdd from "./SectionAdd";
 import { useGetWordsQuery } from "../words/wordsSlice";
-import CardWordList from "../words/CardWordList";
 import Definition from "../definitions/Definition";
 import { useGetTablesQuery } from "../tables/tablesSlice";
 import TableCard from "../tables/TableCard";

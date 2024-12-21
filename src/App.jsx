@@ -38,7 +38,6 @@ import NotePage from "./views/website/NotePage";
 // Content
 import LanguagePage from "./views/content/LanguagePage";
 import ChapterPage from "./views/content/ChapterPage";
-import SectionsPage from "./views/content/SectionsPage";
 import LessonPage from "./views/content/LessonPage";
 import SearchPage from "./views/content/SearchPage";
 import SentencesPage from "./views/content/SentencesPage";
@@ -66,6 +65,7 @@ import ContentPage from "./views/content/ContentPage";
 import TextsPage from "./views/content/TextsPage";
 import DialoguePage from "./views/content/DialoguePage";
 import DialogueID from "./views/content/DialogueID";
+import AdminDialogues from "./views/admin/AdminDialogues";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -161,6 +161,7 @@ function App() {
                 <Route path="sections" element={<AdminSections />} />
                 <Route path="definitions" element={<AdminDefinitions />} />
                 <Route path="sentences" element={<AdminSentences />} />
+                <Route path="dialogues" element={<AdminDialogues />} />
                 <Route path="words" element={<AdminWords />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="users" element={<AdminUsersPage />} />

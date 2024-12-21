@@ -138,3 +138,36 @@ declare type Chapter = {
   level: string;
   learningTime: number;
 };
+
+declare type Lesson = {
+  chapterID: string;
+  state: string; // lesson status = draft / published
+
+  id: string;
+  title: string;
+  subtitle: string;
+  detail: string;
+  caption: string;
+
+  lessonNo: number;
+  sortIndex: number;
+
+  firstLang: string;
+  secondLang: string;
+  thirdLang: string;
+  fourthLang: string;
+
+  lessonImage?: string;
+  level: string;
+  learningTime: number;
+
+  imagesURL?: string; // not required
+  displayMode?: string; // not required
+  userID?: string; // not required
+
+  introduction: string[]; // move to separate schema
+  text: string[]; // move to separate schema
+  notes: string[]; // move to separate schema
+
+  createDate?: string; // add mongoose time stamps
+};

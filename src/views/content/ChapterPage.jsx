@@ -4,7 +4,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useGetBlocksQuery } from "../../features/blocks/blockSlice";
 import CardLesson from "../../features/blocks/CardLesson";
-import ChapterHeader from "../../features/chapters/ChapterHeader";
 import ChapterNavigator from "../../features/navigation/ChapterNavigator";
 import ReactLoading from "react-loading";
 
@@ -53,10 +52,30 @@ export default function ChapterPage() {
   return (
     <main>
       <div className="">
-        <ChapterHeader chapter={displayChapter} />
+        <header className="group relative">
+          <div className="flex items-stretch justify-start">
+            <p
+              title={`Chapter ${chapter?.chapterNo ? chapter?.chapterNo : 0}`}
+              className="min-w-12 text-accent_foreground bg-accent flex items-center justify-center text-base md:text-2xl font-semibold"
+            >
+              {(chapter?.chapterNo ? chapter?.chapterNo : 0).toLocaleString(
+                "en-US",
+                {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                }
+              )}
+            </p>
+            <div className="flex flex-col gap-1 text-destructive_foreground flex-1">
+              <h1 className="text-2xl md:text-4xl font-semibold text-wrap inline py-1 px-2 border-accent border-b-4">
+                {chapter?.title}
+              </h1>
+              <p className="py-1 px-2">{chapter?.subtitle}</p>
+            </div>
+          </div>
+        </header>
         <ChapterNavigator />
       </div>
-      {/* <p className="w-full">{displayChapter?.detail}</p> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
         {content}
       </div>

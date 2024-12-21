@@ -1,21 +1,29 @@
 import React from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useSearchParams } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 15;
 const PAG_LEN = 5;
 
-export default function Pagination({ count, currentPage, setPage }) {
-  const handlePrev = () => {
-    if (currentPage > 1) {
-      setPage(currentPage - 1);
-    }
+export default function Pagination({ count, currentPage, className }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handlePage = (page) => {
+    searchParams.set("page", page);
+    setSearchParams(searchParams);
   };
 
-  const handleNext = () => {
-    if (currentPage < Math.ceil(count / ITEMS_PER_PAGE)) {
-      setPage(currentPage + 1);
-    }
-  };
+  // const handlePrev = () => {
+  //   if (currentPage > 1) {
+  //     setPage(currentPage - 1);
+  //   }
+  // };
+
+  // const handleNext = () => {
+  //   if (currentPage < Math.ceil(count / ITEMS_PER_PAGE)) {
+  //     setPage(currentPage + 1);
+  //   }
+  // };
 
   const pages = Array.from(
     { length: Math.ceil(count / ITEMS_PER_PAGE) },
@@ -35,22 +43,29 @@ export default function Pagination({ count, currentPage, setPage }) {
   const isFirst = currentPage === 1;
   const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
 
+  if (count < ITEMS_PER_PAGE) return null;
+
   return (
-    <div className="flex items-center text-center gap-1 font-medium">
+    <div
+      className={
+        "flex items-stretch text-center gap-1 font-medium " + className
+      }
+    >
       <button
-        onClick={handlePrev}
+        onClick={() => handlePage(currentPage - 1)}
+        disabled={isFirst}
         className={
-          (isFirst ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
+          (isFirst ? "bg-zinc-50" : " bg-zinc-200") +
           " py-1 px-2 rounded-md min-w-8 hidden sm:block"
         }
       >
-        <IoIosArrowBack size={24} />
+        <IoIosArrowBack size={20} />
       </button>
       {isManyPages && currentPage > 2 ? (
         <button
-          onClick={() => setPage(1)}
+          onClick={() => handlePage(1)}
           className={
-            (isFirst ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
+            (isFirst ? "bg-zinc-50" : " bg-zinc-200") +
             " py-1 px-2 rounded-md min-w-8"
           }
         >
@@ -61,10 +76,10 @@ export default function Pagination({ count, currentPage, setPage }) {
         return (
           <button
             key={item}
-            onClick={() => setPage(item)}
+            onClick={() => handlePage(item)}
             className={
-              (item === currentPage ? "bg-yellow-300" : "bg-zinc-200") +
-              " py-1 px-2 cursor-pointer rounded-md min-w-8"
+              (item === currentPage ? "bg-yellow-300" : "bg-zinc-50") +
+              " py-1 px-2 rounded-md min-w-8"
             }
           >
             {item}
@@ -73,9 +88,9 @@ export default function Pagination({ count, currentPage, setPage }) {
       })}
       {isManyPages && currentPage < pages.length - 2 ? (
         <button
-          onClick={() => setPage(pages.length)}
+          onClick={() => handlePage(pages.length)}
           className={
-            (isLast ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
+            (isLast ? "bg-zinc-50" : " bg-zinc-200") +
             " py-1 px-2 rounded-md min-w-8"
           }
         >
@@ -83,13 +98,14 @@ export default function Pagination({ count, currentPage, setPage }) {
         </button>
       ) : null}
       <button
-        onClick={handleNext}
+        onClick={() => handlePage(currentPage + 1)}
+        disabled={isLast}
         className={
-          (isLast ? "bg-zinc-200" : "cursor-pointer bg-zinc-50") +
+          (isLast ? "bg-zinc-50" : " bg-zinc-200") +
           " py-1 px-2 min-w-8 hidden sm:block rounded-md"
         }
       >
-        <IoIosArrowForward size={24} />
+        <IoIosArrowForward size={20} />
       </button>
     </div>
   );

@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { IoIosSearch } from "react-icons/io";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import Pagination from "../../features/components/Pagination";
 
 export default function SearchPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+
   const query = queryParams.get("q") ?? "";
+  const page = queryParams.get("page") ?? 1;
 
   const [searchTerm, setSearchTerm] = useState(query);
 
   const [match, setMatch] = useState(false);
+
   const [words, setWords] = useState([]);
+  const [count, setCount] = useState(false);
 
   const handleSearch = async () => {
     if (!searchTerm || searchTerm === "") {
       return null;
     }
 
-    const { data } = await axiosPrivate.get("/search", {
-      params: { searchTerm, match },
+    const response = await axiosPrivate.get("/search", {
+      params: { searchTerm, match, page },
     });
 
-    if (Array.isArray(data)) {
-      setWords(data);
+    if (response.status === 200 && Array.isArray(response.data?.data)) {
+      setWords(response.data.data);
+      setCount(response.data.count);
     }
   };
 
@@ -33,7 +38,7 @@ export default function SearchPage() {
     <RenderWord word={word} key={word?.id} />
   ));
 
-  const handleSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
     if (searchTerm.trim()) {
@@ -47,31 +52,36 @@ export default function SearchPage() {
 
   useEffect(() => {
     handleSearch();
-  }, [query]);
+  }, [query, page]);
 
   return (
     <main className="flex-1">
       <form
-        className="border-2 border-red-600/70 text-red-600 rounded-full flex items-center gap-1 pr-3 py-1"
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        className="flex items-center justify-center gap-2 bg-zinc-400/10 py-2 px-4 rounded-md"
       >
         <input
           type="text"
-          id="searchParam"
-          name="searchParam"
-          placeholder="Search"
-          className="bg-transparent m-0 flex-1"
+          placeholder="Search..."
+          className="bg-transparent flex-1"
           value={searchTerm}
-          required
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit">
-          <IoIosSearch size={26} className="" />
+        <button type="submit" className="font-bold">
+          Search
         </button>
       </form>
+      <div className="text-center">
+        {count === 1
+          ? `1 result for "${query}"`
+          : `${(page - 1) * 15 + 1} to ${
+              page * 15
+            } of ${count} results for "${query}"`}
+      </div>
       <div className="flex flex-col flex-1 gap-4 p-4 w-full">
         {wordsContent}
       </div>
+      <Pagination count={count} currentPage={+page} className={"mx-auto"} />
     </main>
   );
 }
@@ -81,13 +91,13 @@ function RenderWord({ word }) {
 
   const handleOpenLesson = () => {
     navigate({
-      pathname: "/content/lesson",
+      pathname: "/learn/lesson",
       search: `${createSearchParams({ id: word?.blockID })}`,
     });
   };
 
   return (
-    <div className="min-w-[200px] p-2 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex  items-stretch">
+    <div className="min-w-[200px] py-2 px-4 shrink-0 group border-[1px] shadow-sm shadow-slate-400 flex  items-stretch">
       <div className="flex-1 space-y-2">
         <div className="">
           <span className="mx-2 text-lg font-medium cursor-pointer">
@@ -101,7 +111,7 @@ function RenderWord({ word }) {
         </div>
       </div>
       <button title="Go to Lesson" onClick={handleOpenLesson}>
-        <BsBoxArrowUpRight size={25} className="text-zinc-800" />
+        <BsBoxArrowUpRight size={20} className="text-zinc-800" />
       </button>
     </div>
   );

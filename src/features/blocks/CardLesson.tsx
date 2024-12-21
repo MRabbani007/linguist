@@ -1,8 +1,15 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import { setDisplayBlock, setDisplayChapter } from "../globals/globalsSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 
-export default function CardLesson({ lesson, chapter }) {
+export default function CardLesson({
+  lesson,
+  chapter,
+}: {
+  lesson: Lesson;
+  chapter: Chapter;
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,10 +43,6 @@ export default function CardLesson({ lesson, chapter }) {
           <p className="">{lesson?.subtitle}</p>
           <p>{lesson?.detail}</p>
         </div>
-        {/* <p className="flex items-center gap-2">
-          <IoTimerOutline size={22} className="inline" />
-          <span>{lesson?.learningTime}</span>
-        </p> */}
       </div>
     </div>
   );

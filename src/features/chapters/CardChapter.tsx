@@ -6,7 +6,7 @@ import {
 } from "../globals/globalsSlice";
 import { Link } from "react-router-dom";
 
-export default function CardChapter({ chapter }) {
+export default function CardChapter({ chapter }: { chapter: Chapter }) {
   const displayChapter = useSelector(selectDisplayChapter);
   const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ export default function CardChapter({ chapter }) {
           {chapter?.title || ""}
         </Link>
         <p className="font-normal">{chapter?.subtitle || ""}</p>
-        <p className="font-normal">{chapter?.details || ""}</p>
+        <p className="font-normal">{chapter?.detail || ""}</p>
       </div>
     </div>
   );

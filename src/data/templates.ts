@@ -83,3 +83,30 @@ export const T_CHAPTER: Chapter = {
   level: "",
   learningTime: 0,
 };
+
+export const T_LESSON: Lesson = {
+  chapterID: "",
+  state: "draft",
+
+  id: "",
+  title: "",
+  subtitle: "",
+  detail: "",
+  caption: "",
+
+  lessonNo: 0,
+  sortIndex: 0,
+
+  firstLang: "",
+  secondLang: "",
+  thirdLang: "",
+  fourthLang: "",
+
+  introduction: [],
+  text: [],
+  notes: [],
+
+  imagesURL: "",
+  level: "beginner",
+  learningTime: 0,
+};
