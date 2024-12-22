@@ -30,7 +30,7 @@ export default function AdminWords() {
     content = ids.map((id, index) => (
       <div
         key={id}
-        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
+        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-1 border-b-[1px] border-zinc-200"
       >
         <p className="w-[5%]">{(page - 1) * 15 + index + 1}</p>
         <div className="w-[15%]">

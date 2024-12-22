@@ -110,3 +110,18 @@ export const T_LESSON: Lesson = {
   level: "beginner",
   learningTime: 0,
 };
+
+export const T_ATTRIBUTE: WordAttr = {
+  id: "",
+  label: "",
+  slug: "",
+};
+
+export const T_VALUE: AttributeValue = {
+  id: "",
+  attrID: "",
+  label: "",
+  slug: "",
+  abbrev: "",
+  shortHand: "",
+};

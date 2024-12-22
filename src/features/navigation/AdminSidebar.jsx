@@ -10,6 +10,7 @@ const CONTENT = [
   { label: "Words", url: "/admin/words" },
   { label: "Sentences", url: "/admin/sentences" },
   { label: "Dialogues", url: "/admin/dialogues" },
+  { label: "Word Attributes", url: "/admin/attributes" },
 ];
 
 const PAGES = [
@@ -24,7 +25,7 @@ const items = [
 
 export default function AdminSidebar() {
   return (
-    <nav className="text-zinc-800 hidden sm:inline-block">
+    <nav className="text-zinc-800 hidden lg:inline-block">
       <div className="py-4 px-4 flex items-center gap-2 border-b-[1px] border-red-600">
         <RiAdminLine size={30} />
         <span className="font-semibold text-zinc-900">Admin</span>

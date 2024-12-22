@@ -10,7 +10,6 @@ import AdminSidebar from "../navigation/AdminSidebar";
 export default function LayoutAdmin({ children }) {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false);
 
   const [
     getAllChapters,
@@ -33,34 +32,15 @@ export default function LayoutAdmin({ children }) {
     }
   }, [chapters]);
 
-  const menuRef = useRef();
-  const menuButtonRef = useRef();
-
-  const closeSideBar = (e) => {
-    if (!menuRef.current?.contains(e.target)) {
-      if (menuButtonRef.current?.contains(e.target)) {
-      } else {
-        setShowMenu(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", closeSideBar);
-    return () => {
-      document.removeEventListener("mousedown", closeSideBar);
-    };
-  }, []);
-
   return (
     <div className="flex flex-row items-stretch flex-1">
       <AdminSidebar />
       <main className="">
-        <div className="relative">
+        <div className="relative flex items-center gap-4">
+          <AdminMenu />
           <h2 className="font-semibold flex items-center gap-4 uppercase">
             {location?.pathname.replace("/", "").replaceAll("/", " / ")}
           </h2>
-          <AdminMenu showMenu={showMenu} ref={menuRef} />
         </div>
         <Suspense fallback={<SkeletonContentPage />}>
           <Outlet />

@@ -16,8 +16,8 @@ export default function InputField({
   handleChange,
 }: Props) {
   return (
-    <div className="grid grid-cols-[15%_1fr] items-center gap-2">
-      <label htmlFor={name} className={""}>
+    <div className="grid grid-cols-1 md:grid-cols-[15%_1fr] items-center gap-2">
+      <label htmlFor={name} className={"text-sm md:text-base"}>
         {label}
       </label>
       <input

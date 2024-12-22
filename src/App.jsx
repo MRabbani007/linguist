@@ -66,6 +66,7 @@ import TextsPage from "./views/content/TextsPage";
 import DialoguePage from "./views/content/DialoguePage";
 import DialogueID from "./views/content/DialogueID";
 import AdminDialogues from "./views/admin/AdminDialogues";
+import AdminWordAttributes from "./views/admin/AdminWordAttributes";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -163,6 +164,7 @@ function App() {
                 <Route path="sentences" element={<AdminSentences />} />
                 <Route path="dialogues" element={<AdminDialogues />} />
                 <Route path="words" element={<AdminWords />} />
+                <Route path="attributes" element={<AdminWordAttributes />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="users" element={<AdminUsersPage />} />
                 <Route path="images/upload" element={<ImageUpload />} />

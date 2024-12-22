@@ -171,3 +171,20 @@ declare type Lesson = {
 
   createDate?: string; // add mongoose time stamps
 };
+
+type WordAttr = {
+  id: string;
+  label: string;
+  slug: string;
+};
+
+type AttributeValue = {
+  id: string;
+  attrID: string;
+  label: string;
+  slug: string;
+  abbrev: string;
+  shortHand: string;
+};
+
+type WordAttribute = WordAttr & { values: AttributeValue[] };
