@@ -19,33 +19,18 @@ const lessonsAdapter = createEntityAdapter<Lesson>({
 
 const initialState = lessonsAdapter.getInitialState();
 
-type LessonResponse = { count: number; data: Lesson[] };
 type LessonReq = { page: String; chapter: String };
 
 export const lessonsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // for chapter page
-    getChapterLessons: builder.query<Lesson[], string>({
-      query: (chapterID = "Chapter") => ({
-        url: SERVER.LESSON,
-        method: "GET",
-        params: { chapterID },
-      }),
-      // transformResponse: (responseData) => {
-      //   return lessonsAdapter.setAll(initialState, responseData);
-      // },
-      // providesTags: (result, error, arg) => [
-      //   { type: "Block", id: "BLOCK" },
-      //   ...result.ids.map((id) => ({ type: "Block", id })),
-      // ],
-    }),
     // for admin
-    getAdminLessons: builder.query<LessonResponse, LessonReq>({
+    getAdminLessons: builder.query<QueryResponse<Lesson>, LessonReq>({
       query: ({ page, chapter }) => ({
         url: "/admin/lessons",
         method: "GET",
         params: { page, chapter },
       }),
+      providesTags: ["Lesson"],
       // transformResponse: (responseData) => {
       //   return blocksAdapter.setAll(initialState, responseData);
       // },
@@ -56,41 +41,31 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
     }),
     addLesson: builder.mutation({
       query: (lesson) => ({
-        url: SERVER.LESSON,
+        url: "/admin/lessons",
         method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.ADD_LESSON,
-            payload: { userName: store.getState()?.auth?.user, lesson },
-          },
-        },
+        body: { lesson },
       }),
-      // invalidatesTags: [{ type: "Block", id: "BLOCK" }],
+      invalidatesTags: ["Lesson"],
     }),
     editLesson: builder.mutation({
       query: (lesson) => ({
-        url: SERVER.LESSON,
+        url: "/admin/lessons",
         method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${store.getState()?.auth?.token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        // },
         body: { lesson },
       }),
+      invalidatesTags: ["Lesson"],
       // invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
     deleteLesson: builder.mutation({
       query: (id) => ({
-        url: SERVER.LESSON,
+        url: "/admin/lessons",
         method: "DELETE",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.DELETE_LESSON,
-            payload: { userName: store.getState()?.auth?.user, id },
-          },
-        },
+        body: { id },
       }),
+      invalidatesTags: ["Lesson"],
       // invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
   }),
@@ -98,8 +73,6 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetChapterLessonsQuery,
-  useLazyGetChapterLessonsQuery,
   useLazyGetAdminLessonsQuery,
   useAddLessonMutation,
   useEditLessonMutation,

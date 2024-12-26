@@ -1,4 +1,4 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
 import { BiSolidBadge } from "react-icons/bi";
 import { BsTrophyFill } from "react-icons/bs";
 import { FaListCheck } from "react-icons/fa6";
@@ -9,6 +9,11 @@ export default function MatchWordsScore({
   lives,
   highestScore,
   setShowFilter,
+}: {
+  score: number;
+  lives: number;
+  highestScore: number;
+  setShowFilter: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <div className="flex items-center justify-evenly bg-primary text-white py-3 px-5 mb-2">
@@ -17,7 +22,7 @@ export default function MatchWordsScore({
         title="Select Lessons"
         className=""
       >
-        <FaListCheck size={32} />
+        <FaListCheck size={30} />
       </button>
       <p title="Lives" className="flex items-center gap-3 relative w-fit">
         <IoMdHeart size={40} />

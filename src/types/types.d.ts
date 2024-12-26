@@ -25,8 +25,12 @@ declare global {
     subtitle: string;
     detail: string;
     chapterNo: number;
+    sortIndex: number;
     level: string;
     learningTime: number;
+    visible: boolean;
+    state?: string;
+    status?: string;
   };
 
   type Lesson = {
@@ -187,6 +191,8 @@ declare global {
     updatedAt?: Date;
   };
 
+  type DialogueByID = { dialogue: Dialogue; statements: DialogueStatement[] };
+
   type Word = {
     id: string;
     // Header
@@ -252,6 +258,18 @@ declare global {
   };
 
   type WordAttribute = WordAttr & { values: AttributeValue[] };
+
+  type LessonStatus = {
+    id: string;
+    lessonID: string;
+    status: string;
+  };
+
+  type UserProfile = {
+    selectedLanguage: string;
+    scoreMatchWords: number;
+    lessonStatus: LessonStatus[];
+  };
 }
 
 export {};

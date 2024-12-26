@@ -1,18 +1,20 @@
-import React, { ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 export default function SelectField({
   label,
   value,
   options,
   onValueChange,
+  className,
 }: {
   label: string;
   value?: string | number;
   options: { label: string; value: string }[];
   onValueChange: (value: string) => void;
+  className?: string;
 }) {
   return (
-    <div className="grid grid-cols-[15%_1fr] items-center gap-2">
+    <div className={"grid grid-cols-[15%_1fr] items-center gap-4 " + className}>
       <label htmlFor="Select">{label}</label>
       <select
         id="Select"

@@ -1,10 +1,12 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 import Pagination from "../../features/components/Pagination";
 import FormCreateAttribute from "../../features/admin/FormCreateAttribute";
 import { CiEdit } from "react-icons/ci";
 import FormCreateValue from "../../features/admin/FormCreateValue";
 import FormEditValue from "../../features/admin/FormEditValue";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "@/features/auth/authSlice";
 
 export default function AdminWordAttributes() {
   const page = 1;
@@ -14,11 +16,13 @@ export default function AdminWordAttributes() {
 
   const [isModified, setIsModified] = useState(true);
 
-  const [values, setValues] = useState<AttributeValue[]>([]);
+  // const [values, setValues] = useState<AttributeValue[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const token = useSelector(selectCurrentToken);
 
   async function fetchAttributes() {
     try {
@@ -26,7 +30,10 @@ export default function AdminWordAttributes() {
       setIsSuccess(false);
       setIsError(false);
 
-      const response = await axiosPrivate.get("/admin/wordAttributes");
+      const response = await axiosPrivate.get("/admin/wordAttributes", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
 
       if (response.status === 200 && Array.isArray(response.data.data)) {
         setData(response.data?.data as WordAttribute[]);
@@ -39,24 +46,25 @@ export default function AdminWordAttributes() {
 
       setIsLoading(false);
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       setIsError(true);
     }
   }
 
-  async function fetchValues() {
-    try {
-      const response = await axiosPrivate.get("/admin/wordAttrValues");
+  // async function fetchValues() {
+  //   try {
+  //     const response = await axiosPrivate.get("/admin/wordAttrValues");
 
-      if (response.status === 200 && Array.isArray(response.data.data)) {
-        setValues(response.data?.data as AttributeValue[]);
+  //     if (response.status === 200 && Array.isArray(response.data.data)) {
+  //       setValues(response.data?.data as AttributeValue[]);
 
-        setIsSuccess(true);
-      } else {
-        setIsError(true);
-      }
-    } catch (error) {}
-  }
+  //       setIsSuccess(true);
+  //     } else {
+  //       setIsError(true);
+  //     }
+  //   } catch (error) {}
+  // }
 
   useEffect(() => {
     if (isModified) {
@@ -106,7 +114,7 @@ export default function AdminWordAttributes() {
     content = <p>{"error"}</p>;
   }
 
-  const attributes = data.map((item) => <div key={item.id}>{item.label}</div>);
+  // const attributes = data.map((item) => <div key={item.id}>{item.label}</div>);
 
   const [add, setAdd] = useState(false);
   const [addValue, setAddValue] = useState(false);

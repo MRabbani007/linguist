@@ -1,11 +1,11 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
+// import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
-const globalsAdapter = createEntityAdapter({
-  // select id if id is not default entity.id
-});
+// const globalsAdapter = createEntityAdapter({
+//   // select id if id is not default entity.id
+// });
 
-const initialState = globalsAdapter.getInitialState();
+// const initialState = globalsAdapter.getInitialState();
 
 export const globalsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -34,12 +34,11 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { langID },
       }),
-      // transformResponse: (responseData: Lesson[]) => {
-      //   return lessonsAdapter.setAll(
-      //     lessonsAdapter.getInitialState(),
-      //     responseData
-      //   );
-      // },
+      transformResponse: (responseData: Lesson[]) => {
+        return responseData.sort((a, b) =>
+          a.sortIndex > b.sortIndex ? 1 : -1
+        );
+      },
     }),
     getLessonsByChapterID: builder.query({
       query: (chapterID = "chapter") => ({
@@ -48,6 +47,7 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         params: { chapterID },
       }),
     }),
+    // for lesson page
     getLessonByID: builder.query({
       query: (lessonID = "lesson") => ({
         url: `/lesson`,
@@ -68,6 +68,31 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         params: { searchTerm, lessonID, page, sort, asscending },
       }),
     }),
+    getExerciseLessons: builder.query<Lesson[], any>({
+      query: () => ({
+        url: "/exercise/lessons",
+        method: "GET",
+      }),
+    }),
+    getExerciseWords: builder.query<Word[], any>({
+      query: () => ({
+        url: "/exercise/words",
+        method: "POST",
+      }),
+    }),
+    getDialogues: builder.query<Dialogue[], any>({
+      query: () => ({
+        url: "/dialogues",
+        method: "get",
+      }),
+    }),
+    getDialogueByID: builder.query<DialogueByID, string>({
+      query: (id) => ({
+        url: `/dialogues/id`,
+        method: "get",
+        params: { id },
+      }),
+    }),
   }),
 });
 
@@ -78,4 +103,8 @@ export const {
   useLazyGetLessonsByChapterIDQuery,
   useLazyGetLessonByIDQuery,
   useLazySearchSentencesQuery,
+  useGetExerciseLessonsQuery,
+  useLazyGetExerciseWordsQuery,
+  useLazyGetDialoguesQuery,
+  useLazyGetDialogueByIDQuery,
 } = globalsApiSlice;

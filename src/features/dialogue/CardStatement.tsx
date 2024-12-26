@@ -22,16 +22,15 @@ export default function CardStatement({
   }, [editMode]);
 
   return (
-    <div className={"flex items-stretch justify-start gap-4 text-xl "}>
+    <div className={"flex items-center justify-start gap-4 text-xl "}>
       <button
         className={
           "w-10 h-10 rounded-full flex items-center justify-center " +
-            statement?.person ===
-          "1"
+          (statement?.person === "1"
             ? "bg-green-500/70"
             : statement?.person === "2"
             ? "bg-yellow-500/70"
-            : ""
+            : "")
         }
         onClick={() => setShowTr((curr) => !curr)}
       >

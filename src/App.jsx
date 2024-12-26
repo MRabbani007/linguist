@@ -35,6 +35,7 @@ import SettingsPage from "./views/user/SettingsPage";
 import HomePage from "./views/HomePage";
 import AboutPage from "./views/website/AboutPage";
 import NotePage from "./views/website/NotePage";
+import ContactUs from "./views/website/ContactUs";
 // Content
 import LanguagePage from "./views/content/LanguagePage";
 import ChapterPage from "./views/content/ChapterPage";
@@ -98,6 +99,7 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="note" element={<NotePage />} />
+            <Route path="contactUs" element={<ContactUs />} />
 
             {/* Page to display language chapters, visible to all */}
             <Route path="login" element={<SigninPage />} />
@@ -114,8 +116,8 @@ function App() {
 
             <Route path="content" element={<LayoutLearning />}>
               <Route path="text" element={<TextsPage />} />
-              <Route path="dialogue/id" element={<DialogueID />} />
               <Route path="dialogue" element={<DialoguePage />} />
+              <Route path="dialogue/:id" element={<DialogueID />} />
             </Route>
 
             <Route path="search" element={<SearchPage />} />

@@ -1,7 +1,5 @@
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-import { ACTIONS, SERVER } from "../../data/actions";
-import { store } from "../../app/store";
 
 type QueryResponse<T> = {
   data: T[];
@@ -9,10 +7,9 @@ type QueryResponse<T> = {
 };
 
 const definitionsAdapter = createEntityAdapter<Definition>({
-  // TODO: change compare value to date or sort option
   sortComparer: (a, b) => {
     if (a.sortIndex && b.sortIndex) {
-      return a.sortIndex.toString().localeCompare(b.sortIndex.toString());
+      return a.sortIndex > b.sortIndex ? 1 : -1;
     } else {
       return 1;
     }
@@ -23,90 +20,44 @@ const initialState = definitionsAdapter.getInitialState();
 
 export const definitionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDefinitions: builder.query<QueryResponse<Definition>, string>({
-      query: (lessonID = "lessonID") => ({
-        url: SERVER.DEFINITION,
+    getAdminDefinitions: builder.query<QueryResponse<Definition>, number>({
+      query: (page) => ({
+        url: "/admin/definitions",
         method: "GET",
-        params: { lessonID },
+        params: { page },
       }),
-      // transformResponse: (responseData) => {
-      //   return definitionsAdapter.setAll(initialState, responseData);
-      // },
-      // providesTags: (result, error, definition) => [
-      //   { type: "Definition", id: definition.id },
-      //   ...result.ids.map((id) => ({ type: "Definition", id })),
-      // ],
+      providesTags: ["Definition"],
     }),
     createDefinition: builder.mutation({
       query: (definition) => ({
-        url: SERVER.DEFINITION,
+        url: "/admin/definitions",
         method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.ADD_DEFINITION,
-            payload: { userName: store.getState()?.auth?.user, definition },
-          },
-        },
+        body: { definition },
       }),
-      // invalidatesTags: [{ type: "Definition", id: "DEFINITION" }],
+      invalidatesTags: ["Definition"],
     }),
     editDefinition: builder.mutation({
       query: (definition) => ({
-        url: SERVER.DEFINITION,
+        url: "/admin/definitions",
         method: "PATCH",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDIT_DEFINITION_CONTENT,
-            payload: { userName: store.getState()?.auth?.user, definition },
-          },
-        },
+        body: { definition },
       }),
-      // invalidatesTags: (result, error, arg) => [
-      //   { type: "Definition", id: arg.id },
-      // ],
+      invalidatesTags: ["Definition"],
     }),
     removeDefinition: builder.mutation({
       query: (id) => ({
-        url: SERVER.DEFINITION,
+        url: "/admin/definitions",
         method: "DELETE",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.REMOVE_DEFINITION,
-            payload: { userName: store.getState()?.auth?.user, id },
-          },
-        },
+        body: { id },
       }),
-      // invalidatesTags: (result, error, arg) => [
-      //   { type: "Definition", id: arg.id },
-      // ],
+      invalidatesTags: ["Definition"],
     }),
   }),
 });
 
 export const {
-  useLazyGetDefinitionsQuery,
+  useLazyGetAdminDefinitionsQuery,
   useCreateDefinitionMutation,
   useEditDefinitionMutation,
   useRemoveDefinitionMutation,
 } = definitionsApiSlice;
-
-// returns the query result object
-// export const selectDefinitionsResult =
-//   definitionsApiSlice.endpoints.getDefinitions.select();
-
-// Creates memoized selector
-// const selectDefinitionsData = createSelector(
-//   selectDefinitionsResult,
-//   (definitionsResult) => definitionsResult.data // normalized state object with ids & entities
-// );
-
-//getSelectors creates these selectors and we rename them with aliases using destructuring
-// export const {
-//   selectAll: selectAllDefinitions,
-//   // Pass in a selector that returns the posts slice of state
-// } = definitionsAdapter.getSelectors((state) => {
-//   return selectDefinitionsData(state) ?? initialState;
-// });

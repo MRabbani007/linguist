@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { Dialogue } from "../../types/types";
-import { axiosPrivate } from "../../api/axios";
+import { useEffect, useState } from "react";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useLazyGetDialoguesQuery } from "../globals/globalsApiSlice";
 
 export default function DialogueNavigator() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const params = useParams();
+  const id = params?.id;
 
-  const id = location.state?.id;
-  const [dialogues, setDialogues] = useState<Dialogue[]>([]);
+  const [getDialogues, { data: dialogues }] = useLazyGetDialoguesQuery();
+
+  // if (!dialogues) return null;
+
   const [index, setIndex] = useState(0);
 
-  const fetchDialogues = async () => {
-    const response = await axiosPrivate.get("/dialogue");
-
-    if (response.status === 200 && Array.isArray(response.data)) {
-      setDialogues(response.data);
-    }
-  };
-
   useEffect(() => {
-    fetchDialogues();
+    getDialogues(null);
   }, []);
 
   useEffect(() => {
@@ -31,36 +25,37 @@ export default function DialogueNavigator() {
         setIndex(temp);
       }
     }
-  }, [location.state, dialogues]);
+  }, [id, dialogues]);
 
   const handleNext = () => {
-    if (index < dialogues.length) {
-      navigate(
-        { pathname: "/content/dialogue/id" },
-        { state: { id: dialogues[index + 1].id } }
-      );
+    if (dialogues && index < dialogues.length) {
+      navigate(`/content/dialogue/${dialogues[index + 1].id}`);
     }
   };
 
   const handlePrev = () => {
-    if (index > 0) {
-      // setIndex((curr) => curr - 1);
-      navigate(
-        { pathname: "/content/dialogue/id" },
-        { state: { id: dialogues[index - 1].id } }
-      );
+    if (dialogues && index > 0) {
+      navigate(`/content/dialogue/${dialogues[index - 1].id}`);
     }
   };
 
   return (
     <div className="flex items-center justify-between">
-      <button onClick={handlePrev} className="flex items-center gap-2">
-        <IoChevronBack size={24} />
+      <button
+        disabled={index === 0}
+        onClick={handlePrev}
+        className="btn-r btn-red flex items-center gap-2"
+      >
+        <IoChevronBack size={25} />
         <span>Previous</span>
       </button>
-      <button onClick={handleNext} className="flex items-center gap-2">
+      <button
+        disabled={dialogues ? index === dialogues.length : true}
+        onClick={handleNext}
+        className="btn-r btn-red flex items-center gap-2"
+      >
         <span>Next</span>
-        <IoChevronForward size={24} />
+        <IoChevronForward size={25} />
       </button>
     </div>
   );

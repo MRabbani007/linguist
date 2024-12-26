@@ -25,53 +25,31 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { page },
       }),
-      // transformResponse: (responseData) => {
-      //   store.dispatch(setWordsCount(responseData?.count));
-      //   return adminAdapter.setAll(initialState, responseData?.data);
-      // },
-      // providesTags: (result, error, arg) => [
-      //   { type: "Word", id: "Word" },
-      //   ...result.ids.map((id) => ({ type: "Word", id })),
-      // ],
+      providesTags: ["Word"],
     }),
     addWord: builder.mutation({
       query: (word) => ({
-        url: SERVER.WORD,
+        url: "/admin/words",
         method: "POST",
-        body: {
-          payload: word,
-        },
+        body: { word },
       }),
-      // invalidatesTags: [{ type: "Word", id: "Word" }],
+      invalidatesTags: ["Word"],
     }),
     editWord: builder.mutation({
       query: (word) => ({
-        url: SERVER.WORD,
+        url: "/admin/words",
         method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${store.getState()?.auth?.token}`,
-        },
-        body: {
-          action: {
-            type: ACTIONS.EDIT_WORD_CONTENT,
-            payload: word,
-          },
-        },
+        body: { word },
       }),
-      // invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],
+      invalidatesTags: ["Word"],
     }),
     removeWord: builder.mutation({
       query: (id) => ({
-        url: SERVER.WORD,
+        url: "/admin/words",
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${store.getState()?.auth?.token}`,
-        },
-        body: {
-          payload: id,
-        },
+        body: { id },
       }),
-      // invalidatesTags: (result, error, arg) => [{ type: "Word", id: arg.id }],
+      invalidatesTags: ["Word"],
     }),
   }),
 });

@@ -88,8 +88,12 @@ export const T_CHAPTER: Chapter = {
   subtitle: "",
   detail: "",
   chapterNo: 0,
+  sortIndex: 0,
   level: "",
   learningTime: 0,
+  visible: false,
+  state: "public",
+  status: "draft",
 };
 
 export const T_LESSON: Lesson = {

@@ -78,12 +78,6 @@ const Layout = () => {
   }, [languages]);
 
   useEffect(() => {
-    // if (lastPage?.pathname) {
-    //   navigate(`${lastPage?.pathname}${lastPage?.search ?? ""}`);
-    // }
-  }, []);
-
-  useEffect(() => {
     setLastPage(location);
   }, [location]);
 
@@ -103,7 +97,6 @@ const Layout = () => {
     if (!displayChapter?.id && lastChapter?.id) {
       dispatch(setDisplayChapter(lastChapter));
       if (!displayChapter?.id && !lastLesson?.id) {
-        // navigate("/content/sections");
       }
     }
     if (!displayBlock?.id && lastLesson?.id) {

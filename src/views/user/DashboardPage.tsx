@@ -1,6 +1,4 @@
-import DashboardLinks from "../../features/dashboard/DashboardLinks";
-import Exercises from "../../features/dashboard/Exercises";
-import Progress from "../../features/dashboard/Progress";
+// import Exercises from "../../features/dashboard/Exercises";
 import UserLessonTracker from "../../features/dashboard/UserLessonTracker";
 import UserWordList from "../../features/dashboard/UserWordList";
 
@@ -12,7 +10,7 @@ export default function DashboardPage() {
       </header> */}
       <div className="w-full flex flex-col gap-4">
         <UserLessonTracker />
-        <Exercises />
+        {/* <Exercises /> */}
         <UserWordList />
         {/* <DashboardLinks /> */}
       </div>

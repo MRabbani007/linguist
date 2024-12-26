@@ -63,7 +63,7 @@ const baseQuerywithReauth = async (
 };
 
 export const apiSlice = createApi({
-  reducerPath: "api", // optional
+  reducerPath: "apiSlice", // optional
   baseQuery: baseQuerywithReauth,
   //fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
   tagTypes: [
@@ -78,6 +78,6 @@ export const apiSlice = createApi({
     "User",
     "Profile",
     "Lesson",
-  ],
+  ], // Used for caching and invalidation
   endpoints: () => ({}),
 });

@@ -4,7 +4,7 @@ import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
 
 export default function LayoutLearning() {
   return (
-    <div className="flex items-stretch w-full mx-auto">
+    <div className="flex-1 flex flex-col">
       <Suspense fallback={<SkeletonContentPage />}>
         <Outlet />
       </Suspense>

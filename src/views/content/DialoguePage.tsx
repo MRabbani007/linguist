@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import { axiosPrivate } from "../../api/axios";
-import FormCreateDialogue from "../../features/dialogue/FormCreateDialogue";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectEditMode } from "../../features/admin/adminSlice";
+import { useLazyGetDialoguesQuery } from "@/features/globals/globalsApiSlice";
+import DialogueImg from "/assets/dialogue.png";
 
 export default function DialoguePage() {
-  const editMode = useSelector(selectEditMode);
-  const [dialogues, setDialogues] = useState<Dialogue[]>([]);
-
-  const [add, setAdd] = useState(false);
-
-  const fetchDialogues = async () => {
-    const response = await axiosPrivate.get("/dialogue");
-
-    if (response.status === 200 && Array.isArray(response.data)) {
-      setDialogues(response.data);
-    }
-  };
+  const [getDialogues, { data: dialogues, isLoading, isSuccess, isError }] =
+    useLazyGetDialoguesQuery();
 
   useEffect(() => {
-    fetchDialogues();
+    getDialogues(null);
   }, []);
 
   return (
@@ -30,34 +18,36 @@ export default function DialoguePage() {
           Dialogues
         </h1>
       </header>
-      <div className="flex flex-wrap flex-col sm:flex-row items-stretch gap-4">
-        {dialogues.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="bg-zinc-200 py-4 px-8 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1"
-            >
-              <div>
-                <img src={"/assets/dialogue.png"} />
-              </div>
-              <Link
-                to={{
-                  pathname: "/content/dialogue/id",
-                }}
-                state={{ id: item.id }}
-                className="text-2xl font-semibold"
+      <div className="flex-1 flex flex-wrap flex-col sm:flex-row items-stretch gap-4">
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : isError ? (
+          <p>Error Loading Dialogues</p>
+        ) : (
+          isSuccess &&
+          dialogues.map((item, index) => {
+            return (
+              <div
+                key={index}
+                className="bg-zinc-200 py-4 px-8 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1"
               >
-                <span className="mr-2">{index + 1}.</span>
-                <span>{item?.title}</span>
-              </Link>
-              <p className="text-sm">{item?.subtitle}</p>
-              {/* <p>{item.createdAt?.toString().substring(0, 10)}</p> */}
-            </div>
-          );
-        })}
+                <div className=" flex justify-center items-center">
+                  <img src={DialogueImg} className="w-20 h-20" />
+                </div>
+                <Link
+                  to={`/content/dialogue/${item.id}`}
+                  className="text-2xl font-semibold"
+                >
+                  <span className="mr-2">{index + 1}.</span>
+                  <span>{item?.title}</span>
+                </Link>
+                <p className="text-sm">{item?.subtitle}</p>
+                {/* <p>{item.createdAt?.toString().substring(0, 10)}</p> */}
+              </div>
+            );
+          })
+        )}
       </div>
-      {editMode ? <button onClick={() => setAdd(true)}>Create</button> : null}
-      {add ? <FormCreateDialogue type="add" setShowForm={setAdd} /> : null}
     </main>
   );
 }

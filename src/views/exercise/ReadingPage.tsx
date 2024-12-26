@@ -1,12 +1,10 @@
-import React from "react";
-
 export default function ReadingPage() {
   return (
     <main>
-      <header className=" from-zinc-200 to-white text-zinc-600 border-2 border-zinc-400">
+      <header className="bg-gradient-to-r from-zinc-200 to-zinc-300 text-zinc-600 p-4">
         <h1 className="mx-auto font-bold text-2xl">Reading</h1>
       </header>
-      <div></div>
+      <div>Coming Soon!</div>
     </main>
   );
 }

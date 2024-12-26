@@ -7,13 +7,13 @@ import adminReducer from "../features/admin/adminSlice";
 
 export const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer, // Add RTK Query reducer
     auth: authReducer,
     globals: globalsReducer,
     admin: adminReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware), // Add RTK Query middleware
   devTools: true,
 });
 

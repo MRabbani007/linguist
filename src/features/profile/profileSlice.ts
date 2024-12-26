@@ -1,37 +1,34 @@
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
+// import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-import { ACTIONS, SERVER } from "../../data/actions";
 import { store } from "../../app/store";
 
-const profileAdapter = createEntityAdapter({});
+// const profileAdapter = createEntityAdapter({});
 
-const initialState = profileAdapter.getInitialState();
+// const initialState = profileAdapter.getInitialState();
 
 export const profileApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getProfile: builder.query({
+    getUserProfile: builder.query<UserProfile, null>({
       query: () => ({
-        url: SERVER.USER_PROFILE,
-        method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: "GET_PROFILE",
-            payload: { userName: store.getState()?.auth?.user },
-          },
-        },
+        url: "/user/profile",
+        method: "GET",
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Profile", id })),
-              { type: "Profile", id: "Profile" },
-            ]
-          : [{ type: "Profile", id: "Profile" }],
+      providesTags: ["Profile"],
+    }),
+    updateLessonProgress: builder.mutation({
+      query: (lessonProg) => ({
+        url: "/user/progress/lesson",
+        method: "PATCH",
+        // headers: {
+        //   Authorization: `Bearer ${store.getState()?.auth?.token}`,
+        // },
+        body: { lessonProg },
+      }),
+      invalidatesTags: ["Profile"],
     }),
     updateProfile: builder.mutation({
       query: ({ type, data }) => ({
-        url: SERVER.USER_PROFILE,
+        url: "/user/profile",
         method: "PATCH",
         body: {
           roles: store.getState()?.auth?.roles,
@@ -47,14 +44,14 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useGetProfileQuery,
-  useLazyGetProfileQuery,
+  useGetUserProfileQuery,
   useUpdateProfileMutation,
+  useUpdateLessonProgressMutation,
 } = profileApiSlice;
 
 // returns the query result object
-export const selectProfileResult =
-  profileApiSlice.endpoints.getProfile.select();
+// export const selectProfileResult =
+//   profileApiSlice.endpoints.getProfile.select();
 
 // const selectProfileData = createSelector(
 //   selectProfileResult,

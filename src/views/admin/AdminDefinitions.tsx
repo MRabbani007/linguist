@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Pagination from "../../features/components/Pagination";
-import { useLazyGetAllDefinitionsQuery } from "../../features/admin/adminApiSlice";
 import { CiEdit } from "react-icons/ci";
 import { useSearchParams } from "react-router-dom";
 import FormDefinitionEdit from "@/features/definitions/FormDefinitionEdit";
 import FormDefinitionAdd from "@/features/definitions/FormDefinitionAdd";
+import { useLazyGetAdminDefinitionsQuery } from "@/features/definitions/definitionsSlice";
 
 export default function AdminDefinitions() {
   const [searchParams] = useSearchParams();
@@ -16,11 +16,11 @@ export default function AdminDefinitions() {
   const [edit, setEdit] = useState(false);
   const [editItem, setEditItem] = useState<Definition | null>(null);
 
-  const [getAllDefinitions, { data, isLoading, isSuccess, isError, error }] =
-    useLazyGetAllDefinitionsQuery();
+  const [getAdminDefinitions, { data, isLoading, isSuccess, isError, error }] =
+    useLazyGetAdminDefinitionsQuery();
 
   useEffect(() => {
-    getAllDefinitions(+page);
+    getAdminDefinitions(+page);
   }, [page]);
 
   let content;

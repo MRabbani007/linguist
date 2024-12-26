@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLazyGetRandomWordsQuery } from "../randomWords/randomWordsSlice";
 import MatchWordsScore from "./MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Filter from "./Filter";
 
 // helper function to shuffle words
-function shuffle(array) {
+function shuffle(array: any[]) {
   let currentIndex = array.length;
 
   // While there remain elements to shuffle...

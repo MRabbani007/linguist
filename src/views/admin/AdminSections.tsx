@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
-import { useLazyGetAllSectionsQuery } from "../../features/admin/adminApiSlice";
+import { useEffect, useState } from "react";
 import Pagination from "../../features/components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import { useSearchParams } from "react-router-dom";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
+import { useSelector } from "react-redux";
+import { selectChapters, selectLessons } from "@/features/globals/globalsSlice";
+import SelectField from "@/features/ui/SelectField";
+import { useLazyGetAdminSectionsQuery } from "@/features/sections/sectionSlice";
 
 export default function AdminSections() {
   const [searchParams] = useSearchParams();
@@ -11,12 +14,27 @@ export default function AdminSections() {
 
   const page = searchParams.get("page") ?? 1;
 
-  const [getAllSections, { data, isLoading, isSuccess, isError, error }] =
-    useLazyGetAllSectionsQuery();
+  const [getAdminSections, { data, isLoading, isSuccess, isError, error }] =
+    useLazyGetAdminSectionsQuery();
+
+  const chapters = useSelector(selectChapters);
+  const lessons = useSelector(selectLessons);
+  const [chapterLessons, setChapterLessons] = useState<Lesson[]>([]);
+
+  const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
+  const [selectedLesson, setSelectedLesson] = useState<string | null>(null);
 
   useEffect(() => {
-    getAllSections(+page);
+    getAdminSections({ page: +page, lessonID: selectedLesson ?? "" });
   }, [page]);
+
+  useEffect(() => {
+    if (selectedChapter) {
+      setChapterLessons(
+        lessons.filter((item) => item.chapterID === selectedChapter)
+      );
+    }
+  }, [selectedChapter]);
 
   let content;
   if (isLoading) {
@@ -28,7 +46,7 @@ export default function AdminSections() {
     content = data.data.map((item, index) => (
       <div
         key={item.id}
-        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
+        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-1 border-b-[1px] border-zinc-200"
       >
         <span className="w-[5%]">
           {(+page - 1) * ITEMS_PER_PAGE + index + 1}
@@ -45,6 +63,26 @@ export default function AdminSections() {
 
   return (
     <>
+      <div className="flex items-center gap-4">
+        <SelectField
+          label="Chapter"
+          value={selectedChapter ?? ""}
+          options={chapters.map((item) => ({
+            label: item.title,
+            value: item.id,
+          }))}
+          onValueChange={(val) => setSelectedChapter(val)}
+        />
+        <SelectField
+          label="Lesson"
+          options={chapterLessons.map((item) => ({
+            label: item.title,
+            value: item.id,
+          }))}
+          value={selectedLesson ?? ""}
+          onValueChange={(val) => setSelectedLesson(val)}
+        />
+      </div>
       <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
         <span className="w-[5%]">SN</span>
         <span className="w-[20%]">Title</span>
@@ -54,7 +92,7 @@ export default function AdminSections() {
       </div>
       <div>{content}</div>
       <div className="flex items-center justify-between">
-        <button>Add Section</button>
+        <button className="btn-r btn-red">Add Section</button>
         <Pagination count={count} currentPage={+page} />
       </div>
     </>

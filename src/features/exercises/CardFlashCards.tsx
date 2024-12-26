@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiCheck, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 
+type FlashCardWord = { id: string; first: string; second: string };
+
+type Props = {
+  word: Word;
+  firstLang: boolean;
+  options: FlashCardWord[];
+  handlePrev: () => void;
+  handleNext: () => void;
+  isFirst: boolean;
+  isLast: boolean;
+};
+
 export default function CardFlashCards({
-  word,
   firstLang = true,
   options = [],
   handlePrev = () => {},
   handleNext = () => {},
   isFirst = false,
-  isLast = false,
-}) {
+}: Props) {
   const [show, setShow] = useState(false);
   const [newWord, setNewWord] = useState(true);
   const [status, setStatus] = useState("select");
@@ -20,10 +30,10 @@ export default function CardFlashCards({
     options[Math.floor(Math.random() * options.length)]
   );
 
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<FlashCardWord | null>(null);
 
   useEffect(() => {
-    if (selected?.id && selected?.id === showWord?.id) {
+    if (selected && selected?.id === showWord?.id) {
       setNewWord(false);
       setShow(true);
       setStatus("success");

@@ -81,9 +81,8 @@ export default function SentencesPage() {
   };
 
   useEffect(() => {
-    if (searchTerm !== "" || (lessonID && lessonID !== "")) {
-      searchSentences({ searchTerm: search, lessonID, page });
-    }
+    // if (searchTerm !== "" || (lessonID && lessonID !== "")) {
+    searchSentences({ searchTerm: search, lessonID, page });
   }, [search, lessonID, page]);
 
   let content;

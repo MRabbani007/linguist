@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 import { T_CHAPTER } from "../../data/templates";
 import InputField from "../ui/InputField";
+import SelectField from "../ui/SelectField";
 
 export default function FormChapterEdit({
   chapter,
@@ -53,9 +54,11 @@ export default function FormChapterEdit({
     try {
       if (confirm("Delete this Chapter?")) {
         await removeChapter(chapter.id).unwrap();
+        toast.success("Chapter Deleted");
+        setEdit(false);
       }
     } catch (err) {
-      console.error("Failed to delete the chapter", err);
+      toast.error("Error deleting chapter");
     }
   };
 
@@ -73,7 +76,14 @@ export default function FormChapterEdit({
         label="Chapter Number"
         name="chapterNo"
         type="number"
-        value={state.chapterNo}
+        value={state?.chapterNo ?? 0}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Sort Index"
+        name="sortIndex"
+        type="number"
+        value={state?.sortIndex ?? 0}
         handleChange={handleChange}
       />
       <InputField
@@ -101,16 +111,38 @@ export default function FormChapterEdit({
         label="Level"
         name="level"
         type="text"
-        value={state.level}
+        value={state?.level ?? ""}
         handleChange={handleChange}
       />
       <InputField
         label="Learning Time"
         name="learningTime"
         type="number"
-        value={state.learningTime}
+        value={state?.learningTime ?? 0}
         handleChange={handleChange}
       />
+      <SelectField
+        label="Status"
+        value={state?.status ?? ""}
+        options={[
+          { label: "Draft", value: "draft" },
+          { label: "Published", value: "published" },
+          { label: "Archived", value: "archived" },
+        ]}
+        onValueChange={(status) => setState((curr) => ({ ...curr, status }))}
+      />
+      <div className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          name="visible"
+          id="visible"
+          checked={state?.visible ?? true}
+          onChange={() =>
+            setState((curr) => ({ ...curr, visible: !curr.visible }))
+          }
+        />
+        <label htmlFor="visible">Visible</label>
+      </div>
     </FormContainer>
   );
 }

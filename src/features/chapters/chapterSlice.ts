@@ -1,6 +1,5 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-import { ACTIONS, SERVER } from "../../data/actions";
 import { store } from "../../app/store";
 
 const chaptersAdapter = createEntityAdapter({
@@ -20,10 +19,11 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminChapters: builder.query<QueryResponse<Chapter>, number>({
       query: (page) => ({
-        url: "/chapters",
+        url: "/admin/chapters",
         method: "GET",
         params: { page },
       }),
+      providesTags: ["Chapter"], // Mark data for caching
       // transformResponse: (responseData) => {
       //   // store.dispatch(setChapters(responseData));
       //   return chaptersAdapter.setAll(initialState, responseData);
@@ -35,46 +35,31 @@ export const chaptersApiSlice = apiSlice.injectEndpoints({
     }),
     addChapter: builder.mutation({
       query: (chapter) => ({
-        url: SERVER.CHAPTER,
+        url: "/admin/chapters",
         method: "POST",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.ADD_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user, chapter },
-          },
-        },
+        body: { chapter },
       }),
+      invalidatesTags: ["Chapter"], // Invalidate cache to refetch data
       // invalidatesTags: [{ type: "Chapter", id: "LIST" }],
     }),
     editChapter: builder.mutation({
       query: (chapter) => ({
-        url: SERVER.CHAPTER,
+        url: `/admin/chapters`,
         method: "PATCH",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.EDIT_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user, chapter },
-          },
-        },
+        body: { chapter },
       }),
+      invalidatesTags: ["Chapter"], // Invalidate cache to refetch data
       // invalidatesTags: (result, error, arg) => [
       //   { type: "Chapter", id: arg.id },
       // ],
     }),
     removeChapter: builder.mutation({
       query: (id) => ({
-        url: SERVER.CHAPTER,
+        url: `/admin/chapters`,
         method: "DELETE",
-        body: {
-          roles: store.getState()?.auth?.roles,
-          action: {
-            type: ACTIONS.REMOVE_CHAPTER,
-            payload: { userName: store.getState()?.auth?.user, id },
-          },
-        },
+        body: { id },
       }),
+      invalidatesTags: ["Chapter"],
       // invalidatesTags: (result, error, arg) => [
       //   { type: "Chapter", id: arg.id },
       // ],

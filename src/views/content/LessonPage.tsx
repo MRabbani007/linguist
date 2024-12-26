@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../../features/globals/globalsSlice";
 // Imported Components
@@ -10,6 +9,7 @@ import ContentNavigator from "../../features/navigation/ContentNavigator";
 import { useNavigate } from "react-router-dom";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import Section from "@/features/sections/Section";
+import LessonCompleted from "@/features/lessons/LessonCompleted";
 
 export default function LessonPage() {
   const displayLesson = useSelector(selectDisplayLesson);
@@ -35,7 +35,6 @@ export default function LessonPage() {
   } else if (isError) {
     content = <p>Error</p>;
   } else if (isSuccess) {
-    console.log(data[0]);
     content = data.map((item: any) => (
       <Section
         key={item.id}
@@ -80,6 +79,7 @@ export default function LessonPage() {
       {content}
       <LessonNavigator />
       <ContentNavigator />
+      {isSuccess && <LessonCompleted lessonID={displayLesson.id} />}
     </main>
   );
 }

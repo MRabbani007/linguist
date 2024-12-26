@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Filter from "../../features/exercises/Filter";
 import MatchWordsScore from "../../features/exercises/MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
-import useGetExerciseWords from "../../hooks/useGetExerciseWords";
+import { useLazyGetExerciseWordsQuery } from "@/features/globals/globalsApiSlice";
 
 // helper function to shuffle words
-function shuffle(array) {
+function shuffle(array: any[]) {
   let currentIndex = array.length;
 
   // While there remain elements to shuffle...
@@ -25,53 +25,39 @@ function shuffle(array) {
   return array;
 }
 
-const status = {
-  isLoading: false,
-  isPlaying: false,
+type ExerciseWord = {
+  word: string;
+  key: number;
+  selected: boolean;
 };
 
 export default function MatchWordsPage() {
-  const {
-    handleFetch,
-    data: words,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetExerciseWords();
+  const [getExerciseWords, { data: words, isSuccess }] =
+    useLazyGetExerciseWordsQuery();
 
-  const [selectedLessons, setSelectedLessons] = useState([]);
+  const [selectedLessons, setSelectedLessons] = useState<string[]>([]);
   const [showFilter, setShowFilter] = useState(false);
 
   const [value, setValue] = useLocalStorage("highscore", 0);
-  // const [words, setWords] = useState([]);
 
   const [highestScore, setHighestScore] = useState(0);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(5);
 
   // Array of word and translation
-  const [firstWord, setFirstWord] = useState([]);
-  const [secondWord, setSecondWord] = useState([]);
+  const [firstWord, setFirstWord] = useState<ExerciseWord[]>([]);
+  const [secondWord, setSecondWord] = useState<ExerciseWord[]>([]);
 
   // Boolean for all words completed
   const [allWordsCompleted, setAllWordsCompleted] = useState(false);
 
   // Index of selected words
-  const [firstWordIndex, setFirstWordIndex] = useState(null);
-  const [secondWordIndex, setSecondWordIndex] = useState(null);
-
-  // Status & Result message
-  const [result, setResult] = useState("");
-
-  // const [
-  //   getRandomWords,
-  //   { data: wordsData, isLoading, isSuccess, isError, error },
-  // ] = useLazyGetRandomWordsQuery();
+  const [firstWordIndex, setFirstWordIndex] = useState<number | null>(null);
+  const [secondWordIndex, setSecondWordIndex] = useState<number | null>(null);
 
   // Load Words on first render
   useEffect(() => {
-    handleFetch(selectedLessons);
+    getExerciseWords(selectedLessons);
   }, [selectedLessons]);
 
   useEffect(() => {
@@ -86,22 +72,32 @@ export default function MatchWordsPage() {
 
   // set first and second words
   useEffect(() => {
-    setFirstWord(() => {
-      return words.map((word, index) => {
-        return { word: word?.first, key: index, selected: false };
-      });
-    });
-    setSecondWord(() => {
-      return shuffle(
-        words.map((word, index) => {
-          return { word: word?.second, key: index, selected: false };
-        })
+    if (words) {
+      setFirstWord(
+        words.map((word, index) => ({
+          word: word?.first,
+          key: index,
+          selected: false,
+        }))
       );
-    });
+      setSecondWord(
+        shuffle(
+          words.map((word, index) => ({
+            word: word?.second,
+            key: index,
+            selected: false,
+          }))
+        )
+      );
+    }
   }, [words]);
 
   const handleCheck = () => {
-    if (firstWord[firstWordIndex]?.key === secondWord[secondWordIndex]?.key) {
+    if (
+      firstWordIndex !== null &&
+      secondWordIndex !== null &&
+      firstWord[firstWordIndex]?.key === secondWord[secondWordIndex]?.key
+    ) {
       setFirstWord((curr) => {
         const temp = [...curr];
         temp[firstWordIndex].selected = true;
@@ -114,12 +110,10 @@ export default function MatchWordsPage() {
       });
       setScore((curr) => curr + 1);
       toast.success("Correct!");
-      // setResult("Success");
       setFirstWordIndex(null);
       setSecondWordIndex(null);
     } else {
       toast.error("Wrong!");
-      // setResult("Failed");
       setFirstWordIndex(null);
       setSecondWordIndex(null);
       setLives((curr) => curr - 1);
@@ -140,8 +134,7 @@ export default function MatchWordsPage() {
     }
   }, [score]);
 
-  const handleSelect = (group, index) => {
-    setResult("select");
+  const handleSelect = (group: string, index: number) => {
     if (group === "first") {
       setFirstWordIndex(index);
     }
@@ -157,14 +150,6 @@ export default function MatchWordsPage() {
     }
   }, [firstWordIndex, secondWordIndex]);
 
-  // handle success message
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setResult("wait"), 2000);
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [result]);
-
   useEffect(() => {
     if (Array.isArray(firstWord) && firstWord.length !== 0) {
       setAllWordsCompleted(
@@ -176,7 +161,7 @@ export default function MatchWordsPage() {
   // re-load words when completed
   useEffect(() => {
     if (allWordsCompleted && confirm("Success! Load new words?")) {
-      handleFetch(selectedLessons);
+      getExerciseWords(selectedLessons);
     }
   }, [allWordsCompleted]);
 
@@ -255,13 +240,13 @@ export default function MatchWordsPage() {
         )}
       </div> */}
       </div>
-      {showFilter ? (
+      {showFilter && (
         <Filter
           selectedLessons={selectedLessons}
           setSelectedLessons={setSelectedLessons}
           setShowFilter={setShowFilter}
         />
-      ) : null}
+      )}
     </main>
   );
 }

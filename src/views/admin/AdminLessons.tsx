@@ -44,11 +44,9 @@ export default function AdminLessons() {
     content = data.data.map((item, index) => (
       <div
         key={item.id}
-        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
+        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-1 border-b-[1px] border-zinc-200"
       >
         <span className="w-[2%]">{(+page - 1) * 15 + index + 1}</span>
-        <span className="w-[5%]">{item?.lessonNo}</span>
-        <span className="w-[5%]">{item?.sortIndex}</span>
         <span className="w-[20%]">{item?.title}</span>
         <span className="w-[20%]">{item?.subtitle}</span>
         <span className="flex-1">{item?.detail}</span>
@@ -60,7 +58,7 @@ export default function AdminLessons() {
               setEditItem(item);
             }}
           >
-            <CiEdit size={28} />
+            <CiEdit size={25} />
           </button>
         </span>
       </div>
@@ -87,12 +85,6 @@ export default function AdminLessons() {
       <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
         <span className="w-[2%]" title="Serial Number">
           #
-        </span>
-        <span className="w-[5%]" title="Lesson Number">
-          LN
-        </span>
-        <span className="w-[5%]" title="Sort Index">
-          SI
         </span>
         <span className="w-[20%]" title="Lesson Title">
           Title

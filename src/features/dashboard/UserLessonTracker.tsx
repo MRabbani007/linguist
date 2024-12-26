@@ -1,29 +1,23 @@
-import React, { useEffect } from "react";
 import { BsCheck2 } from "react-icons/bs";
 import { AiFillSignal } from "react-icons/ai";
-import { selectLessons, setProgress } from "../globals/globalsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useGetProfileQuery } from "../profile/profileSlice";
+import { selectLessons } from "../globals/globalsSlice";
+import { useSelector } from "react-redux";
+import { useGetUserProfileQuery } from "../profile/profileSlice";
+import { Link } from "react-router-dom";
 
-const PROGRESS = [
-  { lessonNo: 1.1, lesson: "Alphabets", status: "completed", id: "" },
-  { lessonNo: 1.2, lesson: "Greetings", status: "completed", id: "" },
-  { lessonNo: 1.3, lesson: "Days & Months", status: "completed", id: "" },
-  { lessonNo: 1.4, lesson: "Numbers & Counting", status: "started", id: "" },
-  { lessonNo: 1.5, lesson: "Verbs", status: "", id: "" },
-];
+// const PROGRESS = [
+//   { lessonNo: 1.1, lesson: "Alphabets", status: "completed", id: "" },
+//   { lessonNo: 1.2, lesson: "Greetings", status: "completed", id: "" },
+//   { lessonNo: 1.3, lesson: "Days & Months", status: "completed", id: "" },
+//   { lessonNo: 1.4, lesson: "Numbers & Counting", status: "started", id: "" },
+//   { lessonNo: 1.5, lesson: "Verbs", status: "", id: "" },
+// ];
 
 export default function UserLessonTracker() {
-  const dispatch = useDispatch();
-
-  const { data: profile, isLoading, isSuccess } = useGetProfileQuery();
+  const { data: profile } = useGetUserProfileQuery(null);
   const lessons = useSelector(selectLessons);
 
-  useEffect(() => {
-    if (isSuccess && Array.isArray(profile) && profile[0]?.progress) {
-      dispatch(setProgress(profile[0].progress));
-    }
-  }, [profile]);
+  const lessonStatus = profile?.lessonStatus ?? [];
 
   return (
     <div className="w-full flex-1">
@@ -33,13 +27,13 @@ export default function UserLessonTracker() {
       </div>
       <ul className="flex flex-wrap items-center justify-center gap-4 w-full">
         {lessons.map((item, index) => {
-          const lessonProgress = profile[0].progress.find(
-            (prog) => prog.lessonID === item.id
+          const lessonProgress = lessonStatus.find(
+            (lesson) => lesson.lessonID === item.id
           );
           const style =
-            lessonProgress?.completed === true
+            lessonProgress?.status === "completed"
               ? "from-green-400 to-green-500"
-              : lessonProgress?.completed === false
+              : lessonProgress?.status === "started"
               ? "from-sky-400 to-sky-500"
               : "from-zinc-400 to-zinc-400";
           return (
@@ -53,8 +47,13 @@ export default function UserLessonTracker() {
               <p className="absolute top-0 left-1/2 -translate-x-1/2 py-1 px-4 bg-red-400 rounded-b-md">
                 {item.sortIndex}
               </p>
-              <span className="text-pretty text-center">{item.title}</span>
-              {item.status === "completed" ? (
+              <Link
+                to={`/learn/lesson?id=${item.id}&title=${item.title}`}
+                className="text-pretty text-center mx-4"
+              >
+                {item.title}
+              </Link>
+              {lessonProgress?.status === "completed" ? (
                 <BsCheck2
                   size={40}
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 py-1 px-2 rounded-t-md"

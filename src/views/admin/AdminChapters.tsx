@@ -33,7 +33,7 @@ export default function AdminChapters() {
     content = data.data.map((item, index) => (
       <div
         key={item.id}
-        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-2"
+        className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-1 border-b-[1px] border-zinc-200"
       >
         <span className="w-[5%]">
           {(+page - 1) * ITEMS_PER_PAGE + index + 1}
