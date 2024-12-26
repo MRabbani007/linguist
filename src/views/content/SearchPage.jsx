@@ -12,6 +12,7 @@ export default function SearchPage() {
   const query = queryParams.get("q") ?? "";
   const page = queryParams.get("page") ?? 1;
 
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(query);
 
   const [match, setMatch] = useState(false);
@@ -20,17 +21,25 @@ export default function SearchPage() {
   const [count, setCount] = useState(false);
 
   const handleSearch = async () => {
-    if (!searchTerm || searchTerm === "") {
-      return null;
-    }
+    try {
+      if (!searchTerm || searchTerm === "") {
+        return null;
+      }
 
-    const response = await axiosPrivate.get("/search", {
-      params: { searchTerm, match, page },
-    });
+      setLoading(true);
 
-    if (response.status === 200 && Array.isArray(response.data?.data)) {
-      setWords(response.data.data);
-      setCount(response.data.count);
+      const response = await axiosPrivate.get("/search/words", {
+        params: { page, search: searchTerm },
+      });
+
+      if (response?.status === 200 && Array.isArray(response.data.data)) {
+        setWords(response.data.data);
+        setCount(response.data.count);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectEditMode } from "../../features/globals/globalsSlice";
 import { useDebounce } from "use-debounce";
 import { IoSearchOutline } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 import Pagination from "../../features/components/Pagination";
+import { selectEditMode } from "../../features/admin/adminSlice";
 
 export default function WordsPage() {
   const editMode = useSelector(selectEditMode);

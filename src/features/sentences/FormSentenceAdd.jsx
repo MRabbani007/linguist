@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAddSentenceMutation } from "./sentencesSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";

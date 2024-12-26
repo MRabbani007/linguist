@@ -1,11 +1,11 @@
-import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import FormContainer from "../components/FormContainer";
 import { useDropzone } from "react-dropzone";
 import UploadProgressBar from "../components/UploadProgressBar";
 import { toast } from "react-toastify";
-import { useEditWordDetailsMutation } from "./wordsSlice";
 import { useSelector } from "react-redux";
-import { selectDisplayBlock } from "../globals/globalsSlice";
+import { selectDisplayLesson } from "../globals/globalsSlice";
+import { useEditWordMutation } from "./wordsSlice";
 
 interface Props {
   word: Word;
@@ -14,14 +14,13 @@ interface Props {
 }
 
 export default function FormWordImage({ word, type, setShowForm }: Props) {
-  const [editWordDetails, { isLoading }] = useEditWordDetailsMutation();
-  const displayBlock = useSelector(selectDisplayBlock);
+  const [editWordDetails] = useEditWordMutation();
+  const displayBlock = useSelector(selectDisplayLesson);
 
   const [file, setFile] = useState<File | null>(null);
-  const [foldername, setFoldername] = useState(
+  const foldername =
     "images/words/" +
-      (displayBlock?.title ? displayBlock?.title.split(" ")[0] : "/common")
-  );
+    (displayBlock?.title ? displayBlock?.title.split(" ")[0] : "/common");
   const [url, setURL] = useState<string | null>(null);
 
   const { getRootProps, getInputProps } = useDropzone({

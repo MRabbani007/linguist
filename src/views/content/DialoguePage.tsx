@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 import FormCreateDialogue from "../../features/dialogue/FormCreateDialogue";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectEditMode } from "../../features/globals/globalsSlice";
+import { selectEditMode } from "../../features/admin/adminSlice";
 
 export default function DialoguePage() {
   const editMode = useSelector(selectEditMode);

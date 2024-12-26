@@ -53,7 +53,10 @@ export const tableTemplateAdjective = {
   sortIndex: 9,
 };
 
-export const DefinitionTemplate = {
+export const T_DEFINITION: Definition = {
+  id: "",
+  lessionID: "",
+  sectionID: "",
   sortIndex: 0,
   title: "",
   text: "",
@@ -61,14 +64,19 @@ export const DefinitionTemplate = {
   notes: "",
 };
 
-export const T_WORD = {
+export const T_WORD: Word = {
+  id: "",
+
   sortIndex: 0,
+
   first: "",
   second: "",
   third: "",
   fourth: "",
+
   firstCaption: "",
   secondCaption: "",
+
   type: "",
   gender: "",
   sectionID: "",
@@ -109,6 +117,18 @@ export const T_LESSON: Lesson = {
   imagesURL: "",
   level: "beginner",
   learningTime: 0,
+};
+
+export const T_SECTIONLIST: SectionList = {
+  id: "",
+  lessonID: "",
+  sectionID: "",
+  type: "UL",
+  title: "",
+  text: "",
+  notes: "",
+  sortIndex: 0,
+  items: [],
 };
 
 export const T_ATTRIBUTE: WordAttr = {

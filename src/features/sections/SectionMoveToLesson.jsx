@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllBlocksQuery } from "../blocks/blockSlice";
 import { useEditSectionLessonIDMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { selectLanguage } from "../globals/globalsSlice";
 import FormContainer from "../components/FormContainer";
 
+// TODO: fetch lessons, set options and update edit mutation
 export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
-  const language = useSelector(selectLanguage);
   const [editSectionLessonID] = useEditSectionLessonIDMutation();
 
-  const [allLessons, setAllLessons] = useState([]);
   const [selected, setSelected] = useState("");
-  const { data, isSuccess } = useGetAllBlocksQuery(language?.id);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setAllLessons(() => data.ids.map((id) => data.entities[id]));
-    }
-  }, [data]);
 
   let content = allLessons.map((block, index) => (
     <option value={index} key={index}>
@@ -26,26 +15,17 @@ export default function SectionMoveToLesson({ section, setViewMoveLesson }) {
     </option>
   ));
 
-  useEffect(() => {
-    setSelected(() => {
-      const idx = allLessons.findIndex((block) => block.id === section.blockID);
-      if (idx >= 0) return idx;
-      return "";
-    });
-  }, [section, allLessons]);
-
   const canSave = selected !== "" && !isNaN(selected) && selected >= 0;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (canSave) {
       try {
-        const sectionData = {
+        await editSectionLessonID({
           id: section?.id,
           chapterID: allLessons[selected].chapterID,
           lessonID: allLessons[selected].id,
-        };
-        await editSectionLessonID(sectionData);
+        });
         toast.success("Section Moved");
         setViewMoveLesson(false);
       } catch (e) {

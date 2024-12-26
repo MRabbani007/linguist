@@ -4,8 +4,6 @@ import MatchWordsScore from "./MatchWordsScore";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import Filter from "./Filter";
-import { CiFilter } from "react-icons/ci";
-import { FaListCheck } from "react-icons/fa6";
 
 // helper function to shuffle words
 function shuffle(array) {

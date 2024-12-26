@@ -1,13 +1,8 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectDisplayChapter,
-  setDisplayChapter,
-} from "../globals/globalsSlice";
+import { useDispatch } from "react-redux";
+import { setDisplayChapter } from "../globals/globalsSlice";
 import { Link } from "react-router-dom";
 
 export default function CardChapter({ chapter }: { chapter: Chapter }) {
-  const displayChapter = useSelector(selectDisplayChapter);
   const dispatch = useDispatch();
 
   const handleOpen = async () => {

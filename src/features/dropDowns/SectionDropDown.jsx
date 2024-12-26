@@ -1,6 +1,6 @@
 import { forwardRef, useState } from "react";
 import copy from "copy-to-clipboard";
-import { CiEdit, CiImageOn, CiTrash, CiViewTable } from "react-icons/ci";
+import { CiEdit, CiImageOn, CiViewTable } from "react-icons/ci";
 import { toast } from "react-toastify";
 import {
   BsBoxArrowUpRight,
@@ -13,7 +13,7 @@ import { PiListBullets } from "react-icons/pi";
 import { VscWholeWord } from "react-icons/vsc";
 import { IoCopyOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
+import { selectEditMode } from "../admin/adminSlice";
 
 const SectionDropDown = forwardRef(
   (

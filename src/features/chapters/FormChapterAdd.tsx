@@ -1,4 +1,10 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react";
 import { useAddChapterMutation } from "./chapterSlice";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../globals/globalsSlice";
@@ -27,8 +33,8 @@ export default function FormChapterAdd({
 
   const canSave = !isLoading; //[title, subtitle, detail].every(Boolean) &&
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     if (canSave) {
       try {
         await addChapter({

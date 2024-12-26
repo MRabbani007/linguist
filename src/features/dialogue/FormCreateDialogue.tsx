@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import FormContainer from "../components/FormContainer";
 import { axiosPrivate } from "../../api/axios";
-import { Dialogue } from "../../types/types";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -180,7 +179,7 @@ export default function FormCreateDialogue({
           {Object.keys(LEVEL).map((item, index) => {
             return (
               <option key={index} value={item}>
-                {LEVEL[item]}
+                {LEVEL[+item as keyof typeof LEVEL]}
               </option>
             );
           })}

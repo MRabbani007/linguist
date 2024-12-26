@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 // Imported Styles
 // import "./styles/styles.css";
 // generated from SASS

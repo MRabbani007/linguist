@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
@@ -40,7 +40,7 @@ export default function FormChapterEdit({
     event.preventDefault();
     if (canSave) {
       try {
-        const response = await editChapter(state).unwrap();
+        await editChapter(state).unwrap();
         toast.success("Chapter saved");
         setEdit(false);
       } catch (err) {

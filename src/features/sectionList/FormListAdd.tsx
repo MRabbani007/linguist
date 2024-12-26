@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import { useAddSectionListMutation } from "./sectionListSlice";
 import { toast } from "react-toastify";
-import { LIST } from "../../data/FormTemplates";
 import FormContainer from "../components/FormContainer";
+import { T_SECTIONLIST } from "../../data/templates";
 
 export default function ListAdd({
   lessonID = "",
@@ -21,7 +21,7 @@ export default function ListAdd({
 }) {
   const [addSectionList, { isLoading }] = useAddSectionListMutation();
 
-  const [state, setState] = useState<SectionList>(LIST);
+  const [state, setState] = useState<SectionList>(T_SECTIONLIST);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

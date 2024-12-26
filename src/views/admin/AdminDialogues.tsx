@@ -1,5 +1,12 @@
-import React from "react";
+import FormCreateDialogue from "../../features/dialogue/FormCreateDialogue";
+import { useState } from "react";
 
 export default function AdminDialogues() {
-  return <div>AdminDialogues</div>;
+  const [edit, setEdit] = useState(false);
+
+  return (
+    <div>
+      {edit ? <FormCreateDialogue type="add" setShowForm={setEdit} /> : null}
+    </div>
+  );
 }

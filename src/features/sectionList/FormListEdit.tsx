@@ -6,9 +6,9 @@ import React, {
   useState,
 } from "react";
 import { useEditSectionListContentMutation } from "./sectionListSlice";
-import { LIST } from "../../data/FormTemplates";
 import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
+import { T_SECTIONLIST } from "../../data/templates";
 
 export default function FormListEdit({
   list = {},
@@ -20,7 +20,10 @@ export default function FormListEdit({
   const [editSectionListContent, { isLoading }] =
     useEditSectionListContentMutation();
 
-  const [state, setState] = useState<SectionList>({ ...LIST, ...list });
+  const [state, setState] = useState<SectionList>({
+    ...T_SECTIONLIST,
+    ...list,
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

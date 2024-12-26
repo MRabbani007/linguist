@@ -242,10 +242,10 @@ section {
   gap: 0.25rem;
 }
 
-.add span,
-.save span,
-.cancel span,
-.delete span {
+.add .image,
+.save .image,
+.cancel .image,
+.delete .image {
   display: none;
 }
 
@@ -282,10 +282,10 @@ section {
 }
 
 @media screen and (min-width: 640px) {
-  .add span,
-  .save span,
-  .cancel span,
-  .delete span {
+  .add .image,
+  .save .image,
+  .cancel .image,
+  .delete .image {
     display: inline;
   }
 }

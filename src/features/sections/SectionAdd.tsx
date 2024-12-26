@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useAddSectionMutation } from "./sectionSlice";
 import {
-  selectDisplayBlock,
+  selectDisplayLesson,
   selectDisplayChapter,
 } from "../globals/globalsSlice";
 import { useSelector } from "react-redux";
@@ -29,7 +29,7 @@ interface Props {
 }
 
 export default function SectionAdd({ setAdd }: Props) {
-  const displayBlock = useSelector(selectDisplayBlock);
+  const displayBlock = useSelector(selectDisplayLesson);
   const displayChapter = useSelector(selectDisplayChapter);
 
   const [state, setState] = useState(template);

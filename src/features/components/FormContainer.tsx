@@ -80,10 +80,10 @@ export default function FormContainer({
       <form
         onSubmit={onSubmit}
         onReset={handleReset}
-        className="bg-zinc-100 min-w-fit w-[70vw] max-w-[1024px] mx-4 flex flex-col"
+        className="bg-zinc-100 min-w-fit w-full max-w-[1024px] mx-4 flex flex-col"
       >
-        <div className="py-2 px-4 bg-red-600 text-white flex items-center gap-4">
-          <h2 className="flex-1 text-center">{title}</h2>
+        <div className="py-2 px-4 bg-zinc-800 text-white flex items-center gap-4">
+          <h2 className="flex-1 ">{title}</h2>
           <button type="button" onClick={() => closeForm(false)}>
             <BiX size={24} />
           </button>
@@ -104,47 +104,66 @@ export default function FormContainer({
             />
             <label htmlFor="clearOnSubmit">Clear On Submit</label>
           </div>
-          <div className="flex flex-wrap items-center gap-4 p-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 p-4">
             {type === "add" ? (
-              <button type="submit" title="Add" className="add">
-                <IoAddCircleOutline size={30} />
+              <button
+                type="submit"
+                title="Add"
+                className="py-2 px-4 rounded-md  bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
+              >
+                {/* <IoAddCircleOutline
+                  size={25}
+                  className="hidden md:inline-block"
+                /> */}
                 <span>{submitName}</span>
               </button>
             ) : type === "edit" ? (
-              <button type="submit" title="Save" className="save">
-                <IoCheckmarkCircleOutline size={30} />
+              <button
+                type="submit"
+                title="Save"
+                className="py-2 px-4 rounded-md  bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
+              >
+                {/* <IoCheckmarkCircleOutline
+                  size={25}
+                  className="hidden md:inline-block"
+                /> */}
                 <span>{submitName}</span>
               </button>
             ) : null}
-            <button type="reset" title="Cancel" className="cancel text-center">
-              <IoCloseCircleOutline size={30} />
+            <button
+              type="reset"
+              title="Cancel"
+              className="py-2 px-4 rounded-md bg-zinc-300 text-zinc-800 hover:bg-zinc-200 duration-150 transition-all flex items-center gap-2"
+            >
+              {/* <IoCloseCircleOutline
+                size={25}
+                className="hidden md:inline-block"
+              /> */}
               <span>Cancel</span>
             </button>
             {deleteButton ? (
               <button
                 type="button"
                 title="Delete"
-                className="delete"
+                className="py-2 px-4 rounded-md bg-red-600 text-white hover:bg-red-500 duration-150 transition-all flex items-center gap-2"
                 onClick={onDelete}
               >
-                <AiOutlineDelete size={30} />
+                {/* <AiOutlineDelete size={25} className="hidden md:inline-block" /> */}
                 <span>Delete</span>
               </button>
             ) : null}
           </div>
-          <div>
-            {clearButton ? (
-              <button
-                type="button"
-                title="Clear Form"
-                className="cancel"
-                onClick={handleClear}
-              >
-                <PiEmpty size={30} />
-                <span>Clear</span>
-              </button>
-            ) : null}
-          </div>
+          {clearButton ? (
+            <button
+              type="button"
+              title="Clear Form"
+              className="py-2 px-4 rounded-md bg-zinc-300 text-zinc-800 hover:bg-zinc-200 duration-150 transition-all flex items-center gap-2"
+              onClick={handleClear}
+            >
+              {/* <PiEmpty size={25} /> */}
+              <span>Clear</span>
+            </button>
+          ) : null}
         </div>
       </form>
     </div>

@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Dialogue, DialogueStatement } from "../../types/types";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectEditMode } from "../globals/globalsSlice";
 import { CiEdit } from "react-icons/ci";
 import FormDialogueStatement from "./FormDialogueStatement";
+import { selectEditMode } from "../admin/adminSlice";
 
-interface Props {
+export default function CardStatement({
+  statement,
+  dialogue,
+}: {
   dialogue: Dialogue;
   statement: DialogueStatement;
-}
-
-const PERSON = {
-  1: "bg-green-500/70",
-  2: "bg-yellow-500/70",
-};
-
-export default function CardStatement({ statement, dialogue }: Props) {
+}) {
   const editMode = useSelector(selectEditMode);
   const [edit, setEdit] = useState(false);
   const [showTr, setShowTr] = useState(false);
 
-  useEffect(()=>{
-    if(editMode){
-      setShowTr(true)
+  useEffect(() => {
+    if (editMode) {
+      setShowTr(true);
     }
-  },[editMode])
+  }, [editMode]);
 
   return (
     <div className={"flex items-stretch justify-start gap-4 text-xl "}>
       <button
         className={
           "w-10 h-10 rounded-full flex items-center justify-center " +
-          PERSON[statement?.person]
+            statement?.person ===
+          "1"
+            ? "bg-green-500/70"
+            : statement?.person === "2"
+            ? "bg-yellow-500/70"
+            : ""
         }
         onClick={() => setShowTr((curr) => !curr)}
       >
