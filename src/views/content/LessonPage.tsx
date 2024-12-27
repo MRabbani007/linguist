@@ -56,11 +56,11 @@ export default function LessonPage() {
         <LessonNavigator />
       </div>
       {displayLesson?.lessonImage && (
-        <div className="mx-auto max-h-[300px] lg:max-w-[50vw] overflow-hidden">
+        <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">
           <img
             src={displayLesson?.lessonImage}
             alt=""
-            className="max-h-[300px] h-full"
+            className="max-h-[300px]"
           />
         </div>
       )}

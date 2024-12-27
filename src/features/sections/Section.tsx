@@ -37,12 +37,7 @@ export default function Section({
   return (
     <section>
       <SectionTitle section={section} />
-      <div
-        className={
-          // (expand ? "visible" : "translate-y-4 opacity-0 invisible h-0") +
-          " flex flex-col gap-4 duration-200"
-        }
-      >
+      <div className={" flex flex-col gap-4 duration-200"}>
         {Array.isArray(section?.introduction) &&
         section.introduction.length !== 0 ? (
           <article className="flex flex-col gap-4">
@@ -57,11 +52,11 @@ export default function Section({
         ) : null}
 
         {section?.image && (
-          <div className="h-[70vh]">
+          <div className="mx-auto lg:max-w-[50vw] overflow-hidden">
             <img
               src={section.image}
               alt="section image"
-              className="mx-auto w-full h-full object-contain"
+              className="max-h-[300px]"
             />
           </div>
         )}

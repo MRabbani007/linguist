@@ -34,7 +34,7 @@ export default function LessonHeader({ lesson }: { lesson: Lesson }) {
             })}
           </span>
         </p>
-        <p className="flex items-center px-4">{lesson?.title}</p>
+        <p className="flex items-center px-4">{displayChapter?.title}</p>
       </div>
     </header>
   );
