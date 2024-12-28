@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
@@ -6,11 +6,6 @@ import React, {
   useState,
 } from "react";
 import { useAddSectionMutation } from "./sectionSlice";
-import {
-  selectDisplayLesson,
-  selectDisplayChapter,
-} from "../globals/globalsSlice";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
@@ -25,13 +20,12 @@ const template: Section = {
 };
 
 interface Props {
+  lessonID: string;
+  chapterID: string;
   setAdd: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SectionAdd({ setAdd }: Props) {
-  const displayBlock = useSelector(selectDisplayLesson);
-  const displayChapter = useSelector(selectDisplayChapter);
-
+export default function FormSectionAdd({ lessonID, chapterID, setAdd }: Props) {
   const [state, setState] = useState(template);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +47,8 @@ export default function SectionAdd({ setAdd }: Props) {
         await addSection({
           ...state,
           id: crypto.randomUUID(),
-          chapterID: displayChapter?.id,
-          lessonID: displayBlock?.id,
+          chapterID,
+          lessonID,
         });
         toast.success("Section Added");
         setAdd(false);

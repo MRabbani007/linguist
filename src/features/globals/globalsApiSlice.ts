@@ -54,6 +54,11 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { lessonID },
       }),
+      transformResponse: (responseData: Section[]) => {
+        return responseData.sort((a, b) =>
+          (a?.sortIndex ?? 0) > (b?.sortIndex ?? 0) ? 1 : -1
+        );
+      },
     }),
     searchSentences: builder.query<QueryResponse<Sentence>, any>({
       query: ({

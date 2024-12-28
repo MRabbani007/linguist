@@ -33,7 +33,7 @@ export default function AdminMenu() {
 
   return (
     <div ref={ref} className="flex">
-      <button onClick={() => setShow(true)} className="lg:hidden inline-block">
+      <button onClick={() => setShow(true)} className="g:hidden inline-block">
         <IoMenu size={25} />
       </button>
       {show && (

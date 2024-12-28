@@ -1,4 +1,4 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
@@ -17,7 +17,7 @@ interface Props {
   setEdit: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SectionEdit({ section, setEdit }: Props) {
+export default function FormSectionEdit({ section, setEdit }: Props) {
   const [editSectionHeader, { isLoading }] = useEditSectionHeaderMutation();
   const [removeSection] = useRemoveSectionMutation();
 

@@ -57,6 +57,7 @@ import LayoutAdmin from "./features/layout/LayoutAdmin";
 import AdminChapters from "./views/admin/AdminChapters";
 import AdminLessons from "./views/admin/AdminLessons";
 import AdminSections from "./views/admin/AdminSections";
+import AdminLessonEditor from "./views/admin/AdminLessonEditor";
 import AdminDefinitions from "./views/admin/AdminDefinitions";
 import AdminSentences from "./views/admin/AdminSentences";
 import AdminWords from "./views/admin/AdminWords";
@@ -160,6 +161,7 @@ function App() {
               <Route path="admin" element={<LayoutAdmin />}>
                 <Route index element={<AdminPage />} />
                 <Route path="chapters" element={<AdminChapters />} />
+                <Route path="lessonEdit" element={<AdminLessonEditor />} />
                 <Route path="lessons" element={<AdminLessons />} />
                 <Route path="sections" element={<AdminSections />} />
                 <Route path="definitions" element={<AdminDefinitions />} />

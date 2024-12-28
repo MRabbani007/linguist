@@ -4,7 +4,7 @@ import { setSections } from "../globals/globalsSlice";
 import { useGetSectionsQuery } from "./sectionSlice";
 import { useGetDefinitionsQuery } from "../definitions/definitionsSlice";
 import Section from "./Section";
-import SectionAdd from "./SectionAdd";
+import SectionAdd from "./FormSectionAdd";
 import { useGetWordsQuery } from "../words/wordsSlice";
 import Definition from "../definitions/Definition";
 import { useGetTablesQuery } from "../tables/tablesSlice";

@@ -15,8 +15,10 @@ import InputField from "../ui/InputField";
 // TODO : add select lesson / section
 export default function FormWordAdd({
   sectionID = "",
+  lessonID = "",
   setAdd,
 }: {
+  lessonID?: string;
   sectionID?: string;
   setAdd: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -46,6 +48,7 @@ export default function FormWordAdd({
         await addWord({
           ...state,
           id: crypto.randomUUID(),
+          lessonID,
           sectionID,
         }).unwrap();
         toast.success("Word Added");

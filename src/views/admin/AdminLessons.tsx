@@ -5,8 +5,9 @@ import { CiEdit } from "react-icons/ci";
 import FormLessonEdit from "../../features/lessons/FormLessonEdit";
 import FormLessonAdd from "../../features/lessons/FormLessonAdd";
 import { selectChapters } from "../../features/globals/globalsSlice";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useLazyGetAdminLessonsQuery } from "@/features/lessons/lessonSlice";
+import { IoOpenOutline } from "react-icons/io5";
 
 export default function AdminLessons() {
   const [searchParams] = useSearchParams();
@@ -50,7 +51,7 @@ export default function AdminLessons() {
         <span className="w-[20%]">{item?.title}</span>
         <span className="w-[20%]">{item?.subtitle}</span>
         <span className="flex-1">{item?.detail}</span>
-        <span className="w-[5%]">
+        <span className="w-[5%] flex items-center gap-2">
           <button
             title="Edit"
             onClick={() => {
@@ -60,6 +61,9 @@ export default function AdminLessons() {
           >
             <CiEdit size={25} />
           </button>
+          <Link to={`/admin/lessonEdit?id=${item.id}`}>
+            <IoOpenOutline size={20} />
+          </Link>
         </span>
       </div>
     ));
