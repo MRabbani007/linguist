@@ -51,7 +51,7 @@ export default function AdminLessons() {
         <span className="w-[20%]">{item?.title}</span>
         <span className="w-[20%]">{item?.subtitle}</span>
         <span className="flex-1">{item?.detail}</span>
-        <span className="w-[5%] flex items-center gap-2">
+        <span className="w-[10%] flex items-center justify-center gap-2">
           <button
             title="Edit"
             onClick={() => {
@@ -99,7 +99,7 @@ export default function AdminLessons() {
         <span className="flex-1" title="Lesson Detail">
           Detail
         </span>
-        <span className="w-[5%]" title="Edit Lesson">
+        <span className="w-[10%] text-center" title="Edit Lesson">
           Edit
         </span>
       </div>

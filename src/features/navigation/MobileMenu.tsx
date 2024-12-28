@@ -48,7 +48,7 @@ const items = [
   //   url: "/content/lesson",
   //   icon: <LuText size={30} />,
   // },
-  { id: 20, type: "separator", title: "Review", url: "" },
+  { id: 21, type: "separator", title: "Review", url: "" },
   {
     id: 12,
     label: "Words",
@@ -63,7 +63,7 @@ const items = [
     url: "/sentences",
     icon: <BsTextParagraph size={32} />,
   },
-  { id: 20, type: "separator", title: "Practice", url: "" },
+  { id: 22, type: "separator", title: "Practice", url: "" },
   {
     id: 16,
     label: "Exercise",
@@ -159,7 +159,7 @@ export default function MobileMenu() {
         ) : null}
         {menuItems.map((item) =>
           item?.type === "separator" ? (
-            <div className="border-b-[1px] border-zinc-400 my-2">
+            <div key={item.id} className="border-b-[1px] border-zinc-400 my-2">
               {item.title}
             </div>
           ) : (

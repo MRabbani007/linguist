@@ -1,3 +1,4 @@
+import AdminLessonContainer from "@/features/admin/AdminLessonContainer";
 import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
@@ -59,18 +60,24 @@ export default function AdminLessonEditor() {
   return (
     <main>
       <div className="flex items-center justify-center gap-4">
-        <button className="btn-r btn-red" onClick={() => setEditHeaders(true)}>
-          Edit
+        <button
+          className="btn-r btn-yellow"
+          onClick={() => setEditHeaders(true)}
+        >
+          Lesson
         </button>
-        <button className="btn-r btn-red" onClick={() => setAddSection(true)}>
-          Sections
+        <button className="btn-r btn-yellow">Image</button>
+        <button className="btn-r btn-blue" onClick={() => setAddSection(true)}>
+          Section
         </button>
-        <button className="btn-r btn-red">Image</button>
-        <button className="btn-r btn-red" onClick={() => setAddText(true)}>
+        <button className="btn-r btn-blue" onClick={() => setAddText(true)}>
           Text
         </button>
       </div>
-      {lesson && <LessonHeader lesson={lesson} />}
+
+      <AdminLessonContainer>
+        {lesson && <LessonHeader lesson={lesson} />}
+      </AdminLessonContainer>
 
       {lesson?.lessonImage && (
         <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">

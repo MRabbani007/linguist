@@ -12,6 +12,7 @@ import { selectChapters } from "../globals/globalsSlice";
 import { T_LESSON } from "../../data/templates";
 import InputField from "../ui/InputField";
 import { useDeleteLessonMutation, useEditLessonMutation } from "./lessonSlice";
+import SelectField from "../ui/SelectField";
 
 export default function FormLessonEdit({
   lesson,
@@ -61,21 +62,12 @@ export default function FormLessonEdit({
     try {
       if (confirm("Delete this block?")) {
         await deleteLesson(lesson?.id).unwrap();
+        toast.success("Lesson Deleted");
       }
     } catch (err) {
-      console.error("Failed to delete this lesson", err);
+      toast.error("Failed to delete the Lesson");
     }
   };
-
-  const menuOptions =
-    Array.isArray(chapters) &&
-    chapters.map((item, index) => {
-      return (
-        <option value={item?.id} key={index}>
-          {item?.title}
-        </option>
-      );
-    });
 
   return (
     <FormContainer
@@ -121,21 +113,17 @@ export default function FormLessonEdit({
         value={state.detail}
         handleChange={handleChange}
       />
-      <div className="field">
-        <label htmlFor="chapterID" className="field__label">
-          Chapter ID
-        </label>
-        <select
-          id="chapterID"
-          name="chapterID"
-          value={state?.chapterID}
-          onChange={handleChange}
-          className="field__input"
-        >
-          <option value="">Select Chapter</option>
-          {menuOptions}
-        </select>
-      </div>
+      <SelectField
+        label="Chapter"
+        onValueChange={(chapterID) =>
+          setState((curr) => ({ ...curr, chapterID }))
+        }
+        value={state?.chapterID}
+        options={chapters.map((item) => ({
+          value: item.id,
+          label: item.title,
+        }))}
+      />
       <InputField
         label="First Word"
         name="firstLang"

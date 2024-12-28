@@ -12,6 +12,7 @@ import FormContainer from "../components/FormContainer";
 import { T_LESSON } from "../../data/templates";
 import InputField from "../ui/InputField";
 import { useAddLessonMutation } from "./lessonSlice";
+import SelectField from "../ui/SelectField";
 
 export default function FormLessonAdd({
   setAdd,
@@ -46,23 +47,13 @@ export default function FormLessonAdd({
           createDate: new Date(),
         };
 
-        const response = await addLesson(block).unwrap();
+        await addLesson(block).unwrap();
         toast.success("Lesson Added");
       } catch (err) {
         toast.error("Server Error");
       }
     }
   };
-
-  const menuOptions =
-    Array.isArray(chapters) &&
-    chapters.map((item, index) => {
-      return (
-        <option value={item?.id} key={index}>
-          {item?.title}
-        </option>
-      );
-    });
 
   return (
     <FormContainer
@@ -72,21 +63,17 @@ export default function FormLessonAdd({
       submitButton="Add Lesson"
       closeForm={setAdd}
     >
-      <div className="field">
-        <label htmlFor="chapterID" className="field__label">
-          Chapter
-        </label>
-        <select
-          id="chapterID"
-          name="chapterID"
-          value={state?.chapterID}
-          onChange={handleChange}
-          className="field__input"
-        >
-          <option value="">Select Chapter</option>
-          {menuOptions}
-        </select>
-      </div>
+      <SelectField
+        label="Chapter"
+        onValueChange={(chapterID) =>
+          setState((curr) => ({ ...curr, chapterID }))
+        }
+        value={state?.chapterID}
+        options={chapters.map((item) => ({
+          value: item.id,
+          label: item.title,
+        }))}
+      />
       <InputField
         label="Lesson Number"
         name="lessonNo"

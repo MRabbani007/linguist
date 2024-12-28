@@ -52,60 +52,92 @@ export default function AdminSectionContainer({
     };
   }, []);
 
-  console.log(showDropDown);
-
   return (
     <div className="relative">
       <div ref={dropdownRef} className="absolute top-2 right-2 z-50">
-        <button onClick={() => setShowDropDown(true)}>
+        <button onClick={() => setShowDropDown(true)} className="z-10">
           <BsThreeDots size={25} />
         </button>
         <div
           className={
             (showDropDown ? "" : "-translate-y-2 opacity-0 invisible") +
-            " section-dropdown"
+            " absolute top-full right-0 duration-200 bg-zinc-100 z-[100] text-sm flex flex-col items-stretch shadow-sm shadow-zinc-700"
           }
         >
-          <div className="dropdown-title">Add...</div>
-          <div className="flex flex-row flex-wrap gap-2 items-center justify-start">
-            <button title="Add Introduction" onClick={() => setAddIntro(true)}>
-              <RxTextAlignLeft size={25} />
-            </button>
-            <button title="Add Definition" onClick={() => setAddDef(true)}>
-              <BsChatLeftText size={28} />
-            </button>
-            <button title="Add Table" onClick={() => setAddTable(true)}>
-              <CiViewTable size={32} />
-            </button>
-            <button title="Add List" onClick={() => setAddList(true)}>
-              <PiListBullets size={32} />
-            </button>
-          </div>
-          <div>
-            <button title="Add Word" onClick={() => setAddWord(true)}>
-              <VscWholeWord size={32} />
-              <span>Word</span>
-            </button>
-            <button title="Add Sentence" onClick={() => setAddSentence(true)}>
-              <BsTextParagraph size={32} />
-              <span>Sentence</span>
-            </button>
-          </div>
-          <div className="dropdown-title">Edit...</div>
-          <div>
-            <button title="Edit Section" onClick={() => setEditHeader(true)}>
-              <CiEdit size={32} />
-              <span>Title</span>
-            </button>
-            <button title="Edit Image" onClick={() => setEditImage(true)}>
-              <CiImageOn size={32} />
-              <span>Image</span>
-            </button>
-            <button title="Copy Section ID" onClick={copyIDtoClipboard}>
-              <IoCopyOutline size={30} />
-              <span>Copy ID</span>
-            </button>
-          </div>
+          <div className="py-2 px-4 bg-zinc-200">Add...</div>
+          <button
+            title="Add Introduction"
+            onClick={() => setAddIntro(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <RxTextAlignLeft size={20} />{" "}
+            <span className="text-nowrap">Introduction</span>
+          </button>
+          <button
+            title="Add Definition"
+            onClick={() => setAddDef(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <BsChatLeftText size={20} />
+            <span className="text-nowrap">Definition</span>
+          </button>
+          <button
+            title="Add Table"
+            onClick={() => setAddTable(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <CiViewTable size={20} />
+            <span className="text-nowrap">Table</span>
+          </button>
+          <button
+            title="Add List"
+            onClick={() => setAddList(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <PiListBullets size={20} />
+            <span className="text-nowrap">List</span>
+          </button>
+          <button
+            title="Add Word"
+            onClick={() => setAddWord(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <VscWholeWord size={20} />
+            <span>Word</span>
+          </button>
+          <button
+            title="Add Sentence"
+            onClick={() => setAddSentence(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <BsTextParagraph size={20} />
+            <span>Sentence</span>
+          </button>
+          <div className="py-2 px-4 bg-zinc-200">Edit...</div>
+          <button
+            title="Edit Section"
+            onClick={() => setEditHeader(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <CiEdit size={20} />
+            <span>Section</span>
+          </button>
+          <button
+            title="Edit Image"
+            onClick={() => setEditImage(true)}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <CiImageOn size={20} />
+            <span>Image</span>
+          </button>
+          <button
+            title="Copy Section ID"
+            onClick={copyIDtoClipboard}
+            className="py-2 px-4 hover:bg-zinc-50 flex items-center gap-2"
+          >
+            <IoCopyOutline size={20} />
+            <span>Copy ID</span>
+          </button>
         </div>
       </div>
       <Section
@@ -121,6 +153,7 @@ export default function AdminSectionContainer({
 
       {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}
       {addWord && <FormWordAdd setAdd={setAddWord} sectionID={item.id} />}
+      {}
     </div>
   );
 }
