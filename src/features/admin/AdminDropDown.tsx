@@ -51,6 +51,7 @@ export default function AdminDropDown({ items }: Props) {
             </div>
           ) : item?.type === "button" ? (
             <button
+              key={index}
               title={item?.title}
               onClick={item?.onClick}
               className="py-2 px-2 hover:bg-zinc-50 flex items-center gap-3"
