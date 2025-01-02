@@ -55,13 +55,15 @@ export default function AdminMenu() {
             <BiX size={25} />
           </button>
         </div>
-        <div>
+        <div className="flex flex-col">
           <h3 className="py-2 px-4 font-semibold border-b-2">Pages</h3>
-          <ul>
-            <li className="py-2 px-4">
-              <Link to={"/admin/images/upload"}>Upload Images</Link>
-            </li>
-          </ul>
+          <Link
+            className="py-2 px-4 hover:bg-zinc-200 duration-200"
+            to={"/admin/images/upload"}
+            onClick={() => setShow(false)}
+          >
+            Upload Images
+          </Link>
         </div>
         <div>
           <h3 className="py-2 px-4 font-semibold border-b-2">Content</h3>
@@ -71,6 +73,7 @@ export default function AdminMenu() {
                 <Link
                   key={index}
                   to={item.url}
+                  onClick={() => setShow(false)}
                   className="py-2 px-4 hover:bg-zinc-200 duration-200"
                 >
                   {item.label}
@@ -85,6 +88,7 @@ export default function AdminMenu() {
             <Link
               className="py-2 px-4 hover:bg-zinc-200 duration-200"
               to={"/admin/users"}
+              onClick={() => setShow(false)}
             >
               Users
             </Link>

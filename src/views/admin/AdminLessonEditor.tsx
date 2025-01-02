@@ -2,9 +2,7 @@ import AdminLessonContainer from "@/features/admin/AdminLessonContainer";
 import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
-import FormLessonEdit from "@/features/lessons/FormLessonEdit";
 import LessonHeader from "@/features/lessons/LessonHeader";
-import FormSectionAdd from "@/features/sections/FormSectionAdd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -27,11 +25,6 @@ export default function AdminLessonEditor() {
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
 
-  const [addSection, setAddSection] = useState(false);
-  const [editHeaders, setEditHeaders] = useState(false);
-  const [editImage, setEditImage] = useState(false);
-  const [addText, setAddText] = useState(false);
-
   useEffect(() => {
     setLesson(() => lessons.find((item) => item.id === id) ?? null);
   }, [lessons, id]);
@@ -53,31 +46,17 @@ export default function AdminLessonEditor() {
       //     tables={item.tables}
       //     tableWords={[]}
       //   />
-      <AdminSectionContainer section={item} />
+      <AdminSectionContainer section={item} key={item.id} />
     ));
   }
 
   return (
-    <main>
-      <div className="flex items-center justify-center gap-4">
-        <button
-          className="btn-r btn-yellow"
-          onClick={() => setEditHeaders(true)}
-        >
-          Lesson
-        </button>
-        <button className="btn-r btn-yellow">Image</button>
-        <button className="btn-r btn-blue" onClick={() => setAddSection(true)}>
-          Section
-        </button>
-        <button className="btn-r btn-blue" onClick={() => setAddText(true)}>
-          Text
-        </button>
-      </div>
-
-      <AdminLessonContainer>
-        {lesson && <LessonHeader lesson={lesson} />}
-      </AdminLessonContainer>
+    <>
+      {lesson && (
+        <AdminLessonContainer lesson={lesson}>
+          <LessonHeader lesson={lesson} />
+        </AdminLessonContainer>
+      )}
 
       {lesson?.lessonImage && (
         <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">
@@ -98,18 +77,7 @@ export default function AdminLessonEditor() {
         </div>
       ) : null}
 
-      {content}
-
-      {editHeaders && lesson && (
-        <FormLessonEdit lesson={lesson} setEdit={setEditHeaders} />
-      )}
-      {addSection && lesson && (
-        <FormSectionAdd
-          lessonID={lesson?.id ?? ""}
-          chapterID={lesson?.chapterID ?? ""}
-          setAdd={setAddSection}
-        />
-      )}
-    </main>
+      <div className="flex-1 ">{content}</div>
+    </>
   );
 }

@@ -151,7 +151,11 @@ export default function MobileMenu() {
               <IoAddCircleOutline size={32} />
               <span>Toggle Edit</span>
             </button>
-            <Link to="/admin" className="dropdown-item">
+            <Link
+              to="/admin"
+              onClick={() => setShow(false)}
+              className="dropdown-item"
+            >
               <FaUserGear size={32} />
               <span>Admin Page</span>
             </Link>

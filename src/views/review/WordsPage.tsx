@@ -24,6 +24,7 @@ export default function WordsPage() {
   const subject = searchParams.get("subject") ?? null;
   const level = searchParams.get("level") ?? null;
   const type = searchParams.get("type") ?? null;
+  const gender = searchParams.get("gender") ?? null;
 
   const [words, setWords] = useState([]);
   const [count, setCount] = useState(0);
@@ -56,7 +57,7 @@ export default function WordsPage() {
       setLoading(true);
 
       const response = await axiosPrivate.get("/review/words", {
-        params: { subject, level, type, page, search },
+        params: { subject, level, type, gender, page, search },
       });
 
       if (response?.status === 200 && Array.isArray(response.data.data)) {
@@ -107,6 +108,7 @@ export default function WordsPage() {
           { label: "Subject", value: subject },
           { label: "Level", value: level },
           { label: "Type", value: type },
+          { label: "Gender", value: gender },
         ].map((item) =>
           item?.value ? (
             <p

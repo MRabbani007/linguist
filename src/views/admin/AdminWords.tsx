@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectWordsCount } from "../../features/admin/adminSlice";
 import Pagination from "../../features/components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import FormWordEdit from "../../features/words/FormWordEdit";
@@ -12,7 +10,7 @@ export default function AdminWords() {
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get("page") ?? 1;
-  const count = useSelector(selectWordsCount);
+  let count = 0;
 
   const [edit, setEdit] = useState(false);
   const [editItem, setEditItem] = useState<Word | null>(null);
@@ -32,6 +30,7 @@ export default function AdminWords() {
   } else if (isError) {
     content = <p>{JSON.stringify(error)}</p>;
   } else if (isSuccess) {
+    count = data.count;
     content = data.data.map((item, index) => (
       <div
         key={item.id}

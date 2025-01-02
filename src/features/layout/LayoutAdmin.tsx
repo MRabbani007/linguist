@@ -8,7 +8,7 @@ export default function LayoutAdmin() {
   const location = useLocation();
 
   return (
-    <div className="flex flex-row items-stretch flex-1">
+    <div className="flex flex-row items-stretch flex-1 ">
       {/* <AdminSidebar /> */}
       <main className="">
         <div className="relative flex items-center gap-4">
