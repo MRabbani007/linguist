@@ -1,4 +1,5 @@
 // import { createEntityAdapter } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
 // const globalsAdapter = createEntityAdapter({
@@ -113,3 +114,10 @@ export const {
   useLazyGetDialoguesQuery,
   useLazyGetDialogueByIDQuery,
 } = globalsApiSlice;
+
+export const selectLessonSections = (lessonID: string) =>
+  createSelector(
+    globalsApiSlice.endpoints.getLessonByID.select(lessonID),
+    (result) =>
+      result?.data?.map((item) => ({ label: item.title, value: item.id }))
+  );

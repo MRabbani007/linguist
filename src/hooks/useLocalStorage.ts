@@ -5,7 +5,6 @@ const getLocalValue = (key: string, initValue: any) => {
   if (typeof window === "undefined") return initValue;
 
   const localItem = localStorage?.getItem(key);
-  console.log(JSON.parse(localItem ?? "{}"));
   if (!!localItem) return JSON.parse(localItem);
 
   // return result of a function

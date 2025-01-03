@@ -3,6 +3,7 @@ import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
 import LessonHeader from "@/features/lessons/LessonHeader";
+import { useLazyGetLessonWordsQuery } from "@/features/words/wordsSlice";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -15,8 +16,11 @@ export default function AdminLessonEditor() {
   const [getLesson, { data, isLoading, isSuccess, isError }] =
     useLazyGetLessonByIDQuery();
 
+  const [getLessonWords] = useLazyGetLessonWordsQuery();
+
   useEffect(() => {
     if (id) {
+      getLessonWords(id);
       getLesson(id);
     }
   }, [id]);
@@ -36,16 +40,6 @@ export default function AdminLessonEditor() {
     content = <p>Error</p>;
   } else if (isSuccess) {
     content = data.map((item: any) => (
-      //   <Section
-      //     key={item.id}
-      //     definitions={item.definitions}
-      //     words={item.words}
-      //     section={item}
-      //     sectionLists={item.sectionLists}
-      //     sentences={item.sentences}
-      //     tables={item.tables}
-      //     tableWords={[]}
-      //   />
       <AdminSectionContainer section={item} key={item.id} />
     ));
   }
@@ -77,7 +71,7 @@ export default function AdminLessonEditor() {
         </div>
       ) : null}
 
-      <div className="flex-1 ">{content}</div>
+      <div className="flex-1 flex flex-col gap-4">{content}</div>
     </>
   );
 }

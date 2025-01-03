@@ -16,12 +16,14 @@ import SelectField from "../ui/SelectField";
 type Props = {
   word: Word;
   attributes: WordAttribute[];
+  sections: { label: string; value: string }[];
   setViewEdit: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function FormWordEdit({
   word = T_WORD,
   attributes,
+  sections,
   setViewEdit,
 }: Props) {
   const [editWord, { isLoading }] = useEditWordMutation();
@@ -61,7 +63,8 @@ export default function FormWordEdit({
           ...word,
           ...state,
         };
-        await editWord(newWord).unwrap();
+        const response = await editWord(newWord);
+        console.log(response);
         toast.success("Word Saved");
         setViewEdit(false);
       } catch (err) {
@@ -236,21 +239,14 @@ export default function FormWordEdit({
           handleChange={handleChange}
         />
         {/* Move to section */}
-        {/* <div className="field">
-        <label htmlFor="move-word" className="field__label">
-          Move to Section:
-        </label>
-        <select
-          name="move-word-section"
-          id="move-word-section"
-          value={selected}
-          onChange={(e) => setSelected(e.target.value)}
-          className="field__input"
-        >
-          <option value="">Select Section</option>
-          {sectionOptions}
-        </select>
-      </div> */}
+        <SelectField
+          label="Move To Section"
+          value={state.sectionID}
+          options={sections}
+          onValueChange={(sectionID) =>
+            setState((curr) => ({ ...curr, sectionID }))
+          }
+        />
       </div>
       <div
         className={

@@ -12,7 +12,7 @@ export default function InputField({
   type = "text",
   label,
   name,
-  value,
+  value = "",
   handleChange,
 }: Props) {
   return (
@@ -25,7 +25,7 @@ export default function InputField({
         id={name}
         name={name}
         placeholder={label}
-        value={value}
+        value={value ?? ""}
         onChange={handleChange}
         className="field__input__row"
       />

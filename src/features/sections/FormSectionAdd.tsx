@@ -76,8 +76,7 @@ export default function FormSectionAdd({ lessonID, chapterID, setAdd }: Props) {
           type="number"
           title="Number"
           placeholder="Number"
-          autoComplete="off"
-          value={state?.sortIndex || 1}
+          value={state?.sortIndex}
           onChange={onChange}
           className="field__input__row"
         />

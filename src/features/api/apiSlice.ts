@@ -7,7 +7,7 @@ import { setCredentials, logOut } from "../auth/authSlice";
 import { RootState } from "@/app/store";
 
 let API_URL = "https://linguistserver.onrender.com";
-// API_URL = "http://localhost:3000";
+API_URL = "http://localhost:3000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,

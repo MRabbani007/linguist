@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 import AdminContainerWord from "./AdminContainerWord";
 import FormWordEdit from "../words/FormWordEdit";
 import { useFetchAttributes } from "@/hooks/useFetchAttributes";
+import { useSelector } from "react-redux";
+import { selectLessonSections } from "../globals/globalsApiSlice";
+import { selectSectionWords } from "../words/wordsSlice";
 
 export default function AdminSection({
   section = null,
@@ -26,22 +29,30 @@ export default function AdminSection({
   tables: ConjTable[];
   tableWords?: TableWord[];
 }) {
+  const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
   const [attributes] = useFetchAttributes();
+
+  const sectionWords =
+    useSelector(
+      selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
+    ) ?? [];
 
   const [expandSentences, setExpandSentences] = useState(false);
   const [showEditWord, setShowEditWord] = useState(false);
   const [editWord, setEditWord] = useState<Word | null>(null);
 
-  let content = words.map((word, index) => (
-    <AdminContainerWord
-      word={word}
-      key={index}
-      setEdit={setShowEditWord}
-      setEditItem={setEditWord}
-    >
-      <CardWord word={word} />
-    </AdminContainerWord>
-  ));
+  let content = sectionWords // [...words]
+    .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
+    .map((word, index) => (
+      <AdminContainerWord
+        word={word}
+        key={index}
+        setEdit={setShowEditWord}
+        setEditItem={setEditWord}
+      >
+        <CardWord word={word} />
+      </AdminContainerWord>
+    ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
@@ -165,6 +176,7 @@ export default function AdminSection({
         <FormWordEdit
           setViewEdit={setShowEditWord}
           word={editWord}
+          sections={sections ?? []}
           attributes={attributes as WordAttribute[]}
         />
       )}

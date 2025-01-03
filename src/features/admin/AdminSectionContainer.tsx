@@ -127,7 +127,13 @@ export default function AdminSectionContainer({
         tableWords={[]}
       />
       {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}
-      {addWord && <FormWordAdd setAdd={setAddWord} sectionID={item.id} />}
+      {addWord && (
+        <FormWordAdd
+          setAdd={setAddWord}
+          sectionID={item.id}
+          lessonID={item.lessonID}
+        />
+      )}
     </div>
   );
 }
