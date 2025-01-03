@@ -5,12 +5,10 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../auth/authSlice";
 import { RootState } from "@/app/store";
-
-let API_URL = "https://linguistserver.onrender.com";
-API_URL = "http://localhost:3000";
+import { SERVER_URL } from "@/lib/url";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: API_URL,
+  baseUrl: SERVER_URL,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
