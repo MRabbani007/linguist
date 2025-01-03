@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 
-const isProduction = window.location.hostname !== "localhost";
+const isProduction = false; //window.location.hostname !== "localhost";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
