@@ -1,16 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { RiAdminLine } from "react-icons/ri";
-import { IoMenu } from "react-icons/io5";
+import { RiAdminLine, RiSpeakLine } from "react-icons/ri";
+import { IoInformationCircleOutline, IoMenu } from "react-icons/io5";
 import { BiX } from "react-icons/bi";
+import { PiNotebook } from "react-icons/pi";
+import { GrNotes } from "react-icons/gr";
+import { CgTranscript } from "react-icons/cg";
+import { VscSymbolParameter, VscWholeWord } from "react-icons/vsc";
+import { MdPassword } from "react-icons/md";
 
 const CONTENT = [
-  { label: "Chapters", url: "/admin/chapters" },
-  { label: "Lessons", url: "/admin/lessons" },
-  { label: "Sections", url: "/admin/sections" },
-  { label: "Definitions", url: "/admin/definitions" },
-  { label: "Words", url: "/admin/words" },
-  { label: "Sentences", url: "/admin/sentences" },
+  {
+    label: "Chapters",
+    url: "/admin/chapters",
+    icon: <PiNotebook size={25} />,
+  },
+  { label: "Lessons", url: "/admin/lessons", icon: <GrNotes size={25} /> },
+  {
+    label: "Sections",
+    url: "/admin/sections",
+    icon: <CgTranscript size={25} />,
+  },
+  {
+    label: "Definitions",
+    url: "/admin/definitions",
+    icon: <IoInformationCircleOutline size={25} />,
+  },
+  { label: "Words", url: "/admin/words", icon: <VscWholeWord size={25} /> },
+  {
+    label: "Sentences",
+    url: "/admin/sentences",
+    icon: <VscSymbolParameter size={25} />,
+  },
+  {
+    label: "Dialogues",
+    url: "/admin/dialogues",
+    icon: <RiSpeakLine size={25} />,
+  },
+  {
+    label: "Word Attributes",
+    url: "/admin/attributes",
+    icon: <MdPassword size={25} />,
+  },
 ];
 
 export default function AdminMenu() {
@@ -55,16 +86,6 @@ export default function AdminMenu() {
             <BiX size={25} />
           </button>
         </div>
-        <div className="flex flex-col">
-          <h3 className="py-2 px-4 font-semibold border-b-2">Pages</h3>
-          <Link
-            className="py-2 px-4 hover:bg-zinc-200 duration-200"
-            to={"/admin/images/upload"}
-            onClick={() => setShow(false)}
-          >
-            Upload Images
-          </Link>
-        </div>
         <div>
           <h3 className="py-2 px-4 font-semibold border-b-2">Content</h3>
           <div className="flex flex-col">
@@ -74,25 +95,31 @@ export default function AdminMenu() {
                   key={index}
                   to={item.url}
                   onClick={() => setShow(false)}
-                  className="py-2 px-4 hover:bg-zinc-200 duration-200"
+                  className="py-2 px-4 hover:bg-zinc-200 duration-200 flex items-center gap-2"
                 >
-                  {item.label}
+                  {item?.icon}
+                  <span>{item.label}</span>
                 </Link>
               );
             })}
           </div>
         </div>
-        <div>
-          <h3 className="py-2 px-4 font-semibold  border-b-2">Users</h3>
-          <div className="flex flex-col">
-            <Link
-              className="py-2 px-4 hover:bg-zinc-200 duration-200"
-              to={"/admin/users"}
-              onClick={() => setShow(false)}
-            >
-              Users
-            </Link>
-          </div>
+        <div className="flex flex-col">
+          <h3 className="py-2 px-4 font-semibold border-b-2">Pages</h3>
+          <Link
+            className="py-2 px-4 hover:bg-zinc-200 duration-200"
+            to={"/admin/images/upload"}
+            onClick={() => setShow(false)}
+          >
+            Upload Images
+          </Link>
+          <Link
+            className="py-2 px-4 hover:bg-zinc-200 duration-200"
+            to={"/admin/users"}
+            onClick={() => setShow(false)}
+          >
+            Users
+          </Link>
         </div>
       </nav>
     </div>

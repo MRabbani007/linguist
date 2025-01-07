@@ -91,6 +91,7 @@ export default function AdminWords() {
         <FormWordEdit
           word={editItem}
           setViewEdit={setEdit}
+          sections={[]}
           attributes={attributes as WordAttribute[]}
         />
       )}

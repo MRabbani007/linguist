@@ -21,9 +21,6 @@ export default function SignOut() {
           <span>Sign Out</span>
         </div>
         <h2 className="text-white text-center">{auth.user}</h2>
-        {/* <p className="bg-red-600 text-red-50 rounded-b-lg py-2 px-4 text-end">
-          {today.day + ", " + today.date + " " + today.month}
-        </p> */}
         <button className="input_submit">Sign Out</button>
       </form>
     </div>

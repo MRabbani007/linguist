@@ -1,10 +1,13 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
 import { useSelector } from "react-redux";
 import { selectCurrentRoles, selectCurrentUser } from "./authSlice";
 
-const RequireAuth = ({ allowedRoles }) => {
+export default function RequireAuth({
+  allowedRoles,
+}: {
+  allowedRoles: number[];
+}) {
   const location = useLocation();
 
   const user = useSelector(selectCurrentUser);
@@ -17,6 +20,4 @@ const RequireAuth = ({ allowedRoles }) => {
   ) : (
     <Navigate to="/login" state={{ from: location.pathname }} replace />
   );
-};
-
-export default RequireAuth;
+}

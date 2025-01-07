@@ -27,7 +27,7 @@ export default function InputField({
         placeholder={label}
         value={value ?? ""}
         onChange={handleChange}
-        className="field__input__row"
+        className="bg-transparent border-none outline-none "
       />
     </div>
   );
