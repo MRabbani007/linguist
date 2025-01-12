@@ -12,12 +12,16 @@ import { T_ATTRIBUTE } from "../../data/templates";
 import { createSlug } from "../../lib/utils";
 import { axiosPrivate } from "../../api/axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../auth/authSlice";
 
 export default function FormCreateAttribute({
   setAdd,
 }: {
   setAdd: Dispatch<SetStateAction<boolean>>;
 }) {
+  const token = useSelector(selectCurrentToken);
+
   const [state, setState] = useState(T_ATTRIBUTE);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +40,16 @@ export default function FormCreateAttribute({
     event.preventDefault();
 
     try {
-      const response = await axiosPrivate.post("/admin/wordAttributes", {
-        attribute: state,
-      });
+      const response = await axiosPrivate.post(
+        "/admin/wordAttributes",
+        {
+          attribute: state,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Attribute Created");

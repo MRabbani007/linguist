@@ -55,7 +55,7 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
     }),
     editSectionLessonID: builder.mutation({
       query: (section) => ({
-        url: "/admin/sections",
+        url: "/admin/sections/move",
         method: "PATCH",
         body: { section },
       }),

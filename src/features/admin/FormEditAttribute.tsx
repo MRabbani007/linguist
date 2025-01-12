@@ -6,30 +6,27 @@ import {
   useEffect,
   useState,
 } from "react";
-import { T_VALUE } from "../../data/templates";
-import { createSlug } from "../../lib/utils";
-import { axiosPrivate } from "../../api/axios";
-import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
-import SelectField from "../ui/SelectField";
+import { T_ATTRIBUTE } from "@/data/templates";
+import { createSlug } from "@/lib/utils";
+import { axiosPrivate } from "@/api/axios";
+import { toast } from "react-toastify";
 import InputField from "../ui/InputField";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "../auth/authSlice";
 
-export default function FormEditValue({
+export default function FormEditAttribute({
+  attribute,
   setEdit,
   setModified,
-  options,
-  value,
 }: {
-  value: AttributeValue;
-  setModified: Dispatch<SetStateAction<boolean>>;
+  attribute: WordAttribute;
   setEdit: Dispatch<SetStateAction<boolean>>;
-  options: { label: string; value: string }[];
+  setModified: Dispatch<SetStateAction<boolean>>;
 }) {
   const token = useSelector(selectCurrentToken);
 
-  const [state, setState] = useState({ ...T_VALUE, ...value });
+  const [state, setState] = useState({ ...T_ATTRIBUTE, ...attribute });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -48,7 +45,7 @@ export default function FormEditValue({
 
     try {
       const response = await axiosPrivate.patch(
-        "/admin/wordAttrValues",
+        "/admin/wordAttributes",
         {
           attribute: state,
         },
@@ -59,74 +56,53 @@ export default function FormEditValue({
       );
 
       if (response.status === 200) {
-        toast.success("Value Updated");
         setModified(true);
-        setEdit(false);
+        toast.success("Attribute updated");
       } else {
-        toast.error("Error updating value");
+        toast.error("Error updating attribute");
       }
     } catch (error) {
-      toast.error("Error updating value");
+      toast.error("Error updating attribute");
     }
   }
 
   async function handleDelete() {
-    if (confirm("Delete this value?")) {
+    if (confirm("Delete this attribute?")) {
       try {
-        const response = await axiosPrivate.delete("/admin/wordAttrValues", {
+        const response = await axiosPrivate.delete("/admin/wordAttributes", {
           params: { id: state.id },
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
 
         if (response.status === 200) {
-          toast.success("Value Deleted");
+          toast.success("Attribute Deleted");
           setModified(true);
           setEdit(false);
         } else {
-          toast.error("Error deleting value");
+          toast.error("Error deleting attribute");
         }
       } catch (error) {
-        toast.error("Error deleting value");
+        toast.error("Error deleting attribute");
       }
     }
   }
 
   return (
     <FormContainer
-      title="Update Attribute Value"
+      title="Edit Word Attribute"
       type="edit"
-      submitButton="Update Attribute Value"
+      submitButton="Edit Attribute"
       onSubmit={handleSubmit}
       closeForm={setEdit}
       deleteButton={true}
       onDelete={handleDelete}
     >
-      <SelectField
-        options={options}
-        label="Attribute"
-        value={state.attrID}
-        onValueChange={(attrID) => setState((curr) => ({ ...curr, attrID }))}
-      />
       <InputField
-        label="Value Label"
+        label="Attribute Label"
         name="label"
         type="text"
         value={state.label}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Value Abbreviation"
-        name="abbrev"
-        type="text"
-        value={state.abbrev}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Value Short Hand"
-        name="shortHand"
-        type="text"
-        value={state.shortHand}
         handleChange={handleChange}
       />
     </FormContainer>

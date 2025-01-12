@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../auth/authSlice";
 
 export default function FormCreateValue({
   setAdd,
@@ -23,6 +25,8 @@ export default function FormCreateValue({
   setModified: Dispatch<SetStateAction<boolean>>;
   options: { label: string; value: string }[];
 }) {
+  const token = useSelector(selectCurrentToken);
+
   const [state, setState] = useState(T_VALUE);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +45,16 @@ export default function FormCreateValue({
     event.preventDefault();
 
     try {
-      const response = await axiosPrivate.post("/admin/wordAttrValues", {
-        attribute: state,
-      });
+      const response = await axiosPrivate.post(
+        "/admin/wordAttrValues",
+        {
+          attribute: state,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Value Added");

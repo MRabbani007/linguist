@@ -111,7 +111,7 @@ export default function Section({
                 <CardConjTable
                   key={table?.id}
                   table={table}
-                  tableWords={table.tableWords}
+                  tableWords={table?.tableWords}
                 />
               );
             })}

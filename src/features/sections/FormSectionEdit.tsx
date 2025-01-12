@@ -46,6 +46,7 @@ export default function FormSectionEdit({ section, setEdit }: Props) {
     if (confirm("Delete this section?")) {
       await removeSection(section?.id);
       toast.success("Section Deleted");
+      setEdit(false);
     }
   };
 

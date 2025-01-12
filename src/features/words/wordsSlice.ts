@@ -43,7 +43,7 @@ export const wordsSlice = apiSlice.injectEndpoints({
         body: { word },
       }),
       invalidatesTags: (result, error, { id }) => {
-        return [{ type: "Word", id }];
+        return [{ type: "Word", id: "WORDLIST" }];
       },
     }),
     editWord: builder.mutation({

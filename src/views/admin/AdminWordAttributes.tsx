@@ -7,6 +7,7 @@ import FormCreateValue from "../../features/admin/FormCreateValue";
 import FormEditValue from "../../features/admin/FormEditValue";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "@/features/auth/authSlice";
+import FormEditAttribute from "@/features/admin/FormEditAttribute";
 
 export default function AdminWordAttributes() {
   const page = 1;
@@ -114,17 +115,35 @@ export default function AdminWordAttributes() {
     content = <p>{"error"}</p>;
   }
 
-  // const attributes = data.map((item) => <div key={item.id}>{item.label}</div>);
-
   const [add, setAdd] = useState(false);
   const [addValue, setAddValue] = useState(false);
 
   const [editValue, setEditValue] = useState(false);
   const [value, setValue] = useState<AttributeValue | null>(null);
 
+  const [editAttribute, setEditAttribute] = useState(false);
+  const [attribute, setAttribute] = useState<WordAttribute | null>(null);
+
+  const attributes = data.map((item) => (
+    <div
+      key={item.id}
+      className="py-2 px-4 bg-zinc-100 rounded-md flex items-center gap-4"
+    >
+      <p>{item.label}</p>
+      <button
+        onClick={() => {
+          setEditAttribute(true);
+          setAttribute(item);
+        }}
+      >
+        <CiEdit size={20} />
+      </button>
+    </div>
+  ));
+
   return (
     <>
-      {/* <div>{attributes}</div> */}
+      <div className="flex flex-wrap gap-2">{attributes}</div>
       <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
         <span className="w-[5%]">SN</span>
         <span className="w-[20%]">Attribute</span>
@@ -157,6 +176,13 @@ export default function AdminWordAttributes() {
           setModified={setIsModified}
           options={data.map((item) => ({ label: item.label, value: item.id }))}
           setEdit={setEditValue}
+        />
+      )}
+      {editAttribute && attribute && (
+        <FormEditAttribute
+          setEdit={setEditAttribute}
+          setModified={setIsModified}
+          attribute={attribute}
         />
       )}
     </>

@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { BiX } from "react-icons/bi";
 
 export default function CardWord({ word }: { word: Word }) {
   const displayBlock = useSelector(selectDisplayLesson);
 
   // const [viewEditImage, setViewEditImage] = useState(false);
   const [showPronunce, setShowPronunce] = useState(false);
+  const [showNote, setShowNote] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowNote(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const showPopup = displayBlock?.thirdLang && word?.third;
 
@@ -96,6 +115,29 @@ export default function CardWord({ word }: { word: Word }) {
               word?.level ?? ""
             )} rounded-full size-4 absolute top-2 right-2 z-20`}
           ></div>
+          {word?.note && word.note !== "" && (
+            <button
+              className="absolute top-2 right-6"
+              onClick={() => setShowNote(true)}
+            >
+              <IoInformationCircleOutline size={20} />
+            </button>
+          )}
+          <div
+            ref={ref}
+            className={
+              (showNote ? "" : "invisible opacity-0 -translate-y-4 ") +
+              " absolute top-2 right-2 left-2 bg-white rounded-md p-4 text-sm flex items-start justify-between z-30 duration-200"
+            }
+          >
+            <p className="mt-2 mr-2">{word?.note}</p>
+            <button
+              onClick={() => setShowNote(false)}
+              className="absolute top-1 right-1 bg-zinc-100 rounded-full hover:bg-zinc-200 duration-150 p-1"
+            >
+              <BiX size={20} />
+            </button>
+          </div>
           <div className="text-sm font-light mt-auto">{word?.type}</div>
         </div>
       </div>

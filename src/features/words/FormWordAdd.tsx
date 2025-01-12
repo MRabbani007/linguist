@@ -50,7 +50,7 @@ export default function FormWordAdd({
           id: crypto.randomUUID(),
           lessonID,
           sectionID,
-        }).unwrap();
+        });
         toast.success("Word Added");
         if (clearOnSubmit) {
           setState(value);

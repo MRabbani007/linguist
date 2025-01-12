@@ -14,7 +14,7 @@ export default function ContentPage() {
   return (
     <main>
       <header className="flex items-center gap-4 border-b-2 border-red-700 pb-2 mb-4">
-        <TfiLayoutListThumb size={40} className="text-red-700" />
+        <TfiLayoutListThumb className="text-red-700 size-6 md:size-10" />
         <h1 className="text-2xl md:text-4xl font-semibold">Content Overview</h1>
       </header>
       {chapters.map((chapter, index) => {

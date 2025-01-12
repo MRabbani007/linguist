@@ -65,10 +65,9 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       // ],
     }),
     getAllSections: builder.query<QueryResponse<Section>, number>({
-      query: (page) => ({
-        url: "/admin/sections",
+      query: () => ({
+        url: "/admin/sections/all",
         method: "GET",
-        params: { page },
       }),
       // transformResponse: (responseData) => {
       //   store.dispatch(setSectionsCount(responseData?.count));

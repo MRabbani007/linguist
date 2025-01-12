@@ -27,12 +27,16 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
         <Link
           onClick={handleOpen}
           to={`/learn/chapter?id=${chapter.id}&title=${chapter.title}`}
-          className="text-2xl md:text-4xl font-semibold"
+          className="text-xl md:text-4xl font-semibold"
         >
           {chapter?.title || ""}
         </Link>
-        <p className="font-normal">{chapter?.subtitle || ""}</p>
-        <p className="font-normal">{chapter?.detail || ""}</p>
+        <p className="font-normal text-sm md:text-base">
+          {chapter?.subtitle || ""}
+        </p>
+        <p className="font-normal text-xs md:text-sm">
+          {chapter?.detail || ""}
+        </p>
       </div>
     </div>
   );

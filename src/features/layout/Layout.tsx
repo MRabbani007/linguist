@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Suspense, useEffect } from "react";
 import Navbar from "../navigation/Navbar";
 import SkeletonContentPage from "../../skeletons/SkeletonContentPage";
@@ -26,8 +26,8 @@ import {
   useLazyGetLanguagesQuery,
 } from "../globals/globalsApiSlice";
 
-const Layout = () => {
-  const location = useLocation();
+export default function Layout() {
+  // const location = useLocation();
   const dispatch = useDispatch();
 
   const [getLanguages, { data: languages }] = useLazyGetLanguagesQuery();
@@ -65,7 +65,7 @@ const Layout = () => {
 
   const [lastChapter, setLastChapter] = useLocalStorage("displayChapter", null);
   const [lastLesson, setLastLesson] = useLocalStorage("displayLesson", null);
-  const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
+  // const [lastPage, setLastPage] = useLocalStorage("lastPage", null);
 
   useEffect(() => {
     getLanguages(null);
@@ -77,9 +77,9 @@ const Layout = () => {
     }
   }, [languages]);
 
-  useEffect(() => {
-    setLastPage(location);
-  }, [location]);
+  // useEffect(() => {
+  //   setLastPage(location);
+  // }, [location]);
 
   useEffect(() => {
     if (displayChapter?.id) {
@@ -178,5 +178,4 @@ const Layout = () => {
       <Footer />
     </div>
   );
-};
-export default Layout;
+}

@@ -1,7 +1,5 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-import { ACTIONS, SERVER } from "../../data/actions";
-import { store } from "../../app/store";
 
 const lessonsAdapter = createEntityAdapter<Lesson>({
   // select id if id is not default entity.id

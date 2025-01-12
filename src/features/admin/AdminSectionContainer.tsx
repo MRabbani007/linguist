@@ -11,6 +11,8 @@ import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import AdminDropDown from "./AdminDropDown";
 import AdminSection from "./AdminSection";
+import { MdArrowOutward } from "react-icons/md";
+import FormSectionMove from "../sections/FormSectionMove";
 
 export default function AdminSectionContainer({
   section: item,
@@ -25,6 +27,7 @@ export default function AdminSectionContainer({
   const [addList, setAddList] = useState(false);
   const [addWord, setAddWord] = useState(false);
   const [addSentence, setAddSentence] = useState(false);
+  const [moveSection, setMoveSection] = useState(false);
 
   const copyIDtoClipboard = () => {
     const isCopy = copy(item?.id);
@@ -106,6 +109,13 @@ export default function AdminSectionContainer({
     },
     {
       type: "button",
+      label: "Move",
+      title: "Move Section",
+      icon: <MdArrowOutward size={20} />,
+      onClick: () => setMoveSection(true),
+    },
+    {
+      type: "button",
       label: "Copy ID",
       title: "Copy Section ID",
       icon: <IoCopyOutline size={20} />,
@@ -124,7 +134,7 @@ export default function AdminSectionContainer({
         sectionLists={item.sectionLists}
         sentences={item.sentences}
         tables={item.tables}
-        tableWords={[]}
+        tableWords={item?.tableWords}
       />
       {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}
       {addWord && (
@@ -133,6 +143,9 @@ export default function AdminSectionContainer({
           sectionID={item.id}
           lessonID={item.lessonID}
         />
+      )}
+      {moveSection && (
+        <FormSectionMove setEdit={setMoveSection} section={item} />
       )}
     </div>
   );

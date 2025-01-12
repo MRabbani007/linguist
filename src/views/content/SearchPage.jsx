@@ -88,7 +88,12 @@ export default function SearchPage() {
             } of ${count} results for "${query}"`}
       </div>
       <div className="flex flex-col flex-1 gap-4">{wordsContent}</div>
-      <Pagination count={count} currentPage={+page} className={"mx-auto"} />
+      <Pagination
+        count={count}
+        currentPage={+page}
+        className={"mx-auto"}
+        itemsPerPage={30}
+      />
     </main>
   );
 }

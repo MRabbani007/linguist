@@ -198,7 +198,8 @@ declare global {
     // Header
     userID?: string;
     chapterID?: string;
-    blockID?: string;
+    blockID?: string; // stores lessonID in the DB
+    lessonID?: string; // temporary to send lessonID to backend on create/edit word
     sectionID?: string;
     // Content
     // main language

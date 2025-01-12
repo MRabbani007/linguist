@@ -17,7 +17,10 @@ export default function InputField({
 }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[15%_1fr] items-center gap-2">
-      <label htmlFor={name} className={"text-sm md:text-base"}>
+      <label
+        htmlFor={name}
+        className="text-sm md:text-base font-medium text-zinc-700 p-1"
+      >
         {label}
       </label>
       <input
@@ -27,7 +30,7 @@ export default function InputField({
         placeholder={label}
         value={value ?? ""}
         onChange={handleChange}
-        className="bg-transparent border-none outline-none "
+        className="bg-transparent border-[1px] border-zinc-300 rounded-md"
       />
     </div>
   );

@@ -63,8 +63,8 @@ export default function FormWordEdit({
           ...word,
           ...state,
         };
-        const response = await editWord(newWord);
-        console.log(response);
+        await editWord(newWord);
+
         toast.success("Word Saved");
         setViewEdit(false);
       } catch (err) {

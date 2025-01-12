@@ -4,9 +4,19 @@ import { useSearchParams } from "react-router-dom";
 const ITEMS_PER_PAGE = 15;
 const PAG_LEN = 5;
 
-type Props = { count: number; currentPage: number; className?: string };
+type Props = {
+  count: number;
+  currentPage: number;
+  className?: string;
+  itemsPerPage?: number;
+};
 
-export default function Pagination({ count, currentPage, className }: Props) {
+export default function Pagination({
+  count,
+  currentPage,
+  className,
+  itemsPerPage = ITEMS_PER_PAGE,
+}: Props) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePage = (page: number) => {
@@ -27,7 +37,7 @@ export default function Pagination({ count, currentPage, className }: Props) {
   // };
 
   const pages = Array.from(
-    { length: Math.ceil(count / ITEMS_PER_PAGE) },
+    { length: Math.ceil(count / itemsPerPage) },
     (_, i) => i + 1
   );
 
@@ -42,9 +52,9 @@ export default function Pagination({ count, currentPage, className }: Props) {
     : pages;
 
   const isFirst = currentPage === 1;
-  const isLast = currentPage === Math.ceil(count / ITEMS_PER_PAGE);
+  const isLast = currentPage === Math.ceil(count / itemsPerPage);
 
-  if (count < ITEMS_PER_PAGE) return null;
+  if (count < itemsPerPage) return null;
 
   return (
     <div

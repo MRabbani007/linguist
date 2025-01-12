@@ -11,10 +11,11 @@ import { useFetchAttributes } from "@/hooks/useFetchAttributes";
 import { useSelector } from "react-redux";
 import { selectLessonSections } from "../globals/globalsApiSlice";
 import { selectSectionWords } from "../words/wordsSlice";
+import FormWordMove from "../words/FormWordMove";
 
 export default function AdminSection({
   section = null,
-  words = [],
+  // words = [],
   definitions = [],
   sectionLists = [],
   tables = [],
@@ -38,7 +39,9 @@ export default function AdminSection({
     ) ?? [];
 
   const [expandSentences, setExpandSentences] = useState(false);
+
   const [showEditWord, setShowEditWord] = useState(false);
+  const [showMoveWord, setShowMoveWord] = useState(false);
   const [editWord, setEditWord] = useState<Word | null>(null);
 
   let content = sectionWords // [...words]
@@ -47,6 +50,7 @@ export default function AdminSection({
       <AdminContainerWord
         word={word}
         key={index}
+        setMove={setShowMoveWord}
         setEdit={setShowEditWord}
         setEditItem={setEditWord}
       >
@@ -179,6 +183,10 @@ export default function AdminSection({
           sections={sections ?? []}
           attributes={attributes as WordAttribute[]}
         />
+      )}
+
+      {showMoveWord && editWord && (
+        <FormWordMove word={editWord} setEdit={setShowMoveWord} />
       )}
     </>
   );

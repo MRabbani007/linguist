@@ -131,7 +131,12 @@ export default function WordsPage() {
           words.map((word, index) => <CardWord word={word} key={index} />)
         )}
       </div>
-      <Pagination count={count} currentPage={+page} className="mx-auto" />
+      <Pagination
+        count={count}
+        currentPage={+page}
+        className="mx-auto"
+        itemsPerPage={30}
+      />
       <div className="flex flex-wrap items-stretch gap-8">
         {Array.isArray(data) &&
           data.map((item, index) => (
