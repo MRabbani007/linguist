@@ -271,6 +271,12 @@ declare global {
     scoreMatchWords: number;
     lessonStatus: LessonStatus[];
   };
+
+  type WordList = {
+    name: string;
+    userID: string;
+    id: string;
+  };
 }
 
 export {};

@@ -40,6 +40,61 @@ export const profileApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Profile", id: "Profile" }],
     }),
+    getWordLists: builder.query<WordList[], null>({
+      query: () => ({
+        url: "/user/lists",
+        method: "GET",
+      }),
+    }),
+    createWordList: builder.mutation({
+      query: (wordList) => ({
+        url: "/user/lists",
+        method: "POST",
+        body: { wordList },
+      }),
+    }),
+    editWordList: builder.mutation({
+      query: (wordList) => ({
+        url: "/user/lists",
+        method: "PATCH",
+        body: { wordList },
+      }),
+    }),
+    deleteWordList: builder.mutation({
+      query: (id) => ({
+        url: "/user/lists",
+        method: "DELETE",
+        params: { id },
+      }),
+    }),
+    getWordListbyID: builder.query({
+      query: (id) => ({
+        url: "/user/lists/items",
+        method: "GET",
+        params: { id },
+      }),
+    }),
+    addListWord: builder.mutation({
+      query: (word) => ({
+        url: "/user/lists/items",
+        method: "POST",
+        body: { word },
+      }),
+    }),
+    editListWord: builder.mutation({
+      query: (word) => ({
+        url: "/user/lists/items",
+        method: "PATCH",
+        body: { word },
+      }),
+    }),
+    deleteListWord: builder.mutation({
+      query: (id) => ({
+        url: "/user/lists/items",
+        method: "DELETE",
+        params: { id },
+      }),
+    }),
   }),
 });
 
@@ -47,6 +102,14 @@ export const {
   useGetUserProfileQuery,
   useUpdateProfileMutation,
   useUpdateLessonProgressMutation,
+  useGetWordListsQuery,
+  useCreateWordListMutation,
+  useEditWordListMutation,
+  useDeleteWordListMutation,
+  useGetWordListbyIDQuery,
+  useAddListWordMutation,
+  useEditListWordMutation,
+  useDeleteListWordMutation,
 } = profileApiSlice;
 
 // returns the query result object
