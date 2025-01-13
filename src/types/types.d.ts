@@ -277,6 +277,13 @@ declare global {
     userID: string;
     id: string;
   };
+
+  type WordData = {
+    wordID: string;
+    listID: string;
+    repeatCount: number;
+    id: string;
+  };
 }
 
 export {};

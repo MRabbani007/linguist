@@ -5,6 +5,7 @@ import Sentence from "../sentences/Sentence";
 import { Link } from "react-router-dom";
 import CardWord from "../words/CardWord";
 import CardConjTable from "../tables/CardConjTable";
+import WordContainer from "../words/WordContainer";
 
 export default function Section({
   section = null,
@@ -26,7 +27,9 @@ export default function Section({
   const [expandSentences, setExpandSentences] = useState(false);
 
   let content = words.map((word, index) => (
-    <CardWord word={word} key={index} />
+    <WordContainer word={word} key={index}>
+      <CardWord word={word} />
+    </WordContainer>
   ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);

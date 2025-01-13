@@ -6,6 +6,8 @@ import { store } from "../../app/store";
 
 // const initialState = profileAdapter.getInitialState();
 
+type WordListQuery = { words: Word[]; wordsData: WordData[] };
+
 export const profileApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUserProfile: builder.query<UserProfile, null>({
@@ -45,6 +47,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         url: "/user/lists",
         method: "GET",
       }),
+      providesTags: ["UserWordList"],
     }),
     createWordList: builder.mutation({
       query: (wordList) => ({
@@ -52,6 +55,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { wordList },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
     editWordList: builder.mutation({
       query: (wordList) => ({
@@ -59,6 +63,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { wordList },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
     deleteWordList: builder.mutation({
       query: (id) => ({
@@ -66,13 +71,15 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         params: { id },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
-    getWordListbyID: builder.query({
+    getWordListbyID: builder.query<WordListQuery, string>({
       query: (id) => ({
         url: "/user/lists/items",
         method: "GET",
         params: { id },
       }),
+      providesTags: ["UserWordList"],
     }),
     addListWord: builder.mutation({
       query: (word) => ({
@@ -80,6 +87,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { word },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
     editListWord: builder.mutation({
       query: (word) => ({
@@ -87,6 +95,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { word },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
     deleteListWord: builder.mutation({
       query: (id) => ({
@@ -94,6 +103,7 @@ export const profileApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         params: { id },
       }),
+      invalidatesTags: ["UserWordList"],
     }),
   }),
 });

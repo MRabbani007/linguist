@@ -3,6 +3,7 @@ import {
   useGetWordListsQuery,
 } from "@/features/profile/profileSlice";
 import CardWord from "@/features/words/CardWord";
+import WordContainer from "@/features/words/WordContainer";
 import { useSearchParams } from "react-router-dom";
 
 export default function WordListsPage() {
@@ -16,11 +17,25 @@ export default function WordListsPage() {
   let content;
 
   if (isSuccess) {
-    const { words, wordsData } = data as {
-      words: Word[];
-      wordsData: { wordID: string; repeateCount: number }[];
-    };
-    content = words.map((word) => <CardWord word={word} key={word.id} />);
+    const { words, wordsData } = data;
+    if (words.length === 0) {
+      content = <p>This list is empty</p>;
+    } else {
+      content = words.map((word) => {
+        const wordData =
+          wordsData.find((item) => item.wordID === word.id) ?? null;
+        return (
+          <WordContainer
+            key={word.id}
+            word={word}
+            listID={listID}
+            wordData={wordData}
+          >
+            <CardWord word={word} />
+          </WordContainer>
+        );
+      });
+    }
   }
 
   const wordList = Array.isArray(wordLists)

@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";
-import { IoInformationCircleOutline, IoStar } from "react-icons/io5";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { BiX } from "react-icons/bi";
-import FormAddtoList from "./FormAddtoList";
 
 export default function CardWord({ word }: { word: Word }) {
   const displayBlock = useSelector(selectDisplayLesson);
@@ -11,8 +10,6 @@ export default function CardWord({ word }: { word: Word }) {
   // const [viewEditImage, setViewEditImage] = useState(false);
   const [showPronunce, setShowPronunce] = useState(false);
   const [showNote, setShowNote] = useState(false);
-
-  const [addToList, setAddToList] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -55,8 +52,6 @@ export default function CardWord({ word }: { word: Word }) {
       : gender === "Neuter" || gender === "n"
       ? "(neut)"
       : "";
-
-  // const wordType = (type: string) => null;
 
   return (
     <>
@@ -126,12 +121,6 @@ export default function CardWord({ word }: { word: Word }) {
               <IoInformationCircleOutline size={20} />
             </button>
           )}
-          <button
-            className="absolute bottom-1 left-1/2 invisible group-hover:visible"
-            onClick={() => setAddToList(true)}
-          >
-            <IoStar size={25} className="text-yellow-400" />
-          </button>
           <div
             ref={ref}
             className={
@@ -150,7 +139,6 @@ export default function CardWord({ word }: { word: Word }) {
           <div className="text-sm font-light mt-auto">{word?.type}</div>
         </div>
       </div>
-      {addToList && <FormAddtoList setAdd={setAddToList} word={word} />}
     </>
   );
 }

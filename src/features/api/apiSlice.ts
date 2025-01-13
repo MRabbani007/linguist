@@ -76,6 +76,7 @@ export const apiSlice = createApi({
     "User",
     "Profile",
     "Lesson",
+    "UserWordList",
   ], // Used for caching and invalidation
   endpoints: () => ({}),
 });
