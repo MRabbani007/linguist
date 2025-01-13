@@ -14,6 +14,7 @@ import { selectSectionWords } from "../words/wordsSlice";
 import FormWordMove from "../words/FormWordMove";
 import { selectSectionText } from "../textBlock/textBlockSlice";
 import CardTextBlock from "../textBlock/CardTextBlock";
+import SectionIntroItem from "../sections/SectionIntroItem";
 
 export default function AdminSection({
   section = null,
@@ -39,8 +40,6 @@ export default function AdminSection({
   const sectionIntroduction = useSelector(
     selectSectionText(section?.id ?? "", section?.lessonID ?? "")
   );
-
-  console.log(sectionIntroduction);
 
   const [expandSentences, setExpandSentences] = useState(false);
 
@@ -97,7 +96,7 @@ export default function AdminSection({
           {Array.isArray(section?.introduction) &&
           sectionIntroduction &&
           sectionIntroduction.length !== 0 ? (
-            <article className="flex flex-col gap-4">
+            <article className="flex flex-col gap-0 text-zinc-800">
               {sectionIntroduction.map((item, index) => {
                 return <CardTextBlock key={index} textBlock={item} />;
               })}
@@ -109,9 +108,12 @@ export default function AdminSection({
             <article className="flex flex-col gap-4">
               {section.introduction.map((intro, index) => {
                 return (
-                  <p key={index} className="text-balance group relative">
-                    {intro}
-                  </p>
+                  <SectionIntroItem
+                    sectionID={section.id}
+                    introItem={intro}
+                    index={index}
+                    key={index}
+                  />
                 );
               })}
             </article>

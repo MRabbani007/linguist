@@ -13,7 +13,6 @@ export default function Section({
   definitions = [],
   sectionLists = [],
   tables = [],
-  tableWords = [],
   sentences = [],
 }: {
   section: Section | null;
@@ -21,8 +20,7 @@ export default function Section({
   definitions: Definition[];
   sectionLists: SectionList[];
   sentences: Sentence[];
-  tables: ConjTable[];
-  tableWords?: TableWord[];
+  tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
   const [expandSentences, setExpandSentences] = useState(false);
 
@@ -107,9 +105,6 @@ export default function Section({
         {Array.isArray(tables) && tables.length !== 0 && (
           <div className="flex flex-col gap-4">
             {tables.map((table) => {
-              // const words = tableWords.filter(
-              //   (word) => word.tableID === table.id
-              // );
               return (
                 <CardConjTable
                   key={table?.id}

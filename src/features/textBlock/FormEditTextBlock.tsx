@@ -11,6 +11,7 @@ import InputField from "../ui/InputField";
 import { T_TEXTBLOCK } from "@/data/templates";
 import { useEditTextBlockMutation } from "./textBlockSlice";
 import { toast } from "react-toastify";
+import TextAreaField from "../ui/TextAreaField";
 
 export default function FormEditTextBlock({
   textBlock,
@@ -24,7 +25,9 @@ export default function FormEditTextBlock({
     ...textBlock,
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setState((prevProps) => ({
       ...prevProps,
@@ -65,6 +68,13 @@ export default function FormEditTextBlock({
         onValueChange={(type) => setState((curr) => ({ ...curr, type }))}
       />
       <InputField
+        label="Sort Index"
+        name="sortIndex"
+        type="number"
+        value={state.sortIndex}
+        handleChange={handleChange}
+      />
+      <InputField
         label="Title"
         name="title"
         type="text"
@@ -78,10 +88,9 @@ export default function FormEditTextBlock({
         value={state.label}
         handleChange={handleChange}
       />
-      <InputField
+      <TextAreaField
         label="Text"
         name="text"
-        type="text"
         value={state.text}
         handleChange={handleChange}
       />

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import {
   useDeleteSectionIntroMutation,
   useEditSectionIntroMutation,
@@ -7,47 +6,50 @@ import {
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
 
-export default function SectionIntroItemEdit({
-  section,
-  intro,
+export default function FormSectionIntroEdit({
+  sectionID,
+  introItem,
   index,
   setEdit,
+}: {
+  sectionID: string;
+  introItem: string;
+  index: number;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [editSectionIntro, { isLoading }] = useEditSectionIntroMutation();
+  const [editSectionIntro] = useEditSectionIntroMutation();
   const [deleteSectionIntro] = useDeleteSectionIntroMutation();
 
-  const [input, setInput] = useState(intro);
+  const [input, setInput] = useState(introItem);
 
-  const canSave = !isLoading && input !== "";
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (canSave) {
-      const response = await editSectionIntro({
-        id: section?.id,
+    try {
+      await editSectionIntro({
+        id: sectionID,
         introduction: input,
         index,
       });
-      if (response?.data) {
-        toast.success("Intro item saved");
-        setEdit(false);
-      } else {
-        toast.error("Failed to save introduction item");
-      }
+      toast.success("Intro item saved");
+      setEdit(false);
+    } catch (error) {
+      toast.error("Failed to save introduction item");
     }
   };
 
   const handleDelete = async () => {
-    if (confirm("Delete Intro Item")) {
-      const response = await deleteSectionIntro({ id: section.id, index });
+    if (!confirm("Delete Intro Item")) {
+      return null;
+    }
 
-      if (response?.data) {
-        toast.success("Intro item deleted");
-        setEdit(false);
-      } else {
-        toast.error("Failed to delete introduction item");
-      }
+    try {
+      await deleteSectionIntro({ id: sectionID, index });
+
+      toast.success("Intro item deleted");
+      setEdit(false);
+    } catch (error) {
+      toast.error("Failed to delete introduction item");
     }
   };
 

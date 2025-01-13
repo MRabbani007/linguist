@@ -6,7 +6,7 @@ export default function CardTextBlock({ textBlock }: { textBlock: TextBlock }) {
   const [edit, setEdit] = useState(false);
   return (
     <>
-      <div className="relative group">
+      <div className="relative group bg-zinc-100">
         <p className="text-balance group relative">{textBlock.title}</p>
         <p>
           <span>{textBlock?.label}</span>
