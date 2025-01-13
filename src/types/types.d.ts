@@ -93,6 +93,29 @@ declare global {
     updatedAt?: Date | string;
   };
 
+  type ContentSection = Section & {
+    definitions: Definition[];
+    words: Word[];
+    sentences: Sentence[];
+    sectionLists: SectionList[];
+    tables: (ConjTable & { tableWords: TableWord[] })[];
+  };
+
+  type TextBlock = {
+    id: string;
+    sortIndex: number;
+    lessonID: string;
+    sectionID: string;
+    title: string;
+    label: string;
+    text: string;
+    caption: string;
+    information: string;
+    scope: string; // chapter, lesson, section
+    type: string; // introduction, conclusion, note, tip
+    displayType: string; // sentence, bullet point, tip block
+  };
+
   type Definition = {
     id: string;
     sortIndex: number;

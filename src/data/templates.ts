@@ -123,6 +123,21 @@ export const T_LESSON: Lesson = {
   learningTime: 0,
 };
 
+export const T_TEXTBLOCK: TextBlock = {
+  id: "",
+  sortIndex: 100,
+  lessonID: "",
+  sectionID: "",
+  title: "",
+  label: "",
+  text: "",
+  caption: "",
+  information: "",
+  scope: "", // chapter, lesson, section
+  type: "", // introduction, conclusion, note, tip
+  displayType: "", // sentence, bullet point, tip block
+};
+
 export const T_SECTIONLIST: SectionList = {
   id: "",
   lessonID: "",

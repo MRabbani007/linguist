@@ -13,11 +13,13 @@ import AdminDropDown from "./AdminDropDown";
 import AdminSection from "./AdminSection";
 import { MdArrowOutward } from "react-icons/md";
 import FormSectionMove from "../sections/FormSectionMove";
+import FormAddTextBlock from "../textBlock/FormAddTextBlock";
+import FormDefinitionAdd from "../definitions/FormDefinitionAdd";
 
 export default function AdminSectionContainer({
   section: item,
 }: {
-  section: any;
+  section: ContentSection;
 }) {
   const [editHeader, setEditHeader] = useState(false);
   const [editImage, setEditImage] = useState(false);
@@ -129,12 +131,10 @@ export default function AdminSectionContainer({
       <AdminSection
         key={item.id}
         definitions={item.definitions}
-        words={item.words}
         section={item}
         sectionLists={item.sectionLists}
         sentences={item.sentences}
         tables={item.tables}
-        tableWords={item?.tableWords}
       />
       {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}
       {addWord && (
@@ -146,6 +146,21 @@ export default function AdminSectionContainer({
       )}
       {moveSection && (
         <FormSectionMove setEdit={setMoveSection} section={item} />
+      )}
+      {addIntro && (
+        <FormAddTextBlock
+          setAdd={setAddIntro}
+          lessonID={item.lessonID}
+          sectionID={item.id}
+          scope="introduction"
+        />
+      )}
+      {addDef && (
+        <FormDefinitionAdd
+          setAdd={setAddDef}
+          lessonID={item.lessonID}
+          sectionID={item.id}
+        />
       )}
     </div>
   );

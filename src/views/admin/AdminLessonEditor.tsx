@@ -3,6 +3,7 @@ import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
 import LessonHeader from "@/features/lessons/LessonHeader";
+import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
 import { useLazyGetLessonWordsQuery } from "@/features/words/wordsSlice";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,11 +17,14 @@ export default function AdminLessonEditor() {
   const [getLesson, { data, isLoading, isSuccess, isError }] =
     useLazyGetLessonByIDQuery();
 
+  const [getLessonTextBlocks] = useLazyGetLessonTextBlocksQuery();
+
   const [getLessonWords] = useLazyGetLessonWordsQuery();
 
   useEffect(() => {
     if (id) {
       getLessonWords(id);
+      getLessonTextBlocks(id);
       getLesson(id);
     }
   }, [id]);

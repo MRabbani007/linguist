@@ -12,23 +12,21 @@ import { useSelector } from "react-redux";
 import { selectLessonSections } from "../globals/globalsApiSlice";
 import { selectSectionWords } from "../words/wordsSlice";
 import FormWordMove from "../words/FormWordMove";
+import { selectSectionText } from "../textBlock/textBlockSlice";
+import CardTextBlock from "../textBlock/CardTextBlock";
 
 export default function AdminSection({
   section = null,
-  // words = [],
   definitions = [],
   sectionLists = [],
   tables = [],
-  //   tableWords = [],
   sentences = [],
 }: {
   section: Section | null;
-  words: Word[];
   definitions: Definition[];
   sectionLists: SectionList[];
   sentences: Sentence[];
-  tables: ConjTable[];
-  tableWords?: TableWord[];
+  tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
   const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
   const [attributes] = useFetchAttributes();
@@ -37,6 +35,12 @@ export default function AdminSection({
     useSelector(
       selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
     ) ?? [];
+
+  const sectionIntroduction = useSelector(
+    selectSectionText(section?.id ?? "", section?.lessonID ?? "")
+  );
+
+  console.log(sectionIntroduction);
 
   const [expandSentences, setExpandSentences] = useState(false);
 
@@ -91,6 +95,16 @@ export default function AdminSection({
 
         <div className={" flex flex-col gap-4 duration-200"}>
           {Array.isArray(section?.introduction) &&
+          sectionIntroduction &&
+          sectionIntroduction.length !== 0 ? (
+            <article className="flex flex-col gap-4">
+              {sectionIntroduction.map((item, index) => {
+                return <CardTextBlock key={index} textBlock={item} />;
+              })}
+            </article>
+          ) : null}
+
+          {Array.isArray(section?.introduction) &&
           section.introduction.length !== 0 ? (
             <article className="flex flex-col gap-4">
               {section.introduction.map((intro, index) => {
@@ -134,9 +148,6 @@ export default function AdminSection({
           {Array.isArray(tables) && tables.length !== 0 && (
             <div className="flex flex-col gap-4">
               {tables.map((table) => {
-                // const words = tableWords.filter(
-                //   (word) => word.tableID === table.id
-                // );
                 return (
                   <CardConjTable
                     key={table?.id}
