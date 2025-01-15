@@ -99,6 +99,7 @@ declare global {
     sentences: Sentence[];
     sectionLists: SectionList[];
     tables: (ConjTable & { tableWords: TableWord[] })[];
+    textBlocks: TextBlock[];
   };
 
   type TextBlock = {

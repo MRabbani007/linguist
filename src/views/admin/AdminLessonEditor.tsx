@@ -3,9 +3,11 @@ import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
 import LessonHeader from "@/features/lessons/LessonHeader";
+import LessonIntroEdit from "@/features/lessons/LessonIntroEdit";
 import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
 import { useLazyGetLessonWordsQuery } from "@/features/words/wordsSlice";
 import { useEffect, useState } from "react";
+import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
@@ -32,6 +34,10 @@ export default function AdminLessonEditor() {
   const lessons = useSelector(selectLessons);
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
+
+  const [editIntro, setEditIntro] = useState(false);
+  const [introItem, setIntroItem] = useState("");
+  const [introIndex, setIntroIndex] = useState(-1);
 
   useEffect(() => {
     setLesson(() => lessons.find((item) => item.id === id) ?? null);
@@ -69,6 +75,15 @@ export default function AdminLessonEditor() {
             return (
               <div key={index} className="group relative text-pretty flex-1">
                 <span className="text-wrap">{intro}</span>
+                <button
+                  onClick={() => {
+                    setEditIntro(true);
+                    setIntroIndex(index);
+                    setIntroItem(intro);
+                  }}
+                >
+                  <CiEdit size={20} />
+                </button>
               </div>
             );
           })}
@@ -76,6 +91,15 @@ export default function AdminLessonEditor() {
       ) : null}
 
       <div className="flex-1 flex flex-col gap-4">{content}</div>
+
+      {lesson && editIntro && (
+        <LessonIntroEdit
+          setEdit={setEditIntro}
+          intro={introItem}
+          index={introIndex}
+          lesson={lesson}
+        />
+      )}
     </>
   );
 }

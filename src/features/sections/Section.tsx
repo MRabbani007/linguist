@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import CardWord from "../words/CardWord";
 import CardConjTable from "../tables/CardConjTable";
 import WordContainer from "../words/WordContainer";
+import CardTextBlock from "../textBlock/CardTextBlock";
 
 export default function Section({
   section = null,
@@ -15,7 +16,7 @@ export default function Section({
   tables = [],
   sentences = [],
 }: {
-  section: Section | null;
+  section: ContentSection | null;
   words: Word[];
   definitions: Definition[];
   sectionLists: SectionList[];
@@ -37,7 +38,7 @@ export default function Section({
   return (
     <section>
       <div className="flex items-stretch group relative">
-        <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg">
+        <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg rounded-md">
           {(section?.sortIndex ? section?.sortIndex : 0).toLocaleString(
             "en-US",
             {
@@ -70,6 +71,15 @@ export default function Section({
                   {intro}
                 </p>
               );
+            })}
+          </article>
+        ) : null}
+
+        {Array.isArray(section?.textBlocks) &&
+        section?.textBlocks.length !== 0 ? (
+          <article className="flex flex-col gap-0 text-zinc-800">
+            {section?.textBlocks.map((item, index) => {
+              return <CardTextBlock key={index} textBlock={item} />;
             })}
           </article>
         ) : null}

@@ -25,12 +25,12 @@ export default function CardLesson({
   return (
     <div
       onClick={handleOpenLesson}
-      className="flex gap-4 min-w-[300px] cursor-pointer duration-200 relative group hover:bg-zinc-200 rounded-lg p-2"
+      className="flex cursor-pointer relative group gap-1 "
     >
       <span className="bg-red-600 shrink-0 w-10 h-10 flex items-center justify-center text-accent_foreground rounded-full text-sm">
         {lesson?.sortIndex}
       </span>
-      <div className="flex flex-col">
+      <div className="flex-1 flex flex-col group-hover:bg-zinc-200 rounded-lg p-2 duration-200">
         <p className="font-semibold text-base md:text-2xl">{lesson?.title}</p>
         <div className="">
           <p className="text-sm">{lesson?.subtitle}</p>

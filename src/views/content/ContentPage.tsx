@@ -21,7 +21,7 @@ export default function ContentPage() {
         return (
           <div className="flex flex-col items-stretch" key={index}>
             <CardChapter chapter={chapter} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 my-6">
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))

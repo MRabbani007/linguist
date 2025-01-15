@@ -36,7 +36,7 @@ export default function ContentNavigator() {
   };
 
   return (
-    <section className="flex justify-center items-center flex-1 p-4 gap-8 w-full bg-destructive">
+    <section className="flex justify-center items-center flex-1 p-4 gap-8 w-full">
       <div className="flex flex-wrap gap-4 items-center">
         {displayLessons.map((lesson, idx) => (
           <div key={idx} className="flex items-center gap-2 ">

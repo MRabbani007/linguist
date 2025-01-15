@@ -66,6 +66,30 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Lesson"],
       // invalidatesTags: (result, error, arg) => [{ type: "Block", id: arg.id }],
     }),
+    addLessonIntro: builder.mutation({
+      query: (introData) => ({
+        url: "/admin/lessons/intro",
+        method: "POST",
+        body: { introData },
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
+    editLessonIntro: builder.mutation({
+      query: (introData) => ({
+        url: "/admin/lessons/intro",
+        method: "PATCH",
+        body: { introData },
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
+    deleteLessonIntro: builder.mutation({
+      query: (introData) => ({
+        url: "/admin/lessons/intro",
+        method: "DELETE",
+        body: { introData },
+      }),
+      invalidatesTags: ["Lesson"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -75,24 +99,7 @@ export const {
   useAddLessonMutation,
   useEditLessonMutation,
   useDeleteLessonMutation,
+  useAddLessonIntroMutation,
+  useEditLessonIntroMutation,
+  useDeleteLessonIntroMutation,
 } = lessonsApiSlice;
-
-// returns the query result object
-// export const selectBlocksResult = blocksApiSlice.endpoints.getBlocks.select();
-
-// Creates memoized selector
-// const selectBlocksData = createSelector(
-//   selectBlocksResult,
-//   (blockResult) => blockResult.data // normalized state object with ids & entities
-// );
-
-//getSelectors creates these selectors and we rename them with aliases using destructuring
-// export const {
-//   selectAll: selectAllBlocks,
-//   // selectById: selectBlocksByChapterID,
-//   // selectIds: selectBlockByBlockID,
-//   // Pass in a selector that returns the posts slice of state
-// } = blocksAdapter.getSelectors((state) => {
-//   // console.log(selectBlocksData(state));
-//   return selectBlocksData(state) ?? initialState;
-// });

@@ -29,7 +29,8 @@ export default function CardWord({ word }: { word: Word }) {
 
   const showPopup = displayBlock?.thirdLang && word?.third;
 
-  const levelColor = (level: string) =>
+  const level = word?.level ?? "";
+  const levelColor =
     level.includes("A1") === true
       ? "sky-600"
       : level.includes("A2") === true
@@ -44,25 +45,40 @@ export default function CardWord({ word }: { word: Word }) {
       ? "red-600"
       : "zinc-100";
 
-  const wordGender = (gender: string) =>
+  const gender = word?.gender ?? "";
+  const wordGender =
     gender === "Masculine" || gender === "m"
-      ? "(masc)"
+      ? "masc"
       : gender === "Feminine" || gender === "f"
-      ? "(fem)"
+      ? "fem"
       : gender === "Neuter" || gender === "n"
-      ? "(neut)"
-      : "";
+      ? "neut"
+      : null;
+
+  const wordType =
+    word?.type === "Verb"
+      ? { short: "V", title: "Verb", bg: "bg-yellow-200/30" }
+      : word?.type === "Noun"
+      ? { short: "N", title: "Noun", bg: "bg-green-200/30" }
+      : word?.type === "Adjective"
+      ? { short: "Adj", title: "Adjective", bg: "bg-red-200/30" }
+      : null;
 
   return (
     <>
       <div
         className={
           (word.type === "ph" ? "" : "") +
-          "  flex flex-col h-full text-xl duration-200 group relative z-10 bg-destructive"
+          "  flex flex-col h-full text-xl duration-200 group relative z-10 bg-destructive rounded-md overflow-clip"
         }
       >
         {/* Word Body */}
-        <div className="flex-1 flex items-stretch gap-4 relative py-2 px-4 md:py-4 md:px-6">
+        <div
+          className={
+            `border-l-2 hover:border-l-4 border-${levelColor} duration-200  ` +
+            " flex-1 flex items-stretch gap-4 relative py-2 px-4 md:p4-4 md:px-4"
+          }
+        >
           {/* Word Image */}
           {word?.imageURL ? (
             <img
@@ -80,9 +96,6 @@ export default function CardWord({ word }: { word: Word }) {
                 onMouseOut={() => setShowPronunce(false)}
               >
                 <span>{word?.first}</span>
-                <span className="font-light italic text-sm">
-                  {wordGender(word?.gender ?? "")}
-                </span>
                 <span className="font-light text-sm italic ml-2">
                   {word.firstCaption}
                 </span>
@@ -107,12 +120,10 @@ export default function CardWord({ word }: { word: Word }) {
               </span>
             </p>
           </div>
-          <div
+          {/* <div
             title={word?.level}
-            className={`bg-${levelColor(
-              word?.level ?? ""
-            )} rounded-full size-4 absolute top-2 right-2 z-20`}
-          ></div>
+            className={`bg-${levelColor} rounded-full size-4 absolute top-2 right-2 z-20`}
+          ></div> */}
           {word?.note && word.note !== "" && (
             <button
               className="absolute top-2 right-6"
@@ -136,7 +147,21 @@ export default function CardWord({ word }: { word: Word }) {
               <BiX size={20} />
             </button>
           </div>
-          <div className="text-sm font-light mt-auto">{word?.type}</div>
+          {wordType && (
+            <div className="flex items-center mt-auto gap-2">
+              <p
+                className={`text-xs font-medium py-1 px-2 rounded-md ${wordType?.bg}`}
+                title={wordType?.title}
+              >
+                {wordType.short}
+              </p>
+              {wordGender && (
+                <p className="text-xs font-medium py-1 px-2 rounded-md bg-zinc-200">
+                  {wordGender}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

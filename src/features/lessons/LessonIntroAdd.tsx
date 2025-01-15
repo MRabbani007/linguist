@@ -1,17 +1,23 @@
-import { useState } from "react";
-import { useAddBlockIntroMutation } from "./blockSlice";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import { useAddLessonIntroMutation } from "./lessonSlice";
 
-export default function LessonIntroAdd({ lesson, setAdd }) {
-  const [addBlockIntro, { isLoading }] = useAddBlockIntroMutation();
+export default function LessonIntroAdd({
+  lesson,
+  setAdd,
+}: {
+  lesson: Lesson;
+  setAdd: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [addBlockIntro, { isLoading }] = useAddLessonIntroMutation();
 
   const [input, setInput] = useState("");
 
   const canSave = !isLoading && input !== "";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     if (canSave) {
       await addBlockIntro({ id: lesson?.id, introduction: input });
       toast.success("Introduction item Added");

@@ -1,32 +1,32 @@
-import { useState } from "react";
-import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-import {
-  useDeleteBlockIntroMutation,
-  useEditBlockIntroMutation,
-} from "./blockSlice";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
+import {
+  useDeleteLessonIntroMutation,
+  useEditLessonIntroMutation,
+} from "./lessonSlice";
 
-export default function LessonIntroItemEdit({ lesson, intro, index, setEdit }) {
-  const [editBlockIntro, { isLoading: isLoadingEdit }] =
-    useEditBlockIntroMutation();
-  const [deleteLessonIntro, { isLoading: isLoadingDelete }] =
-    useDeleteBlockIntroMutation();
+export default function LessonIntroEdit({
+  lesson,
+  intro,
+  index,
+  setEdit,
+}: {
+  lesson: Lesson;
+  intro: string;
+  index: number;
+  setEdit: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [editBlockIntro] = useEditLessonIntroMutation();
+  const [deleteLessonIntro] = useDeleteLessonIntroMutation();
 
   const [input, setInput] = useState(intro);
 
-  const canSaveEdit = !isLoadingEdit && input !== "";
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (canSaveEdit) {
-      await editBlockIntro({ id: lesson?.id, introduction: input, index });
-      toast.success("Lesson intro item saved");
-      setEdit(false);
-    }
-  };
-
-  const handleReset = () => {
+    await editBlockIntro({ id: lesson?.id, introduction: input, index });
+    toast.success("Lesson intro item saved");
     setEdit(false);
   };
 
