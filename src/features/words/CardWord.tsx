@@ -75,7 +75,7 @@ export default function CardWord({ word }: { word: Word }) {
         {/* Word Body */}
         <div
           className={
-            `border-l-2 hover:border-l-4 border-${levelColor} duration-200  ` +
+            `border-l-2 border-${levelColor} duration-200  ` +
             " flex-1 flex items-stretch gap-4 relative py-2 px-4 md:p4-4 md:px-4"
           }
         >

@@ -8,22 +8,17 @@ export default function ListSection({ list }: { list: SectionList }) {
   });
 
   return (
-    <article className="flex flex-col gap-4">
+    <article className="flex flex-col">
       {/* title */}
-      {list?.title && (
-        <p>
-          <strong className="text-xl font-light">{list?.title}</strong>
-        </p>
+      {list?.title && list.title !== "" && (
+        <p className="text-xl font-light">{list?.title}</p>
       )}
-
-      {list?.text ? <p className="">{list?.text}</p> : null}
-
+      {list?.text && list.text !== "" ? <p className="">{list?.text}</p> : null}
       {list?.type === "OL" ? (
-        <ol className="list-decimal list-inside space-y-1">{content}</ol>
+        <ol className="list-decimal list-inside">{content}</ol>
       ) : (
-        <ul className="list-disc list-inside space-y-1">{content}</ul>
+        <ul className="list-disc list-inside">{content}</ul>
       )}
-
       {list?.notes ? <p className="">{list.notes}</p> : null}
     </article>
   );

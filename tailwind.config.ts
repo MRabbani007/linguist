@@ -2,6 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: "class",
+  safelist: [
+    {
+      pattern: /border-(red|blue|green|yellow|purple|pink|gray|sky)-600/,
+    },
+  ],
   theme: {
     extend: {
       colors: {
