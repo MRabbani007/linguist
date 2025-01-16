@@ -49,9 +49,6 @@ export const lessonsApiSlice = apiSlice.injectEndpoints({
       query: (lesson) => ({
         url: "/admin/lessons",
         method: "PATCH",
-        // headers: {
-        //   Authorization: `Bearer ${store.getState()?.auth?.token}`,
-        // },
         body: { lesson },
       }),
       invalidatesTags: ["Lesson"],

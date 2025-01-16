@@ -34,9 +34,9 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
         <p className="font-normal text-sm md:text-base">
           {chapter?.subtitle || ""}
         </p>
-        <p className="font-normal text-xs md:text-sm">
+        {/* <p className="font-normal text-xs md:text-sm">
           {chapter?.detail || ""}
-        </p>
+        </p> */}
       </div>
     </div>
   );

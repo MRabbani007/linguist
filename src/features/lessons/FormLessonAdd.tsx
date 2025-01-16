@@ -41,19 +41,20 @@ export default function FormLessonAdd({
     event.preventDefault();
     if (canSave) {
       try {
-        let block = {
-          ...state,
-          id: crypto.randomUUID(),
-          createDate: new Date(),
-        };
-
-        await addLesson(block).unwrap();
+        const response = await addLesson(state).unwrap();
+        console.log(response);
         toast.success("Lesson Added");
       } catch (err) {
         toast.error("Server Error");
       }
     }
   };
+
+  const lessonStateOptions = [
+    { label: "Draft", value: "draft" },
+    { label: "Published", value: "published" },
+    { label: "Archived", value: "archived" },
+  ];
 
   return (
     <FormContainer
@@ -129,6 +130,11 @@ export default function FormLessonAdd({
         type="text"
         value={state.fourthLang}
         handleChange={handleChange}
+      />
+      <SelectField
+        label="Lesson State"
+        onValueChange={(val) => setState((curr) => ({ ...curr, state: val }))}
+        options={lessonStateOptions}
       />
     </FormContainer>
   );

@@ -66,8 +66,7 @@ export default function Pagination({
         onClick={() => handlePage(currentPage - 1)}
         disabled={isFirst}
         className={
-          (isFirst ? "bg-zinc-50" : " bg-zinc-200") +
-          " py-1 px-2 rounded-md min-w-8 hidden sm:block"
+          " border-[2px] border-zinc-100 bg-zinc-50 hover:bg-zinc-100 disabled:bg-zinc-200 duration-100 py-1 px-2 rounded-md min-w-8 hidden sm:block"
         }
       >
         <IoIosArrowBack size={20} />
@@ -76,8 +75,8 @@ export default function Pagination({
         <button
           onClick={() => handlePage(1)}
           className={
-            (isFirst ? "bg-zinc-50" : " bg-zinc-200") +
-            " py-1 px-2 rounded-md min-w-8"
+            (isFirst ? " bg-zinc-200" : "bg-zinc-50 ") +
+            " border-[2px] border-zinc-100 py-1 px-2 rounded-md min-w-8 hover:bg-zinc-100 duration-100"
           }
         >
           First
@@ -89,8 +88,8 @@ export default function Pagination({
             key={item}
             onClick={() => handlePage(item)}
             className={
-              (item === currentPage ? "bg-yellow-300" : "bg-zinc-50") +
-              " py-1 px-2 rounded-md min-w-8"
+              (item === currentPage ? "border-yellow-300" : "border-zinc-100") +
+              " border-[2px] py-1 px-2 rounded-md min-w-10 bg-zinc-50 hover:bg-zinc-100 duration-100"
             }
           >
             {item}
@@ -101,8 +100,8 @@ export default function Pagination({
         <button
           onClick={() => handlePage(pages.length)}
           className={
-            (isLast ? "bg-zinc-50" : " bg-zinc-200") +
-            " py-1 px-2 rounded-md min-w-8"
+            (isLast ? "bg-zinc-200" : " bg-zinc-50") +
+            " border-[2px] border-zinc-100 py-1 px-2 rounded-md min-w-8 hover:bg-zinc-100 duration-100"
           }
         >
           Last
@@ -113,7 +112,7 @@ export default function Pagination({
         disabled={isLast}
         className={
           (isLast ? "bg-zinc-50" : " bg-zinc-200") +
-          " py-1 px-2 min-w-8 hidden sm:block rounded-md"
+          " border-[2px] border-zinc-100 bg-zinc-50 hover:bg-zinc-100 disabled:bg-zinc-200 duration-100 py-1 px-2 min-w-8 hidden sm:block rounded-md"
         }
       >
         <IoIosArrowForward size={20} />

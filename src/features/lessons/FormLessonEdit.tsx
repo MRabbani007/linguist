@@ -44,7 +44,8 @@ export default function FormLessonEdit({
 
     if (canSave) {
       try {
-        const response = await editLesson(state).unwrap();
+        const response = await editLesson(state);
+        console.log(response);
 
         if (response) {
           toast.success("Lesson Saved");
@@ -53,6 +54,7 @@ export default function FormLessonEdit({
           toast.error("Failed to save the Lesson");
         }
       } catch (err) {
+        console.log(err);
         toast.error("Error: Failed to save the Lesson");
       }
     }
