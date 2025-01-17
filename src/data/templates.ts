@@ -82,6 +82,24 @@ export const T_WORD: Word = {
   sectionID: "",
 };
 
+export const T_SENTENCE: Sentence = {
+  id: "",
+  sectionID: "",
+  lessonID: "",
+  sortIndex: 0,
+  text: "",
+  translation: "",
+  pronunce: "",
+  caption: "",
+  note: "",
+  type: "",
+  baseWord: "",
+  baseWordID: "",
+  baseWordTranslation: "",
+  show: true,
+  level: 1,
+};
+
 export const T_CHAPTER: Chapter = {
   id: "",
   title: "",

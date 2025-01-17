@@ -133,6 +133,7 @@ export default function FormLessonAdd({
       />
       <SelectField
         label="Lesson State"
+        value={state?.state}
         onValueChange={(val) => setState((curr) => ({ ...curr, state: val }))}
         options={lessonStateOptions}
       />

@@ -1,8 +1,14 @@
 import { useSelector } from "react-redux";
 import { selectDisplayChapter } from "../globals/globalsSlice";
 
-export default function LessonHeader({ lesson }: { lesson: Lesson }) {
-  const displayChapter = useSelector(selectDisplayChapter);
+export default function LessonHeader({
+  lesson,
+  chapter,
+}: {
+  lesson: Lesson;
+  chapter?: Chapter | null;
+}) {
+  const displayChapter = chapter ?? useSelector(selectDisplayChapter);
 
   return (
     <header className="group">

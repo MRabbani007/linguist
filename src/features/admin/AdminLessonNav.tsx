@@ -11,7 +11,8 @@ import { ITEMS_PER_PAGE } from "@/lib/constants";
 export default function AdminLessonNav({ children }: { children?: ReactNode }) {
   const navigate = useNavigate();
 
-  const [getAdminLessons, { data, isSuccess }] = useLazyGetAdminLessonsQuery();
+  const [getAdminLessons, { data, isSuccess, isLoading }] =
+    useLazyGetAdminLessonsQuery();
 
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id") ?? "";
@@ -23,8 +24,8 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
   }, [page]);
 
   useEffect(() => {
-    console.log(direction, id, page);
-    if (id === "" && direction === "next") {
+    console.log(id, direction, page);
+    if (id === "" && direction === "next" && isSuccess && !isLoading) {
       navigate({
         pathname: "/admin/lessonEdit",
         search: `${createSearchParams({
@@ -33,7 +34,7 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
         })}`,
       });
     }
-    if (id === "" && direction === "prev" && isSuccess) {
+    if (id === "" && direction === "prev" && isSuccess && !isLoading) {
       navigate({
         pathname: "/admin/lessonEdit",
         search: `${createSearchParams({
@@ -42,7 +43,7 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
         })}`,
       });
     }
-  }, [page, data]);
+  }, [data]);
 
   const handlePrevious = () => {
     if (isFirstPage && firstLesson) {
@@ -54,7 +55,7 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
       navigate({
         pathname: "/admin/lessonEdit",
         search: `${createSearchParams({
-          // id: data?.data[lessonIndex - 1]?.id ?? "",
+          id: "",
           p: (parseInt(page) - 1).toString(),
           dir: "prev",
         })}`,
@@ -74,12 +75,11 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
     if (isLastPage && lastLesson) {
       // disabled
     } else if (lastLesson) {
-      console.log("move page");
       // move page
       navigate({
         pathname: "/admin/lessonEdit",
         search: `${createSearchParams({
-          // id: data?.data[lessonIndex - 1]?.id ?? "",
+          id: "",
           p: (parseInt(page) + 1).toString(),
           dir: "next",
         })}`,
@@ -99,7 +99,9 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
   const [lessonIndex, setLessonIndex] = useState(-1);
 
   useEffect(() => {
-    setLessonIndex(data?.data.findIndex((item) => item.id === id) ?? -1);
+    if (id && id !== "") {
+      setLessonIndex(data?.data.findIndex((item) => item.id === id) ?? -1);
+    }
   }, [id, data]);
 
   const firstLesson = lessonIndex === 0;
@@ -107,8 +109,6 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
 
   const isFirstPage = +page === 1;
   const isLastPage = +page === (data?.count ?? 0 / ITEMS_PER_PAGE);
-
-  console.log(lastLesson, lessonIndex, data?.data.length);
 
   return (
     <div className="p-2 md:p-4 flex justify-between items-center ">

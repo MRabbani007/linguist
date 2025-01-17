@@ -1,19 +1,5 @@
-import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-
-// TODO: change compare value to date or sort option
-const wordsAdapter = createEntityAdapter({
-  // selectId: (word) => word.id,
-  // sortComparer: (a, b) => {
-  //   if (a.sortIndex && b.sortIndex) {
-  //     return a.sortIndex.toString().localeCompare(b.sortIndex.toString());
-  //   } else {
-  //     return a.blockID.localeCompare(b.blockID);
-  //   }
-  // },
-});
-
-const initialState = wordsAdapter.getInitialState();
 
 export const wordsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -92,23 +78,6 @@ export const {
   useEditWordMutation,
   useRemoveWordMutation,
 } = wordsSlice;
-
-// returns the query result object
-// export const selectWordsResult = extendedApiSlice.endpoints.getWords.select();
-
-// Creates memoized selector
-// const selectWordsData = createSelector(
-//   selectWordsResult,
-//   (wordResult) => wordResult.data // normalized state object with ids & entities
-// );
-
-//getSelectors creates these selectors and we rename them with aliases using destructuring
-// export const {
-//   selectAll: selectAllWords,
-//   // Pass in a selector that returns the posts slice of state
-// } = wordsAdapter.getSelectors(
-//   (state) => selectWordsData(state) ?? initialState
-// );
 
 export const selectSectionWords = (lessonID: string, sectionID: string) =>
   createSelector(

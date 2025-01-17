@@ -162,12 +162,28 @@ declare global {
 
   type Sentence = {
     id: string;
+    sectionID: string;
+    lessonID: string;
+    sortIndex: number;
+
     text: string;
-    translation: string;
-    pronounce: string;
     caption: string;
+    translation: string;
+    tCaption?: string;
+    pronunce: string;
+    note: string;
+
     level: number;
     type: string;
+    group?: string;
+    exercises?: string;
+
+    baseWordID?: string;
+    baseWord?: string;
+    baseWordTranslation?: string;
+
+    show: boolean;
+    display?: string;
   };
 
   type Dialogue = {

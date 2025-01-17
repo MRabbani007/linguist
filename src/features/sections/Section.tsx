@@ -25,11 +25,13 @@ export default function Section({
 }) {
   const [expandSentences, setExpandSentences] = useState(false);
 
-  let content = words.map((word, index) => (
-    <WordContainer word={word} key={index}>
-      <CardWord word={word} />
-    </WordContainer>
-  ));
+  let content = [...words]
+    .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
+    .map((word, index) => (
+      <WordContainer word={word} key={index}>
+        <CardWord word={word} />
+      </WordContainer>
+    ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 

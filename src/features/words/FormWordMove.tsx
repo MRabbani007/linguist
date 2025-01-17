@@ -45,9 +45,6 @@ export default function FormWordMove({
         }))
     : [];
 
-  console.log(state.lessonID);
-  console.log(sections);
-
   return (
     <FormContainer
       type="edit"

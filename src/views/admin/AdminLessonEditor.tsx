@@ -2,7 +2,7 @@ import AdminLessonContainer from "@/features/admin/AdminLessonContainer";
 import AdminLessonNav from "@/features/admin/AdminLessonNav";
 import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
-import { selectLessons } from "@/features/globals/globalsSlice";
+import { selectChapters, selectLessons } from "@/features/globals/globalsSlice";
 import LessonHeader from "@/features/lessons/LessonHeader";
 import LessonIntroEdit from "@/features/lessons/LessonIntroEdit";
 import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
@@ -25,7 +25,7 @@ export default function AdminLessonEditor() {
   const [getLessonWords] = useLazyGetLessonWordsQuery();
 
   useEffect(() => {
-    if (id !== "") {
+    if (id && id !== "") {
       getLessonWords(id);
       getLessonTextBlocks(id);
       getLesson(id);
@@ -33,17 +33,27 @@ export default function AdminLessonEditor() {
   }, [id]);
 
   const lessons = useSelector(selectLessons);
+  const chapters = useSelector(selectChapters);
 
   const [lesson, setLesson] = useState<Lesson | null>(null);
+  const [chapter, setChapter] = useState<Chapter | null>(null);
 
   const [editIntro, setEditIntro] = useState(false);
   const [introItem, setIntroItem] = useState("");
   const [introIndex, setIntroIndex] = useState(-1);
 
   useEffect(() => {
-    console.log(id);
     setLesson(() => lessons.find((item) => item.id === id) ?? null);
   }, [lessons, id]);
+
+  useEffect(() => {
+    if (lesson) {
+      const temp = chapters.find((item) => item.id === lesson?.chapterID);
+      if (temp) {
+        setChapter(temp);
+      }
+    }
+  }, [id, lesson?.id, chapters]);
 
   let content;
   if (isLoading) {
@@ -62,7 +72,7 @@ export default function AdminLessonEditor() {
 
       {lesson && (
         <AdminLessonContainer lesson={lesson}>
-          <LessonHeader lesson={lesson} />
+          <LessonHeader lesson={lesson} chapter={chapter} />
         </AdminLessonContainer>
       )}
 

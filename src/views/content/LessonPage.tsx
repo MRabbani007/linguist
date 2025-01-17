@@ -44,7 +44,6 @@ export default function LessonPage() {
         sectionLists={item.sectionLists}
         sentences={item.sentences}
         tables={item.tables}
-        tableWords={[]}
       />
     ));
   }
