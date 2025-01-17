@@ -40,9 +40,5 @@ export default function AdminPage() {
       </div>
     );
   }
-  return (
-    <main>
-      <div>{content}</div>
-    </main>
-  );
+  return <div>{content}</div>;
 }

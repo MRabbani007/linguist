@@ -47,10 +47,12 @@ export default function AdminLessons() {
         key={item.id}
         className="flex items-center text-center hover:bg-zinc-100 duration-200 px-1 py-1 border-b-[1px] border-zinc-200 group"
       >
-        <span className="w-[2%]">{(+page - 1) * 15 + index + 1}</span>
+        {/* <span className="w-[2%]">{(+page - 1) * 15 + index + 1}</span> */}
+        <span className="w-[2%]">{item?.sortIndex}</span>
         <span className="flex-1 md:w-[20%]">{item?.title}</span>
         <span className="flex-1 md:w-[20%]">{item?.subtitle}</span>
         <span className="hidden md:inline-block md:flex-1">{item?.detail}</span>
+        <span className="w-[10%]">{item?.state}</span>
         <span className="w-[15%] flex items-center justify-center gap-2">
           <button
             title="Edit"
@@ -63,7 +65,7 @@ export default function AdminLessons() {
             <CiEdit size={25} />
           </button>
           <Link
-            to={`/admin/lessonEdit?id=${item.id}`}
+            to={`/admin/lessonEdit?id=${item.id}&p=${page}`}
             className="group-hover:bg-zinc-200 hover:bg-zinc-300 duration-150 p-1 rounded-md"
           >
             <IoOpenOutline size={25} />
@@ -90,27 +92,30 @@ export default function AdminLessons() {
           ))}
         </select>
       </div>
-      <div className="flex items-center p-2 bg-zinc-200 text-center rounded-md">
-        <span className="w-[2%]" title="Serial Number">
-          #
-        </span>
-        <span className="flex-1 md:w-[20%]" title="Lesson Title">
-          Title
-        </span>
-        <span className="flex-1 md:w-[20%]" title="Lesson Sub-title">
-          Sub-Title
-        </span>
-        <span
-          className="hidden md:inline-block md:flex-1"
-          title="Lesson Detail"
-        >
-          Detail
-        </span>
-        <span className="w-[15%] text-center" title="Edit Lesson">
-          Edit
-        </span>
+      <div className="flex-1 flex flex-col">
+        <div className="flex items-center p-2 text-center border-2 border-zinc-200">
+          <span className="w-[2%]" title="Serial Number">
+            #
+          </span>
+          <span className="flex-1 md:w-[20%]" title="Lesson Title">
+            Title
+          </span>
+          <span className="flex-1 md:w-[20%]" title="Lesson Sub-title">
+            Sub-Title
+          </span>
+          <span
+            className="hidden md:inline-block md:flex-1"
+            title="Lesson Detail"
+          >
+            Detail
+          </span>
+          <span className="w-[10%]">Status</span>
+          <span className="w-[15%] text-center" title="Edit Lesson">
+            Edit
+          </span>
+        </div>
+        <div className="flex-1">{content}</div>
       </div>
-      <div className="flex-1">{content}</div>
       <div className="flex items-center justify-between">
         <button className="btn-r btn-red" onClick={() => setAdd(true)}>
           Add Lesson

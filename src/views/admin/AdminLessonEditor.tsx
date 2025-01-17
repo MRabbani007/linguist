@@ -1,4 +1,5 @@
 import AdminLessonContainer from "@/features/admin/AdminLessonContainer";
+import AdminLessonNav from "@/features/admin/AdminLessonNav";
 import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectLessons } from "@/features/globals/globalsSlice";
@@ -14,7 +15,7 @@ import { useSearchParams } from "react-router-dom";
 export default function AdminLessonEditor() {
   const [searchParams] = useSearchParams();
 
-  const id = searchParams.get("id");
+  const id = searchParams.get("id") ?? "";
 
   const [getLesson, { data, isLoading, isSuccess, isError }] =
     useLazyGetLessonByIDQuery();
@@ -24,7 +25,7 @@ export default function AdminLessonEditor() {
   const [getLessonWords] = useLazyGetLessonWordsQuery();
 
   useEffect(() => {
-    if (id) {
+    if (id !== "") {
       getLessonWords(id);
       getLessonTextBlocks(id);
       getLesson(id);
@@ -40,6 +41,7 @@ export default function AdminLessonEditor() {
   const [introIndex, setIntroIndex] = useState(-1);
 
   useEffect(() => {
+    console.log(id);
     setLesson(() => lessons.find((item) => item.id === id) ?? null);
   }, [lessons, id]);
 
@@ -56,6 +58,8 @@ export default function AdminLessonEditor() {
 
   return (
     <>
+      <AdminLessonNav />
+
       {lesson && (
         <AdminLessonContainer lesson={lesson}>
           <LessonHeader lesson={lesson} />
@@ -100,6 +104,8 @@ export default function AdminLessonEditor() {
           lesson={lesson}
         />
       )}
+
+      <AdminLessonNav />
     </>
   );
 }

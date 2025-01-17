@@ -171,7 +171,7 @@ export default function LessonNavigator({
         disabled={firstLesson && firstChapter}
         className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
-        <FaArrowLeft size={24} />
+        <FaArrowLeft size={25} />
         <span className="font-semibold hidden md:inline text-nowrap">
           {firstLesson ? "Previous Chapter" : "Previous Lesson"}
         </span>
@@ -185,7 +185,7 @@ export default function LessonNavigator({
         <span className="font-semibold hidden md:inline duration-200 text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}
         </span>
-        <FaArrowRight size={24} />
+        <FaArrowRight size={25} />
       </button>
     </div>
   );

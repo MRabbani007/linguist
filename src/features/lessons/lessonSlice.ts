@@ -17,7 +17,7 @@ const lessonsAdapter = createEntityAdapter<Lesson>({
 
 const initialState = lessonsAdapter.getInitialState();
 
-type LessonReq = { page: String; chapter: String };
+type LessonReq = { page: String; chapter?: String };
 
 export const lessonsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

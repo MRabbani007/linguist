@@ -71,6 +71,12 @@ export default function FormLessonEdit({
     }
   };
 
+  const lessonStateOptions = [
+    { label: "Draft", value: "draft" },
+    { label: "Published", value: "published" },
+    { label: "Archived", value: "archived" },
+  ];
+
   return (
     <FormContainer
       type="edit"
@@ -167,6 +173,11 @@ export default function FormLessonEdit({
         type="number"
         value={state.learningTime}
         handleChange={handleChange}
+      />
+      <SelectField
+        label="Lesson State"
+        onValueChange={(val) => setState((curr) => ({ ...curr, state: val }))}
+        options={lessonStateOptions}
       />
     </FormContainer>
   );
