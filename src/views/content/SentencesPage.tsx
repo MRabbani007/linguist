@@ -4,30 +4,41 @@ import {
   Link,
   createSearchParams,
   useNavigate,
-  useParams,
   useSearchParams,
 } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectDisplayLesson } from "../../features/globals/globalsSlice";
+import {
+  selectDisplayLesson,
+  selectLessons,
+} from "../../features/globals/globalsSlice";
 // import { useDebounce } from "use-debounce";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import Pagination from "../../features/components/Pagination";
 import ReactLoading from "react-loading";
 import { useLazySearchSentencesQuery } from "@/features/globals/globalsApiSlice";
-import { BiFilter } from "react-icons/bi";
+import { BiCollapse, BiExpand, BiFilter, BiX } from "react-icons/bi";
 import FormSentenceFilter from "@/features/sentences/FormSentenceFilter";
+import AdminSentenceContainer from "@/features/admin/AdminSentenceContainer";
+import { ITEMS_PER_PAGE } from "@/lib/constants";
+import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";
+import { selectEditMode } from "@/features/admin/adminSlice";
 
 export default function SentencesPage() {
   const displayBlock = useSelector(selectDisplayLesson);
+  const editMode = useSelector(selectEditMode);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const search = searchParams.get("search") ?? null;
+  const search = searchParams.get("search") ?? "";
   const page = searchParams.get("page") ?? 1;
   const level = searchParams.get("level") ?? "";
   const lessonID = searchParams.get("lessonID") ?? "";
   let count = 0;
+
+  const lessons = useSelector(selectLessons);
+
+  const lesson = lessons?.find((item) => item.id === lessonID);
 
   // const location = useLocation();
   // const from = location.state?.from?.pathname || "/";
@@ -37,18 +48,50 @@ export default function SentencesPage() {
   // const [value] = useDebounce(search, 1000);
   // const [sort, setSort] = useState("");
 
+  useEffect(() => {
+    setSearchTerm(search ?? "");
+  }, [search]);
+
+  const [edit, setEdit] = useState(false);
+  const [editItem, setEditItem] = useState<Sentence | null>(null);
+
+  const [display, setDisplay] = useState("condensed");
+
   const [searchSentences, { data, isLoading, isSuccess, isError }] =
     useLazySearchSentencesQuery();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if (searchTerm.trim()) {
-      navigate({
-        pathname: "/sentences",
-        search: `${createSearchParams({ search: searchTerm })}`,
-      });
+    navigate({
+      pathname: "/sentences",
+      search: `${createSearchParams({ search: searchTerm })}`,
+    });
+  };
+
+  const handleClear = (clearItem: string) => {
+    let params: {
+      search?: string;
+      lessonID?: string;
+      level?: string;
+      page?: string;
+    } = {};
+    if (clearItem !== "search" && search) {
+      params.search = search;
     }
+    if (clearItem !== "lessonID" && lessonID !== "") {
+      params.lessonID = lessonID;
+    }
+    if (clearItem !== "level" && level !== "") {
+      params.level = level;
+    }
+    if (page && page !== 1) {
+      params.page = page;
+    }
+    navigate({
+      pathname: "/sentences",
+      search: `${createSearchParams(params)}`,
+    });
   };
 
   useEffect(() => {
@@ -70,11 +113,26 @@ export default function SentencesPage() {
   } else if (isSuccess) {
     count = data.count;
     content = data.data.map((item: Sentence) => {
-      return <Sentence sentence={item} key={item.id} />;
+      return (
+        <AdminSentenceContainer
+          sentence={item}
+          setEdit={setEdit}
+          setEditItem={setEditItem}
+        >
+          <Sentence sentence={item} key={item.id} display={display} />
+        </AdminSentenceContainer>
+      );
     });
   } else if (isError) {
     content = <p>Error Loading Sentences</p>;
   }
+
+  const fromNo = isSuccess ? (+page - 1) * ITEMS_PER_PAGE + 1 : 0;
+
+  const toNo =
+    isSuccess && +page * ITEMS_PER_PAGE < count
+      ? +page * ITEMS_PER_PAGE
+      : count;
 
   return (
     <>
@@ -95,16 +153,76 @@ export default function SentencesPage() {
             <IoSearchOutline size={32} />
           </button>
         </form>
-        <p>{isSuccess ? count + " results" : null}</p>
+        <div className="flex items-center gap-2">
+          {search && (
+            <p className="py-1 px-4 bg-zinc-100 rounded-md relative group">
+              {search}
+              <button
+                onClick={() => handleClear("search")}
+                className="absolute hidden group-hover:inline-block top-0 right-0"
+              >
+                <BiX size={20} />
+              </button>
+            </p>
+          )}
+          {level && (
+            <p className="py-1 px-4 bg-zinc-100 rounded-md relative group">
+              {level}
+              <button
+                onClick={() => handleClear("level")}
+                className="absolute hidden group-hover:inline-block top-0 right-0"
+              >
+                <BiX size={20} />
+              </button>
+            </p>
+          )}
+          {lessonID && lesson && (
+            <p className="py-1 px-4 bg-zinc-100 rounded-md relative group">
+              {lesson?.title}
+              <button
+                onClick={() => handleClear("lessonID")}
+                className="absolute hidden group-hover:inline-block top-0 right-0"
+              >
+                <BiX size={20} />
+              </button>
+            </p>
+          )}
+          <p>
+            {isSuccess
+              ? count === 0
+                ? `0 results`
+                : count === 1
+                ? "1 result"
+                : count < ITEMS_PER_PAGE
+                ? `${count} results`
+                : `${fromNo} to ${toNo} of ${count}` + " results"
+              : null}
+          </p>
+        </div>
         {/* <p>{lessonID}</p> */}
         {/* <SortSentences sort={sort} setSort={setSort} /> */}
-        <div className="flex items-center gap-4 justify-between">
-          <Pagination currentPage={+page} count={count} />
-          {/* <button onClick={() => setShowFilter(true)}>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setShowFilter(true)}
+            className="p-1 bg-zinc-100 hover:bg-zinc-200 duration-200 rounded-md"
+          >
             <BiFilter size={25} />
-          </button> */}
+          </button>
+          <button
+            className="p-1 bg-zinc-100 hover:bg-zinc-200 duration-200 rounded-md"
+            onClick={() =>
+              setDisplay((curr) => (curr === "condensed" ? "" : "condensed"))
+            }
+          >
+            {display === "condensed" ? (
+              <BiExpand size={20} />
+            ) : (
+              <BiCollapse size={20} />
+            )}
+          </button>
+          <Pagination currentPage={+page} count={count} className="ml-auto" />
         </div>
-        <div className="w-full flex flex-col gap-4">{content}</div>
+        <div className="w-full flex flex-col gap-2">{content}</div>
         <Pagination currentPage={+page} count={count} />
         <div className="my-2">
           {displayBlock?.id ? (
@@ -122,7 +240,16 @@ export default function SentencesPage() {
             </Link>
           )}
         </div>
-        {/* {showFilter && <FormSentenceFilter setShowForm={setShowFilter} />} */}
+        {showFilter && (
+          <FormSentenceFilter
+            setShowForm={setShowFilter}
+            levelInit={level ?? ""}
+            lessonIDInit={lessonID ?? ""}
+          />
+        )}
+        {editMode && edit && editItem && (
+          <FormSentenceEdit sentence={editItem} setEdit={setEdit} />
+        )}
       </main>
     </>
   );

@@ -1,4 +1,20 @@
-export default function Sentence({ sentence }: { sentence: Sentence }) {
+import { useSelector } from "react-redux";
+import { selectLessonbyID } from "../globals/globalsApiSlice";
+import { selectLanguage } from "../globals/globalsSlice";
+import { Link } from "react-router-dom";
+
+export default function Sentence({
+  sentence,
+  display,
+}: {
+  sentence: Sentence;
+  display?: string;
+}) {
+  const language = useSelector(selectLanguage);
+  const lesson = useSelector(
+    selectLessonbyID(language?.id ?? "", sentence?.lessonID)
+  );
+
   const color = !!sentence?.level
     ? sentence.level < 2
       ? "bg-sky-500"
@@ -13,15 +29,15 @@ export default function Sentence({ sentence }: { sentence: Sentence }) {
 
   return (
     <div className="w-full relative group flex items-stretch bg-zinc-100">
-      <div className={"min-w-4 min-h-full shrink-0 " + color}></div>
+      <div className={"w-1 min-h-full shrink-0 " + color}></div>
       <div className="flex-1 p-4">
-        <p className="w-fit font-medium" title={sentence?.pronounce}>
+        <p className="w-fit font-medium" title={sentence?.pronunce}>
           <span className="font-semibold text-red-700 text-lg">
             {sentence?.text}
           </span>
           <span>{sentence?.caption}</span>
         </p>
-        {sentence?.translation && (
+        {sentence?.translation && display !== "condensed" && (
           <p>
             <span>
               <i>{sentence?.translation}</i>
@@ -30,6 +46,31 @@ export default function Sentence({ sentence }: { sentence: Sentence }) {
               <i>{sentence?.caption}</i>
             </span>
           </p>
+        )}
+        {display && display === "condensed" ? null : (
+          <div className="flex items-center gap-4 text-sm mt-1">
+            {sentence?.baseWord && (
+              <p
+                className="py-1 px-2 bg-white rounded-md"
+                title={sentence?.baseWordTranslation}
+              >
+                {sentence?.baseWord}
+              </p>
+            )}
+            {lesson?.title && (
+              <Link
+                to={`/learn/lesson?=title=${lesson?.title}&id=${lesson?.id}`}
+                className="py-1 px-2 bg-sky-100 rounded-md"
+              >
+                {lesson?.title}
+              </Link>
+            )}
+            {sentence?.type && (
+              <p className="py-1 px-2 bg-green-100 rounded-md">
+                {sentence?.type}
+              </p>
+            )}
+          </div>
         )}
       </div>
     </div>

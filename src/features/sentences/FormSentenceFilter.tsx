@@ -6,14 +6,18 @@ import { useSelector } from "react-redux";
 import { selectLessons } from "../globals/globalsSlice";
 
 export default function FormSentenceFilter({
+  levelInit,
+  lessonIDInit,
   setShowForm,
 }: {
+  lessonIDInit?: string;
+  levelInit?: string;
   setShowForm: Dispatch<SetStateAction<boolean>>;
 }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [level, setLevel] = useState("all");
-  const [lessonID, setLessonID] = useState("");
+  const [level, setLevel] = useState(levelInit ?? "");
+  const [lessonID, setLessonID] = useState(lessonIDInit ?? "");
 
   const lessons = useSelector(selectLessons);
   const lessonOptions = lessons.map((item) => ({
@@ -23,9 +27,16 @@ export default function FormSentenceFilter({
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+    let params: { lessonID?: string; level?: string } = {};
+    if (lessonID !== "") {
+      params.lessonID = lessonID;
+    }
+    if (level !== "") {
+      params.level = level.toString();
+    }
     navigate({
       pathname: location.pathname,
-      search: `${createSearchParams({ level, lessonID })}`,
+      search: `${createSearchParams(params)}`,
     });
     setShowForm(false);
   };

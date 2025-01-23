@@ -23,6 +23,11 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { searchTerm, lessonID, page, sort, asscending },
       }),
+      transformResponse: (response: any) => {
+        // Assuming the API response is { todos: [...], total: number }
+        const { data, count }: { data: Sentence[]; count: number } = response;
+        return { data, count }; // Structure the response for easy usage in components
+      },
       providesTags: (result) =>
         result
           ? [
@@ -30,9 +35,9 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
                 type: "Sentence" as const,
                 id,
               })), // Provide tags for each todo
-              { type: "Sentence", id: "SENTENCE" }, // A special tag to track the entire list
+              { type: "Sentence", id: "SENTENCELIST" }, // A special tag to track the entire list
             ]
-          : [{ type: "Sentence", id: "SENTENCE" }],
+          : [{ type: "Sentence", id: "SENTENCELIST" }],
     }),
     addSentence: builder.mutation({
       query: (sentence) => ({
@@ -40,7 +45,7 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { sentence },
       }),
-      invalidatesTags: [{ type: "Sentence", id: "SENTENCE" }],
+      invalidatesTags: [{ type: "Sentence", id: "SENTENCELIST" }],
     }),
     editSentence: builder.mutation({
       query: (sentence) => ({

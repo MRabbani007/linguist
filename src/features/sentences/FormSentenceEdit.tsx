@@ -59,7 +59,8 @@ export default function FormSentenceEdit({
     event.preventDefault();
     if (canSave) {
       try {
-        await editSentence(state);
+        const response = await editSentence(state).unwrap();
+        console.log(response);
         toast.success("Sentence Saved");
         setEdit(false);
       } catch (e) {

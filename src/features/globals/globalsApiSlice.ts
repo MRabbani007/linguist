@@ -65,13 +65,15 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
       query: ({
         searchTerm = "",
         lessonID = "",
+        level,
+        ipp = 15,
         page = 1,
         sort,
         asscending,
       }) => ({
         url: "/search/sentences",
         method: "GET",
-        params: { searchTerm, lessonID, page, sort, asscending },
+        params: { searchTerm, lessonID, level, ipp, page, sort, asscending },
       }),
     }),
     getExerciseLessons: builder.query<Lesson[], any>({
@@ -120,4 +122,12 @@ export const selectLessonSections = (lessonID: string) =>
     globalsApiSlice.endpoints.getLessonByID.select(lessonID),
     (result) =>
       result?.data?.map((item) => ({ label: item.title, value: item.id }))
+  );
+
+export const selectLessonbyID = (langID: string, lessonID: string) =>
+  createSelector(
+    globalsApiSlice.endpoints.getAllLessons.select(langID),
+    (result) => {
+      return result?.data?.find((item) => item?.id === lessonID);
+    }
   );

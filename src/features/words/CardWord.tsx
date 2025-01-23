@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { BiX } from "react-icons/bi";
+import { selectEditMode } from "../admin/adminSlice";
 
 export default function CardWord({ word }: { word: Word }) {
   const displayBlock = useSelector(selectDisplayLesson);
+  const editMode = useSelector(selectEditMode);
 
   // const [viewEditImage, setViewEditImage] = useState(false);
   const [showPronunce, setShowPronunce] = useState(false);
@@ -124,6 +126,9 @@ export default function CardWord({ word }: { word: Word }) {
             title={word?.level}
             className={`bg-${levelColor} rounded-full size-4 absolute top-2 right-2 z-20`}
           ></div> */}
+          {editMode && (
+            <p className="absolute top-2 right-4 text-sm">{word.sortIndex}</p>
+          )}
           {word?.note && word.note !== "" && (
             <button
               className="absolute top-2 right-6"

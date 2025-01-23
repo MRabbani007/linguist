@@ -3,6 +3,7 @@ import Pagination from "@/features/components/Pagination";
 import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";
 import Sentence from "@/features/sentences/Sentence";
 import { useLazyGetAdminSentencesQuery } from "@/features/sentences/sentencesSlice";
+import { ITEMS_PER_PAGE } from "@/lib/constants";
 import { FormEvent, useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import {
@@ -82,7 +83,13 @@ export default function AdminSentences() {
           <IoSearchOutline size={32} />
         </button>
       </form>
-      <p>{isSuccess ? count + " results" : null}</p>
+      <p>
+        {isSuccess
+          ? `${(+page - 1) * ITEMS_PER_PAGE + 1} to ${
+              +page * ITEMS_PER_PAGE
+            } of ${count}` + " results"
+          : null}
+      </p>
       <Pagination currentPage={+page} count={count} />
       <div className="w-full flex flex-col gap-4">{content}</div>
       <Pagination currentPage={+page} count={count} />
