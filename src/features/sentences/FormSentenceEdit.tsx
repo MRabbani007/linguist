@@ -14,36 +14,20 @@ import FormContainer from "../components/FormContainer";
 import { T_SENTENCE } from "@/data/templates";
 import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";
-import { useSelector } from "react-redux";
-import { selectLessons, selectSections } from "../globals/globalsSlice";
 
 export default function FormSentenceEdit({
   sentence,
   setEdit,
+  words,
 }: {
   sentence: Sentence;
   setEdit: Dispatch<SetStateAction<boolean>>;
+  words?: Word[];
 }) {
   const [editSentence, { isLoading }] = useEditSentenceMutation();
   const [removeSentence] = useRemoveSentenceMutation();
 
   const [state, setState] = useState({ ...T_SENTENCE, ...sentence });
-
-  const lessons = useSelector(selectLessons);
-  const lessonOptions = lessons.map((item) => ({
-    label: item.title,
-    value: item.id,
-  }));
-
-  const sections = useSelector(selectSections);
-  const sectionOptions = Array.isArray(sections)
-    ? sections
-        .filter((item) => item.lessonID === state?.lessonID)
-        .map((item) => ({
-          label: item.title,
-          value: item.id,
-        }))
-    : [];
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -82,6 +66,14 @@ export default function FormSentenceEdit({
     value: (idx + 1).toString(),
   }));
 
+  console.log(sentence);
+  const wordOptions = words
+    ? words?.map((word) => ({
+        value: word.id,
+        label: word.first,
+      }))
+    : [];
+
   return (
     <FormContainer
       title="Edit Sentence"
@@ -107,6 +99,31 @@ export default function FormSentenceEdit({
           setState((curr) => ({ ...curr, level: +level }))
         }
       />
+      <SelectField
+        options={wordOptions}
+        label="Base Word"
+        value={state.baseWordID ?? ""}
+        onValueChange={(baseWordID) => {
+          const word = words
+            ? words.find((item) => item.id === baseWordID)
+            : null;
+          if (word) {
+            setState((curr) => ({
+              ...curr,
+              baseWordID,
+              baseWord: word.first,
+              baseWordTranslation: word.second,
+            }));
+          } else {
+            setState((curr) => ({
+              ...curr,
+              baseWordID: "",
+              baseWord: "",
+              baseWordTranslation: "",
+            }));
+          }
+        }}
+      />
       <InputField
         label="Base Word"
         name="baseWord"
@@ -119,6 +136,13 @@ export default function FormSentenceEdit({
         name="baseWordTranslation"
         type="text"
         value={state?.baseWordTranslation ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Type"
+        name="type"
+        type="text"
+        value={state?.type ?? ""}
         handleChange={handleChange}
       />
       <InputField
@@ -141,22 +165,6 @@ export default function FormSentenceEdit({
         type="text"
         value={state?.pronunce ?? ""}
         handleChange={handleChange}
-      />
-      <SelectField
-        label="Lesson"
-        value={state?.lessonID ?? ""}
-        options={lessonOptions}
-        onValueChange={(lessonID) =>
-          setState((curr) => ({ ...curr, lessonID }))
-        }
-      />
-      <SelectField
-        label="Section"
-        value={state?.sectionID ?? ""}
-        options={sectionOptions}
-        onValueChange={(sectionID) =>
-          setState((curr) => ({ ...curr, sectionID }))
-        }
       />
     </FormContainer>
   );

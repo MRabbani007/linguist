@@ -15,9 +15,11 @@ import SelectField from "../ui/SelectField";
 export default function FormSentenceAdd({
   section,
   setAdd,
+  words,
 }: {
   section: Section;
   setAdd: Dispatch<SetStateAction<boolean>>;
+  words?: Word[];
 }) {
   const [addSentence, { isLoading }] = useAddSentenceMutation();
 
@@ -60,6 +62,20 @@ export default function FormSentenceAdd({
     value: (idx + 1).toString(),
   }));
 
+  const wordOptions = words
+    ? words?.map((word) => ({
+        value: word.id,
+        label: word.first,
+      }))
+    : [];
+
+  // const sentenceTypes = [
+  //   "Interrogative",
+  //   "Informative",
+  //   "Declarative",
+  //   "Exclamatory",
+  // ];
+
   return (
     <FormContainer
       title="Add Sentence"
@@ -82,11 +98,50 @@ export default function FormSentenceAdd({
           setState((curr) => ({ ...curr, level: +level }))
         }
       />
+      <SelectField
+        options={wordOptions}
+        label="Base Word"
+        value={state.baseWordID ?? ""}
+        onValueChange={(baseWordID) => {
+          const word = words
+            ? words.find((item) => item.id === baseWordID)
+            : null;
+          if (word) {
+            setState((curr) => ({
+              ...curr,
+              baseWordID,
+              baseWord: word.first,
+              baseWordTranslation: word.second,
+            }));
+          } else {
+            setState((curr) => ({
+              ...curr,
+              baseWordID: "",
+              baseWord: "",
+              baseWordTranslation: "",
+            }));
+          }
+        }}
+      />
       <InputField
         label="Base Word"
         name="baseWord"
         type="text"
         value={state?.baseWord ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Base Word Translation"
+        name="baseWordTranslation"
+        type="text"
+        value={state?.baseWordTranslation ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Type"
+        name="type"
+        type="text"
+        value={state?.type ?? ""}
         handleChange={handleChange}
       />
       <InputField

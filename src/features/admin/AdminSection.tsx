@@ -15,6 +15,8 @@ import FormWordMove from "../words/FormWordMove";
 import { selectSectionText } from "../textBlock/textBlockSlice";
 import CardTextBlock from "../textBlock/CardTextBlock";
 import SectionIntroItem from "../sections/SectionIntroItem";
+import AdminSentenceContainer from "./AdminSentenceContainer";
+import FormSentenceEdit from "../sentences/FormSentenceEdit";
 
 export default function AdminSection({
   section = null,
@@ -46,6 +48,9 @@ export default function AdminSection({
   const [showEditWord, setShowEditWord] = useState(false);
   const [showMoveWord, setShowMoveWord] = useState(false);
   const [editWord, setEditWord] = useState<Word | null>(null);
+
+  const [showEditSentence, setShowEditSentence] = useState(false);
+  const [editItem, setEditItem] = useState<Sentence | null>(null);
 
   let content = sectionWords // [...words]
     .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
@@ -172,7 +177,15 @@ export default function AdminSection({
                 Examples
               </p>
               {temp.map((sentence) => {
-                return <Sentence sentence={sentence} key={sentence?.id} />;
+                return (
+                  <AdminSentenceContainer
+                    sentence={sentence}
+                    setEdit={setShowEditSentence}
+                    setEditItem={setEditItem}
+                  >
+                    <Sentence sentence={sentence} key={sentence?.id} />
+                  </AdminSentenceContainer>
+                );
               })}
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <button onClick={() => setExpandSentences((curr) => !curr)}>
@@ -200,6 +213,14 @@ export default function AdminSection({
 
       {showMoveWord && editWord && (
         <FormWordMove word={editWord} setEdit={setShowMoveWord} />
+      )}
+
+      {showEditSentence && editItem && (
+        <FormSentenceEdit
+          sentence={editItem}
+          setEdit={setShowEditSentence}
+          words={sectionWords}
+        />
       )}
     </>
   );

@@ -15,6 +15,7 @@ import { MdArrowOutward } from "react-icons/md";
 import FormSectionMove from "../sections/FormSectionMove";
 import FormAddTextBlock from "../textBlock/FormAddTextBlock";
 import FormDefinitionAdd from "../definitions/FormDefinitionAdd";
+import FormSentenceAdd from "../sentences/FormSentenceAdd";
 
 export default function AdminSectionContainer({
   section: item,
@@ -160,6 +161,13 @@ export default function AdminSectionContainer({
           setAdd={setAddDef}
           lessonID={item.lessonID}
           sectionID={item.id}
+        />
+      )}
+      {addSentence && (
+        <FormSentenceAdd
+          section={item}
+          setAdd={setAddSentence}
+          words={item.words}
         />
       )}
     </div>
