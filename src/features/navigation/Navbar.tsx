@@ -53,7 +53,7 @@ export default function Navbar() {
   const isActive = (page: string) => location.pathname.includes(page);
 
   return (
-    <div className="z-50 font-medium bg-destructive flex items-stretch justify-between px-4 py-2 my-0 relative">
+    <div className="z-50 font-medium bg-destructive flex items-stretch justify-between px-4 py-2 my-0 relative border-b-[1px] border-red-600">
       {/* Left Logo */}
       <Link
         to="/"

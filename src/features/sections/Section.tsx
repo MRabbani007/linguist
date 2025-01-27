@@ -23,7 +23,7 @@ export default function Section({
   sentences: Sentence[];
   tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
-  const [expandSentences, setExpandSentences] = useState(false);
+  const [expandSentences, setExpandSentences] = useState(true);
 
   let content = [...words]
     .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
@@ -134,8 +134,8 @@ export default function Section({
         </div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
-          <div className="flex flex-col gap-4">
-            <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p>
+          <div className="flex flex-col gap-2">
+            {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p> */}
             {temp.map((sentence) => {
               return <Sentence sentence={sentence} key={sentence?.id} />;
             })}

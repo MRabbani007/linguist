@@ -17,6 +17,7 @@ import CardTextBlock from "../textBlock/CardTextBlock";
 import SectionIntroItem from "../sections/SectionIntroItem";
 import AdminSentenceContainer from "./AdminSentenceContainer";
 import FormSentenceEdit from "../sentences/FormSentenceEdit";
+import FormSentenceMove from "../sentences/FormSentenceMove";
 
 export default function AdminSection({
   section = null,
@@ -43,13 +44,14 @@ export default function AdminSection({
     selectSectionText(section?.id ?? "", section?.lessonID ?? "")
   );
 
-  const [expandSentences, setExpandSentences] = useState(false);
+  const [expandSentences, setExpandSentences] = useState(true);
 
   const [showEditWord, setShowEditWord] = useState(false);
   const [showMoveWord, setShowMoveWord] = useState(false);
   const [editWord, setEditWord] = useState<Word | null>(null);
 
   const [showEditSentence, setShowEditSentence] = useState(false);
+  const [showMoveSentence, setShowMoveSentence] = useState(false);
   const [editItem, setEditItem] = useState<Sentence | null>(null);
 
   let content = sectionWords // [...words]
@@ -173,14 +175,15 @@ export default function AdminSection({
 
           {Array.isArray(sentences) && sentences.length !== 0 ? (
             <div className="flex flex-col gap-4">
-              <p className="py-2 px-4 text-xl bg-sky-600 text-white">
+              {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">
                 Examples
-              </p>
+              </p> */}
               {temp.map((sentence) => {
                 return (
                   <AdminSentenceContainer
                     sentence={sentence}
                     setEdit={setShowEditSentence}
+                    setMove={setShowMoveSentence}
                     setEditItem={setEditItem}
                   >
                     <Sentence sentence={sentence} key={sentence?.id} />
@@ -221,6 +224,9 @@ export default function AdminSection({
           setEdit={setShowEditSentence}
           words={sectionWords}
         />
+      )}
+      {showMoveSentence && editItem && (
+        <FormSentenceMove sentence={editItem} setEdit={setShowMoveSentence} />
       )}
     </>
   );

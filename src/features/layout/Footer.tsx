@@ -15,7 +15,8 @@ export default function Footer() {
           <Link to="/exercise">Exercise</Link>
           <Link to="/review/words">Review</Link>
         </div>
-        <div className="flex flex-col sm:gap-2 sm:px-8 mt-4 sm:mt-0">
+        <div className="flex flex-col sm:px-8 sm:mt-0">
+          <p className="font-bold opacity-0">About</p>
           <Link to={"/about"}>About</Link>
           <Link to={"/contactUs"}>Contact Us</Link>
           <Link to={"/contactUs"}>Report a bug or a problem</Link>

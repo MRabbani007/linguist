@@ -99,6 +99,27 @@ export default function FormSentenceEdit({
           setState((curr) => ({ ...curr, level: +level }))
         }
       />
+      <InputField
+        label="Sentence"
+        name="text"
+        type="text"
+        value={state?.text ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Translation"
+        name="translation"
+        type="text"
+        value={state?.translation ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Pronunce"
+        name="pronunce"
+        type="text"
+        value={state?.pronunce ?? ""}
+        handleChange={handleChange}
+      />
       <SelectField
         options={wordOptions}
         label="Base Word"
@@ -143,27 +164,6 @@ export default function FormSentenceEdit({
         name="type"
         type="text"
         value={state?.type ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Sentence"
-        name="text"
-        type="text"
-        value={state?.text ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Translation"
-        name="translation"
-        type="text"
-        value={state?.translation ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Pronunce"
-        name="pronunce"
-        type="text"
-        value={state?.pronunce ?? ""}
         handleChange={handleChange}
       />
     </FormContainer>

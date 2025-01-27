@@ -1,17 +1,10 @@
-import React, {
+import {
   Dispatch,
   FormEvent,
   ReactNode,
   SetStateAction,
   useEffect,
 } from "react";
-import { PiEmpty } from "react-icons/pi";
-import {
-  IoAddCircleOutline,
-  IoCheckmarkCircleOutline,
-  IoCloseCircleOutline,
-} from "react-icons/io5";
-import { AiOutlineDelete } from "react-icons/ai";
 import { BiX } from "react-icons/bi";
 
 interface Props {
@@ -88,14 +81,14 @@ export default function FormContainer({
             <BiX size={24} />
           </button>
         </div>
-        <div className="max-h-[80vh] min-h-[60vh] h-full overflow-y-auto">
+        <div className="max-h-[70vh] min-h-[60vh] h-full overflow-y-auto">
           <div className="flex flex-col justify-start items-stretch gap-4 p-4">
             {children}
           </div>
         </div>
         {/* Form Buttons */}
-        <div className="flex items-center justify-between gap-4 px-4">
-          <div className="md:flex items-center gap-2 hidden">
+        <div className="flex items-center justify-center gap-4 px-4">
+          {/* <div className="md:flex items-center gap-2 hidden">
             <input
               type="checkbox"
               id="clearOnSubmit"
@@ -103,8 +96,8 @@ export default function FormContainer({
               onChange={() => setClearOnSubmit((curr) => !curr)}
             />
             <label htmlFor="clearOnSubmit">Clear On Submit</label>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 p-4">
+          </div> */}
+          <div className="flex flex-wrap items-center justify-center gap-2 py-2 text-sm">
             {type === "add" ? (
               <button
                 type="submit"
