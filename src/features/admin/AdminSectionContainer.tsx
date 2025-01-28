@@ -134,7 +134,6 @@ export default function AdminSectionContainer({
         definitions={item.definitions}
         section={item}
         sectionLists={item.sectionLists}
-        sentences={item.sentences}
         tables={item.tables}
       />
       {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}

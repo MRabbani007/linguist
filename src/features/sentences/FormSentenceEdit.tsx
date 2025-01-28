@@ -44,9 +44,11 @@ export default function FormSentenceEdit({
     if (canSave) {
       try {
         const response = await editSentence(state).unwrap();
-        console.log(response);
-        toast.success("Sentence Saved");
-        setEdit(false);
+
+        if (response) {
+          toast.success("Sentence Saved");
+          setEdit(false);
+        }
       } catch (e) {
         toast.error("Server Error");
       }
@@ -66,7 +68,6 @@ export default function FormSentenceEdit({
     value: (idx + 1).toString(),
   }));
 
-  console.log(sentence);
   const wordOptions = words
     ? words?.map((word) => ({
         value: word.id,
@@ -78,7 +79,7 @@ export default function FormSentenceEdit({
     <FormContainer
       title="Edit Sentence"
       type="edit"
-      submitButton="Save Sentence"
+      submitButton="Save"
       deleteButton={true}
       onSubmit={handleSubmit}
       onDelete={handleDelete}

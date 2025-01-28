@@ -5,6 +5,7 @@ import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectChapters, selectLessons } from "@/features/globals/globalsSlice";
 import LessonHeader from "@/features/lessons/LessonHeader";
 import LessonIntroEdit from "@/features/lessons/LessonIntroEdit";
+import { useLazyGetAdminSentencesQuery } from "@/features/sentences/sentencesSlice";
 import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
 import { useLazyGetLessonWordsQuery } from "@/features/words/wordsSlice";
 import { useEffect, useState } from "react";
@@ -20,6 +21,8 @@ export default function AdminLessonEditor() {
   const [getLesson, { data, isLoading, isSuccess, isError }] =
     useLazyGetLessonByIDQuery();
 
+  const [getSentences] = useLazyGetAdminSentencesQuery();
+
   const [getLessonTextBlocks] = useLazyGetLessonTextBlocksQuery();
 
   const [getLessonWords] = useLazyGetLessonWordsQuery();
@@ -28,6 +31,7 @@ export default function AdminLessonEditor() {
     if (id && id !== "") {
       getLessonWords(id);
       getLessonTextBlocks(id);
+      getSentences({ lessonID: id, ipp: 300 });
       getLesson(id);
     }
   }, [id]);

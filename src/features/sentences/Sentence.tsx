@@ -1,7 +1,3 @@
-import { useSelector } from "react-redux";
-import { selectLessonbyID } from "../globals/globalsApiSlice";
-import { selectLanguage } from "../globals/globalsSlice";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Sentence({
@@ -11,10 +7,10 @@ export default function Sentence({
   sentence: Sentence;
   display?: string;
 }) {
-  const language = useSelector(selectLanguage);
-  const lesson = useSelector(
-    selectLessonbyID(language?.id ?? "", sentence?.lessonID)
-  );
+  // const language = useSelector(selectLanguage);
+  // const lesson = useSelector(
+  //   selectLessonbyID(language?.id ?? "", sentence?.lessonID)
+  // );
   const [expand, setExpand] = useState(false);
 
   const color = !!sentence?.level

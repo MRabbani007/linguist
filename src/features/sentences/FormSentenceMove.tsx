@@ -34,16 +34,17 @@ export default function FormSentenceMove({
         }))
     : [];
 
-  const canSave = !isLoading;
+  const canSave = true || !isLoading;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (canSave) {
       try {
         const response = await editSentence(state).unwrap();
-        console.log(response);
-        toast.success("Sentence Saved");
-        setEdit(false);
+        if (response) {
+          toast.success("Sentence Saved");
+          setEdit(false);
+        }
       } catch (e) {
         toast.error("Server Error");
       }

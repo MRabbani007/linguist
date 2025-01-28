@@ -18,18 +18,17 @@ import SectionIntroItem from "../sections/SectionIntroItem";
 import AdminSentenceContainer from "./AdminSentenceContainer";
 import FormSentenceEdit from "../sentences/FormSentenceEdit";
 import FormSentenceMove from "../sentences/FormSentenceMove";
+import { selectSectionSentences } from "../sentences/sentencesSlice";
 
 export default function AdminSection({
   section = null,
   definitions = [],
   sectionLists = [],
   tables = [],
-  sentences = [],
 }: {
   section: Section | null;
   definitions: Definition[];
   sectionLists: SectionList[];
-  sentences: Sentence[];
   tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
   const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
@@ -39,6 +38,10 @@ export default function AdminSection({
     useSelector(
       selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
     ) ?? [];
+
+  const sectionSentences = useSelector(
+    selectSectionSentences(section?.lessonID ?? "", 300, section?.id ?? "")
+  );
 
   const sectionIntroduction = useSelector(
     selectSectionText(section?.id ?? "", section?.lessonID ?? "")
@@ -68,12 +71,14 @@ export default function AdminSection({
       </AdminContainerWord>
     ));
 
-  const temp = expandSentences ? sentences : sentences.slice(0, 2);
+  const temp = expandSentences
+    ? sectionSentences
+    : sectionSentences.slice(0, 2);
 
   if (!section) return null;
 
   return (
-    <>
+    <div key={section.id}>
       <section>
         <div className="flex items-stretch group relative">
           <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg">
@@ -173,7 +178,7 @@ export default function AdminSection({
             {content}
           </div>
 
-          {Array.isArray(sentences) && sentences.length !== 0 ? (
+          {Array.isArray(sectionSentences) && sectionSentences.length !== 0 ? (
             <div className="flex flex-col gap-4">
               {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">
                 Examples
@@ -228,6 +233,6 @@ export default function AdminSection({
       {showMoveSentence && editItem && (
         <FormSentenceMove sentence={editItem} setEdit={setShowMoveSentence} />
       )}
-    </>
+    </div>
   );
 }

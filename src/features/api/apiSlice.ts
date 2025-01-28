@@ -9,13 +9,16 @@ import { SERVER_URL } from "@/lib/url";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: SERVER_URL,
+  method: "GET",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    console.log(token);
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
+
+      return headers;
     }
-    return headers;
   },
 });
 

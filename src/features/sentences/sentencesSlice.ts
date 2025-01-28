@@ -1,3 +1,4 @@
+import { createSelector } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
 type GetSentQuery = {
@@ -6,7 +7,9 @@ type GetSentQuery = {
   page?: number;
   sort?: string;
   asscending?: string;
+  ipp?: number;
 };
+
 type GetSentRes = { data: Sentence[]; count: number };
 
 export const sentencesApiSlice = apiSlice.injectEndpoints({
@@ -18,15 +21,19 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         page = 1,
         sort,
         asscending,
+        ipp,
       }) => ({
         url: "/admin/sentences",
         method: "GET",
-        params: { searchTerm, lessonID, page, sort, asscending },
+        params: { searchTerm, lessonID, page, sort, asscending, ipp },
       }),
       transformResponse: (response: any) => {
         // Assuming the API response is { todos: [...], total: number }
         const { data, count }: { data: Sentence[]; count: number } = response;
-        return { data, count }; // Structure the response for easy usage in components
+        const sorted = [...data].sort((a, b) =>
+          a?.sortIndex > b?.sortIndex ? 1 : -1
+        );
+        return { data: sorted, count }; // Structure the response for easy usage in components
       },
       providesTags: (result) =>
         result
@@ -53,9 +60,7 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { sentence },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Sentence", id: arg.id },
-      ],
+      invalidatesTags: (result, error, { id }) => [{ type: "Sentence", id }],
     }),
     removeSentence: builder.mutation({
       query: (id) => ({
@@ -76,3 +81,20 @@ export const {
   useEditSentenceMutation,
   useRemoveSentenceMutation,
 } = sentencesApiSlice;
+
+export const selectSectionSentences = (
+  lessonID: string,
+  ipp: number,
+  sectionID: string
+) =>
+  createSelector(
+    sentencesApiSlice.endpoints.getAdminSentences.select({
+      lessonID,
+      ipp,
+    }),
+    (result) => {
+      return result?.data
+        ? result?.data?.data.filter((item) => item.sectionID === sectionID)
+        : [];
+    }
+  );

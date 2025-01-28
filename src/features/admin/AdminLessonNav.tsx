@@ -24,7 +24,6 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
   }, [page]);
 
   useEffect(() => {
-    console.log(id, direction, page);
     if (id === "" && direction === "next" && isSuccess && !isLoading) {
       navigate({
         pathname: "/admin/lessonEdit",

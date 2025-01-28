@@ -30,13 +30,11 @@ export default function FormSectionMove({
 
       if (!selected) return null;
 
-      const response = await editSectionLessonID({
+      await editSectionLessonID({
         id: section?.id,
         chapterID: selected.chapterID,
         lessonID: selected.id,
       });
-
-      console.log(response);
 
       toast.success("Section Moved");
       setEdit(false);

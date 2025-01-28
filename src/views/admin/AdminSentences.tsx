@@ -1,6 +1,7 @@
 import AdminSentenceContainer from "@/features/admin/AdminSentenceContainer";
 import Pagination from "@/features/components/Pagination";
 import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";
+import FormSentenceMove from "@/features/sentences/FormSentenceMove";
 import Sentence from "@/features/sentences/Sentence";
 import { useLazyGetAdminSentencesQuery } from "@/features/sentences/sentencesSlice";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
@@ -26,6 +27,7 @@ export default function AdminSentences() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [edit, setEdit] = useState(false);
+  const [move, setMove] = useState(false);
   const [editItem, setEditItem] = useState<Sentence | null>(null);
 
   const handleSubmit = (event: FormEvent) => {
@@ -53,6 +55,7 @@ export default function AdminSentences() {
       return (
         <AdminSentenceContainer
           key={item.id}
+          setMove={setMove}
           sentence={item}
           setEdit={setEdit}
           setEditItem={setEditItem}
@@ -95,6 +98,9 @@ export default function AdminSentences() {
       <Pagination currentPage={+page} count={count} />
       {edit && editItem && (
         <FormSentenceEdit sentence={editItem} setEdit={setEdit} />
+      )}
+      {move && editItem && (
+        <FormSentenceMove sentence={editItem} setEdit={setMove} />
       )}
     </>
   );

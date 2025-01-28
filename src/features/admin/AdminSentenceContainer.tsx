@@ -46,6 +46,12 @@ export default function AdminSentenceContainer({
           </button>
         </div>
       )}
+      {editMode && (
+        <div className="absolute bottom-0 right-2 text-sm">
+          <p>{sentence.lessonID}</p>
+          <p>{sentence.sectionID}</p>
+        </div>
+      )}
     </div>
   );
 }
