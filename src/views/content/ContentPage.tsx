@@ -12,16 +12,20 @@ export default function ContentPage() {
   const lessons = useSelector(selectLessons);
 
   return (
-    <main>
-      <header className="flex items-center gap-4 border-b-2 border-red-700 pb-2 mb-4">
-        <TfiLayoutListThumb className="text-red-700 size-6 md:size-10" />
-        <h1 className="text-2xl md:text-4xl font-semibold">Content Overview</h1>
+    <main className="bg-zinc-200 md:px-20">
+      <header className="flex items-center gap-4  mb-4 ">
+        <p className="rounded-lg p-2 bg-red-600">
+          <TfiLayoutListThumb className="text-white size-6 md:size-8" />
+        </p>
+        <h1 className="text-2xl md:text-4xl font-semibold border-b-2 pb-1 border-red-700 flex-1">
+          Content Overview
+        </h1>
       </header>
       {chapters.map((chapter, index) => {
         return (
           <div className="flex flex-col items-stretch" key={index}>
             <CardChapter chapter={chapter} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 my-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-6">
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))

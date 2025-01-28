@@ -49,7 +49,7 @@ export default function LessonPage() {
   }
 
   return (
-    <main>
+    <main className="bg-zinc-200 md:px-20">
       <div>
         <LessonHeader lesson={displayLesson} />
         <LessonNavigator />

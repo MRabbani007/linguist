@@ -119,7 +119,7 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
       >
         <FaArrowLeft size={25} />
         <span className="font-semibold hidden md:inline text-nowrap">
-          {firstLesson ? "Previous Chapter" : "Previous Lesson"}
+          {firstLesson ? "Previous Lesson" : "Previous Lesson"}
         </span>
       </button>
       {children}
@@ -129,7 +129,7 @@ export default function AdminLessonNav({ children }: { children?: ReactNode }) {
         className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
       >
         <span className="font-semibold hidden md:inline duration-200 text-nowrap">
-          {lastLesson ? "Next Chapter" : "Next Lesson"}
+          {lastLesson ? "Next Lesson" : "Next Lesson"}
         </span>
         <FaArrowRight size={25} />
       </button>

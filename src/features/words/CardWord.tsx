@@ -71,7 +71,7 @@ export default function CardWord({ word }: { word: Word }) {
       <div
         className={
           (word.type === "ph" ? "" : "") +
-          "  flex flex-col h-full text-xl duration-200 group relative z-10 bg-destructive rounded-md overflow-clip"
+          "  flex flex-col h-full text-xl duration-200 group relative z-10 bg-zinc-100 hover:bg-white rounded-md overflow-clip"
         }
       >
         {/* Word Body */}

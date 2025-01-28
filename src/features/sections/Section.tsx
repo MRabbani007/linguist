@@ -87,7 +87,7 @@ export default function Section({
         ) : null}
 
         {section?.image && (
-          <div className="mx-auto lg:max-w-[50vw] overflow-hidden">
+          <div className="mx-auto mb-4 lg:max-w-[50vw] p-4 bg-white rounded-lg shadow-md shadow-zinc-400 overflow-hidden">
             <img
               src={section.image}
               alt="section image"

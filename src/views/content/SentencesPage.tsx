@@ -53,6 +53,7 @@ export default function SentencesPage() {
   }, [search]);
 
   const [edit, setEdit] = useState(false);
+  const [move, setMove] = useState(false);
   const [editItem, setEditItem] = useState<Sentence | null>(null);
 
   const [display, setDisplay] = useState("condensed");
@@ -115,6 +116,7 @@ export default function SentencesPage() {
     content = data.data.map((item: Sentence) => {
       return (
         <AdminSentenceContainer
+          setMove={setMove}
           sentence={item}
           setEdit={setEdit}
           setEditItem={setEditItem}

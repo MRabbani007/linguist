@@ -62,7 +62,7 @@ export default function ChapterPage() {
   }
 
   return (
-    <main>
+    <main className="bg-zinc-200 md:px-20">
       <div className="">
         <header className="group relative">
           <div className="flex items-stretch justify-start">
@@ -70,7 +70,7 @@ export default function ChapterPage() {
               title={`Chapter ${
                 displayChapter?.chapterNo ? displayChapter?.chapterNo : 0
               }`}
-              className="min-w-12 text-accent_foreground bg-accent flex items-center justify-center text-base md:text-2xl font-semibold"
+              className="min-w-12 text-accent_foreground bg-accent flex items-center justify-center text-base md:text-2xl font-semibold rounded-lg"
             >
               {(displayChapter?.chapterNo
                 ? displayChapter?.chapterNo
@@ -81,7 +81,7 @@ export default function ChapterPage() {
               })}
             </p>
             <div className="flex flex-col gap-1 text-destructive_foreground flex-1">
-              <h1 className="text-2xl md:text-4xl font-semibold text-wrap inline py-1 px-2 border-accent border-b-4">
+              <h1 className="text-2xl md:text-3xl font-semibold text-wrap inline py-2 px-2 border-accent border-b-4">
                 {displayChapter?.title}
               </h1>
               <p className="py-1 px-2">{displayChapter?.subtitle}</p>
@@ -91,7 +91,7 @@ export default function ChapterPage() {
         <ChapterNavigator />
       </div>
       <div className="flex-1">
-        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {content}
         </div>
       </div>

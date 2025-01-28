@@ -125,24 +125,24 @@ function CardLesson({
         {lesson.sortIndex}
       </p>
       <div className="flex-1 flex flex-col">
-        <p
+        <Link
+          to={`/admin/lessonEdit?id=${lesson.id}&p=${page}`}
           className="text-lg font-medium h-6 flex items-center cursor-pointer"
-          onClick={() => {
-            setEditItem(lesson);
-            setEdit(true);
-          }}
         >
           {lesson.title}
-        </p>
+        </Link>
         <p className="text-sm -mt-1">{lesson.subtitle}</p>
         <div className="pl-8 py-2 text-sm">{lesson.detail}</div>
       </div>
-      <Link
-        to={`/admin/lessonEdit?id=${lesson.id}&p=${page}`}
+      <button
+        onClick={() => {
+          setEditItem(lesson);
+          setEdit(true);
+        }}
         className="group-hover:bg-zinc-200 hover:bg-zinc-300 duration-150 p-1 rounded-md"
       >
-        <IoOpenOutline size={25} />
-      </Link>
+        <CiEdit size={20} />
+      </button>
     </div>
   );
 }

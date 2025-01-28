@@ -1,2 +1,33 @@
+.clip-wave {
+  clip-path: polygon(
+    0 0%,
+    10% 15%,
+    20% 10%,
+    30% 20%,
+    40% 15%,
+    50% 25%,
+    60% 20%,
+    70% 30%,
+    80% 25%,
+    90% 35%,
+    100% 20%,
+    100% 100%,
+    0 100%
+  );
+}
 
+.custom-wave {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
 
+.custom-wave svg {
+  position: relative;
+  display: block;
+  width: calc(124% + 1.3px);
+  height: 136px;
+}
