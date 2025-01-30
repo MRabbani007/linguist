@@ -10,7 +10,15 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { lessonID, page },
       }),
-      providesTags: ["Section"],
+      providesTags: [{ type: "Section", id: "LESSONSECTIONS" }],
+    }),
+    getLessonSections: builder.query<QueryResponse<Section>, string>({
+      query: (lessonID = "lesson") => ({
+        url: "/admin/sections/lesson",
+        method: "GET",
+        params: { lessonID },
+      }),
+      providesTags: [{ type: "Section", id: "LESSONSECTIONS" }],
     }),
     addSection: builder.mutation({
       query: (section) => ({
@@ -69,6 +77,7 @@ export const sectionsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
+  useLazyGetLessonSectionsQuery,
   useLazyGetAdminSectionsQuery,
   useAddSectionMutation,
   useEditSectionHeaderMutation,

@@ -48,7 +48,6 @@ export default function FormLessonImage({ lesson }) {
   };
 
   return (
-    // <FormContainer type="add" onSubmit={onSubmit}>
     <form onSubmit={onSubmit}>
       {file === null ? (
         <button type="button" title="Add Images" onClick={handleClick}>
@@ -80,6 +79,5 @@ export default function FormLessonImage({ lesson }) {
         multiple
       />
     </form>
-    // </FormContainer>
   );
 }

@@ -7,13 +7,15 @@ import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";
 import { useEditWordMutation } from "./wordsSlice";
 
-interface Props {
+export default function FormWordImage({
+  word,
+  type,
+  setShowForm,
+}: {
   word: Word;
   type: "add" | "edit";
   setShowForm: Dispatch<SetStateAction<boolean>>;
-}
-
-export default function FormWordImage({ word, type, setShowForm }: Props) {
+}) {
   const [editWordDetails] = useEditWordMutation();
   const displayBlock = useSelector(selectDisplayLesson);
 

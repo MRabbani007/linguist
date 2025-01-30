@@ -1,25 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { axiosPrivate } from "../../api/axios";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { initializeApp } from "firebase/app";
-import {
-  getStorage,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  deleteObject,
-  listAll,
-} from "firebase/storage";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  getFirestore,
-  doc,
-} from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { BiCheck, BiImageAdd, BiX } from "react-icons/bi";
-import { getFiles, uploadFile } from "../../data/storage";
+import { firestoreDB, storage, uploadFile } from "../../data/storage";
 import { useDebounce } from "use-debounce";
 import { IoArrowBack, IoFolderOutline } from "react-icons/io5";
 import { FiFolderPlus } from "react-icons/fi";
@@ -34,7 +18,7 @@ export async function fetchDB() {
     // get collection data
     const snapshot = await getDocs(colRef);
 
-    let images = [];
+    let images: any[] = [];
 
     snapshot.docs.forEach((doc) => {
       images.push({ ...doc.data(), id: doc.id });
@@ -46,43 +30,36 @@ export async function fetchDB() {
   }
 }
 
-export async function deleteImage(imageDoc) {
+export async function deleteImage(imageDoc: ImageMeta) {
   try {
     // collection ref
-    const colRef = collection(firestoreDB, "images");
+    // const colRef = collection(firestoreDB, "images");
 
     const docRef = doc(firestoreDB, "images", imageDoc.id);
     // getDoc();
 
     // Create a reference to the file to delete
     const storageRef = ref(
-      firebaseStorage,
+      storage,
       `${imageDoc.foldername}/${imageDoc.filename}`
     );
 
     // Delete the file
-    await deleteObject(storageRef)
-      .then(() => {
-        // File deleted successfully
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-      });
+    await deleteObject(storageRef);
 
     await deleteDoc(docRef);
 
     toast.success("image deleted");
   } catch (error) {
-    console.error(error);
     toast.error("error deleting");
   }
 }
 
 export default function ImageUpload() {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [files, setFiles] = useState(null);
-  const [foldername, setFoldername] = useState("images/lessons");
+  const [files, setFiles] = useState<any>(null);
+  const [foldername, setFoldername] = useState<string>("images/lessons");
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -93,10 +70,8 @@ export default function ImageUpload() {
 
   const [newFolder, setNewFolder] = useState("");
 
-  const [value] = useDebounce(foldername, 1000);
-
-  const [images, setImages] = useState([]);
-  const [folders, setFolders] = useState([]);
+  const [images, setImages] = useState<ImageMeta[]>([]);
+  const [folders, setFolders] = useState<FolderMeta[]>([]);
 
   // open file select
   const handleClick = () => {
@@ -106,10 +81,8 @@ export default function ImageUpload() {
   };
 
   // select files to upload
-  const handleSelect = (e) => {
-    // e.preventDefault();
-
-    const myFiles = e.target.files ?? null;
+  const handleSelect = (event: ChangeEvent<HTMLInputElement>) => {
+    const myFiles = event.target.files ?? null;
 
     // const formData = new FormData();
 
@@ -120,77 +93,30 @@ export default function ImageUpload() {
     setFiles(myFiles);
   };
 
-  const handleRemove = (key) => {
+  const handleRemove = (key: string) => {
     console.log(key, files);
     // || confirm("Remove this image?")
-    if (false) {
-      setFiles((curr) => {
-        if (curr) {
-          delete curr[key];
-          return { ...curr };
-        }
-      });
-    }
+    setFiles((curr: any) => {
+      if (curr) {
+        delete curr[key];
+        return { ...curr };
+      }
+    });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!files) return;
 
-    const promises = Object.keys(files).map((fileKey, index) => {
-      return uploadFile(files[fileKey], foldername);
+    const promises = Object.keys(files).map((fileKey) => {
+      return uploadFile({ file: files[fileKey], foldername });
     });
 
     await Promise.all(promises);
 
     setFiles(null);
     toast.success("Images uploaded");
-
-    // await axiosPrivate
-    //   .post("/admin/images", files, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       toast.success("Files uploaded");
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     toast.error("Error uploadng files");
-    //   });
   };
-
-  const handleFetch = async () => {
-    // await axiosPrivate.get("/admin/images").then((response) => {
-    //   if (response.status === 200 && Array.isArray(response?.data)) {
-    //     setImages(response.data);
-    //   }
-    // });
-
-    // await getImages()
-    //   .then((data) => {
-    //     if (Array.isArray(data)) {
-    //       setImages(data);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
-
-    const response = await getFiles(value);
-    setImages(response.files);
-    setFolders(response.folders);
-  };
-
-  const handleDelete = async (image) => {
-    if (confirm("Delete this image?")) {
-      await deleteFile(image);
-    }
-  };
-
-  useEffect(() => {
-    handleFetch();
-  }, [value, files]);
 
   const isRoot = foldername === "" || foldername === "/";
 
@@ -202,8 +128,8 @@ export default function ImageUpload() {
     setFoldername(pathname.join("/"));
   };
 
-  const handleAddFolder = (e) => {
-    e.preventDefault();
+  const handleAddFolder = (event: FormEvent) => {
+    event.preventDefault();
     setFoldername((curr) => {
       const currPath = curr.split("/");
       const temp = newFolder.split("/");
@@ -325,7 +251,6 @@ export default function ImageUpload() {
             <button
               className="absolute top-0 right-0 invisible opacity-0 group-hover:opacity-100 group-hover:visible duration-200"
               title="Delete Image"
-              onClick={() => handleDelete(item)}
             >
               <BiX size={30} />
             </button>

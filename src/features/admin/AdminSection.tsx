@@ -19,6 +19,8 @@ import AdminSentenceContainer from "./AdminSentenceContainer";
 import FormSentenceEdit from "../sentences/FormSentenceEdit";
 import FormSentenceMove from "../sentences/FormSentenceMove";
 import { selectSectionSentences } from "../sentences/sentencesSlice";
+import FormBulkMove from "../sentences/FormBulkMove";
+import { BiX } from "react-icons/bi";
 
 export default function AdminSection({
   section = null,
@@ -56,6 +58,26 @@ export default function AdminSection({
   const [showEditSentence, setShowEditSentence] = useState(false);
   const [showMoveSentence, setShowMoveSentence] = useState(false);
   const [editItem, setEditItem] = useState<Sentence | null>(null);
+
+  const [bulkMove, setBulkMove] = useState(false);
+  const [selectedSentences, setSelectedSentences] = useState<string[]>([]);
+
+  const handleSelectSentence = (id: string) => {
+    const index = selectedSentences.findIndex((item) => item === id);
+    if (index >= 0) {
+      const temp = [...selectedSentences];
+      temp.splice(index, 1);
+      setSelectedSentences(temp);
+    } else {
+      setSelectedSentences((curr) => [...curr, id]);
+    }
+  };
+
+  const handleClear = () => {
+    if (confirm("Clear selected sentences?")) {
+      setSelectedSentences([]);
+    }
+  };
 
   let content = sectionWords // [...words]
     .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
@@ -103,7 +125,16 @@ export default function AdminSection({
             )}
           </div>
         </div>
-
+        <div className="flex items-center justify-end bg-zinc-100 rounded-md p-2 ml-auto">
+          <button onClick={() => setBulkMove(true)}>
+            {selectedSentences?.length === 1
+              ? `1 Sentence`
+              : `${selectedSentences?.length} Sentences`}
+          </button>
+          <button onClick={handleClear}>
+            <BiX size={20} />
+          </button>
+        </div>
         <div className={" flex flex-col gap-4 duration-200"}>
           {Array.isArray(section?.introduction) &&
           sectionIntroduction &&
@@ -190,6 +221,14 @@ export default function AdminSection({
                     setEdit={setShowEditSentence}
                     setMove={setShowMoveSentence}
                     setEditItem={setEditItem}
+                    section={section}
+                    handleSelectSentence={handleSelectSentence}
+                    selected={
+                      selectedSentences.findIndex((id) => id === sentence.id) >=
+                      0
+                        ? true
+                        : false
+                    }
                   >
                     <Sentence sentence={sentence} key={sentence?.id} />
                   </AdminSentenceContainer>
@@ -232,6 +271,13 @@ export default function AdminSection({
       )}
       {showMoveSentence && editItem && (
         <FormSentenceMove sentence={editItem} setEdit={setShowMoveSentence} />
+      )}
+      {bulkMove && (
+        <FormBulkMove
+          sentences={selectedSentences}
+          setEdit={setBulkMove}
+          setSelected={setSelectedSentences}
+        />
       )}
     </div>
   );

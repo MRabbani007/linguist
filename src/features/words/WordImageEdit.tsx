@@ -1,25 +1,20 @@
-import React, {
+import {
   Dispatch,
+  FormEvent,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { toast } from "react-toastify";
 import FormContainer from "../components/FormContainer";
-import { getFiles } from "../../data/storage";
 import { IoArrowBack, IoFolderOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectImageFolder,
-  selectImagesFetch,
-  setImageFolder,
-  setImagesFetch,
-} from "../admin/adminSlice";
+import { useDispatch } from "react-redux";
+import { setImageFolder, setImagesFetch } from "../admin/adminSlice";
 import { IoIosArrowForward } from "react-icons/io";
 import { useEditWordMutation } from "./wordsSlice";
+import { getFiles } from "@/data/storage";
 
-const imageFileTypes = ["png", "svg", "jpg", "jpeg"];
+// const imageFileTypes = ["png", "svg", "jpg", "jpeg"];
 
 export default function WordImageEdit({
   word,
@@ -35,16 +30,16 @@ export default function WordImageEdit({
 
   const [foldername, setFoldername] = useState("images"); //pathname ||
 
-  const [images, setImages] = useState([]); //lastFetch?.images ||
-  const [folders, setFolders] = useState([]); //lastFetch?.folders ||
+  const [images, setImages] = useState<FileMeta[]>([]);
+  const [folders, setFolders] = useState<FolderMeta[]>([]); //lastFetch?.folders ||
 
-  const [editWordDetails, { isLoading }] = useEditWordMutation();
+  const [editWordDetails] = useEditWordMutation();
 
   const [image, setImage] = useState(word?.imageURL || "");
-  const [fileType, setFileType] = useState(() =>
-    word?.image ? word?.image.split(".")[1] : "png"
-  );
-  const [input, setInput] = useState("");
+  // const [fileType, setFileType] = useState(() =>
+  //   word?.image ? word?.image.split(".")[1] : "png"
+  // );
+  // const [input, setInput] = useState("");
 
   const canSave = image !== "";
   // fileType === "other" ? input !== "" : true;
@@ -63,8 +58,8 @@ export default function WordImageEdit({
     setFolders(response.folders);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     try {
       if (canSave) {
         // const newImage = fileType === "other" ? input : fileType;: image + "." + newImage

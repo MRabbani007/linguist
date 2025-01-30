@@ -46,6 +46,31 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Sentence", id: "SENTENCELIST" }],
     }),
+    getLessonSentences: builder.query({
+      query: (lessonID: string) => ({
+        url: "/admin/sentences/lesson",
+        method: "GET",
+        params: { lessonID },
+      }),
+      transformResponse: (response: any) => {
+        // Assuming the API response is { todos: [...], total: number }
+        const { data, count }: { data: Sentence[]; count: number } = response;
+        const sorted = [...data].sort((a, b) =>
+          a?.sortIndex > b?.sortIndex ? 1 : -1
+        );
+        return { data: sorted, count }; // Structure the response for easy usage in components
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result?.data.map(({ id }) => ({
+                type: "Sentence" as const,
+                id,
+              })), // Provide tags for each todo
+              { type: "Sentence", id: "SENTENCELIST" }, // A special tag to track the entire list
+            ]
+          : [{ type: "Sentence", id: "SENTENCELIST" }],
+    }),
     addSentence: builder.mutation({
       query: (sentence) => ({
         url: "/admin/sentences",
@@ -72,14 +97,32 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         { type: "Sentence", id: arg.id },
       ],
     }),
+    bulkMoveSentences: builder.mutation({
+      query: ({
+        sentences,
+        lessonID,
+        sectionID,
+      }: {
+        sentences: string[];
+        lessonID: string;
+        sectionID: string;
+      }) => ({
+        url: "/admin/sentences/bulk/move",
+        method: "PATCH",
+        body: { sentences, lessonID, sectionID },
+      }),
+      invalidatesTags: [{ type: "Sentence", id: "SENTENCELIST" }],
+    }),
   }),
 });
 
 export const {
   useLazyGetAdminSentencesQuery,
+  useLazyGetLessonSentencesQuery,
   useAddSentenceMutation,
   useEditSentenceMutation,
   useRemoveSentenceMutation,
+  useBulkMoveSentencesMutation,
 } = sentencesApiSlice;
 
 export const selectSectionSentences = (

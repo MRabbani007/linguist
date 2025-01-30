@@ -324,6 +324,15 @@ declare global {
     repeatCount: number;
     id: string;
   };
+
+  type FolderMeta = { name: string; fullPath: string };
+  type FileMeta = { imageURL: string; filename: string; foldername: string };
+  type ImageMeta = {
+    id: string;
+    filename: string;
+    foldername: string;
+    imageURL: string;
+  };
 }
 
 export {};

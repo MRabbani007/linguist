@@ -7,14 +7,7 @@ import {
   deleteObject,
   listAll,
 } from "firebase/storage";
-import {
-  collection,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  getFirestore,
-  doc,
-} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDUdk3pT127JwPF28wQkywvZ-o9O9Ijz9s",
@@ -34,7 +27,7 @@ export const firestoreDB = getFirestore(firebase);
 
 export const storage = getStorage(firebase);
 
-export async function getFiles(foldername) {
+export async function getFiles(foldername: string) {
   // Create a reference under which you want to list
   const listRef = ref(storage, foldername);
 
@@ -53,7 +46,7 @@ export async function getFiles(foldername) {
   //   // Uh-oh, an error occurred!
   // });
 
-  const files = [];
+  const files: FileMeta[] = [];
 
   const promises = res.items.map(async (item) => {
     const imageURL = await getDownloadURL(item);
@@ -69,7 +62,13 @@ export async function getFiles(foldername) {
   return { files, folders };
 }
 
-export async function uploadFile(file, foldername) {
+export async function uploadFile({
+  foldername,
+  file,
+}: {
+  foldername: string;
+  file: File;
+}) {
   const filename = file.name;
   // create reference
   const storageRef = ref(storage, `${foldername}/${filename}`);
@@ -92,17 +91,17 @@ export async function uploadFile(file, foldername) {
   };
 }
 
-export async function deleteFile({ foldername, filename }) {
+export async function deleteFile({
+  foldername,
+  filename,
+}: {
+  foldername: string;
+  filename: string;
+}) {
   console.log(foldername, filename);
   // Create a reference to the file to delete
   const storageRef = ref(storage, `${foldername}/${filename}`);
 
   // Delete the file
-  await deleteObject(storageRef)
-    .then(() => {
-      // File deleted successfully
-    })
-    .catch((error) => {
-      // Uh-oh, an error occurred!
-    });
+  await deleteObject(storageRef);
 }

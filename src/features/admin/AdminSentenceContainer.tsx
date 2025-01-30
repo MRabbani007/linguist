@@ -10,11 +10,19 @@ export default function AdminSentenceContainer({
   setMove,
   setEditItem,
   children,
+  handleSelectSentence,
+  selected,
+  lesson,
+  section,
 }: {
   sentence: Sentence;
   setEdit: Dispatch<SetStateAction<boolean>>;
   setMove: Dispatch<SetStateAction<boolean>>;
   setEditItem: Dispatch<SetStateAction<Sentence | null>>;
+  handleSelectSentence?: (id: string) => void;
+  selected?: boolean;
+  lesson?: Lesson;
+  section?: Section;
   children?: ReactNode;
 }) {
   const editMode = useSelector(selectEditMode);
@@ -23,7 +31,14 @@ export default function AdminSentenceContainer({
     <div className="relative group">
       {children}
       {editMode && (
-        <div className="absolute top-2 right-2 space-x-2">
+        <div className="absolute top-2 right-2 flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={selected ?? false}
+            onChange={() =>
+              handleSelectSentence && handleSelectSentence(sentence.id)
+            }
+          />
           <button
             title="Move"
             className=" bg-zinc-50 p-1 rounded-md"
@@ -48,8 +63,11 @@ export default function AdminSentenceContainer({
       )}
       {editMode && (
         <div className="absolute bottom-0 right-2 text-sm">
-          <p>{sentence.lessonID}</p>
-          <p>{sentence.sectionID}</p>
+          <p>
+            <span>{lesson?.title}</span>
+            <span>{lesson?.subtitle}</span>
+          </p>
+          <p>{section?.title}</p>
         </div>
       )}
     </div>
