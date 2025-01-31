@@ -6,6 +6,7 @@ import { selectCurrentUser } from "../auth/authSlice";
 import { useDeleteListWordMutation } from "../profile/profileSlice";
 import { toast } from "react-toastify";
 import { BiX } from "react-icons/bi";
+import { motion } from "framer-motion";
 
 export default function WordContainer({
   word,
@@ -43,7 +44,14 @@ export default function WordContainer({
 
   return (
     <>
-      <div className="relative group">
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        transition={{ type: "spring", stiffness: 100, damping: 12 }}
+        className="relative group"
+      >
         {user && (
           <>
             {wordData?.id ? (
@@ -64,7 +72,7 @@ export default function WordContainer({
           </>
         )}
         {children}
-      </div>
+      </motion.div>
       {user && addToList && <FormAddtoList setAdd={setAddToList} word={word} />}
     </>
   );

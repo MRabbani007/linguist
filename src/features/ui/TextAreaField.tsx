@@ -5,6 +5,7 @@ type Props = {
   name: string;
   value: string | number;
   handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  autoFocus?: boolean;
 };
 
 export default function TextAreaField({
@@ -12,6 +13,7 @@ export default function TextAreaField({
   name,
   value = "",
   handleChange,
+  autoFocus = false,
 }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[15%_1fr] items-center gap-2">
@@ -24,6 +26,7 @@ export default function TextAreaField({
       <textarea
         id={name}
         name={name}
+        autoFocus={autoFocus}
         placeholder={label}
         className="bg-transparent border-[1px] border-zinc-300 rounded-md line-clamp-2 min-h-20 p-2"
         value={value ?? ""}

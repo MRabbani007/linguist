@@ -73,7 +73,7 @@ export default function FormContainer({
       <form
         onSubmit={onSubmit}
         onReset={handleReset}
-        className="bg-zinc-100 min-w-fit w-full max-w-[1024px] mx-4 flex flex-col"
+        className="bg-zinc-100 min-w-fit w-full max-w-[1024px] mx-4 flex flex-col rounded-lg overflow-clip"
       >
         <div className="py-2 px-4 bg-zinc-800 text-white flex items-center gap-4">
           <h2 className="flex-1 ">{title}</h2>

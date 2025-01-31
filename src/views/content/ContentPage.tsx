@@ -6,6 +6,7 @@ import {
 import CardChapter from "../../features/chapters/CardChapter";
 import CardLesson from "../../features/lessons/CardLesson";
 import { TfiLayoutListThumb } from "react-icons/tfi";
+import { motion } from "framer-motion";
 
 export default function ContentPage() {
   const chapters = useSelector(selectChapters);
@@ -23,9 +24,28 @@ export default function ContentPage() {
       </header>
       {chapters.map((chapter, index) => {
         return (
-          <div className="flex flex-col items-stretch" key={index}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.2 },
+              },
+            }}
+            viewport={{ once: true, amount: 0.2 }} // Triggers when 20% is in view
+            className="flex flex-col items-stretch"
+            key={index}
+          >
             <CardChapter chapter={chapter} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-6">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              transition={{ staggerChildren: 0.2, delay: 0.6 }}
+              viewport={{ once: true, amount: 0.2 }} // Triggers when 20% is in view
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-6"
+            >
               {lessons
                 .filter((item) => item.chapterID === chapter.id)
                 .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
@@ -34,8 +54,8 @@ export default function ContentPage() {
                     <CardLesson lesson={lesson} chapter={chapter} key={idx} />
                   );
                 })}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         );
       })}
     </main>

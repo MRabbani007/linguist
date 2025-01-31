@@ -1,21 +1,28 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { selectEditMode } from "./adminSlice";
 import { IoOpenOutline } from "react-icons/io5";
+import { motion } from "framer-motion";
 
 export default function AdminSentenceContainer({
   sentence,
+  sortIndex,
   setEdit,
   setMove,
   setEditItem,
-  children,
   handleSelectSentence,
   selected,
   lesson,
   section,
+  isDraggable = false,
+  onDragStart,
+  onDragEnter,
+  onDragEnd,
+  children,
 }: {
   sentence: Sentence;
+  sortIndex?: number;
   setEdit: Dispatch<SetStateAction<boolean>>;
   setMove: Dispatch<SetStateAction<boolean>>;
   setEditItem: Dispatch<SetStateAction<Sentence | null>>;
@@ -23,15 +30,57 @@ export default function AdminSentenceContainer({
   selected?: boolean;
   lesson?: Lesson;
   section?: Section;
+  isDraggable?: boolean;
+  onDragStart?: (params: any) => void;
+  onDragEnter?: (params: any) => void;
+  onDragEnd?: (params?: any) => void;
   children?: ReactNode;
 }) {
   const editMode = useSelector(selectEditMode);
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [isOver, setIsOver] = useState(false);
+
+  const handleDragStart = () => {
+    setIsDragging(true);
+    onDragStart && onDragStart(sentence);
+  };
+  const handleDragEnter = () => {
+    onDragEnter && onDragEnter(sentence);
+    setIsOver(true);
+  };
+  const handleDragLeave = () => {
+    setIsOver(false);
+  };
+  const handleDragEnd = () => {
+    onDragEnd && onDragEnd();
+    setIsDragging(false);
+    setIsOver(false);
+  };
+
   return (
-    <div className="relative group">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.4 }}
+      draggable={isDraggable}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragEnd={handleDragEnd}
+      className="relative group"
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        borderWidth: isOver ? "2px" : "0px",
+        borderColor: isOver ? "grey" : "",
+        cursor: isDraggable ? "move" : "default",
+      }}
+    >
       {children}
       {editMode && (
         <div className="absolute top-2 right-2 flex items-center gap-2">
+          <span>{sortIndex}</span>
           <input
             type="checkbox"
             checked={selected ?? false}
@@ -70,6 +119,6 @@ export default function AdminSentenceContainer({
           <p>{section?.title}</p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

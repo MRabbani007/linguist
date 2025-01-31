@@ -23,6 +23,7 @@ import AdminSentenceContainer from "@/features/admin/AdminSentenceContainer";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
 import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";
 import { selectEditMode } from "@/features/admin/adminSlice";
+import { motion } from "framer-motion";
 
 export default function SentencesPage() {
   const displayBlock = useSelector(selectDisplayLesson);
@@ -224,7 +225,21 @@ export default function SentencesPage() {
           </button>
           <Pagination currentPage={+page} count={count} className="ml-auto" />
         </div>
-        <div className="w-full flex flex-col gap-2">{content}</div>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.6, duration: 0.3, delay: 0.5 }, // Staggers children animations
+            },
+          }}
+          className="w-full flex flex-col gap-2"
+        >
+          {content}
+        </motion.div>
         <Pagination currentPage={+page} count={count} />
         <div className="my-2">
           {displayBlock?.id ? (

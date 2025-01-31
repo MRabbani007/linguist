@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { BsChatLeftText, BsTextParagraph } from "react-icons/bs";
 import FormSectionEdit from "../sections/FormSectionEdit";
 import { RxTextAlignLeft } from "react-icons/rx";
@@ -16,12 +16,34 @@ import FormSectionMove from "../sections/FormSectionMove";
 import FormAddTextBlock from "../textBlock/FormAddTextBlock";
 import FormDefinitionAdd from "../definitions/FormDefinitionAdd";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
+import { useSelector } from "react-redux";
+import { selectLessonSections } from "../globals/globalsApiSlice";
+import { selectSectionSentences } from "../sentences/sentencesSlice";
+import { selectSectionText } from "../textBlock/textBlockSlice";
+import { selectSectionWords } from "../words/wordsSlice";
 
 export default function AdminSectionContainer({
-  section: item,
+  section,
+  children,
 }: {
   section: ContentSection;
+  children?: ReactNode;
 }) {
+  const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
+
+  const sectionWords =
+    useSelector(
+      selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
+    ) ?? [];
+
+  const sectionSentences = useSelector(
+    selectSectionSentences(section?.lessonID ?? "", 300, section?.id ?? "")
+  );
+
+  const sectionIntroduction = useSelector(
+    selectSectionText(section?.id ?? "", section?.lessonID ?? "")
+  );
+
   const [editHeader, setEditHeader] = useState(false);
   const [editImage, setEditImage] = useState(false);
   const [addIntro, setAddIntro] = useState(false);
@@ -33,7 +55,7 @@ export default function AdminSectionContainer({
   const [moveSection, setMoveSection] = useState(false);
 
   const copyIDtoClipboard = () => {
-    const isCopy = copy(item?.id);
+    const isCopy = copy(section?.id);
     if (isCopy) {
       toast.success("Section ID Copied");
     }
@@ -130,43 +152,45 @@ export default function AdminSectionContainer({
     <div className="relative">
       <AdminDropDown items={items} />
       <AdminSection
-        key={item.id}
-        definitions={item.definitions}
-        section={item}
-        sectionLists={item.sectionLists}
-        tables={item.tables}
+        section={section}
+        sectionIntroduction={sectionIntroduction ?? []}
+        sectionWords={sectionWords}
+        sentences={sectionSentences}
       />
-      {editHeader && <FormSectionEdit section={item} setEdit={setEditHeader} />}
+      {children}
+      {editHeader && (
+        <FormSectionEdit section={section} setEdit={setEditHeader} />
+      )}
       {addWord && (
         <FormWordAdd
           setAdd={setAddWord}
-          sectionID={item.id}
-          lessonID={item.lessonID}
+          sectionID={section.id}
+          lessonID={section.lessonID}
         />
       )}
       {moveSection && (
-        <FormSectionMove setEdit={setMoveSection} section={item} />
+        <FormSectionMove setEdit={setMoveSection} section={section} />
       )}
       {addIntro && (
         <FormAddTextBlock
           setAdd={setAddIntro}
-          lessonID={item.lessonID}
-          sectionID={item.id}
+          lessonID={section.lessonID}
+          sectionID={section.id}
           scope="introduction"
         />
       )}
       {addDef && (
         <FormDefinitionAdd
           setAdd={setAddDef}
-          lessonID={item.lessonID}
-          sectionID={item.id}
+          lessonID={section.lessonID}
+          sectionID={section.id}
         />
       )}
       {addSentence && (
         <FormSentenceAdd
-          section={item}
+          section={section}
           setAdd={setAddSentence}
-          words={item.words}
+          words={section.words}
         />
       )}
     </div>

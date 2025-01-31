@@ -45,12 +45,13 @@ export default function FormWordAdd({
     setValue(state);
     if (canSave) {
       try {
-        await addWord({
+        const response = await addWord({
           ...state,
           id: crypto.randomUUID(),
           lessonID,
           sectionID,
-        });
+        }).unwrap();
+        console.log(response);
         toast.success("Word Added");
         if (clearOnSubmit) {
           setState(value);

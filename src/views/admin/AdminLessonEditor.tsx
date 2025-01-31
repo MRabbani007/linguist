@@ -25,7 +25,7 @@ export default function AdminLessonEditor() {
 
   const [getLessonTextBlocks] = useLazyGetLessonTextBlocksQuery();
 
-  const [getLessonWords] = useLazyGetLessonWordsQuery();
+  const [getLessonWords, { data: words }] = useLazyGetLessonWordsQuery();
 
   useEffect(() => {
     if (id && id !== "") {
@@ -66,7 +66,10 @@ export default function AdminLessonEditor() {
     content = <p>Error</p>;
   } else if (isSuccess) {
     content = data.map((item: any) => (
-      <AdminSectionContainer section={item} key={item.id} />
+      <AdminSectionContainer
+        section={item}
+        key={item.id}
+      ></AdminSectionContainer>
     ));
   }
 

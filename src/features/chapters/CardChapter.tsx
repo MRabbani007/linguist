@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setDisplayChapter } from "../globals/globalsSlice";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function CardChapter({ chapter }: { chapter: Chapter }) {
   const dispatch = useDispatch();
@@ -23,7 +24,12 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
       : null;
 
   return (
-    <div className="flex items-stretch duration-200 group relative group">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="flex items-stretch duration-200 group relative group"
+    >
       {/* Chapter Number */}
       <p className="bg-red-600 w-10 text-lg flex items-center justify-center text-white rounded-lg">
         {chapter?.chapterNo}
@@ -49,6 +55,6 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
       >
         {level?.short}
       </p>
-    </div>
+    </motion.div>
   );
 }

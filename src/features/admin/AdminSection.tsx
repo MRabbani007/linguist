@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardWord from "../words/CardWord";
 import Definition from "../definitions/Definition";
 import ListSection from "../sectionList/ListSection";
@@ -8,46 +8,31 @@ import { Link } from "react-router-dom";
 import AdminContainerWord from "./AdminContainerWord";
 import FormWordEdit from "../words/FormWordEdit";
 import { useFetchAttributes } from "@/hooks/useFetchAttributes";
-import { useSelector } from "react-redux";
-import { selectLessonSections } from "../globals/globalsApiSlice";
-import { selectSectionWords } from "../words/wordsSlice";
 import FormWordMove from "../words/FormWordMove";
-import { selectSectionText } from "../textBlock/textBlockSlice";
 import CardTextBlock from "../textBlock/CardTextBlock";
 import SectionIntroItem from "../sections/SectionIntroItem";
 import AdminSentenceContainer from "./AdminSentenceContainer";
 import FormSentenceEdit from "../sentences/FormSentenceEdit";
 import FormSentenceMove from "../sentences/FormSentenceMove";
-import { selectSectionSentences } from "../sentences/sentencesSlice";
+import { useSortSentencesMutation } from "../sentences/sentencesSlice";
 import FormBulkMove from "../sentences/FormBulkMove";
-import { BiX } from "react-icons/bi";
+import { BiSort, BiX } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { AnimatePresence } from "framer-motion";
 
 export default function AdminSection({
   section = null,
-  definitions = [],
-  sectionLists = [],
-  tables = [],
+  sectionIntroduction,
+  sectionWords,
+  sentences: sectionSentences,
 }: {
-  section: Section | null;
-  definitions: Definition[];
-  sectionLists: SectionList[];
-  tables: (ConjTable & { tableWords: TableWord[] })[];
+  section: ContentSection | null;
+  sectionIntroduction: TextBlock[];
+  sectionWords: Word[];
+  sentences: Sentence[];
 }) {
-  const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
+  const [sortSentences] = useSortSentencesMutation();
   const [attributes] = useFetchAttributes();
-
-  const sectionWords =
-    useSelector(
-      selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
-    ) ?? [];
-
-  const sectionSentences = useSelector(
-    selectSectionSentences(section?.lessonID ?? "", 300, section?.id ?? "")
-  );
-
-  const sectionIntroduction = useSelector(
-    selectSectionText(section?.id ?? "", section?.lessonID ?? "")
-  );
 
   const [expandSentences, setExpandSentences] = useState(true);
 
@@ -61,6 +46,47 @@ export default function AdminSection({
 
   const [bulkMove, setBulkMove] = useState(false);
   const [selectedSentences, setSelectedSentences] = useState<string[]>([]);
+
+  const [showSortSentences, setShowSortSentences] = useState(false);
+  const [sortedSentences, setSortedSentences] = useState(sectionSentences);
+
+  const [dragItem, setDragItem] = useState<Sentence | null>(null);
+  const [dragOverItem, setDragOverItem] = useState<Sentence | null>(null);
+
+  const dragStart = (sentence: Sentence) => {
+    setDragItem(sentence);
+  };
+  const dragEnter = (sentence: Sentence) => {
+    setDragOverItem(sentence);
+  };
+  const dragEnd = () => {
+    // Reset
+    if (!dragItem || !dragOverItem) {
+      setDragItem(null);
+      setDragOverItem(null);
+      return null;
+    }
+
+    const dragItemIndex = sortedSentences.findIndex(
+      (item) => item.id === dragItem.id
+    );
+    const dragOverItemIndex = sortedSentences.findIndex(
+      (item) => item.id === dragOverItem.id
+    );
+
+    if (dragItemIndex < 0 || dragOverItemIndex < 0) {
+      return null;
+    }
+
+    const sortedItems = [...sortedSentences];
+    sortedItems.splice(dragItemIndex, 1);
+    sortedItems.splice(dragOverItemIndex, 0, dragItem);
+
+    setSortedSentences(sortedItems);
+
+    setDragItem(null);
+    setDragOverItem(null);
+  };
 
   const handleSelectSentence = (id: string) => {
     const index = selectedSentences.findIndex((item) => item === id);
@@ -79,12 +105,34 @@ export default function AdminSection({
     }
   };
 
+  const handleSort = async () => {
+    const sentenceData = sortedSentences.map((item, sortIndex) => ({
+      id: item.id,
+      sortIndex,
+    }));
+
+    const response = await sortSentences({ sentences: sentenceData }).unwrap();
+
+    if (response) {
+      toast.success("Sentences updated");
+      setShowSortSentences(false);
+    } else {
+      toast.error("Error saving sort");
+    }
+  };
+
+  useEffect(() => {
+    if (showSortSentences === false) {
+      setSortedSentences(sectionSentences);
+    }
+  }, [showSortSentences]);
+
   let content = sectionWords // [...words]
     .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
-    .map((word, index) => (
+    .map((word) => (
       <AdminContainerWord
         word={word}
-        key={index}
+        key={word.id}
         setMove={setShowMoveWord}
         setEdit={setShowEditWord}
         setEditItem={setEditWord}
@@ -93,15 +141,15 @@ export default function AdminSection({
       </AdminContainerWord>
     ));
 
-  const temp = expandSentences
-    ? sectionSentences
-    : sectionSentences.slice(0, 2);
+  const temp2 = showSortSentences ? sortedSentences : sectionSentences;
+  const temp = expandSentences ? temp2 : temp2.slice(0, 2);
 
   if (!section) return null;
 
   return (
     <div key={section.id}>
       <section>
+        {/* Section Title */}
         <div className="flex items-stretch group relative">
           <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg">
             {(section?.sortIndex ? section?.sortIndex : 0).toLocaleString(
@@ -125,23 +173,54 @@ export default function AdminSection({
             )}
           </div>
         </div>
-        <div className="flex items-center justify-end bg-zinc-100 rounded-md p-2 ml-auto">
-          <button onClick={() => setBulkMove(true)}>
-            {selectedSentences?.length === 1
-              ? `1 Sentence`
-              : `${selectedSentences?.length} Sentences`}
-          </button>
-          <button onClick={handleClear}>
-            <BiX size={20} />
-          </button>
+        {/* Control buttons */}
+        <div className="flex items-center gap-4">
+          {showSortSentences ? (
+            <div className="ml-auto rounded-md p-1 flex items-center gap-2 bg-zinc-50">
+              <BiSort size={20} />
+              <button
+                onClick={handleSort}
+                className="bg-green-100 py-1 px-2 flex items-center text-sm"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setShowSortSentences(false)}
+                title={"Sort Sentences"}
+                className=" bg-zinc-100 rounded-md p-1"
+              >
+                <BiX size={20} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setShowSortSentences(true)}
+              title={"Sort Sentences"}
+              className=" ml-auto bg-zinc-100 rounded-md p-2"
+            >
+              <BiSort size={20} />
+            </button>
+          )}
+          <div className="flex items-center bg-zinc-100 rounded-md p-2">
+            <button onClick={() => setBulkMove(true)}>
+              {selectedSentences?.length === 1
+                ? `1 Sentence`
+                : `${selectedSentences?.length} Sentences`}
+            </button>
+            {selectedSentences.length > 0 && (
+              <button onClick={handleClear}>
+                <BiX size={20} />
+              </button>
+            )}
+          </div>
         </div>
         <div className={" flex flex-col gap-4 duration-200"}>
           {Array.isArray(section?.introduction) &&
           sectionIntroduction &&
           sectionIntroduction.length !== 0 ? (
             <article className="flex flex-col gap-0 text-zinc-800">
-              {sectionIntroduction.map((item, index) => {
-                return <CardTextBlock key={index} textBlock={item} />;
+              {sectionIntroduction.map((item) => {
+                return <CardTextBlock key={item.id} textBlock={item} />;
               })}
             </article>
           ) : null}
@@ -172,9 +251,10 @@ export default function AdminSection({
             </div>
           )}
 
-          {Array.isArray(definitions) && definitions.length !== 0 ? (
+          {Array.isArray(section?.definitions) &&
+          section?.definitions.length !== 0 ? (
             <div className="flex flex-col gap-4">
-              {definitions.map((definition) => {
+              {section?.definitions.map((definition) => {
                 return (
                   <Definition definition={definition} key={definition?.id} />
                 );
@@ -182,17 +262,18 @@ export default function AdminSection({
             </div>
           ) : null}
 
-          {Array.isArray(sectionLists) && sectionLists.length !== 0 ? (
+          {Array.isArray(section?.sectionLists) &&
+          section?.sectionLists.length !== 0 ? (
             <div className="flex flex-col gap-4">
-              {sectionLists.map((list) => {
+              {section?.sectionLists.map((list) => {
                 return <ListSection list={list} key={list?.id} />;
               })}
             </div>
           ) : null}
 
-          {Array.isArray(tables) && tables.length !== 0 && (
+          {Array.isArray(section?.tables) && section?.tables.length !== 0 && (
             <div className="flex flex-col gap-4">
-              {tables.map((table) => {
+              {section?.tables.map((table) => {
                 return (
                   <CardConjTable
                     key={table?.id}
@@ -210,30 +291,38 @@ export default function AdminSection({
           </div>
 
           {Array.isArray(sectionSentences) && sectionSentences.length !== 0 ? (
-            <div className="flex flex-col gap-4">
-              {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">
-                Examples
-              </p> */}
-              {temp.map((sentence) => {
-                return (
-                  <AdminSentenceContainer
-                    sentence={sentence}
-                    setEdit={setShowEditSentence}
-                    setMove={setShowMoveSentence}
-                    setEditItem={setEditItem}
-                    section={section}
-                    handleSelectSentence={handleSelectSentence}
-                    selected={
-                      selectedSentences.findIndex((id) => id === sentence.id) >=
-                      0
-                        ? true
-                        : false
-                    }
-                  >
-                    <Sentence sentence={sentence} key={sentence?.id} />
-                  </AdminSentenceContainer>
-                );
-              })}
+            <div
+              className={(showSortSentences ? "" : "") + " flex flex-col gap-4"}
+            >
+              <AnimatePresence>
+                {temp.map((sentence) => {
+                  return (
+                    <AdminSentenceContainer
+                      key={sentence.id}
+                      sentence={sentence}
+                      sortIndex={sentence.sortIndex}
+                      setEdit={setShowEditSentence}
+                      setMove={setShowMoveSentence}
+                      setEditItem={setEditItem}
+                      section={section}
+                      handleSelectSentence={handleSelectSentence}
+                      selected={
+                        selectedSentences.findIndex(
+                          (id) => id === sentence.id
+                        ) >= 0
+                          ? true
+                          : false
+                      }
+                      isDraggable={showSortSentences}
+                      onDragStart={dragStart}
+                      onDragEnter={dragEnter}
+                      onDragEnd={dragEnd}
+                    >
+                      <Sentence sentence={sentence} key={sentence?.id} />
+                    </AdminSentenceContainer>
+                  );
+                })}
+              </AnimatePresence>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <button onClick={() => setExpandSentences((curr) => !curr)}>
                   {expandSentences ? "Show Less" : "Show more"}
@@ -253,7 +342,7 @@ export default function AdminSection({
         <FormWordEdit
           setViewEdit={setShowEditWord}
           word={editWord}
-          sections={sections ?? []}
+          sections={[]} // TODO: provide lesson sections
           attributes={attributes as WordAttribute[]}
         />
       )}

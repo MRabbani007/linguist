@@ -4,6 +4,7 @@ import TreeImage from "../assets/tree_image.jpg";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../features/globals/globalsSlice";
 import { DEFAULT_LANG } from "../lib/defaultLanguage";
+import { motion } from "framer-motion";
 
 export default function HomePage() {
   const language = useSelector(selectLanguage) ?? DEFAULT_LANG;
@@ -13,17 +14,25 @@ export default function HomePage() {
   return (
     <main className="p-0 m-0 gap-0">
       <div className="min-h-[80vh] relative flex-1 bg-gradient-to-b from-red-600/40 to-white flex flex-col items-center justify-center">
-        <img
+        <motion.img
           src={WorldLang}
           alt="World_Language"
           width={400}
           height={350}
           className="w-full max-w-[600px]"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         />
         <p className="italic font-semibold text-xl text-destructive_foreground">
           Learn languages fast & easy
         </p>
-        <div className="flex flex-col md:flex-row flex-wrap items-center md:gap-4 gap-2 mt-2">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="flex flex-col md:flex-row flex-wrap items-center md:gap-4 gap-2 mt-2"
+        >
           {!!language?.name ? (
             <>
               <Link
@@ -47,7 +56,7 @@ export default function HomePage() {
           >
             {!!language?.name ? "Select Language" : "Start Now"}
           </Link>
-        </div>
+        </motion.div>
       </div>
       <div className="h-screen relative bg-red-600/40 flex flex-col items-center justify-center gap-6">
         <div className="custom-wave absolute top-0 left-0 w-full overflow-hidden ">

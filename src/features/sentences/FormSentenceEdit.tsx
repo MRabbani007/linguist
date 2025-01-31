@@ -14,6 +14,8 @@ import FormContainer from "../components/FormContainer";
 import { T_SENTENCE } from "@/data/templates";
 import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";
+import { TabContent, TabNavigator } from "../ui/MultiTabs";
+import TextAreaField from "../ui/TextAreaField";
 
 export default function FormSentenceEdit({
   sentence,
@@ -29,7 +31,9 @@ export default function FormSentenceEdit({
 
   const [state, setState] = useState({ ...T_SENTENCE, ...sentence });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setState((prevProps) => ({
       ...prevProps,
@@ -75,6 +79,8 @@ export default function FormSentenceEdit({
       }))
     : [];
 
+  const [page, setPage] = useState("Sentence");
+
   return (
     <FormContainer
       title="Edit Sentence"
@@ -85,88 +91,97 @@ export default function FormSentenceEdit({
       onDelete={handleDelete}
       closeForm={setEdit}
     >
-      <InputField
-        label="Sort Index"
-        name="sortIndex"
-        type="number"
-        value={state?.sortIndex}
-        handleChange={handleChange}
-      />
-      <SelectField
-        options={levelOptions}
-        label="Level"
-        value={state.level ?? ""}
-        onValueChange={(level) =>
-          setState((curr) => ({ ...curr, level: +level }))
-        }
-      />
-      <InputField
-        label="Sentence"
-        name="text"
-        type="text"
-        value={state?.text ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Translation"
-        name="translation"
-        type="text"
-        value={state?.translation ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Pronunce"
-        name="pronunce"
-        type="text"
-        value={state?.pronunce ?? ""}
-        handleChange={handleChange}
-      />
-      <SelectField
-        options={wordOptions}
-        label="Base Word"
-        value={state.baseWordID ?? ""}
-        onValueChange={(baseWordID) => {
-          const word = words
-            ? words.find((item) => item.id === baseWordID)
-            : null;
-          if (word) {
-            setState((curr) => ({
-              ...curr,
-              baseWordID,
-              baseWord: word.first,
-              baseWordTranslation: word.second,
-            }));
-          } else {
-            setState((curr) => ({
-              ...curr,
-              baseWordID: "",
-              baseWord: "",
-              baseWordTranslation: "",
-            }));
+      <TabNavigator
+        pages={["Sentence", "Details", "BaseWord"]}
+        page={page}
+        setPage={setPage}
+      ></TabNavigator>
+      <TabContent currentPage={page} pageName="Sentence">
+        <SelectField
+          options={levelOptions}
+          label="Level"
+          value={state.level ?? ""}
+          onValueChange={(level) =>
+            setState((curr) => ({ ...curr, level: +level }))
           }
-        }}
-      />
-      <InputField
-        label="Base Word"
-        name="baseWord"
-        type="text"
-        value={state?.baseWord ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Base Word Translation"
-        name="baseWordTranslation"
-        type="text"
-        value={state?.baseWordTranslation ?? ""}
-        handleChange={handleChange}
-      />
-      <InputField
-        label="Type"
-        name="type"
-        type="text"
-        value={state?.type ?? ""}
-        handleChange={handleChange}
-      />
+        />
+        <TextAreaField
+          label="Sentence"
+          name="text"
+          value={state.text}
+          handleChange={handleChange}
+        />
+        <TextAreaField
+          label="Translation"
+          name="translation"
+          value={state.translation}
+          handleChange={handleChange}
+        />
+      </TabContent>
+      <TabContent currentPage={page} pageName="Details">
+        <InputField
+          label="Sort Index"
+          name="sortIndex"
+          type="number"
+          value={state?.sortIndex}
+          handleChange={handleChange}
+        />
+        <InputField
+          label="Type"
+          name="type"
+          type="text"
+          value={state?.type ?? ""}
+          handleChange={handleChange}
+        />
+        <InputField
+          label="Pronunce"
+          name="pronunce"
+          type="text"
+          value={state?.pronunce ?? ""}
+          handleChange={handleChange}
+        />
+      </TabContent>
+      <TabContent currentPage={page} pageName="BaseWord">
+        <SelectField
+          options={wordOptions}
+          label="Base Word"
+          value={state.baseWordID ?? ""}
+          onValueChange={(baseWordID) => {
+            const word = words
+              ? words.find((item) => item.id === baseWordID)
+              : null;
+            if (word) {
+              setState((curr) => ({
+                ...curr,
+                baseWordID,
+                baseWord: word.first,
+                baseWordTranslation: word.second,
+              }));
+            } else {
+              setState((curr) => ({
+                ...curr,
+                baseWordID: "",
+                baseWord: "",
+                baseWordTranslation: "",
+              }));
+            }
+          }}
+        />
+        <InputField
+          label="Base Word"
+          name="baseWord"
+          type="text"
+          value={state?.baseWord ?? ""}
+          handleChange={handleChange}
+        />
+        <InputField
+          label="Base Word Translation"
+          name="baseWordTranslation"
+          type="text"
+          value={state?.baseWordTranslation ?? ""}
+          handleChange={handleChange}
+        />
+      </TabContent>
     </FormContainer>
   );
 }

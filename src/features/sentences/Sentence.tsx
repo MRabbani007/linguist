@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Sentence({
   sentence,
@@ -28,7 +29,15 @@ export default function Sentence({
   const baseWordIndex = -1;
 
   return (
-    <div className="w-full relative group flex items-stretch bg-red-50/50">
+    <motion.div
+      key={sentence.id}
+      variants={{
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      transition={{ type: "spring", stiffness: 100, damping: 12 }}
+      className="w-full relative group flex items-stretch bg-red-50/50"
+    >
       <div className={"w-1 min-h-full shrink-0 " + color}></div>
       <div
         className={display === "condensed" ? "py-2 px-4" : "p-4" + " flex-1 "}
@@ -85,6 +94,6 @@ export default function Sentence({
           </div>
         )} */}
       </div>
-    </div>
+    </motion.div>
   );
 }

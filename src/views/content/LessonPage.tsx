@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import Section from "@/features/sections/Section";
 import LessonCompleted from "@/features/lessons/LessonCompleted";
+import { motion } from "framer-motion";
+import ScrollProgressBar from "@/features/ui/ScrollProgressBar";
 
 export default function LessonPage() {
   const displayLesson = useSelector(selectDisplayLesson);
@@ -48,18 +50,26 @@ export default function LessonPage() {
     ));
   }
 
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, [displayLesson?.id]);
+
   return (
     <main className="bg-zinc-200 md:px-20">
+      <ScrollProgressBar />
       <div>
         <LessonHeader lesson={displayLesson} />
         <LessonNavigator />
       </div>
       {displayLesson?.lessonImage && (
         <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">
-          <img
+          <motion.img
             src={displayLesson?.lessonImage}
             alt=""
             className="max-h-[300px]"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
           />
         </div>
       )}
@@ -75,7 +85,15 @@ export default function LessonPage() {
           })}
         </div>
       ) : null}
-      {content}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        transition={{ staggerChildren: 0.2, delay: 1, duration: 1 }}
+        viewport={{ once: true, amount: 0.01 }} // Triggers when 20% is in view
+        className="flex flex-col gap-4"
+      >
+        {content}
+      </motion.div>
       <LessonNavigator />
       <ContentNavigator />
       {isSuccess && <LessonCompleted lessonID={displayLesson.id} />}

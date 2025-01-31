@@ -41,7 +41,7 @@ export default function Layout() {
   // const [
   //   getProfile,
   //   { data: userProfile, isLoading: isLoadingProfile, isSuccess },
-  // ] = useLazyGetProfileQuery();
+  // ] = useGetUserProfileQuery();
 
   // const user = useSelector(selectCurrentUser);
   const language = useSelector(selectLanguage);

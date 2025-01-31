@@ -6,6 +6,7 @@ type Props = {
   type: HTMLInputTypeAttribute;
   value: string | number;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
 };
 
 export default function InputField({
@@ -13,6 +14,7 @@ export default function InputField({
   label,
   name,
   value = "",
+  autoFocus = false,
   handleChange,
 }: Props) {
   return (
@@ -27,6 +29,7 @@ export default function InputField({
         type={type}
         id={name}
         name={name}
+        autoFocus={autoFocus}
         placeholder={label}
         value={value ?? ""}
         onChange={handleChange}

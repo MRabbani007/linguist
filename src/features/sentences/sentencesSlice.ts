@@ -113,6 +113,18 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Sentence", id: "SENTENCELIST" }],
     }),
+    sortSentences: builder.mutation({
+      query: ({
+        sentences,
+      }: {
+        sentences: { id: string; sortIndex: number }[];
+      }) => ({
+        url: "/admin/sentences/bulk/sort",
+        method: "PATCH",
+        body: { sentences },
+      }),
+      invalidatesTags: [{ type: "Sentence", id: "SENTENCELIST" }],
+    }),
   }),
 });
 
@@ -123,6 +135,7 @@ export const {
   useEditSentenceMutation,
   useRemoveSentenceMutation,
   useBulkMoveSentencesMutation,
+  useSortSentencesMutation,
 } = sentencesApiSlice;
 
 export const selectSectionSentences = (

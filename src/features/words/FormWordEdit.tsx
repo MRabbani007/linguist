@@ -239,14 +239,14 @@ export default function FormWordEdit({
           handleChange={handleChange}
         />
         {/* Move to section */}
-        <SelectField
+        {/* <SelectField
           label="Move To Section"
           value={state.sectionID}
           options={sections}
           onValueChange={(sectionID) =>
             setState((curr) => ({ ...curr, sectionID }))
           }
-        />
+        /> */}
       </div>
       <div
         className={

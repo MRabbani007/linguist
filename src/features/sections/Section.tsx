@@ -7,6 +7,7 @@ import CardWord from "../words/CardWord";
 import CardConjTable from "../tables/CardConjTable";
 import WordContainer from "../words/WordContainer";
 import CardTextBlock from "../textBlock/CardTextBlock";
+import { motion } from "framer-motion";
 
 export default function Section({
   section = null,
@@ -38,7 +39,13 @@ export default function Section({
   if (!section) return null;
 
   return (
-    <section>
+    <motion.section
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      transition={{ type: "spring", stiffness: 100, damping: 12 }}
+    >
       <div className="flex items-stretch group relative">
         <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg rounded-md">
           {(section?.sortIndex ? section?.sortIndex : 0).toLocaleString(
@@ -129,12 +136,24 @@ export default function Section({
         )}
 
         {/* Words */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          transition={{ staggerChildren: 0.2, delay: 0.6 }}
+          viewport={{ once: true, amount: 0.2 }} // Triggers when 20% is in view
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+        >
           {content}
-        </div>
+        </motion.div>
 
         {Array.isArray(sentences) && sentences.length !== 0 ? (
-          <div className="flex flex-col gap-2">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            transition={{ staggerChildren: 0.2, delay: 0.6 }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="flex flex-col gap-2"
+          >
             {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p> */}
             {temp.map((sentence) => {
               return <Sentence sentence={sentence} key={sentence?.id} />;
@@ -150,9 +169,9 @@ export default function Section({
                 Go to Sentences
               </Link>
             </div>
-          </div>
+          </motion.div>
         ) : null}
       </div>
-    </section>
+    </motion.section>
   );
 }

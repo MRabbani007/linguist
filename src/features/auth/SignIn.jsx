@@ -1,17 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// Imported Context
 // Imported Hooks
-import useAuth from "../../hooks/useAuth";
 import useInput from "../../hooks/useInput";
 import useToggle from "../../hooks/useToggle";
-// Imported Data
-import { ACTIONS } from "../../data/actions";
-// Imported Icons
-import { FaRegUserCircle } from "react-icons/fa";
-import axios from "../../api/axios";
-import Background from "../../assets/bg.svg";
-
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
@@ -66,16 +57,20 @@ const SignIn = () => {
         navigate(from, { replace: true });
       }
     } catch (err) {
-      if (!err?.response) {
+      console.log(err);
+      if (err.status === "FETCH_ERROR") {
+        console.log("here");
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
+      }
+
+      if (err?.status === 400) {
         setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
+      } else if (err?.status === 401) {
+        console.log(err.status);
         setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
       }
-      console.log(err);
       // set focus to error
       errRef.current.focus();
     }

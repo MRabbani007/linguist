@@ -3,6 +3,7 @@ import { apiSlice } from "../api/apiSlice";
 
 export const wordsSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // use for admin words page
     getWords: builder.query<{ data: Word[]; count: number }, number>({
       query: (page) => ({
         url: "/admin/words",
@@ -14,13 +15,33 @@ export const wordsSlice = apiSlice.injectEndpoints({
         const { data, count }: { data: Word[]; count: number } = response;
         return { data, count }; // Structure the response for easy usage in components
       },
-      providesTags: (result) =>
-        result
+      providesTags: (result) => {
+        return result
           ? [
               ...result?.data.map(({ id }) => ({ type: "Word" as const, id })), // Provide tags for each todo
               { type: "Word", id: "WORDLIST" }, // A special tag to track the entire list
             ]
-          : [{ type: "Word", id: "WORDLIST" }],
+          : [{ type: "Word", id: "WORDLIST" }];
+      },
+    }),
+    // used for lesson editor
+    getLessonWords: builder.query<Word[], string>({
+      query: (lessonID) => ({
+        url: "/admin/words/lesson",
+        method: "GET",
+        params: { lessonID },
+      }),
+      // transformResponse: (response: any) => {
+      //   console.log(response);
+      //   return response;
+      // },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Word" as const, id })), // Provide tags for each todo
+              { type: "Word", id: "WORDLESSON" }, // A special tag to track the entire list
+            ]
+          : [{ type: "Word", id: "WORDLESSON" }],
     }),
     addWord: builder.mutation({
       query: (word) => ({
@@ -28,8 +49,11 @@ export const wordsSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { word },
       }),
-      invalidatesTags: (result, error, { id }) => {
-        return [{ type: "Word", id: "WORDLIST" }];
+      invalidatesTags: () => {
+        return [
+          { type: "Word", id: "WORDLIST" },
+          { type: "Word", id: "WORDLESSON" },
+        ];
       },
     }),
     editWord: builder.mutation({
@@ -50,28 +74,11 @@ export const wordsSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, { id }) => [{ type: "Word", id }],
     }),
-    getLessonWords: builder.query<Word[], string>({
-      query: (lessonID) => ({
-        url: "/admin/words/lesson",
-        method: "GET",
-        params: { lessonID },
-      }),
-      // transformResponse: (response: any) => {
-      //   console.log(response);
-      //   return response;
-      // },
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Word" as const, id })), // Provide tags for each todo
-              { type: "Word", id: "WORDLESSON" }, // A special tag to track the entire list
-            ]
-          : [{ type: "Word", id: "WORDLESSON" }],
-    }),
   }),
 });
 
 export const {
+  useGetWordsQuery,
   useLazyGetWordsQuery,
   useLazyGetLessonWordsQuery,
   useAddWordMutation,

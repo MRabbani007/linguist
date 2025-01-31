@@ -1,18 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// Imported Hooks
-import useAuth from "../../hooks/useAuth";
+
 // Imported Components
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentAuth,
-  setCredentials,
-} from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../features/auth/authSlice";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import useInput from "../../hooks/useInput";
 import useToggle from "../../hooks/useToggle";
 
-const SigninPage = () => {
+export default function SigninPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -63,16 +59,14 @@ const SigninPage = () => {
         navigate(from, { replace: true });
       }
     } catch (err) {
-      if (!err?.response) {
+      if (err?.status === "FETCH_ERROR") {
+        console.log("1");
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
+      } else if (err?.status === 400) {
         setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
+      } else if (err?.status === 401) {
+        setErrMsg("Wrong user details");
       }
-      console.log(err);
       // set focus to error
       errRef.current.focus();
     }
@@ -169,6 +163,4 @@ const SigninPage = () => {
       </form>
     </div>
   );
-};
-
-export default SigninPage;
+}

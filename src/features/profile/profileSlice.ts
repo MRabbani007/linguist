@@ -42,6 +42,21 @@ export const profileApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Profile", id: "Profile" }],
     }),
+    getSettings: builder.query({
+      query: () => ({
+        url: "/user/settings",
+        method: "GET",
+      }),
+      providesTags: ["Profile"],
+    }),
+    updateSettings: builder.query({
+      query: ({ update }) => ({
+        url: "/user/settings",
+        method: "PATCH",
+        body: { update },
+      }),
+      providesTags: ["Profile"],
+    }),
     getWordLists: builder.query<WordList[], null>({
       query: () => ({
         url: "/user/lists",
@@ -111,6 +126,8 @@ export const profileApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetUserProfileQuery,
   useUpdateProfileMutation,
+  useGetSettingsQuery,
+  useUpdateSettingsQuery,
   useUpdateLessonProgressMutation,
   useGetWordListsQuery,
   useCreateWordListMutation,
@@ -121,24 +138,3 @@ export const {
   useEditListWordMutation,
   useDeleteListWordMutation,
 } = profileApiSlice;
-
-// returns the query result object
-// export const selectProfileResult =
-//   profileApiSlice.endpoints.getProfile.select();
-
-// const selectProfileData = createSelector(
-//   selectProfileResult,
-//   (result) => result.data // normalized state object with ids & entities
-// );
-
-// export const selectProgressChapter = (chapterID = "") => {
-//   const profile = profileApiSlice.endpoints.getProfile.select();
-//   console.log(profile);
-//   return profile?.chapters.find((c) => c.id === chapterID);
-// };
-
-// export const selectProgressLesson = (chapterID = "", lessonID = "") => {
-//   const profile = profileApiSlice.endpoints.getProfile.select();
-//   const chapter = profile.chapters.find((c) => c.id === chapterID);
-//   return chapter?.lessons.find((l) => l.id === lessonID);
-// };
