@@ -51,10 +51,12 @@ export default function FormWordAdd({
           lessonID,
           sectionID,
         }).unwrap();
-        console.log(response);
-        toast.success("Word Added");
-        if (clearOnSubmit) {
-          setState(value);
+
+        if (response) {
+          toast.success("Word Added");
+          if (clearOnSubmit) {
+            setState(value);
+          }
         }
       } catch (err) {
         toast.error("Error");

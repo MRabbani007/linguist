@@ -25,11 +25,11 @@ export default function CardLesson({
 
   return (
     <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0 },
-      }}
-      transition={{ type: "spring", stiffness: 100, damping: 12 }}
+      // variants={{
+      //   hidden: { opacity: 0, y: 30 },
+      //   visible: { opacity: 1, y: 0 },
+      // }}
+      // transition={{ type: "spring", stiffness: 100, damping: 12 }}
       onClick={handleOpenLesson}
       className="flex cursor-pointer relative group gap-2 p-2 bg-zinc-100 hover:bg-white shadow-md shadow-zinc-300 rounded-lg duration-200"
     >

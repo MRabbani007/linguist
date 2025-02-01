@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
 const adminAdapter = createEntityAdapter({
@@ -111,6 +111,22 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       //   ...result.ids.map((id) => ({ type: "Count", id })),
       // ],
     }),
+    getAdminUsers: builder.query<QueryResponse<AdminUser>, number>({
+      query: (page) => ({
+        url: "/admin/users",
+        method: "GET",
+        params: { page },
+      }),
+      providesTags: ["User"],
+    }),
+    updateAdminUser: builder.mutation({
+      query: (user) => ({
+        url: "/admin/users",
+        method: "PATCH",
+        body: { user },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -120,4 +136,6 @@ export const {
   useLazyGetAllLessonsQuery,
   useLazyGetAllSectionsQuery,
   useLazyGetAllDefinitionsQuery,
+  useLazyGetAdminUsersQuery,
+  useUpdateAdminUserMutation,
 } = adminApiSlice;

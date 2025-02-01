@@ -325,6 +325,17 @@ declare global {
     id: string;
   };
 
+  type AdminUser = {
+    id: string;
+    username: string;
+    email: string;
+    roles: number[];
+    rolesUser: number;
+    rolesEditor: number;
+    rolesAdmin: number;
+    createDate?: date;
+  };
+
   type FolderMeta = { name: string; fullPath: string };
   type FileMeta = { imageURL: string; filename: string; foldername: string };
   type ImageMeta = {

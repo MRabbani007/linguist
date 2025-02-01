@@ -1,39 +1,43 @@
-import { ACTIONS, SERVER } from "../../data/actions";
 import { apiSlice } from "../api/apiSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (credentials) => ({
-        url: SERVER.USER_SIGNIN,
+      query: ({
+        username,
+        password,
+      }: {
+        username: string;
+        password: string;
+      }) => ({
+        url: "/user/auth",
         method: "POST",
-        body: {
-          action: {
-            type: ACTIONS.USER_SIGNIN,
-            payload: {
-              ...credentials,
-            },
-          },
-        },
+        body: { username, password },
       }),
     }),
     register: builder.mutation({
-      query: (credentials) => ({
-        url: SERVER.USER_SIGNUP,
+      query: ({
+        username,
+        password,
+      }: {
+        username: string;
+        password: string;
+      }) => ({
+        url: "/user/register",
         method: "POST",
-        body: { ...credentials },
+        body: { username, password },
       }),
     }),
     logout: builder.mutation({
       query: (credentials) => ({
-        url: SERVER.USER_LOGOUT,
+        url: "/user/logout",
         method: "POST",
         body: { ...credentials },
       }),
     }),
     refresh: builder.mutation({
       query: () => ({
-        url: SERVER.USER_REFRESH,
+        url: "/user/refresh",
         method: "GET",
         credentials: "include",
       }),

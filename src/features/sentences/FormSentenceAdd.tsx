@@ -13,6 +13,7 @@ import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";
 import MultiTabs, { TabContent, TabNavigator } from "../ui/MultiTabs";
 import TextAreaField from "../ui/TextAreaField";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function FormSentenceAdd({
   section,
@@ -23,9 +24,11 @@ export default function FormSentenceAdd({
   setAdd: Dispatch<SetStateAction<boolean>>;
   words?: Word[];
 }) {
+  const [value, setValue] = useLocalStorage("SentenceAdd", T_SENTENCE);
+
   const [addSentence, { isLoading }] = useAddSentenceMutation();
 
-  const [state, setState] = useState(T_SENTENCE);
+  const [state, setState] = useState<Sentence>(value);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,26 +48,36 @@ export default function FormSentenceAdd({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (canSave) {
-      try {
-        const sentence = {
-          ...state,
-          chapterID: section?.chapterID || "",
-          lessonID: section?.lessonID || "",
-          sectionID: section?.id || "",
-        };
-        const response = await addSentence(sentence).unwrap();
 
-        if (response) {
-          toast.success("Sentence Added");
-        } else {
-          toast.warning("Error saving sentence");
-        }
-      } catch (e) {
-        toast.error("Server Error");
+    setValue(state);
+    if (!canSave) {
+      return null;
+    }
+
+    try {
+      const sentence = {
+        ...state,
+        chapterID: section?.chapterID || "",
+        lessonID: section?.lessonID || "",
+        sectionID: section?.id || "",
+      };
+      const response = await addSentence(sentence).unwrap();
+
+      if (clearOnSubmit === true) {
+        setState(T_SENTENCE);
       }
+
+      if (response) {
+        toast.success("Sentence Added");
+      } else {
+        toast.warning("Error saving sentence");
+      }
+    } catch (e) {
+      toast.error("Server Error");
     }
   };
+
+  const [clearOnSubmit, setClearOnSubmit] = useState(false);
 
   const levelOptions = new Array(10).fill("").map((_, idx) => ({
     label: (idx + 1).toString(),
@@ -92,6 +105,9 @@ export default function FormSentenceAdd({
       submitButton="Add Sentence"
       onSubmit={handleSubmit}
       closeForm={setAdd}
+      showClearOnSubmit={true}
+      clearOnSubmit={clearOnSubmit}
+      setClearOnSubmit={setClearOnSubmit}
     >
       <MultiTabs className="flex flex-col gap-4">
         <TabNavigator
@@ -121,6 +137,7 @@ export default function FormSentenceAdd({
             value={state.text}
             handleChange={handleChange}
             autoFocus={true}
+            lang="Russian"
           />
           <TextAreaField
             label="Translation"

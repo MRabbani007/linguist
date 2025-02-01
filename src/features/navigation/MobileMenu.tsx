@@ -85,7 +85,7 @@ export default function MobileMenu() {
     dispatch(toggleEditMode());
   };
 
-  const isAdmin = roles && roles.includes(5150);
+  const isAdmin = roles && roles.includes(2001);
   const isLoggedIn = !!user;
 
   const menuItems = isLoggedIn

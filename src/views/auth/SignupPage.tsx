@@ -1,26 +1,22 @@
 // React
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// Imported Context
-// Imported Components
-// Imported Data
-import { ACTIONS } from "../../data/actions";
-// Imported Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faInfoCircle,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "../../api/axios";
+import { useRegisterMutation } from "../../features/auth/authApiSlice";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Signup = () => {
-  const userRef = useRef();
+  const userRef = useRef<HTMLInputElement>();
   const errRef = useRef();
   const navigate = useNavigate();
+  const [register] = useRegisterMutation();
 
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
@@ -38,7 +34,7 @@ const Signup = () => {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    userRef.current.focus();
+    userRef?.current?.focus();
   }, []);
 
   useEffect(() => {
@@ -54,8 +50,8 @@ const Signup = () => {
     setErrMsg("");
   }, [user, pwd, matchPwd]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     // if button enabled with JS hack
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
@@ -64,33 +60,29 @@ const Signup = () => {
       return;
     }
     try {
-      const response = await axios.post(SERVER.USER_SIGNUP, {
-        type: ACTIONS.USER_SIGNUP,
-        payload: {
-          username: user,
-          password: pwd,
-        },
-      });
+      const response = await register({
+        username: user,
+        password: pwd,
+      }).unwrap();
 
-      if (response.status === "success") {
+      if (response) {
         setSuccess(true); //clear state and controlled inputs
         //need value attrib on inputs for this
         setUser("");
         setPwd("");
         setMatchPwd("");
-        navigate("login");
-      } else {
         alert("User Registered");
+        navigate("/login");
+      } else {
       }
-    } catch (err) {
-      if (!err?.response) {
+    } catch (err: any) {
+      if (err?.status === "FETCH_ERROR") {
         setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
+      } else if (err.status === 409) {
         setErrMsg("Username Taken");
       } else {
         setErrMsg("Registration Failed");
       }
-      errRef.current.focus();
     }
   };
 
@@ -103,11 +95,7 @@ const Signup = () => {
         <div className="login_header">
           <span>Sign Up</span>
         </div>
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
+        <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
           {errMsg}
         </p>
         <div className="input_box">
@@ -116,7 +104,6 @@ const Signup = () => {
             id="username"
             placeholder=""
             className="input_field"
-            ref={userRef}
             autoComplete="off"
             onChange={(e) => setUser(e.target.value)}
             value={user}

@@ -15,6 +15,7 @@ interface Props {
   deleteButton?: boolean;
   clearButton?: boolean;
   clearOnSubmit?: boolean;
+  showClearOnSubmit?: boolean;
   setClearOnSubmit?: Dispatch<SetStateAction<boolean>>;
   onSubmit: (event: FormEvent) => void;
   onDelete?: () => void;
@@ -30,6 +31,7 @@ export default function FormContainer({
   submitButton = "",
   deleteButton = false,
   clearButton = false,
+  showClearOnSubmit,
   clearOnSubmit = false,
   setClearOnSubmit = () => {},
   onSubmit = () => {},
@@ -81,22 +83,24 @@ export default function FormContainer({
             <BiX size={24} />
           </button>
         </div>
-        <div className="max-h-[70vh] min-h-[60vh] h-full overflow-y-auto">
+        <div className="max-h-[70vh] min-h-[30vh] h-full overflow-y-auto">
           <div className="flex flex-col justify-start items-stretch gap-4 p-4">
             {children}
           </div>
         </div>
         {/* Form Buttons */}
         <div className="flex items-center justify-center gap-4 px-4">
-          {/* <div className="md:flex items-center gap-2 hidden">
-            <input
-              type="checkbox"
-              id="clearOnSubmit"
-              checked={clearOnSubmit}
-              onChange={() => setClearOnSubmit((curr) => !curr)}
-            />
-            <label htmlFor="clearOnSubmit">Clear On Submit</label>
-          </div> */}
+          {showClearOnSubmit === true && (
+            <div className="md:flex items-center gap-2 mr-auto hidden">
+              <input
+                type="checkbox"
+                id="clearOnSubmit"
+                checked={clearOnSubmit}
+                onChange={() => setClearOnSubmit((curr) => !curr)}
+              />
+              <label htmlFor="clearOnSubmit">Clear On Submit</label>
+            </div>
+          )}
           <div className="flex flex-wrap items-center justify-center gap-2 py-2 text-sm">
             {type === "add" ? (
               <button

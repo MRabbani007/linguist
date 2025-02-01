@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // Imported Components
@@ -13,12 +13,11 @@ export default function SigninPage() {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useDispatch();
 
   // Set focus to username input on load
-  const userRef = useRef();
-  const errRef = useRef();
+  const userRef = useRef<HTMLInputElement>();
 
   const [user, resetUser, userAttribs] = useInput("user", "");
   const [pwd, setPwd] = useState("");
@@ -31,7 +30,7 @@ export default function SigninPage() {
   useEffect(() => {
     if (!success) {
       // set focus to login username
-      userRef.current.focus();
+      userRef?.current?.focus();
     }
   }, []);
 
@@ -40,8 +39,9 @@ export default function SigninPage() {
     setErrMsg("");
   }, [user, pwd]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
     try {
       const response = await login({ username: user, password: pwd }).unwrap();
 
@@ -58,9 +58,8 @@ export default function SigninPage() {
         setSuccess(true);
         navigate(from, { replace: true });
       }
-    } catch (err) {
+    } catch (err: any) {
       if (err?.status === "FETCH_ERROR") {
-        console.log("1");
         setErrMsg("No Server Response");
       } else if (err?.status === 400) {
         setErrMsg("Missing Username or Password");
@@ -68,7 +67,7 @@ export default function SigninPage() {
         setErrMsg("Wrong user details");
       }
       // set focus to error
-      errRef.current.focus();
+      // errRef?.current?.focus();
     }
   };
 
@@ -82,7 +81,7 @@ export default function SigninPage() {
           <span>Sign In</span>
         </div>
         <p
-          ref={errRef}
+          // ref={errRef}
           className={errMsg ? "errmsg" : "offscreen"}
           aria-live="assertive"
         >

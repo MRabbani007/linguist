@@ -11,12 +11,6 @@ export default function CheckboxField({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <label
-        htmlFor={name}
-        className="text-sm md:text-base font-medium text-zinc-700 p-1"
-      >
-        {label}
-      </label>
       <input
         type="checkbox"
         id={name}
@@ -24,6 +18,12 @@ export default function CheckboxField({
         checked={value}
         onChange={(event) => onChange(event.target.checked)}
       />
+      <label
+        htmlFor={name}
+        className="text-sm md:text-base font-medium text-zinc-700 p-1"
+      >
+        {label}
+      </label>
     </div>
   );
 }

@@ -182,3 +182,13 @@ export const T_VALUE: AttributeValue = {
   abbrev: "",
   shortHand: "",
 };
+
+export const T_ADMINUSER: AdminUser = {
+  id: "",
+  rolesAdmin: 0,
+  rolesEditor: 0,
+  rolesUser: 0,
+  username: "",
+  email: "",
+  roles: [],
+};
