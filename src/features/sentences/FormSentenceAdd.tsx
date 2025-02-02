@@ -77,6 +77,10 @@ export default function FormSentenceAdd({
     }
   };
 
+  const handleClear = () => {
+    setState(T_SENTENCE);
+  };
+
   const [clearOnSubmit, setClearOnSubmit] = useState(false);
 
   const levelOptions = new Array(10).fill("").map((_, idx) => ({
@@ -108,6 +112,8 @@ export default function FormSentenceAdd({
       showClearOnSubmit={true}
       clearOnSubmit={clearOnSubmit}
       setClearOnSubmit={setClearOnSubmit}
+      clearButton={true}
+      handleClear={handleClear}
     >
       <MultiTabs className="flex flex-col gap-4">
         <TabNavigator

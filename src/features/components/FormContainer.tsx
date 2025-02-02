@@ -4,8 +4,11 @@ import {
   ReactNode,
   SetStateAction,
   useEffect,
+  useRef,
+  useState,
 } from "react";
 import { BiX } from "react-icons/bi";
+import { IoSettingsOutline } from "react-icons/io5";
 
 interface Props {
   children: ReactNode;
@@ -40,6 +43,10 @@ export default function FormContainer({
   handleClear = () => {},
   closeForm,
 }: Props) {
+  const [formSettings, setFormSettings] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
   const handleEscape = (ev: globalThis.KeyboardEvent) => {
     if (ev.key === "Escape") {
       closeForm(false);
@@ -61,6 +68,20 @@ export default function FormContainer({
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setFormSettings(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const submitName =
     submitButton !== ""
       ? submitButton
@@ -75,14 +96,16 @@ export default function FormContainer({
       <form
         onSubmit={onSubmit}
         onReset={handleReset}
-        className="bg-zinc-100 min-w-fit w-full max-w-[1024px] mx-4 flex flex-col rounded-lg overflow-clip"
+        className="bg-zinc-50 min-w-fit w-full max-w-[1024px] mx-4 flex flex-col rounded-lg overflow-clip"
       >
+        {/* Form Header */}
         <div className="py-2 px-4 bg-zinc-800 text-white flex items-center gap-4">
           <h2 className="flex-1 ">{title}</h2>
           <button type="button" onClick={() => closeForm(false)}>
             <BiX size={24} />
           </button>
         </div>
+        {/* Form Content */}
         <div className="max-h-[70vh] min-h-[30vh] h-full overflow-y-auto">
           <div className="flex flex-col justify-start items-stretch gap-4 p-4">
             {children}
@@ -90,23 +113,47 @@ export default function FormContainer({
         </div>
         {/* Form Buttons */}
         <div className="flex items-center justify-center gap-4 px-4">
-          {showClearOnSubmit === true && (
-            <div className="md:flex items-center gap-2 mr-auto hidden">
-              <input
-                type="checkbox"
-                id="clearOnSubmit"
-                checked={clearOnSubmit}
-                onChange={() => setClearOnSubmit((curr) => !curr)}
-              />
-              <label htmlFor="clearOnSubmit">Clear On Submit</label>
-            </div>
-          )}
-          <div className="flex flex-wrap items-center justify-center gap-2 py-2 text-sm">
+          {/* Form Settings */}
+          <div className="relative">
+            {showClearOnSubmit && (
+              <button
+                type="button"
+                title="Settings"
+                onClick={() => setFormSettings((curr) => !curr)}
+                className="bg-zinc-200 hover:bg-zinc-100 duration-200 p-1 rounded-md"
+              >
+                <IoSettingsOutline size={25} />
+              </button>
+            )}
+            {showClearOnSubmit === true && (
+              <div
+                ref={ref}
+                className={
+                  (formSettings ? "" : "translate-y-4 opacity-0 invisible") +
+                  " absolute bottom-full left-0 bg-zinc-200 text-sm py-1 px-4 rounded-md duration-200"
+                }
+              >
+                <div className="flex items-center gap-2 ">
+                  <input
+                    type="checkbox"
+                    id="clearOnSubmit"
+                    checked={clearOnSubmit}
+                    onChange={() => setClearOnSubmit((curr) => !curr)}
+                  />
+                  <label htmlFor="clearOnSubmit" className="whitespace-nowrap">
+                    Clear On Submit
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Submit, cancel, delete buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-2 py-2 text-sm mx-auto">
             {type === "add" ? (
               <button
                 type="submit"
                 title="Add"
-                className="py-2 px-4 rounded-md  bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
+                className="py-2 px-4 rounded-md bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
               >
                 {/* <IoAddCircleOutline
                   size={25}
@@ -118,7 +165,7 @@ export default function FormContainer({
               <button
                 type="submit"
                 title="Save"
-                className="py-2 px-4 rounded-md  bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
+                className="py-2 px-4 rounded-md bg-zinc-800 text-white hover:bg-zinc-700 duration-150 transition-all flex items-center gap-2"
               >
                 {/* <IoCheckmarkCircleOutline
                   size={25}
@@ -150,11 +197,12 @@ export default function FormContainer({
               </button>
             ) : null}
           </div>
+          {/* Clear form button */}
           {clearButton ? (
             <button
               type="button"
               title="Clear Form"
-              className="py-2 px-4 rounded-md bg-zinc-300 text-zinc-800 hover:bg-zinc-200 duration-150 transition-all flex items-center gap-2"
+              className="py-1 px-2 md:py-2 md:px-4 text-sm font-medium rounded-md bg-zinc-300 text-zinc-800 hover:bg-zinc-200 duration-150 transition-all flex items-center gap-2"
               onClick={handleClear}
             >
               {/* <PiEmpty size={25} /> */}

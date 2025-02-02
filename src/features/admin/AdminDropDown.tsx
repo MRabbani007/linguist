@@ -35,13 +35,16 @@ export default function AdminDropDown({ items }: Props) {
 
   return (
     <div ref={dropdownRef} className="absolute top-2 right-2 z-50">
-      <button onClick={() => setShowDropDown(true)} className="z-10">
+      <button
+        onClick={() => setShowDropDown(true)}
+        className="p-1 bg-zinc-50 hover:bg-zinc-200 rounded-md"
+      >
         <BsThreeDots size={25} />
       </button>
       <div
         className={
           (showDropDown ? "" : "-translate-y-2 opacity-0 invisible") +
-          " absolute top-full right-0 duration-200 bg-zinc-100 z-[100] text-sm flex flex-col items-stretch shadow-sm shadow-zinc-700"
+          " absolute top-full right-0 duration-200 z-[100] bg-zinc-50 text-sm flex flex-col items-stretch shadow-sm shadow-zinc-700"
         }
       >
         {items.map((item, index) =>
