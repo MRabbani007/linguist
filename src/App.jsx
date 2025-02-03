@@ -13,6 +13,8 @@ import ErrorFallBack from "./features/auth/ErrorFallBack";
 import SkeletonContentPage from "./skeletons/SkeletonContentPage";
 // Layouts & navigation
 import Layout from "./features/layout/Layout";
+import LayoutAdmin from "./features/layout/LayoutAdmin";
+import LayoutLearning from "./features/layout/LayoutLearning";
 import RequireAuth from "./features/auth/RequireAuth";
 import PersistLogin from "./features/auth/PersistLogin";
 import Unauthorized from "./views/auth/Unauthorized";
@@ -26,6 +28,17 @@ import AdminPage from "./views/admin/AdminPage";
 import AdminSettings from "./views/admin/AdminSettings";
 import AdminUsersPage from "./views/admin/AdminUsersPage";
 // Editor
+import AdminChapters from "./views/admin/AdminChapters";
+import AdminLessons from "./views/admin/AdminLessons";
+import AdminSections from "./views/admin/AdminSections";
+import AdminLessonEditor from "./views/admin/AdminLessonEditor";
+import AdminDefinitions from "./views/admin/AdminDefinitions";
+import AdminSentences from "./views/admin/AdminSentences";
+import AdminWords from "./views/admin/AdminWords";
+import AdminDialogues from "./views/admin/AdminDialogues";
+import AdminDialogueID from "./views/admin/AdminDialogueIDPage";
+import AdminWordAttributes from "./views/admin/AdminWordAttributes";
+import ImageUpload from "./views/admin/ImageUpload";
 // User
 import DashboardPage from "./views/user/DashboardPage";
 import ProfilePage from "./views/user/ProfilePage";
@@ -38,6 +51,10 @@ import NotePage from "./views/website/NotePage";
 import ContactUs from "./views/website/ContactUs";
 // Content
 import LanguagePage from "./views/content/LanguagePage";
+import ContentPage from "./views/content/ContentPage";
+import TextsPage from "./views/content/TextsPage";
+import DialoguePage from "./views/content/DialoguePage";
+import DialogueID from "./views/content/DialogueID";
 import ChapterPage from "./views/content/ChapterPage";
 import LessonPage from "./views/content/LessonPage";
 import SearchPage from "./views/content/SearchPage";
@@ -53,22 +70,6 @@ import ReadingPage from "./views/exercise/ReadingPage";
 import SpellingPage from "./views/exercise/SpellingPage";
 import GrammarPage from "./views/exercise/GrammarPage";
 import FlashCardsPage from "./views/exercise/FlashCardsPage";
-import LayoutAdmin from "./features/layout/LayoutAdmin";
-import AdminChapters from "./views/admin/AdminChapters";
-import AdminLessons from "./views/admin/AdminLessons";
-import AdminSections from "./views/admin/AdminSections";
-import AdminLessonEditor from "./views/admin/AdminLessonEditor";
-import AdminDefinitions from "./views/admin/AdminDefinitions";
-import AdminSentences from "./views/admin/AdminSentences";
-import AdminWords from "./views/admin/AdminWords";
-import LayoutLearning from "./features/layout/LayoutLearning";
-import ImageUpload from "./views/admin/ImageUpload";
-import ContentPage from "./views/content/ContentPage";
-import TextsPage from "./views/content/TextsPage";
-import DialoguePage from "./views/content/DialoguePage";
-import DialogueID from "./views/content/DialogueID";
-import AdminDialogues from "./views/admin/AdminDialogues";
-import AdminWordAttributes from "./views/admin/AdminWordAttributes";
 
 // const AddContentPage = lazyLoad("../views/AddContentPage", "AddContentPage");
 // const AddContentPage = lazy(() =>
@@ -167,6 +168,7 @@ function App() {
                 <Route path="definitions" element={<AdminDefinitions />} />
                 <Route path="sentences" element={<AdminSentences />} />
                 <Route path="dialogues" element={<AdminDialogues />} />
+                <Route path="dialogues/edit" element={<AdminDialogueID />} />
                 <Route path="words" element={<AdminWords />} />
                 <Route path="attributes" element={<AdminWordAttributes />} />
                 <Route path="settings" element={<AdminSettings />} />

@@ -88,7 +88,7 @@ export const globalsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    getDialogues: builder.query<Dialogue[], any>({
+    getDialogues: builder.query<QueryResponse<Dialogue>, any>({
       query: () => ({
         url: "/dialogues",
         method: "get",

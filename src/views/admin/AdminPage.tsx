@@ -4,9 +4,49 @@ import { PiNotebook } from "react-icons/pi";
 import { CgTranscript } from "react-icons/cg";
 import { GrNotes } from "react-icons/gr";
 import { VscSymbolParameter, VscWholeWord } from "react-icons/vsc";
+import { RiSpeakLine } from "react-icons/ri";
 
 export default function AdminPage() {
   const { data, isLoading, isSuccess } = useGetAllCountQuery("a");
+
+  const links = [
+    {
+      icon: <PiNotebook size={30} />,
+      label: "Chapters",
+      url: "/admin/chapters",
+      count: data?.chaptersCount,
+    },
+    {
+      icon: <GrNotes size={25} />,
+      label: "Lessons",
+      url: "/admin/lessons",
+      count: data?.lessonsCount,
+    },
+    {
+      icon: <CgTranscript size={25} />,
+      label: "Sections",
+      url: "/admin/sections",
+      count: data?.sectionsCount,
+    },
+    {
+      icon: <VscWholeWord size={25} />,
+      label: "Words",
+      url: "/admin/words",
+      count: data?.wordsCount,
+    },
+    {
+      icon: <VscSymbolParameter size={25} />,
+      label: "Sentences",
+      url: "/admin/sentences",
+      count: data?.sentenceCount,
+    },
+    {
+      label: "Dialogues",
+      url: "/admin/dialogues",
+      icon: <RiSpeakLine size={25} />,
+      count: 0,
+    },
+  ];
 
   let content;
   if (isLoading) {
@@ -21,57 +61,22 @@ export default function AdminPage() {
     );
   } else if (isSuccess) {
     content = (
-      <div className="flex flex-wrap items-center gap-2">
-        <p className="flex flex-col items-center justify-center bg-zinc-200 rounded-md overflow-hidden font-medium">
-          <Link
-            to={"/admin/chapters"}
-            className="flex items-center gap-1 bg-sky-600 text-white p-4"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-center">
+        {links.map((item) => (
+          <p
+            key={item.label}
+            className="flex flex-col bg-zinc-200 rounded-md overflow-hidden font-medium"
           >
-            <PiNotebook size={25} />
-            chapters
-          </Link>
-          <span className="p-2">{data?.chaptersCount}</span>
-        </p>
-        <p className="flex flex-col items-center justify-center bg-zinc-200 rounded-md overflow-hidden font-medium">
-          <Link
-            to={"/admin/lessons"}
-            className="flex items-center gap-1 bg-sky-600 text-white p-4"
-          >
-            <GrNotes size={25} />
-            lessons
-          </Link>
-          <span className="p-2">{data?.lessonsCount}</span>
-        </p>
-        <p className="flex flex-col items-center justify-center bg-zinc-200 rounded-md overflow-hidden font-medium">
-          <Link
-            to={"/admin/sections"}
-            className="flex items-center gap-1 bg-sky-600 text-white p-4"
-          >
-            <CgTranscript size={25} />
-            sections
-          </Link>
-          <span className="p-2">{data?.sectionsCount}</span>
-        </p>
-        <p className="flex flex-col items-center justify-center bg-zinc-200 rounded-md overflow-hidden font-medium">
-          <Link
-            to={"/admin/words"}
-            className="flex items-center gap-1 bg-sky-600 text-white p-4"
-          >
-            <VscWholeWord size={25} />
-            words
-          </Link>
-          <span className="p-2">{data?.wordsCount}</span>
-        </p>
-        <p className="flex flex-col items-center justify-center bg-zinc-200 rounded-md overflow-hidden font-medium">
-          <Link
-            to={"/admin/sentences"}
-            className="flex items-center gap-1 bg-sky-600 text-white p-4"
-          >
-            <VscSymbolParameter size={25} />
-            sentences
-          </Link>
-          <span className="p-2">{data?.sentenceCount}</span>
-        </p>
+            <Link
+              to={item.url}
+              className="flex items-center justify-center gap-1 bg-sky-600 text-white p-4"
+            >
+              {item.icon}
+              {item.label}
+            </Link>
+            <span className="p-2">{item.count}</span>
+          </p>
+        ))}
       </div>
     );
   }

@@ -8,9 +8,9 @@ export default function DialogueNavigator() {
   const params = useParams();
   const id = params?.id;
 
-  const [getDialogues, { data: dialogues }] = useLazyGetDialoguesQuery();
+  const [getDialogues, { data }] = useLazyGetDialoguesQuery();
 
-  // if (!dialogues) return null;
+  const dialogues = data?.data;
 
   const [index, setIndex] = useState(0);
 
@@ -44,18 +44,18 @@ export default function DialogueNavigator() {
       <button
         disabled={index === 0}
         onClick={handlePrev}
-        className="btn-r btn-red flex items-center gap-2"
+        className="py-2 pl-2 pr-2 bg-red-500 hover:bg-red-500/80 text-white duration-200 rounded-md flex items-center gap-2"
       >
-        <IoChevronBack size={25} />
-        <span>Previous</span>
+        <IoChevronBack size={20} />
+        {/* <span>Previous</span> */}
       </button>
       <button
         disabled={dialogues ? index === dialogues.length : true}
         onClick={handleNext}
-        className="btn-r btn-red flex items-center gap-2"
+        className="py-2 pl-2 pr-2 bg-red-500 hover:bg-red-500/80 text-white duration-200 rounded-md flex items-center gap-2"
       >
-        <span>Next</span>
-        <IoChevronForward size={25} />
+        {/* <span>Next</span> */}
+        <IoChevronForward size={20} />
       </button>
     </div>
   );

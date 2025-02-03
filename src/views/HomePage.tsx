@@ -31,7 +31,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="flex flex-col md:flex-row flex-wrap items-center md:gap-4 gap-2 mt-2"
+          className="flex flex-row flex-wrap items-center md:gap-4 gap-2 mt-2"
         >
           {!!language?.name ? (
             <>
@@ -88,7 +88,7 @@ export default function HomePage() {
         <div className="font-bold text-white text-lg  max-w-[1024px] bg-gradient-to-r from-red-600/80 to-red-600 py-2 px-8 rounded-full">
           Popular Languages
         </div>
-        <div className=" grid grid-cols-3 gap-4 w-full max-w-[1024px] text-center font-medium text-zinc-800">
+        <div className="px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-[1024px] text-center font-medium text-zinc-800">
           {langs.map((item) => (
             <button
               key={item}
@@ -103,7 +103,7 @@ export default function HomePage() {
         <p className="text-3xl font-extrabold text-lime-800">
           Learn More about our learning method
         </p>
-        <div className="bg-white rounded-xl w-full max-w-[1024px] flex-1 shadow-[0_0_10px_10px] shadow-zinc-200 flex flex-col gap-6 items-center justify-center py-10">
+        <div className="bg-white rounded-xl w-full max-w-[1024px] flex-1 shadow-[0_0_10px_10px] shadow-zinc-200 flex flex-col gap-6 items-center justify-center py-10 px-4">
           <img
             src={TreeImage}
             alt="learning method"
@@ -118,20 +118,20 @@ export default function HomePage() {
             All you need is the desire to learn. We take care of the rest.
           </p>
           <div className="space-y-2">
-            <p className="mx-32">
+            <p className="lg:mx-32">
               Of all the digital language learning methods, ours is probably the
               one that most closely mimics the natural language acquisition
               process.
             </p>
-            <p className="mx-32">
+            <p className="lg:mx-32">
               It stands out for its effectiveness, simplicity, and its ability
               to produce quick and tangible results.
             </p>
-            <p className="mx-32">
+            <p className="lg:mx-32">
               You won't need to immediately understand complex grammatical
               structures. The explanations will come gradually.
             </p>
-            <p className="mx-32">
+            <p className="lg:mx-32">
               All you need is to be truly available for 30 minutes a day (in one
               or two sessions) at least five days a week.
             </p>

@@ -9,6 +9,10 @@ import FormContainer from "../components/FormContainer";
 import { axiosPrivate } from "../../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  useAddDialogueMutation,
+  useEditDialogueMutation,
+} from "./dialogueSlice";
 
 const template: Dialogue = {
   id: "",
@@ -58,10 +62,13 @@ export default function FormCreateDialogue({
   setShowForm,
 }: Props) {
   const navigate = useNavigate();
+  const [addDialogue] = useAddDialogueMutation();
+  const [editDialogue] = useEditDialogueMutation();
 
   const [state, setState] = useState<Dialogue>(() =>
     dialogue?.id ? dialogue : template
   );
+
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -74,20 +81,17 @@ export default function FormCreateDialogue({
 
   const createDialogue = async (event: FormEvent) => {
     event.preventDefault();
-    if (dialogue?.id) {
-      const response = await axiosPrivate.patch("/dialogue", {
-        dialogue: state,
-      });
-      if (response?.status === 204) {
+    if (type === "edit" && dialogue?.id) {
+      const response = await editDialogue(state).unwrap();
+      console.log(response);
+      if (response) {
         toast.success("Dialogue Updated");
         setShowForm(false);
       } else {
         toast.error("Error");
       }
     } else {
-      const response = await axiosPrivate.post("/dialogue", {
-        dialogue: { ...state, id: crypto.randomUUID() },
-      });
+      const response = await addDialogue(state).unwrap();
       if (response?.status === 204) {
         toast.success("Dialogue Added");
       } else {

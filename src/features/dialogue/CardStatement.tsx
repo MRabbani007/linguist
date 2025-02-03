@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CiEdit } from "react-icons/ci";
-import FormDialogueStatement from "./FormDialogueStatement";
 import { selectEditMode } from "../admin/adminSlice";
 
 export default function CardStatement({
   statement,
-  dialogue,
 }: {
-  dialogue: Dialogue;
   statement: DialogueStatement;
 }) {
   const editMode = useSelector(selectEditMode);
-  const [edit, setEdit] = useState(false);
   const [showTr, setShowTr] = useState(false);
 
   useEffect(() => {
@@ -22,44 +17,37 @@ export default function CardStatement({
   }, [editMode]);
 
   return (
-    <div className={"flex items-center justify-start gap-4 text-xl "}>
-      <button
+    <div
+      className={
+        "flex items-stretch justify-start gap-4 bg-zinc-50 rounded-md overflow-clip"
+      }
+    >
+      <p
         className={
-          "w-10 h-10 rounded-full flex items-center justify-center " +
+          "w-2 flex items-center justify-center " +
           (statement?.person === "1"
-            ? "bg-green-500/70"
+            ? "bg-orange-600/70"
             : statement?.person === "2"
-            ? "bg-yellow-500/70"
+            ? "bg-sky-500/70"
             : "")
         }
-        onClick={() => setShowTr((curr) => !curr)}
-      >
-        {editMode && statement.sortIndex}
-      </button>
-      <div className={" grid-cols-1 grid gap-0 flex-1 "}>
-        <span className="">{statement?.text}</span>
-        <span
+      ></p>
+      <div className={"flex flex-col gap-0 flex-1 py-2"}>
+        <p
+          className="cursor-pointer font-medium tracking-wider"
+          onClick={() => setShowTr((curr) => !curr)}
+        >
+          {statement?.text}
+        </p>
+        <p
           className={
             (showTr ? "" : "invisible opacity-0 h-0 pointer-events-none") +
-            "  text-sm ml-8 duration-200"
+            "  text-sm duration-200"
           }
         >
           {statement?.translation}
-        </span>
+        </p>
       </div>
-      {editMode ? (
-        <button onClick={() => setEdit(true)}>
-          <CiEdit size={24} />
-        </button>
-      ) : null}
-      {edit ? (
-        <FormDialogueStatement
-          type="edit"
-          statement={statement}
-          dialogue={dialogue}
-          setShowForm={setEdit}
-        />
-      ) : null}
     </div>
   );
 }

@@ -14,7 +14,7 @@ export default function ContentPage() {
 
   return (
     <main className="bg-zinc-200 md:px-20">
-      <header className="flex items-center gap-4  mb-4 ">
+      <header className="flex items-center gap-4">
         <p className="rounded-lg p-2 bg-red-600">
           <TfiLayoutListThumb className="text-white size-6 md:size-8" />
         </p>

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLazyGetDialoguesQuery } from "@/features/globals/globalsApiSlice";
 import DialogueImg from "/assets/dialogue.png";
+import { LuMessagesSquare } from "react-icons/lu";
 
 export default function DialoguePage() {
   const [getDialogues, { data: dialogues, isLoading, isSuccess, isError }] =
@@ -12,9 +13,12 @@ export default function DialoguePage() {
   }, []);
 
   return (
-    <main>
-      <header>
-        <h1 className="font-bold text-3xl p-4 bg-primary_foreground">
+    <main className="bg-zinc-200 md:px-20">
+      <header className="flex items-center gap-4  mb-4 ">
+        <p className="rounded-lg p-2 bg-red-600">
+          <LuMessagesSquare className="text-white size-6 md:size-8" />
+        </p>
+        <h1 className="text-2xl md:text-4xl font-semibold border-b-2 pb-1 border-red-700 flex-1">
           Dialogues
         </h1>
       </header>
@@ -25,24 +29,23 @@ export default function DialoguePage() {
           <p>Error Loading Dialogues</p>
         ) : (
           isSuccess &&
-          dialogues.map((item, index) => {
+          dialogues?.data.map((item, index) => {
             return (
               <div
                 key={index}
-                className="bg-zinc-200 py-4 px-8 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1"
+                className="bg-zinc-50 py-4 px-4 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1 flex justify-center items-center gap-4"
               >
-                <div className=" flex justify-center items-center">
-                  <img src={DialogueImg} className="w-20 h-20" />
+                <img src={DialogueImg} className="w-10 h-10" />
+                <div className="">
+                  <Link
+                    to={`/content/dialogue/${item.id}`}
+                    className="md:text-xl font-semibold"
+                  >
+                    <span className="mr-2">{index + 1}.</span>
+                    <span>{item?.title}</span>
+                  </Link>
+                  <p className="text-xs md:text-sm">{item?.subtitle}</p>
                 </div>
-                <Link
-                  to={`/content/dialogue/${item.id}`}
-                  className="text-2xl font-semibold"
-                >
-                  <span className="mr-2">{index + 1}.</span>
-                  <span>{item?.title}</span>
-                </Link>
-                <p className="text-sm">{item?.subtitle}</p>
-                {/* <p>{item.createdAt?.toString().substring(0, 10)}</p> */}
               </div>
             );
           })

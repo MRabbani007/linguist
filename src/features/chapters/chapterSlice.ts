@@ -1,6 +1,5 @@
 import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
-import { store } from "../../app/store";
 
 const chaptersAdapter = createEntityAdapter({
   // TODO: change compare value to date or sort option

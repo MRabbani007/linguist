@@ -1,11 +1,10 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   FormEvent,
   SetStateAction,
   useState,
 } from "react";
-import { Dialogue, DialogueStatement } from "../../types/types";
 import { axiosPrivate } from "../../api/axios";
 import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
@@ -21,7 +20,7 @@ const template: DialogueStatement = {
 
 interface Props {
   type: "add" | "edit";
-  statement?: DialogueStatement;
+  statement?: DialogueStatement | null;
   dialogue?: Dialogue;
   setShowForm: Dispatch<SetStateAction<boolean>>;
 }

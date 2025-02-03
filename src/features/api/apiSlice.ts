@@ -69,18 +69,20 @@ export const apiSlice = createApi({
   //fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
   tagTypes: [
     "Chapter",
+    "Lesson",
     "Block",
+    "textBlock",
     "Section",
     "Word",
     "Sentence",
     "Definition",
     "Table",
     "TableWord",
+    "Dialogue",
+    "DialogueItem",
     "User",
     "Profile",
-    "Lesson",
     "UserWordList",
-    "textBlock",
   ], // Used for caching and invalidation
   endpoints: () => ({}),
 });
