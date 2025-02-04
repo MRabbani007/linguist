@@ -76,7 +76,7 @@ export default function AdminMenu() {
       <nav
         className={
           (show ? "" : " -translate-x-full invisible opacity-0") +
-          " text-zinc-800 bg-zinc-100 fixed top-0 bottom-0 left-0 duration-200 p-4 z-[120] w-[80vw] min-w-[250px] max-w-[400px] overflow-y-auto"
+          " text-zinc-800 bg-zinc-100 fixed top-0 bottom-0 left-0 duration-200 z-[120] w-[80vw] min-w-[250px] max-w-[400px] overflow-y-auto"
         }
       >
         <div className="py-4 px-4 flex items-center gap-2 border-b-[1px] border-red-600">

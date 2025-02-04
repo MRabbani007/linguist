@@ -19,15 +19,10 @@ import ReactLoading from "react-loading";
 import { useLazySearchSentencesQuery } from "@/features/globals/globalsApiSlice";
 import { BiCollapse, BiExpand, BiFilter, BiX } from "react-icons/bi";
 import FormSentenceFilter from "@/features/sentences/FormSentenceFilter";
-import AdminSentenceContainer from "@/features/admin/AdminSentenceContainer";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
-import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";
-import { selectEditMode } from "@/features/admin/adminSlice";
-import { motion } from "framer-motion";
 
 export default function SentencesPage() {
   const displayBlock = useSelector(selectDisplayLesson);
-  const editMode = useSelector(selectEditMode);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -52,10 +47,6 @@ export default function SentencesPage() {
   useEffect(() => {
     setSearchTerm(search ?? "");
   }, [search]);
-
-  const [edit, setEdit] = useState(false);
-  const [move, setMove] = useState(false);
-  const [editItem, setEditItem] = useState<Sentence | null>(null);
 
   const [display, setDisplay] = useState("condensed");
 
@@ -115,16 +106,7 @@ export default function SentencesPage() {
   } else if (isSuccess) {
     count = data.count;
     content = data.data.map((item: Sentence) => {
-      return (
-        <AdminSentenceContainer
-          setMove={setMove}
-          sentence={item}
-          setEdit={setEdit}
-          setEditItem={setEditItem}
-        >
-          <Sentence sentence={item} key={item.id} display={display} />
-        </AdminSentenceContainer>
-      );
+      return <Sentence sentence={item} key={item.id} display={display} />;
     });
   } else if (isError) {
     content = <p>Error Loading Sentences</p>;
@@ -225,21 +207,7 @@ export default function SentencesPage() {
           </button>
           <Pagination currentPage={+page} count={count} className="ml-auto" />
         </div>
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.6, duration: 0.3, delay: 0.5 }, // Staggers children animations
-            },
-          }}
-          className="w-full flex flex-col gap-2"
-        >
-          {content}
-        </motion.div>
+        <div className="w-full flex flex-col gap-2">{content}</div>
         <Pagination currentPage={+page} count={count} />
         <div className="my-2">
           {displayBlock?.id ? (
@@ -263,9 +231,6 @@ export default function SentencesPage() {
             levelInit={level ?? ""}
             lessonIDInit={lessonID ?? ""}
           />
-        )}
-        {editMode && edit && editItem && (
-          <FormSentenceEdit sentence={editItem} setEdit={setEdit} />
         )}
       </main>
     </>

@@ -22,7 +22,7 @@ export default function DialoguePage() {
           Dialogues
         </h1>
       </header>
-      <div className="flex-1 flex flex-wrap flex-col sm:flex-row items-stretch gap-4">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading ? (
           <p>Loading...</p>
         ) : isError ? (
@@ -33,7 +33,7 @@ export default function DialoguePage() {
             return (
               <div
                 key={index}
-                className="bg-zinc-50 py-4 px-4 rounded-lg w-full min-w-[300px] max-w-[400px] lg:max-w-[500px] flex-1 flex justify-center items-center gap-4"
+                className="bg-zinc-50 py-4 px-4 rounded-lg w-full flex-1 flex items-center gap-4"
               >
                 <img src={DialogueImg} className="w-10 h-10" />
                 <div className="">

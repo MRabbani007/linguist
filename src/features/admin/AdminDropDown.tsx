@@ -34,7 +34,7 @@ export default function AdminDropDown({ items }: Props) {
   }, []);
 
   return (
-    <div ref={dropdownRef} className="absolute top-2 right-2 z-50">
+    <div ref={dropdownRef} className="absolute top-2 right-2 z-30">
       <button
         onClick={() => setShowDropDown(true)}
         className="p-1 bg-zinc-50 hover:bg-zinc-200 rounded-md"

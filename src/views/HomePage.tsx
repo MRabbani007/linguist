@@ -5,11 +5,24 @@ import { useSelector } from "react-redux";
 import { selectLanguage } from "../features/globals/globalsSlice";
 import { DEFAULT_LANG } from "../lib/defaultLanguage";
 import { motion } from "framer-motion";
+import Flag_Russia from "../assets/flag_russia.png";
+import Flag_USA from "../assets/flag_usa.png";
+import Flag_UAE from "../assets/flag_uae.png";
+import Flag_France from "../assets/flag_france.png";
+import Flag_Spain from "../assets/flag_spain.png";
+import Flag_Germany from "../assets/flag_germany.png";
 
 export default function HomePage() {
   const language = useSelector(selectLanguage) ?? DEFAULT_LANG;
 
-  const langs = ["Russian", "English", "Arabic", "French", "Spanish", "German"];
+  const langs = [
+    { label: "Russian", icon: Flag_Russia },
+    { label: "English", icon: Flag_USA },
+    { label: "Arabic", icon: Flag_UAE },
+    { label: "French", icon: Flag_France },
+    { label: "Spanish", icon: Flag_Spain },
+    { label: "German", icon: Flag_Germany },
+  ];
 
   return (
     <main className="p-0 m-0 gap-0">
@@ -91,10 +104,11 @@ export default function HomePage() {
         <div className="px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-[1024px] text-center font-medium text-zinc-800">
           {langs.map((item) => (
             <button
-              key={item}
-              className="py-2 px-4 bg-white rounded-lg hover:bg-zinc-50 hover:shadow-md hover:shadow-zinc-400 duration-200"
+              key={item.label}
+              className="py-2 px-4 bg-white rounded-lg hover:bg-zinc-50 hover:shadow-md hover:shadow-zinc-400 duration-200 flex items-center justify-center gap-2"
             >
-              {item}
+              <img src={item?.icon} alt={item.label} className="w-12 h-10" />
+              <span>{item.label}</span>
             </button>
           ))}
         </div>

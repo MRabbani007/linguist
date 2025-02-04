@@ -56,7 +56,11 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         // Assuming the API response is { todos: [...], total: number }
         const { data, count }: { data: Sentence[]; count: number } = response;
         const sorted = [...data].sort((a, b) =>
-          a?.sortIndex > b?.sortIndex ? 1 : -1
+          a?.sortIndex === 0 && b?.sortIndex === 0
+            ? -1
+            : a?.sortIndex > b?.sortIndex
+            ? 1
+            : -1
         );
         return { data: sorted, count }; // Structure the response for easy usage in components
       },

@@ -100,6 +100,7 @@ export default function AdminSentences() {
               ? true
               : false
           }
+          sortIndex={item.sortIndex}
         >
           <Sentence sentence={item} />
         </AdminSentenceContainer>

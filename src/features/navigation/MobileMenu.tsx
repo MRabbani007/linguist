@@ -32,14 +32,14 @@ const items = [
     label: "Texts",
     title: "Texts",
     url: "/content/text",
-    icon: <IoDocumentTextOutline size={32} />,
+    icon: <IoDocumentTextOutline size={30} />,
   },
   {
     id: 15,
     label: "Dialogues",
     title: "Dialogues",
     url: "/content/dialogue",
-    icon: <BsBlockquoteLeft size={32} />,
+    icon: <BsBlockquoteLeft size={30} />,
   },
   // {
   //   id: 11,
@@ -54,14 +54,14 @@ const items = [
     label: "Words",
     title: "Words",
     url: "/review/words",
-    icon: <IoTextOutline size={32} />,
+    icon: <IoTextOutline size={30} />,
   },
   {
     id: 13,
     label: "Sentences",
     title: "Sentences",
     url: "/sentences",
-    icon: <BsTextParagraph size={32} />,
+    icon: <BsTextParagraph size={30} />,
   },
   { id: 22, type: "separator", title: "Practice", url: "" },
   {
@@ -69,7 +69,7 @@ const items = [
     label: "Exercise",
     title: "Exercise",
     url: "/exercise",
-    icon: <IoBarbellOutline size={38} />,
+    icon: <IoBarbellOutline size={30} />,
   },
 ];
 
@@ -95,7 +95,7 @@ export default function MobileMenu() {
           label: "Dashboard",
           title: "Dashboard",
           url: "/dashboard",
-          icon: <IoGridOutline size={34} />,
+          icon: <IoGridOutline size={30} />,
         },
         ...items,
         {
@@ -103,7 +103,7 @@ export default function MobileMenu() {
           label: "Settings",
           title: "Settings",
           url: "/settings",
-          icon: <IoSettingsOutline size={36} />,
+          icon: <IoSettingsOutline size={30} />,
         },
       ]
     : items;
@@ -119,17 +119,17 @@ export default function MobileMenu() {
       </button>
       {show && (
         <div
-          className="fixed inset-0 bg-zinc-900/80 z-[100]"
+          className="fixed inset-0 bg-zinc-900/80 z-[200]"
           onClick={() => setShow(false)}
         />
       )}
       <nav
         className={
           (show ? "" : " -translate-x-full invisible opacity-0") +
-          " text-zinc-800 bg-zinc-100 fixed top-0 bottom-0 left-0 duration-200 p-4 z-[120] w-[80vw] min-w-[250px] max-w-[400px] overflow-y-auto"
+          " text-zinc-800 bg-zinc-100 fixed top-0 bottom-0 left-0 duration-200 z-[220] w-[80vw] min-w-[250px] max-w-[400px] overflow-y-auto"
         }
       >
-        <div className="flex items-center justify-between gap-4 mb-6">
+        <div className="flex items-center justify-between gap-4 mb-2 p-4">
           <Link
             to="/"
             title="Home"
@@ -143,7 +143,9 @@ export default function MobileMenu() {
         </div>
         {isAdmin ? (
           <>
-            <div className="border-b-[1px] border-zinc-400 my-2">Admin</div>
+            <div className="border-b-[1px] border-zinc-400 my-2 px-2">
+              Admin
+            </div>
             <button
               onClick={handleToggleEditMode}
               className={(editMode ? "text-green-600" : "") + " dropdown-item"}
@@ -163,7 +165,10 @@ export default function MobileMenu() {
         ) : null}
         {menuItems.map((item) =>
           item?.type === "separator" ? (
-            <div key={item.id} className="border-b-[1px] border-zinc-400 my-2">
+            <div
+              key={item.id}
+              className="border-b-[1px] border-zinc-400 my-2 px-2"
+            >
               {item.title}
             </div>
           ) : (
@@ -185,7 +190,7 @@ export default function MobileMenu() {
           className="dropdown-item hover:bg-zinc-200 duration-150"
           onClick={() => setShow(false)}
         >
-          <IoIosLogOut size={36} />
+          <IoIosLogOut size={30} />
           <span>{isLoggedIn ? "Sign Out" : "Sign In"}</span>
         </Link>
       </nav>

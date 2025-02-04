@@ -77,9 +77,8 @@ export default function AdminSentenceContainer({
         cursor: isDraggable ? "move" : "default",
       }}
     >
-      {children}
       {editMode && (
-        <div className="absolute top-2 right-2 flex items-center gap-2">
+        <div className="absolute bottom-full right-0 z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-100 flex items-center gap-2 w-fit ml-auto py-1 px-4 bg-zinc-100 ">
           <span>{sortIndex}</span>
           <input
             type="checkbox"
@@ -110,12 +109,11 @@ export default function AdminSentenceContainer({
           </button>
         </div>
       )}
+      {children}
       {editMode && (
-        <div className="absolute bottom-0 right-2 text-sm">
-          <p>
-            <span>{lesson?.title}</span>
-            <span>{lesson?.subtitle}</span>
-          </p>
+        <div className="absolute bottom-0 right-2 invisible opacity-0 group-hover:visible group-hover:opacity-100 duration-100 text-sm  w-fit ml-auto py-1 px-4 bg-zinc-100">
+          <p>{lesson?.title}</p>
+          <p>{lesson?.subtitle}</p>
           <p>{section?.title}</p>
         </div>
       )}

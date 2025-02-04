@@ -7,7 +7,7 @@ import FormLessonAdd from "../../features/lessons/FormLessonAdd";
 import { selectChapters } from "../../features/globals/globalsSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import { useLazyGetAdminLessonsQuery } from "@/features/lessons/lessonSlice";
-import { IoOpenOutline } from "react-icons/io5";
+import { IoAddCircleOutline, IoOpenOutline } from "react-icons/io5";
 
 export default function AdminLessons() {
   const [searchParams] = useSearchParams();
@@ -43,7 +43,7 @@ export default function AdminLessons() {
   } else if (isSuccess) {
     count = data.count;
     content = data.data.map((item) => (
-      <CardLesson
+      <CardAdminLesson
         lesson={item}
         key={item.id}
         setEdit={setEdit}
@@ -94,9 +94,17 @@ export default function AdminLessons() {
         </div> */}
         <div className="flex-1 flex flex-col gap-4">{content}</div>
       </div>
+      {/* Page Footer */}
       <div className="flex items-center justify-between">
-        <button className="btn-r btn-red" onClick={() => setAdd(true)}>
-          Add Lesson
+        <button
+          className="text-red-600 flex items-center gap-2 group"
+          title="Add Lesson"
+          onClick={() => setAdd(true)}
+        >
+          <IoAddCircleOutline size={30} />
+          <span className="opacity-0 group-hover:opacity-100 duration-200 -translate-x-4 group-hover:translate-x-0">
+            Add Lesson
+          </span>
         </button>
         <Pagination count={count} currentPage={+page} />
       </div>
@@ -108,7 +116,7 @@ export default function AdminLessons() {
   );
 }
 
-function CardLesson({
+function CardAdminLesson({
   lesson,
   setEdit,
   setEditItem,
@@ -121,18 +129,22 @@ function CardLesson({
 }) {
   return (
     <div className="flex gap-2 bg-zinc-100 hover:bg-zinc-200 duration-200 rounded-md p-2 relative">
-      <p className="bg-red-600 p-0 text-sm rounded-md text-white w-6 h-6 flex items-center justify-center">
+      <p className="bg-red-600 p-0 text-sm rounded-md text-white w-8 h-8 flex items-center justify-center">
         {lesson.sortIndex}
       </p>
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col gap-1">
         <Link
           to={`/admin/lessonEdit?id=${lesson.id}&p=${page}`}
           className="text-lg font-medium h-6 flex items-center cursor-pointer"
         >
           {lesson.title}
         </Link>
-        <p className="text-sm -mt-1">{lesson.subtitle}</p>
-        <div className="pl-8 py-2 text-sm">{lesson.detail}</div>
+        {lesson?.subtitle !== "" && (
+          <p className="text-sm -mt-1">{lesson.subtitle}</p>
+        )}
+        {lesson?.detail !== "" && (
+          <p className="pl-8 py-2 text-sm">{lesson.detail}</p>
+        )}
       </div>
       <button
         onClick={() => {
