@@ -106,7 +106,7 @@ export default function FormSentenceAdd({
   return (
     <FormContainer
       title="Add Sentence"
-      submitButton="Add Sentence"
+      submitButton="Add"
       onSubmit={handleSubmit}
       closeForm={setAdd}
       showClearOnSubmit={true}

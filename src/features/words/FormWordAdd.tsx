@@ -67,18 +67,19 @@ export default function FormWordAdd({
   };
 
   const handleClear = () => {
-    setState(value);
+    setState(T_WORD);
   };
 
   return (
     <FormContainer
       type="add"
       title="Add Word"
-      submitButton="Add Word"
-      clearButton={true}
+      submitButton="Add"
       onSubmit={handleSubmit}
       closeForm={setAdd}
+      clearButton={true}
       handleClear={handleClear}
+      showClearOnSubmit={true}
       clearOnSubmit={clearOnSubmit}
       setClearOnSubmit={setClearOnSubmit}
     >
