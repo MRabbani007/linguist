@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useLazyGetAllChaptersQuery } from "../../features/admin/adminApiSlice";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import FormChapterEdit from "../../features/chapters/FormChapterEdit";
 import FormChapterAdd from "../../features/chapters/FormChapterAdd";

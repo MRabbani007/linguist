@@ -26,6 +26,8 @@ export default function Section({
 }) {
   const [expandSentences, setExpandSentences] = useState(true);
 
+  if (!section) return null;
+
   let content = [...words]
     .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
     .map((word, index) => (
@@ -36,8 +38,6 @@ export default function Section({
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
-  if (!section) return null;
-
   return (
     <motion.section
       variants={{
@@ -45,6 +45,7 @@ export default function Section({
         visible: { opacity: 1, y: 0 },
       }}
       transition={{ type: "spring", stiffness: 100, damping: 12 }}
+      className="bg-white rounded-lg p-4 "
     >
       <div className="flex items-stretch group relative">
         <p className="text-accent_foreground bg-accent shrink-0 flex items-center justify-center font-medium px-4 text-lg rounded-md">
@@ -56,17 +57,11 @@ export default function Section({
             }
           )}
         </p>
-        <div className="flex flex-col flex-1 text-destructive_foreground">
-          <div className="border-b-[1px] border-accent flex items-center gap-4">
-            <h3 className="font-semibold text-xl md:text-2xl px-4 py-2 flex-1">
-              {section?.title}
-            </h3>
-          </div>
-          {section?.subtitle && (
-            <p className=" px-4 py-1">
-              <i className="">{section?.subtitle}</i>
-            </p>
-          )}
+        <div className="flex flex-col flex-1 text-destructive_foreground p-2">
+          <h3 className="font-semibold text-xl md:text-2xl flex-1">
+            {section?.title}
+          </h3>
+          {section?.subtitle && <i className="">{section?.subtitle}</i>}
         </div>
       </div>
 
@@ -134,24 +129,22 @@ export default function Section({
             })}
           </div>
         )}
-
         {/* Words */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          transition={{ staggerChildren: 0.2, delay: 0.6 }}
-          viewport={{ once: true, amount: 0.2 }} // Triggers when 20% is in view
+          transition={{ staggerChildren: 0.1, delay: 0.1 }}
+          viewport={{ once: true, amount: 0.1 }} // Triggers when 20% is in view
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
         >
           {content}
         </motion.div>
-
         {Array.isArray(sentences) && sentences.length !== 0 ? (
           <motion.div
             initial="hidden"
             whileInView="visible"
-            transition={{ staggerChildren: 0.2, delay: 0.6 }}
-            viewport={{ once: true, amount: 0.2 }}
+            transition={{ staggerChildren: 0.1, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.01 }}
             className="flex flex-col gap-2"
           >
             {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p> */}

@@ -1,5 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { useSelector } from "react-redux";
 import { selectLessons, selectSections } from "../globals/globalsSlice";
 import { useBulkMoveSentencesMutation } from "./sentencesSlice";

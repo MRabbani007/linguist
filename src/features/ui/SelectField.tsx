@@ -18,7 +18,7 @@ export default function SelectField({
   return (
     <div
       className={
-        "grid grid-cols-1 md:grid-cols-[15%_1fr] items-center gap-0 md:gap-4 " +
+        "flex-1 grid grid-cols-1 md:grid-cols-[15%_1fr] items-center gap-0 md:gap-4 " +
         className
       }
     >

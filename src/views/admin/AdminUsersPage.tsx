@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RiAdminLine, RiUserLine } from "react-icons/ri";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import { useLazyGetAdminUsersQuery } from "@/features/admin/adminApiSlice";
 import { useSearchParams } from "react-router-dom";
 import FormEditUser from "@/features/admin/FormEditUser";

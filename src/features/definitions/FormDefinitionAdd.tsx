@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_DEFINITION } from "../../data/templates";
 import InputField from "../ui/InputField";
 import { useCreateDefinitionMutation } from "./definitionsSlice";

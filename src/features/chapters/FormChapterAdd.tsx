@@ -9,7 +9,7 @@ import { useAddChapterMutation } from "./chapterSlice";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import InputField from "../ui/InputField";
 import { T_CHAPTER } from "../../data/templates";
 

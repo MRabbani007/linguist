@@ -1,21 +1,12 @@
 import { useDispatch } from "react-redux";
 import { setDisplayChapter } from "../globals/globalsSlice";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 export default function CardChapter({ chapter }: { chapter: Chapter }) {
   const dispatch = useDispatch();
 
   const handleOpen = async () => {
     dispatch(setDisplayChapter(chapter));
-    // navigate(`/title=${}&id=${}`,{});
-    // navigate({
-    //   pathname: "/content/chapter",
-    //   search: `?${createSearchParams({
-    //     title: chapter?.title,
-    //     id: chapter?.id,
-    //   })}`,
-    // });
   };
 
   const level =
@@ -24,17 +15,11 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
       : null;
 
   return (
-    <motion.div
-      // initial={{ opacity: 0, y: -20 }}
-      // whileInView={{ opacity: 1, y: 0 }}
-      // transition={{ duration: 0.3, ease: "easeOut" }}
-      className="flex items-stretch duration-200 group relative group"
-    >
-      {/* Chapter Number */}
+    <div className="flex items-stretch duration-200 group relative group">
       <p className="bg-red-600 w-10 text-lg flex items-center justify-center text-white rounded-lg">
         {chapter?.chapterNo}
       </p>
-      <div className="px-4 py-2 my-2 flex-1 flex flex-col bg-zinc-100 group-hover:bg-white rounded-r-lg duration-200 shadow-md shadow-zinc-300">
+      <div className="px-4 py-2 my-2 flex-1 flex flex-col bg-white rounded-r-lg duration-200 shadow-sm shadow-zinc-600">
         <Link
           onClick={handleOpen}
           to={`/learn/chapter?id=${chapter.id}&title=${chapter.title}`}
@@ -45,9 +30,6 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
         <p className="font-normal text-sm md:text-base">
           {chapter?.subtitle || ""}
         </p>
-        {/* <p className="font-normal text-xs md:text-sm">
-          {chapter?.detail || ""}
-        </p> */}
       </div>
       <p
         className="absolute top-1/2 -translate-y-1/2 right-6 border-2 border-green-600 rounded-full w-8 h-8 flex items-center justify-center text-sm text-green-600"
@@ -55,6 +37,6 @@ export default function CardChapter({ chapter }: { chapter: Chapter }) {
       >
         {level?.short}
       </p>
-    </motion.div>
+    </div>
   );
 }

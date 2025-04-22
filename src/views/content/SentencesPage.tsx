@@ -14,7 +14,7 @@ import {
 // import { useDebounce } from "use-debounce";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import ReactLoading from "react-loading";
 import { useLazySearchSentencesQuery } from "@/features/globals/globalsApiSlice";
 import { BiCollapse, BiExpand, BiFilter, BiX } from "react-icons/bi";

@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useAddSentenceMutation } from "./sentencesSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_SENTENCE } from "@/data/templates";
 import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";

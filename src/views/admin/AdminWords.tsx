@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import FormWordEdit from "../../features/words/FormWordEdit";
 import { useFetchAttributes } from "../../hooks/useFetchAttributes";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import { useSearchParams } from "react-router-dom";
 import { ITEMS_PER_PAGE } from "@/lib/constants";

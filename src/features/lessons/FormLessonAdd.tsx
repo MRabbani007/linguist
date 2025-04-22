@@ -8,7 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectChapters } from "../globals/globalsSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_LESSON } from "../../data/templates";
 import InputField from "../ui/InputField";
 import { useAddLessonMutation } from "./lessonSlice";

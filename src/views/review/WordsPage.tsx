@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { axiosPrivate } from "../../api/axios";
 import CardWord from "../../features/words/CardWord";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import { useFetchAttributes } from "../../hooks/useFetchAttributes";
 
 export default function WordsPage() {

@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { axiosPrivate } from "../../api/axios";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "../../components/Pagination";
 import FormCreateAttribute from "../../features/admin/FormCreateAttribute";
 import { CiEdit } from "react-icons/ci";
 import FormCreateValue from "../../features/admin/FormCreateValue";

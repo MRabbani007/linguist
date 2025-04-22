@@ -1,5 +1,5 @@
 import AdminSentenceContainer from "@/features/admin/AdminSentenceContainer";
-import Pagination from "@/features/components/Pagination";
+import Pagination from "@/components/Pagination";
 import { selectLessons, selectSections } from "@/features/globals/globalsSlice";
 import FormBulkMove from "@/features/sentences/FormBulkMove";
 import FormSentenceEdit from "@/features/sentences/FormSentenceEdit";

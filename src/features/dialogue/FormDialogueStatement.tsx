@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { axiosPrivate } from "../../api/axios";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
 
 const template: DialogueStatement = {

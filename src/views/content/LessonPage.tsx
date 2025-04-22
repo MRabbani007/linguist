@@ -55,18 +55,18 @@ export default function LessonPage() {
   }, [displayLesson?.id]);
 
   return (
-    <main className="bg-zinc-200 md:px-20">
+    <main className="bg-zinc-200 md:px-20 flex flex-col items-stretch">
       <ScrollProgressBar />
       <div>
         <LessonHeader lesson={displayLesson} />
         <LessonNavigator />
       </div>
       {displayLesson?.lessonImage && (
-        <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">
+        <div className="flex justify-center rounded-lg overflow-hidden bg-white">
           <motion.img
             src={displayLesson?.lessonImage}
             alt=""
-            className="max-h-[300px]"
+            className="max-h-[300px] lg:max-w-[50vw]"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
@@ -86,10 +86,10 @@ export default function LessonPage() {
         </div>
       ) : null}
       <motion.div
-        initial="hidden"
-        animate="visible"
-        transition={{ staggerChildren: 0.2, delay: 1, duration: 1 }}
-        viewport={{ once: true, amount: 0.01 }} // Triggers when 20% is in view
+        // initial="hidden"
+        // animate="visible"
+        // transition={{ staggerChildren: 0.2, delay: 0, duration: 0.2 }}
+        // viewport={{ once: true, amount: 0.01 }} // Triggers when 20% is in view
         className="flex flex-col gap-4"
       >
         {content}

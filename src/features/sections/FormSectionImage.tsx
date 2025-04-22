@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { useDropzone } from "react-dropzone";
-import UploadProgressBar from "../components/UploadProgressBar";
+import UploadProgressBar from "../../components/UploadProgressBar";
 import { useEditSectionHeaderMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
 import { Section } from "../../types/types";

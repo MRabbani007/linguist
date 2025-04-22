@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { selectChapters } from "../globals/globalsSlice";
 import { T_LESSON } from "../../data/templates";
 import InputField from "../ui/InputField";
@@ -45,7 +45,6 @@ export default function FormLessonEdit({
     if (canSave) {
       try {
         const response = await editLesson(state);
-        console.log(response);
 
         if (response) {
           toast.success("Lesson Saved");
@@ -65,6 +64,7 @@ export default function FormLessonEdit({
       if (confirm("Delete this block?")) {
         await deleteLesson(lesson?.id).unwrap();
         toast.success("Lesson Deleted");
+        setEdit(false);
       }
     } catch (err) {
       toast.error("Failed to delete the Lesson");

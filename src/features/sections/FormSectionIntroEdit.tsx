@@ -4,7 +4,7 @@ import {
   useEditSectionIntroMutation,
 } from "./sectionSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 
 export default function FormSectionIntroEdit({
   sectionID,

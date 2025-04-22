@@ -1,5 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import SelectField from "../ui/SelectField";
 import { T_WORD } from "@/data/templates";
 import { useEditWordMutation } from "./wordsSlice";

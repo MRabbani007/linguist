@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_ATTRIBUTE } from "@/data/templates";
 import { createSlug } from "@/lib/utils";
 import { axiosPrivate } from "@/api/axios";

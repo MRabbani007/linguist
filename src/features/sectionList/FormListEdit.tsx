@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useEditSectionListContentMutation } from "./sectionListSlice";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { toast } from "react-toastify";
 import { T_SECTIONLIST } from "../../data/templates";
 

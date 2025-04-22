@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useAddWordMutation } from "./wordsSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { T_WORD } from "../../data/templates";
 import InputField from "../ui/InputField";

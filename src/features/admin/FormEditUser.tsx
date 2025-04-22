@@ -5,7 +5,7 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import InputField from "../ui/InputField";
 import { useUpdateAdminUserMutation } from "./adminApiSlice";
 import CheckboxField from "../ui/CheckboxField";

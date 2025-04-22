@@ -5,7 +5,7 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { axiosPrivate } from "../../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

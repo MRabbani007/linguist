@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { setDisplayChapter, setDisplayLesson } from "../globals/globalsSlice";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/app/store";
-import { motion } from "framer-motion";
 
 export default function CardLesson({
   lesson,
@@ -24,14 +23,9 @@ export default function CardLesson({
   };
 
   return (
-    <motion.div
-      // variants={{
-      //   hidden: { opacity: 0, y: 30 },
-      //   visible: { opacity: 1, y: 0 },
-      // }}
-      // transition={{ type: "spring", stiffness: 100, damping: 12 }}
+    <div
       onClick={handleOpenLesson}
-      className="flex cursor-pointer relative group gap-2 p-2 bg-zinc-100 hover:bg-white shadow-md shadow-zinc-300 rounded-lg duration-200"
+      className="flex cursor-pointer relative group gap-2 p-2 bg-white shadow-sm shadow-zinc-600 rounded-lg duration-200"
     >
       <span className="bg-red-600 shrink-0 w-8 h-8 flex items-center justify-center text-accent_foreground rounded-full text-sm">
         {lesson?.sortIndex}
@@ -43,6 +37,6 @@ export default function CardLesson({
           <p className="text-xs">{lesson?.detail}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

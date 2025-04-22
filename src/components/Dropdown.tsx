@@ -33,7 +33,7 @@ export default function Dropdown({ label, url, icon, items }: Props) {
     >
       <button
         onClick={handleClick}
-        className="border-b-2 pt-0.5 border-destructive hover:border-yellow-500 duration-200"
+        className="border-b-2 pt-0.5 border-white hover:border-yellow-500 duration-200"
       >
         {icon}
         {label}

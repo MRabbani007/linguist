@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { IoArrowBack, IoFolderOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { setImageFolder, setImagesFetch } from "../admin/adminSlice";

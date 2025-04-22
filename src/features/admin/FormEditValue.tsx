@@ -10,7 +10,7 @@ import { T_VALUE } from "../../data/templates";
 import { createSlug } from "../../lib/utils";
 import { axiosPrivate } from "../../api/axios";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import SelectField from "../ui/SelectField";
 import InputField from "../ui/InputField";
 import { useSelector } from "react-redux";

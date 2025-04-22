@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useAddSectionMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 
 const template: Section = {
   id: "",

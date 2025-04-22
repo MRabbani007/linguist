@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
-import useFileUpload from "../../hooks/useFileUpload";
+import useFileUpload from "../hooks/useFileUpload";
 import { motion } from "framer-motion";
 
 interface Props {

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { selectLessons, selectSections } from "../globals/globalsSlice";
 import { T_SENTENCE } from "@/data/templates";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import SelectField from "../ui/SelectField";
 
 export default function FormSentenceMove({

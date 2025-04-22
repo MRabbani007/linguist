@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useAddSectionListMutation } from "./sectionListSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_SECTIONLIST } from "../../data/templates";
 
 export default function ListAdd({

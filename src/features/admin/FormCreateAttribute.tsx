@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import InputField from "../ui/InputField";
 import { T_ATTRIBUTE } from "../../data/templates";
 import { createSlug } from "../../lib/utils";

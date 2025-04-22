@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { useDropzone } from "react-dropzone";
-import UploadProgressBar from "../components/UploadProgressBar";
+import UploadProgressBar from "../../components/UploadProgressBar";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";

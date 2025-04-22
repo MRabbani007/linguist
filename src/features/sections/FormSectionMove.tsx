@@ -1,7 +1,7 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useEditSectionLessonIDMutation } from "./sectionSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import SelectField from "../ui/SelectField";
 import { useSelector } from "react-redux";
 import { selectLessons } from "../globals/globalsSlice";

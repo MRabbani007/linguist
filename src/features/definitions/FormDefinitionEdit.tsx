@@ -10,7 +10,7 @@ import {
   useRemoveDefinitionMutation,
 } from "./definitionsSlice";
 import { toast } from "react-toastify";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../../components/FormContainer";
 import { T_DEFINITION } from "../../data/templates";
 import InputField from "../ui/InputField";
 

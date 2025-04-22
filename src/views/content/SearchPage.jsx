@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
-import { axiosPrivate } from "../../api/axios";
+import { axiosPrivate } from "@/api/axios";
 import { BsBoxArrowUpRight } from "react-icons/bs";
-import Pagination from "../../features/components/Pagination";
+import Pagination from "@/components/Pagination";
 
 export default function SearchPage() {
   const navigate = useNavigate();
