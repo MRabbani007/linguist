@@ -62,7 +62,7 @@ export default function LessonPage() {
         <LessonNavigator />
       </div>
       {displayLesson?.lessonImage && (
-        <div className="flex justify-center rounded-lg overflow-hidden bg-white">
+        <div className="flex justify-center rounded-lg overflow-hidden bg-white p-2 md:p-6">
           <motion.img
             src={displayLesson?.lessonImage}
             alt=""
@@ -75,25 +75,17 @@ export default function LessonPage() {
       )}
       {Array.isArray(displayLesson?.introduction) &&
       displayLesson?.introduction?.length !== 0 ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-0 py-6 px-4 bg-white rounded-lg font-medium text-zinc-700">
           {displayLesson.introduction.map((intro, index) => {
             return (
-              <div key={index} className="group relative text-pretty flex-1">
-                <span className="text-wrap">{intro}</span>
-              </div>
+              <p key={index} className="group relative text-pretty">
+                {intro}
+              </p>
             );
           })}
         </div>
       ) : null}
-      <motion.div
-        // initial="hidden"
-        // animate="visible"
-        // transition={{ staggerChildren: 0.2, delay: 0, duration: 0.2 }}
-        // viewport={{ once: true, amount: 0.01 }} // Triggers when 20% is in view
-        className="flex flex-col gap-4"
-      >
-        {content}
-      </motion.div>
+      <motion.div className="flex flex-col gap-4">{content}</motion.div>
       <LessonNavigator />
       <ContentNavigator />
       {isSuccess && <LessonCompleted lessonID={displayLesson.id} />}

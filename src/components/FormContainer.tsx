@@ -47,18 +47,18 @@ export default function FormContainer({
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleEscape = (ev: globalThis.KeyboardEvent) => {
-    if (ev.key === "Escape") {
-      closeForm(false);
-    }
-  };
-
   const handleReset = () => {
     closeForm(false);
     onReset(false);
   };
 
   useEffect(() => {
+    const handleEscape = (ev: globalThis.KeyboardEvent) => {
+      if (ev.key === "Escape") {
+        closeForm(false);
+      }
+    };
+
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleEscape);
 

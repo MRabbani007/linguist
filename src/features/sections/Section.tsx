@@ -8,6 +8,8 @@ import CardConjTable from "../tables/CardConjTable";
 import WordContainer from "../words/WordContainer";
 import CardTextBlock from "../textBlock/CardTextBlock";
 import { motion } from "framer-motion";
+import FormDisplaySentence from "../sentences/FormDisplaySentence";
+import FormDisplayWord from "../sentences/FormDisplayWord";
 
 export default function Section({
   section = null,
@@ -25,6 +27,8 @@ export default function Section({
   tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
   const [expandSentences, setExpandSentences] = useState(true);
+  const [showWords, setShowWords] = useState(false);
+  const [showSentences, setShowSentences] = useState(false);
 
   if (!section) return null;
 
@@ -37,6 +41,9 @@ export default function Section({
     ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
+
+  const hasWords = Array.isArray(words) && words.length !== 0;
+  const hasSentences = Array.isArray(sentences) && sentences.length !== 0;
 
   return (
     <motion.section
@@ -62,6 +69,24 @@ export default function Section({
             {section?.title}
           </h3>
           {section?.subtitle && <i className="">{section?.subtitle}</i>}
+        </div>
+        <div className="flex items-center gap-2">
+          {hasWords && (
+            <button
+              onClick={() => setShowWords((curr) => !curr)}
+              className="p-1 rounded-md bg-red-100"
+            >
+              W
+            </button>
+          )}
+          {hasSentences && (
+            <button
+              onClick={() => setShowSentences((curr) => !curr)}
+              className="py-1 px-3 font-medium rounded-md bg-red-50"
+            >
+              S
+            </button>
+          )}
         </div>
       </div>
 
@@ -139,7 +164,7 @@ export default function Section({
         >
           {content}
         </motion.div>
-        {Array.isArray(sentences) && sentences.length !== 0 ? (
+        {Array.isArray(sentences) && sentences.length !== 0 && (
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -155,6 +180,7 @@ export default function Section({
               <button onClick={() => setExpandSentences((curr) => !curr)}>
                 {expandSentences ? "Show Less" : "Show more"}
               </button>
+
               <Link
                 to={`/sentences/${section?.lessonID}`}
                 className="text-blue-500 font-medium"
@@ -163,7 +189,21 @@ export default function Section({
               </Link>
             </div>
           </motion.div>
-        ) : null}
+        )}
+        {showSentences && (
+          <FormDisplaySentence
+            sentences={sentences}
+            title={section?.title}
+            setShowForm={setShowSentences}
+          />
+        )}
+        {showWords && (
+          <FormDisplayWord
+            words={words}
+            title={section?.title}
+            setShowForm={setShowWords}
+          />
+        )}
       </div>
     </motion.section>
   );
