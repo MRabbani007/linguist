@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../../features/globals/globalsSlice";
-// Imported Components
 import LessonNavigator from "../../features/navigation/LessonNavigator";
-// Imported Icons
 import LessonHeader from "../../features/lessons/LessonHeader";
 import ContentNavigator from "../../features/navigation/ContentNavigator";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +31,30 @@ export default function LessonPage() {
 
   let content;
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = (
+      <>
+        <div className="flex-1 bg-white rounded-lg flex flex-col p-4 animate-pulse">
+          <div className="flex items-stretch gap-2">
+            <div className="bg-red-600 w-14 h-20 shrink-0 rounded-lg"></div>
+            <div className="flex-1 flex flex-col items-stretch gap-2">
+              <p className="flex-1 bg-zinc-300 rounded-lg"></p>
+              <p className="flex-1 bg-zinc-300 rounded-lg"></p>
+            </div>
+          </div>
+          <div className="flex-1 min-h-[100px]"></div>
+        </div>
+        <div className="flex-1 bg-white rounded-lg flex flex-col p-4 animate-pulse">
+          <div className="flex items-stretch gap-2">
+            <div className="bg-red-600 w-14 h-20 shrink-0 rounded-lg"></div>
+            <div className="flex-1 flex flex-col items-stretch gap-2">
+              <p className="flex-1 bg-zinc-300 rounded-lg"></p>
+              <p className="flex-1 bg-zinc-300 rounded-lg"></p>
+            </div>
+          </div>
+          <div className="flex-1 min-h-[100px]"></div>
+        </div>
+      </>
+    );
   } else if (isError) {
     content = <p>Error</p>;
   } else if (isSuccess) {
@@ -85,6 +106,7 @@ export default function LessonPage() {
           })}
         </div>
       ) : null}
+      {/* Sections */}
       <motion.div className="flex flex-col gap-4">{content}</motion.div>
       <LessonNavigator />
       <ContentNavigator />

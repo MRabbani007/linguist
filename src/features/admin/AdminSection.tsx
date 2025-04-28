@@ -201,18 +201,19 @@ export default function AdminSection({
               <BiSort size={20} />
             </button>
           )}
-          <div className="flex items-center bg-zinc-100 rounded-md p-2">
-            <button onClick={() => setBulkMove(true)}>
-              {selectedSentences?.length === 1
-                ? `1 Sentence`
-                : `${selectedSentences?.length} Sentences`}
-            </button>
-            {selectedSentences.length > 0 && (
+          {selectedSentences.length > 0 && (
+            <div className="flex items-center bg-zinc-100 rounded-md p-2">
+              <button onClick={() => setBulkMove(true)}>
+                {selectedSentences?.length === 1
+                  ? `1 Sentence`
+                  : `${selectedSentences?.length} Sentences`}
+              </button>
+
               <button onClick={handleClear}>
                 <BiX size={20} />
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <div className={" flex flex-col gap-4 duration-200"}>
           {Array.isArray(section?.introduction) &&
@@ -346,11 +347,9 @@ export default function AdminSection({
           attributes={attributes as WordAttribute[]}
         />
       )}
-
       {showMoveWord && editWord && (
         <FormWordMove word={editWord} setEdit={setShowMoveWord} />
       )}
-
       {showEditSentence && editItem && (
         <FormSentenceEdit
           sentence={editItem}

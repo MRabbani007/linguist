@@ -11,7 +11,6 @@ import {
   selectDisplayLesson,
   selectLessons,
 } from "../../features/globals/globalsSlice";
-// import { useDebounce } from "use-debounce";
 import { MdOutlinePlayLesson } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import Pagination from "../../components/Pagination";
@@ -20,6 +19,7 @@ import { useLazySearchSentencesQuery } from "@/features/globals/globalsApiSlice"
 import { BiCollapse, BiExpand, BiFilter, BiX } from "react-icons/bi";
 import FormSentenceFilter from "@/features/sentences/FormSentenceFilter";
 import { ITEMS_PER_PAGE } from "@/lib/constants";
+import FormDisplaySentence from "@/features/sentences/FormDisplaySentence";
 
 export default function SentencesPage() {
   const displayBlock = useSelector(selectDisplayLesson);
@@ -33,16 +33,12 @@ export default function SentencesPage() {
   let count = 0;
 
   const lessons = useSelector(selectLessons);
-
   const lesson = lessons?.find((item) => item.id === lessonID);
-
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
 
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilter, setShowFilter] = useState(false);
-  // const [value] = useDebounce(search, 1000);
-  // const [sort, setSort] = useState("");
+  const [showSentences, setShowSentences] = useState(false);
+  const [dispalayIndex, setDisplayIndex] = useState(-1);
 
   useEffect(() => {
     setSearchTerm(search ?? "");
@@ -88,7 +84,6 @@ export default function SentencesPage() {
   };
 
   useEffect(() => {
-    // if (searchTerm !== "" || (lessonID && lessonID !== "")) {
     searchSentences({ searchTerm: search, lessonID, page, level });
   }, [search, lessonID, page, level]);
 
@@ -105,8 +100,18 @@ export default function SentencesPage() {
     );
   } else if (isSuccess) {
     count = data.count;
-    content = data.data.map((item: Sentence) => {
-      return <Sentence sentence={item} key={item.id} display={display} />;
+    content = data.data.map((item: Sentence, idx) => {
+      return (
+        <div
+          onClick={() => {
+            setShowSentences(true);
+            setDisplayIndex(idx);
+          }}
+          className="cursor-pointer"
+        >
+          <Sentence sentence={item} key={item.id} display={display} />
+        </div>
+      );
     });
   } else if (isError) {
     content = <p>Error Loading Sentences</p>;
@@ -184,8 +189,6 @@ export default function SentencesPage() {
               : null}
           </p>
         </div>
-        {/* <p>{lessonID}</p> */}
-        {/* <SortSentences sort={sort} setSort={setSort} /> */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => setShowFilter(true)}
@@ -205,25 +208,31 @@ export default function SentencesPage() {
               <BiCollapse size={20} />
             )}
           </button>
+          <button
+            onClick={() => setShowSentences((curr) => !curr)}
+            className="py-1 px-3 font-medium rounded-md shadow-sm shadow-zinc-400 hover:shadow-md hover:shadow-zinc-400 duration-200 bg-red-100"
+          >
+            S
+          </button>
           <Pagination currentPage={+page} count={count} className="ml-auto" />
         </div>
         <div className="w-full flex flex-col gap-2">{content}</div>
-        <Pagination currentPage={+page} count={count} />
-        <div className="my-2">
-          {displayBlock?.id ? (
+        <div className="flex items-center gap-4 my-4">
+          {lessonID?.trim() ? (
             <Link
               to={`/learn/lesson?id=${displayBlock?.id}`}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 mr-auto"
             >
               <span>Back to Lesson</span>
               <MdOutlinePlayLesson size={32} />
             </Link>
           ) : (
-            <Link to={"/learn/chapters"} className="flex items-center gap-2">
+            <Link to={"/learn"} className="flex items-center gap-2 mr-auto">
               <span>Go to lessons</span>
               <MdOutlinePlayLesson size={32} />
             </Link>
           )}
+          <Pagination currentPage={+page} count={count} />
         </div>
         {showFilter && (
           <FormSentenceFilter
@@ -232,6 +241,13 @@ export default function SentencesPage() {
             lessonIDInit={lessonID ?? ""}
           />
         )}
+        <FormDisplaySentence
+          sentences={Array.isArray(data?.data) ? data.data : []}
+          title={lesson?.title ?? "Sentences"}
+          showForm={showSentences}
+          setShowForm={setShowSentences}
+          initialIndex={dispalayIndex}
+        />
       </main>
     </>
   );

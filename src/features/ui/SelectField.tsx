@@ -35,7 +35,7 @@ export default function SelectField({
         onChange={(event: ChangeEvent<HTMLSelectElement>) =>
           onValueChange(event.target.value)
         }
-        className="px-4 py-2 text-gray-700 bg-white border-[1px] border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+        className="appearance-none px-4 py-2 text-gray-700 bg-white border-[1px] border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[1px] focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
       >
         <option value="">{`Select ${label}`}</option>
         {options.map((item, idx) => (

@@ -31,10 +31,6 @@ export const wordsSlice = apiSlice.injectEndpoints({
         method: "GET",
         params: { lessonID },
       }),
-      // transformResponse: (response: any) => {
-      //   console.log(response);
-      //   return response;
-      // },
       providesTags: (result) =>
         result
           ? [

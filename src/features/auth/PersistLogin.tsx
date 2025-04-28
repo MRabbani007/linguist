@@ -52,11 +52,13 @@ export default function PersistLogin() {
     };
   }, []);
 
+  // !persist ? (
+  //   <Outlet />
+  // ) :
+
   return (
     <>
-      {!persist ? (
-        <Outlet />
-      ) : isLoading ? (
+      {isLoading ? (
         <main className="flex-1 items-center justify-center">
           <header className="text-zinc-800 font-medium justify-center">
             <h1>

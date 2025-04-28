@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import AdminDropDown from "./AdminDropDown";
 import FormLessonEdit from "../lessons/FormLessonEdit";
 import FormSectionAdd from "../sections/FormSectionAdd";
+import { BsThreeDots } from "react-icons/bs";
 
 export default function AdminLessonContainer({
   children,
@@ -63,7 +64,9 @@ export default function AdminLessonContainer({
   return (
     <>
       <div className="relative">
-        <AdminDropDown items={items} />
+        <div className="absolute top-2 right-0 flex items-center gap-2 z-30">
+          <AdminDropDown items={items} icon={<BsThreeDots />} />
+        </div>
         {children}
       </div>
       {editHeaders && lesson && (

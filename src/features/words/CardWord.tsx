@@ -67,108 +67,104 @@ export default function CardWord({ word }: { word: Word }) {
       : null;
 
   return (
-    <>
+    <div
+      className={
+        (word.type === "ph" ? "" : "") +
+        " flex-1 flex flex-col text-xl duration-200 group relative z-10 bg-zinc-100 hover:bg-zinc-50 rounded-md overflow-clip"
+      }
+    >
+      {/* Word Body */}
       <div
         className={
-          (word.type === "ph" ? "" : "") +
-          "  flex flex-col h-full text-xl duration-200 group relative z-10 bg-zinc-100 hover:bg-zinc-50 rounded-md overflow-clip"
+          `border-l-2 border-${levelColor} duration-200  ` +
+          " flex-1 flex items-stretch gap-4 relative py-2 px-4 md:p4-4 md:px-4"
         }
       >
-        {/* Word Body */}
-        <div
-          className={
-            `border-l-2 border-${levelColor} duration-200  ` +
-            " flex-1 flex items-stretch gap-4 relative py-2 px-4 md:p4-4 md:px-4"
-          }
-        >
-          {/* Word Image */}
-          {word?.imageURL ? (
-            <img
-              src={word.imageURL}
-              alt={word.first}
-              className="object-contain max-h-24 w-20 my-auto"
-            />
-          ) : null}
-          {/* Word first, second */}
-          <div className="flex flex-col flex-wrap items-start justify-start gap-2 flex-1 my-auto">
-            <div className="font-semibold relative group w-fit">
-              <p
-                className="cursor-pointer text-xl space-x-1"
-                onMouseOver={() => setShowPronunce(true)}
-                onMouseOut={() => setShowPronunce(false)}
-              >
-                <span>{word?.first}</span>
-                <span className="font-light text-sm italic ml-2">
-                  {word.firstCaption}
-                </span>
-              </p>
-              {showPopup ? (
-                <p
-                  className={
-                    (showPronunce
-                      ? ""
-                      : "invisible opacity-0 -translate-y-4 ") +
-                    " absolute top-full left-0 py-1 px-2 w-fit text-nowrap font-normal z-50 bg-white rounded-lg duration-200 text-sm"
-                  }
-                >
-                  {word?.third}
-                </p>
-              ) : null}
-            </div>
-            <p className="font-medium text-destructive_foreground text-base">
-              <span>{word?.second}</span>
+        {/* Word Image */}
+        {word?.imageURL ? (
+          <img
+            src={word.imageURL}
+            alt={word.first}
+            className="object-contain max-h-24 w-20 my-auto"
+          />
+        ) : null}
+        {/* Word first, second */}
+        <div className="flex flex-col flex-wrap items-start justify-start gap-2 flex-1 my-auto">
+          <div className="font-semibold relative group w-fit">
+            <p
+              className="cursor-pointer text-xl space-x-1"
+              onMouseOver={() => setShowPronunce(true)}
+              onMouseOut={() => setShowPronunce(false)}
+            >
+              <span>{word?.first}</span>
               <span className="font-light text-sm italic ml-2">
-                {word.secondCaption}
+                {word.firstCaption}
               </span>
             </p>
+            {showPopup ? (
+              <p
+                className={
+                  (showPronunce ? "" : "invisible opacity-0 -translate-y-4 ") +
+                  " absolute top-full left-0 py-1 px-2 w-fit text-nowrap font-normal z-50 bg-white rounded-lg duration-200 text-sm"
+                }
+              >
+                {word?.third}
+              </p>
+            ) : null}
           </div>
-          {/* <div
+          <p className="font-medium text-destructive_foreground text-base">
+            <span>{word?.second}</span>
+            <span className="font-light text-sm italic ml-2">
+              {word.secondCaption}
+            </span>
+          </p>
+        </div>
+        {/* <div
             title={word?.level}
             className={`bg-${levelColor} rounded-full size-4 absolute top-2 right-2 z-20`}
           ></div> */}
-          {editMode && (
-            <p className="absolute top-2 right-4 text-sm">{word.sortIndex}</p>
-          )}
-          {word?.note && word.note !== "" && (
-            <button
-              className="absolute top-2 right-6"
-              onClick={() => setShowNote(true)}
-            >
-              <IoInformationCircleOutline size={20} />
-            </button>
-          )}
-          <div
-            ref={ref}
-            className={
-              (showNote ? "" : "invisible opacity-0 -translate-y-4 ") +
-              " absolute top-2 right-2 left-2 bg-white rounded-md p-4 text-sm flex items-start justify-between z-30 duration-200"
-            }
+        {editMode && (
+          <p className="absolute top-2 right-4 text-sm">{word.sortIndex}</p>
+        )}
+        {word?.note && word.note !== "" && (
+          <button
+            className="absolute top-2 right-6"
+            onClick={() => setShowNote(true)}
           >
-            <p className="mt-2 mr-2">{word?.note}</p>
-            <button
-              onClick={() => setShowNote(false)}
-              className="absolute top-1 right-1 bg-zinc-100 rounded-full hover:bg-zinc-200 duration-150 p-1"
-            >
-              <BiX size={20} />
-            </button>
-          </div>
-          {wordType && (
-            <div className="flex items-center mt-auto gap-2">
-              <p
-                className={`text-xs font-medium py-1 px-2 rounded-md ${wordType?.bg}`}
-                title={wordType?.title}
-              >
-                {wordType.short}
-              </p>
-              {wordGender && (
-                <p className="text-xs font-medium py-1 px-2 rounded-md bg-zinc-200">
-                  {wordGender}
-                </p>
-              )}
-            </div>
-          )}
+            <IoInformationCircleOutline size={20} />
+          </button>
+        )}
+        <div
+          ref={ref}
+          className={
+            (showNote ? "" : "invisible opacity-0 -translate-y-4 ") +
+            " absolute top-2 right-2 left-2 bg-white rounded-md p-4 text-sm flex items-start justify-between z-30 duration-200"
+          }
+        >
+          <p className="mt-2 mr-2">{word?.note}</p>
+          <button
+            onClick={() => setShowNote(false)}
+            className="absolute top-1 right-1 bg-zinc-100 rounded-full hover:bg-zinc-200 duration-150 p-1"
+          >
+            <BiX size={20} />
+          </button>
         </div>
+        {wordType && (
+          <div className="flex items-center mt-auto gap-2">
+            <p
+              className={`text-xs font-medium py-1 px-2 rounded-md ${wordType?.bg}`}
+              title={wordType?.title}
+            >
+              {wordType.short}
+            </p>
+            {wordGender && (
+              <p className="text-xs font-medium py-1 px-2 rounded-md bg-zinc-200">
+                {wordGender}
+              </p>
+            )}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

@@ -30,20 +30,30 @@ export default function Section({
   const [showWords, setShowWords] = useState(false);
   const [showSentences, setShowSentences] = useState(false);
 
+  const [dispalayIndex, setDisplayIndex] = useState(-1);
+
   if (!section) return null;
 
   let content = [...words]
-    .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
+    // .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
     .map((word, index) => (
       <WordContainer word={word} key={index}>
-        <CardWord word={word} />
+        <div
+          onClick={() => {
+            setShowWords(true);
+            setDisplayIndex(index);
+          }}
+          className="cursor-pointer bg-red-600/20 flex items-stretch h-full"
+        >
+          <CardWord word={word} />
+        </div>
       </WordContainer>
     ));
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
-  const hasWords = Array.isArray(words) && words.length !== 0;
-  const hasSentences = Array.isArray(sentences) && sentences.length !== 0;
+  // const hasWords = Array.isArray(words) && words.length !== 0;
+  // const hasSentences = Array.isArray(sentences) && sentences.length !== 0;
 
   return (
     <motion.section
@@ -70,11 +80,11 @@ export default function Section({
           </h3>
           {section?.subtitle && <i className="">{section?.subtitle}</i>}
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           {hasWords && (
             <button
               onClick={() => setShowWords((curr) => !curr)}
-              className="p-1 rounded-md bg-red-100"
+              className="py-1 px-3 font-medium rounded-md shadow-sm shadow-zinc-400 hover:shadow-md hover:shadow-zinc-400 duration-200 bg-red-100"
             >
               W
             </button>
@@ -82,12 +92,12 @@ export default function Section({
           {hasSentences && (
             <button
               onClick={() => setShowSentences((curr) => !curr)}
-              className="py-1 px-3 font-medium rounded-md bg-red-50"
+              className="py-1 px-3 font-medium rounded-md shadow-sm shadow-zinc-400 hover:shadow-md hover:shadow-zinc-400 duration-200 bg-red-100"
             >
               S
             </button>
           )}
-        </div>
+        </div> */}
       </div>
 
       <div className={" flex flex-col gap-4 duration-200"}>
@@ -164,6 +174,7 @@ export default function Section({
         >
           {content}
         </motion.div>
+
         {Array.isArray(sentences) && sentences.length !== 0 && (
           <motion.div
             initial="hidden"
@@ -173,8 +184,18 @@ export default function Section({
             className="flex flex-col gap-2"
           >
             {/* <p className="py-2 px-4 text-xl bg-sky-600 text-white">Examples</p> */}
-            {temp.map((sentence) => {
-              return <Sentence sentence={sentence} key={sentence?.id} />;
+            {temp.map((sentence, idx) => {
+              return (
+                <div
+                  onClick={() => {
+                    setShowSentences(true);
+                    setDisplayIndex(idx);
+                  }}
+                  className="cursor-pointer"
+                >
+                  <Sentence sentence={sentence} key={sentence?.id} />
+                </div>
+              );
             })}
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button onClick={() => setExpandSentences((curr) => !curr)}>
@@ -190,20 +211,20 @@ export default function Section({
             </div>
           </motion.div>
         )}
-        {showSentences && (
-          <FormDisplaySentence
-            sentences={sentences}
-            title={section?.title}
-            setShowForm={setShowSentences}
-          />
-        )}
-        {showWords && (
-          <FormDisplayWord
-            words={words}
-            title={section?.title}
-            setShowForm={setShowWords}
-          />
-        )}
+        <FormDisplaySentence
+          sentences={sentences}
+          title={section?.title}
+          showForm={showSentences}
+          setShowForm={setShowSentences}
+          initialIndex={dispalayIndex}
+        />
+        <FormDisplayWord
+          words={words}
+          title={section?.title}
+          showForm={showWords}
+          setShowForm={setShowWords}
+          initialIndex={dispalayIndex}
+        />
       </div>
     </motion.section>
   );

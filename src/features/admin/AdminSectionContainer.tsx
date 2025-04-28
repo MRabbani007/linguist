@@ -5,7 +5,7 @@ import { RxTextAlignLeft } from "react-icons/rx";
 import { CiEdit, CiImageOn, CiViewTable } from "react-icons/ci";
 import { PiListBullets } from "react-icons/pi";
 import { VscWholeWord } from "react-icons/vsc";
-import { IoCopyOutline } from "react-icons/io5";
+import { IoAddOutline, IoCopyOutline } from "react-icons/io5";
 import FormWordAdd from "../words/FormWordAdd";
 import copy from "copy-to-clipboard";
 import { toast } from "react-toastify";
@@ -17,7 +17,6 @@ import FormAddTextBlock from "../textBlock/FormAddTextBlock";
 import FormDefinitionAdd from "../definitions/FormDefinitionAdd";
 import FormSentenceAdd from "../sentences/FormSentenceAdd";
 import { useSelector } from "react-redux";
-import { selectLessonSections } from "../globals/globalsApiSlice";
 import { selectSectionSentences } from "../sentences/sentencesSlice";
 import { selectSectionText } from "../textBlock/textBlockSlice";
 import { selectSectionWords } from "../words/wordsSlice";
@@ -29,8 +28,6 @@ export default function AdminSectionContainer({
   section: ContentSection;
   children?: ReactNode;
 }) {
-  const sections = useSelector(selectLessonSections(section?.lessonID ?? ""));
-
   const sectionWords =
     useSelector(
       selectSectionWords(section?.lessonID ?? "", section?.id ?? "")
@@ -61,7 +58,7 @@ export default function AdminSectionContainer({
     }
   };
 
-  const items = [
+  const addItems = [
     {
       type: "separator",
       label: "Add...",
@@ -111,6 +108,9 @@ export default function AdminSectionContainer({
       icon: <BsTextParagraph size={20} />,
       onClick: () => setAddSentence(true),
     },
+  ];
+
+  const editItems = [
     {
       type: "separator",
       label: "Edit...",
@@ -150,7 +150,10 @@ export default function AdminSectionContainer({
 
   return (
     <div className="relative">
-      <AdminDropDown items={items} />
+      <div className="absolute top-2 right-0 flex items-center gap-2 z-30">
+        <AdminDropDown items={addItems} icon={<IoAddOutline size={25} />} />
+        <AdminDropDown items={editItems} icon={<CiEdit size={25} />} />
+      </div>
       <AdminSection
         section={section}
         sectionIntroduction={sectionIntroduction ?? []}
@@ -193,6 +196,9 @@ export default function AdminSectionContainer({
           words={section.words}
         />
       )}
+      {editImage && null}
+      {addTable && null}
+      {addList && null}
     </div>
   );
 }

@@ -22,10 +22,8 @@ export default function AdminLessonEditor() {
     useLazyGetLessonByIDQuery();
 
   const [getSentences] = useLazyGetAdminSentencesQuery();
-
   const [getLessonTextBlocks] = useLazyGetLessonTextBlocksQuery();
-
-  const [getLessonWords, { data: words }] = useLazyGetLessonWordsQuery();
+  const [getLessonWords] = useLazyGetLessonWordsQuery();
 
   useEffect(() => {
     if (id && id !== "") {
@@ -75,13 +73,12 @@ export default function AdminLessonEditor() {
 
   return (
     <>
-      <AdminLessonNav />
-
       {lesson && (
         <AdminLessonContainer lesson={lesson}>
           <LessonHeader lesson={lesson} chapter={chapter} />
         </AdminLessonContainer>
       )}
+      <AdminLessonNav />
 
       {lesson?.lessonImage && (
         <div className="mx-auto lg:max-w-[50vw] overflow-hidden ">
@@ -111,6 +108,7 @@ export default function AdminLessonEditor() {
         </div>
       ) : null}
 
+      {/* Sections */}
       <div className="flex-1 flex flex-col gap-4">{content}</div>
 
       {lesson && editIntro && (

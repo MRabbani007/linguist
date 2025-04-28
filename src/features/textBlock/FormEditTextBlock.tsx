@@ -41,9 +41,10 @@ export default function FormEditTextBlock({
     event.preventDefault();
     try {
       await editTextBlock(state).unwrap();
-      toast.success("Text block Added");
+      toast.success("Text block saved");
+      setEdit(false);
     } catch (err) {
-      toast.error("Failed to add text block");
+      toast.error("Failed to save text block");
     }
   };
 

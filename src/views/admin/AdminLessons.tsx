@@ -55,7 +55,7 @@ export default function AdminLessons() {
 
   return (
     <>
-      <div className="flex items-center gap-4">
+      <div className="flex items-stretch gap-2">
         <SelectField
           label="Chapter"
           onValueChange={(val) => setChapter(val)}
