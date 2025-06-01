@@ -11,11 +11,18 @@ import {
 } from "./sectionSlice";
 import { toast } from "react-toastify";
 import FormContainer from "../../components/FormContainer";
+import SelectField from "../ui/SelectField";
+import InputField from "../ui/InputField";
 
 interface Props {
   section: Section;
   setEdit: Dispatch<SetStateAction<boolean>>;
 }
+
+const wordDisplayOptions = [
+  { label: "Table", value: "table" },
+  { label: "Grid", value: "grid" },
+];
 
 export default function FormSectionEdit({ section, setEdit }: Props) {
   const [editSectionHeader, { isLoading }] = useEditSectionHeaderMutation();
@@ -23,15 +30,17 @@ export default function FormSectionEdit({ section, setEdit }: Props) {
 
   const [state, setState] = useState(section);
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const canSave = !isLoading;
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.target;
     setState((prevProps) => ({
       ...prevProps,
       [name]: value,
     }));
   };
-
-  const canSave = !isLoading;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -60,53 +69,38 @@ export default function FormSectionEdit({ section, setEdit }: Props) {
       onDelete={handleDelete}
       closeForm={setEdit}
     >
-      <div className="field__row">
-        <label htmlFor="sortIndex" className="field__label">
-          Number
-        </label>
-        <input
-          id="sortIndex"
-          name="sortIndex"
-          type="text"
-          title="Number"
-          placeholder="Number"
-          value={state?.sortIndex}
-          onChange={onChange}
-          className="field__input__row"
-        />
-      </div>
-      <div className="field__row">
-        <label htmlFor="title" className="field__label">
-          Section Title
-        </label>
-        <input
-          id="title"
-          name="title"
-          type="text"
-          autoFocus
-          required
-          title="Section Title"
-          placeholder="Section Title"
-          value={state?.title || ""}
-          onChange={onChange}
-          className="field__input__row"
-        />
-      </div>
-      <div className="field__row">
-        <label htmlFor="subtitle" className="field__label">
-          Section Sub-Title
-        </label>
-        <input
-          id="subtitle"
-          name="subtitle"
-          type="text"
-          title="Section SubTitle"
-          placeholder="Section SubTitle"
-          value={state?.subtitle || ""}
-          onChange={onChange}
-          className="field__input__row"
-        />
-      </div>
+      <InputField
+        label="Index"
+        name="sortIndex"
+        type="text"
+        value={state?.sortIndex ? state?.sortIndex : 0}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Title"
+        name="title"
+        type="text"
+        value={state?.title ?? ""}
+        handleChange={handleChange}
+      />
+      <InputField
+        label="Subtitle"
+        name="subtitle"
+        type="text"
+        value={state?.subtitle ?? ""}
+        handleChange={handleChange}
+      />
+      <SelectField
+        options={wordDisplayOptions}
+        label="Word Display"
+        value={state.display ?? ""}
+        onValueChange={(display) =>
+          setState((curr) => ({
+            ...curr,
+            display,
+          }))
+        }
+      />
     </FormContainer>
   );
 }

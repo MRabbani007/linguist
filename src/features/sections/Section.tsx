@@ -10,6 +10,7 @@ import CardTextBlock from "../textBlock/CardTextBlock";
 import { motion } from "framer-motion";
 import FormDisplaySentence from "../sentences/FormDisplaySentence";
 import FormDisplayWord from "../sentences/FormDisplayWord";
+import CardWordRow from "../words/CardWordRow";
 
 export default function Section({
   section = null,
@@ -29,26 +30,31 @@ export default function Section({
   const [expandSentences, setExpandSentences] = useState(true);
   const [showWords, setShowWords] = useState(false);
   const [showSentences, setShowSentences] = useState(false);
+  const displayWords = section?.display?.trim() ?? "grid";
 
   const [dispalayIndex, setDisplayIndex] = useState(-1);
 
   if (!section) return null;
 
-  let content = [...words]
-    // .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
-    .map((word, index) => (
-      <WordContainer word={word} key={index}>
-        <div
-          onClick={() => {
-            setShowWords(true);
-            setDisplayIndex(index);
-          }}
-          className="cursor-pointer bg-red-600/20 flex items-stretch h-full"
-        >
-          <CardWord word={word} />
-        </div>
-      </WordContainer>
-    ));
+  let wordsContent = [...words]
+    .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
+    .map((word, index) =>
+      displayWords === "table" ? (
+        <CardWordRow word={word} index={index + 1} />
+      ) : (
+        <WordContainer word={word} key={index}>
+          <div
+            onClick={() => {
+              setShowWords(true);
+              setDisplayIndex(index);
+            }}
+            className="cursor-pointer flex items-stretch h-full"
+          >
+            <CardWord word={word} />
+          </div>
+        </WordContainer>
+      )
+    );
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
@@ -170,9 +176,13 @@ export default function Section({
           whileInView="visible"
           transition={{ staggerChildren: 0.1, delay: 0.1 }}
           viewport={{ once: true, amount: 0.1 }} // Triggers when 20% is in view
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+          className={
+            (displayWords === "table"
+              ? "grid-cols-1 "
+              : " grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ") + " grid"
+          }
         >
-          {content}
+          {wordsContent}
         </motion.div>
 
         {Array.isArray(sentences) && sentences.length !== 0 && (

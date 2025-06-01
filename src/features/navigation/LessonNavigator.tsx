@@ -165,11 +165,11 @@ export default function LessonNavigator({
   };
 
   return (
-    <div className="p-2 md:p-4 flex justify-between items-center ">
+    <div className="flex justify-between items-center mt-4">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200 p-2 md:p-4 bg-white rounded-lg"
       >
         <FaArrowLeft size={25} />
         <span className="font-semibold hidden md:inline text-nowrap">
@@ -180,7 +180,7 @@ export default function LessonNavigator({
       <button
         onClick={handleNext}
         disabled={lastLesson && lastChapter}
-        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200"
+        className="flex items-center gap-2 text-accent disabled:text-destructive_foreground group duration-200 p-2 md:p-4 bg-white rounded-lg"
       >
         <span className="font-semibold hidden md:inline duration-200 text-nowrap">
           {lastLesson ? "Next Chapter" : "Next Lesson"}

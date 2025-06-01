@@ -11,11 +11,11 @@ export default function LessonHeader({
   const displayChapter = chapter ?? useSelector(selectDisplayChapter);
 
   return (
-    <header className="group">
+    <header className="group bg-white rounded-lg">
       <div className="flex items-stretch relative">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
-          className="w-12 bg-accent flex flex-col items-center justify-center text-base md:text-2xl font-semibold border-b-4 border-destructive text-accent_foreground rounded-t-lg"
+          className="w-12 bg-accent flex flex-col items-center justify-center text-base md:text-2xl font-semibold border-b-4 border-destructive text-accent_foreground rounded-tl-lg"
         >
           {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString("en-US", {
             minimumIntegerDigits: 2,
@@ -31,7 +31,7 @@ export default function LessonHeader({
           title={`Chapter ${
             displayChapter?.chapterNo ? displayChapter?.chapterNo : 0
           }`}
-          className="w-12 py-1 text-accent_foreground bg-accent flex flex-col items-center justify-center text-base font-semibold rounded-b-lg"
+          className="w-12 py-1 text-accent_foreground bg-accent flex flex-col items-center justify-center text-base font-semibold rounded-bl-lg"
         >
           <span>
             {(displayChapter?.chapterNo ?? "").toLocaleString("en-US", {

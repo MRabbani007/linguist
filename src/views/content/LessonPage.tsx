@@ -10,6 +10,7 @@ import Section from "@/features/sections/Section";
 import LessonCompleted from "@/features/lessons/LessonCompleted";
 import { motion } from "framer-motion";
 import ScrollProgressBar from "@/features/ui/ScrollProgressBar";
+import AdminGotoLesson from "@/features/admin/AdminGotoLesson";
 
 export default function LessonPage() {
   const displayLesson = useSelector(selectDisplayLesson);
@@ -82,6 +83,7 @@ export default function LessonPage() {
         <LessonHeader lesson={displayLesson} />
         <LessonNavigator />
       </div>
+      <AdminGotoLesson id={displayLesson.id} />
       {displayLesson?.lessonImage && (
         <div className="flex justify-center rounded-lg overflow-hidden bg-white p-2 md:p-6">
           <motion.img

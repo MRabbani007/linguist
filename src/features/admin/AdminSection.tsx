@@ -19,6 +19,8 @@ import FormBulkMove from "../sentences/FormBulkMove";
 import { BiSort, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { AnimatePresence } from "framer-motion";
+import AdminWordGrid from "../words/AdminWordGrid";
+import AdminWordRow from "../words/AdminWordRow";
 
 export default function AdminSection({
   section = null,
@@ -129,17 +131,26 @@ export default function AdminSection({
 
   let content = sectionWords // [...words]
     .sort((a, b) => (a.sortIndex > b.sortIndex ? 1 : -1))
-    .map((word) => (
-      <AdminContainerWord
-        word={word}
-        key={word.id}
-        setMove={setShowMoveWord}
-        setEdit={setShowEditWord}
-        setEditItem={setEditWord}
-      >
-        <CardWord word={word} />
-      </AdminContainerWord>
-    ));
+    .map((word) =>
+      section?.display === "table" ? (
+        <AdminWordRow
+          word={word}
+          key={word.id}
+          index={word.sortIndex}
+          setMove={setShowMoveWord}
+          setEdit={setShowEditWord}
+          setEditItem={setEditWord}
+        />
+      ) : (
+        <AdminWordGrid
+          word={word}
+          key={word.id}
+          setMove={setShowMoveWord}
+          setEdit={setShowEditWord}
+          setEditItem={setEditWord}
+        />
+      )
+    );
 
   const temp2 = showSortSentences ? sortedSentences : sectionSentences;
   const temp = expandSentences ? temp2 : temp2.slice(0, 2);
@@ -287,7 +298,14 @@ export default function AdminSection({
           )}
 
           {/* Words */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div
+            className={
+              (section?.display === "table"
+                ? "grid-cols-1 "
+                : " grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4  ") +
+              " grid"
+            }
+          >
             {content}
           </div>
 

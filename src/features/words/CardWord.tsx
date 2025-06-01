@@ -119,10 +119,6 @@ export default function CardWord({ word }: { word: Word }) {
             </span>
           </p>
         </div>
-        {/* <div
-            title={word?.level}
-            className={`bg-${levelColor} rounded-full size-4 absolute top-2 right-2 z-20`}
-          ></div> */}
         {editMode && (
           <p className="absolute top-2 right-4 text-sm">{word.sortIndex}</p>
         )}
