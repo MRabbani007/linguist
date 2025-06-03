@@ -1,9 +1,8 @@
-import AdminLessonContainer from "@/features/admin/AdminLessonContainer";
+import AdminLessonHeader from "@/features/admin/AdminLessonHeader";
 import AdminLessonNav from "@/features/admin/AdminLessonNav";
-import AdminSectionContainer from "@/features/admin/AdminSectionContainer";
+import AdminSection from "@/features/admin/AdminSection";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
 import { selectChapters, selectLessons } from "@/features/globals/globalsSlice";
-import LessonHeader from "@/features/lessons/LessonHeader";
 import LessonIntroEdit from "@/features/lessons/LessonIntroEdit";
 import { useLazyGetAdminSentencesQuery } from "@/features/sentences/sentencesSlice";
 import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
@@ -64,20 +63,13 @@ export default function AdminLessonEditor() {
     content = <p>Error</p>;
   } else if (isSuccess) {
     content = data.map((item: any) => (
-      <AdminSectionContainer
-        section={item}
-        key={item.id}
-      ></AdminSectionContainer>
+      <AdminSection section={item} key={item?.id} />
     ));
   }
 
   return (
     <>
-      {lesson && (
-        <AdminLessonContainer lesson={lesson}>
-          <LessonHeader lesson={lesson} chapter={chapter} />
-        </AdminLessonContainer>
-      )}
+      {lesson && <AdminLessonHeader lesson={lesson} chapter={chapter} />}
       <AdminLessonNav />
 
       {lesson?.lessonImage && (

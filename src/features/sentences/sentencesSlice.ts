@@ -89,7 +89,7 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { sentence },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Sentence", id }],
+      invalidatesTags: (_, __, { id }) => [{ type: "Sentence", id }],
     }),
     removeSentence: builder.mutation({
       query: (id) => ({
@@ -97,9 +97,7 @@ export const sentencesApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Sentence", id: arg.id },
-      ],
+      invalidatesTags: (_, __, arg) => [{ type: "Sentence", id: arg.id }],
     }),
     bulkMoveSentences: builder.mutation({
       query: ({

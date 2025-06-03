@@ -77,7 +77,7 @@ export default function LessonPage() {
   }, [displayLesson?.id]);
 
   return (
-    <main className="bg-zinc-200 md:px-20 flex flex-col items-stretch">
+    <main className="p-0 sm:p-4 md:py-4 md:px-20 flex flex-col items-stretch">
       <ScrollProgressBar />
       <div>
         <LessonHeader lesson={displayLesson} />

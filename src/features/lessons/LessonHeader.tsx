@@ -10,8 +10,34 @@ export default function LessonHeader({
 }) {
   const displayChapter = chapter ?? useSelector(selectDisplayChapter);
 
+  if (false)
+    return (
+      <header className="bg-white relative mx-4 my-6 rounded-lg flex items-center">
+        {/* <p
+        title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}
+        className="text-white absolute bottom-full left-1 text-sm translate-y-2 py-1 px-3 bg-accent rounded-md"
+      >
+        <span>
+          {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </span>
+      </p> */}
+        <p>
+          {(lesson?.sortIndex ? lesson?.sortIndex : 0).toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false,
+          })}
+        </p>
+        <h1 className="text-lg md:text-3xl font-semibold text-wrap border-0 border-accent py-2 px-4 rounded-lg">
+          {lesson?.title}
+        </h1>
+      </header>
+    );
+
   return (
-    <header className="group bg-white rounded-lg">
+    <header className="group bg-white rounded-lg m-4 sm:m-0">
       <div className="flex items-stretch relative">
         <p
           title={`Lesson ${lesson?.sortIndex ? lesson?.sortIndex : 0}`}

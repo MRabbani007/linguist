@@ -1,21 +1,19 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
+// import { createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
-const lessonsAdapter = createEntityAdapter<Lesson>({
-  // select id if id is not default entity.id
-  // selectId: (block) => block.id,
-  // TODO: change compare value to date or sort option
-  sortComparer: (a, b) => {
-    if (a.sortIndex && b.sortIndex) {
-      return a.sortIndex > b.sortIndex ? 1 : -1;
-    } else if (a.lessonNo && b.lessonNo) {
-      return a.lessonNo > b.lessonNo ? 1 : -1;
-    }
-    return 1;
-  },
-});
-
-const initialState = lessonsAdapter.getInitialState();
+// const lessonsAdapter = createEntityAdapter<Lesson>({
+//   // select id if id is not default entity.id
+//   // selectId: (block) => block.id,
+//   // TODO: change compare value to date or sort option
+//   sortComparer: (a, b) => {
+//     if (a.sortIndex && b.sortIndex) {
+//       return a.sortIndex > b.sortIndex ? 1 : -1;
+//     } else if (a.lessonNo && b.lessonNo) {
+//       return a.lessonNo > b.lessonNo ? 1 : -1;
+//     }
+//     return 1;
+//   },
+// });
 
 type LessonReq = { page: String; chapter?: String };
 

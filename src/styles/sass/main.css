@@ -97,7 +97,7 @@ p {
   text-wrap: wrap;
 }
 
-main {
+.m {
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -120,11 +120,6 @@ section {
   gap: 1rem;
 }
 
-@media screen and (min-width: 1024px) {
-  main {
-    padding: 2rem;
-  }
-}
 .form_input {
   display: flex;
   align-items: center;

@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { uploadFile } from "../../data/storage";
-import { useEditLessonMutation } from "./blockSlice";
 import { BiCheck, BiImageAdd, BiX } from "react-icons/bi";
+import { useEditLessonMutation } from "./lessonSlice";
 
-export default function FormLessonImage({ lesson }) {
+export default function FormLessonImage({ lesson }: { lesson: Lesson }) {
   const [editLesson] = useEditLessonMutation();
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [file, setFile] = useState(null);
-  const [lessonImage, setlessonImage] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [lessonImage, setlessonImage] = useState("");
 
   // open file select
   const handleClick = () => {
@@ -18,7 +18,7 @@ export default function FormLessonImage({ lesson }) {
   };
 
   // select files
-  const handleSelect = (e) => {
+  const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target?.files && e.target.files[0]) setFile(e.target.files[0]);
   };
 
@@ -27,12 +27,15 @@ export default function FormLessonImage({ lesson }) {
     setFile(null);
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!file) return;
     try {
-      const { imageURL } = await uploadFile(file, "images/lessons");
+      const { imageURL } = await uploadFile({
+        file,
+        foldername: "images/lessons",
+      });
 
       setlessonImage(imageURL);
 
@@ -56,7 +59,7 @@ export default function FormLessonImage({ lesson }) {
       ) : (
         <div className="flex flex-col relative">
           <img src={URL.createObjectURL(file)} className={"w-20 flex-1"} />
-          <p>{file.name}</p>
+          <p>{file?.name}</p>
           <div className="flex items-center gap-4">
             <button type="submit" className="absolute bottom-2 left-2">
               <BiCheck size={24} />
@@ -78,6 +81,7 @@ export default function FormLessonImage({ lesson }) {
         className="hidden"
         multiple
       />
+      {lessonImage && null}
     </form>
   );
 }

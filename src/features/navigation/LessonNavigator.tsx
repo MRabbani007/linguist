@@ -165,7 +165,7 @@ export default function LessonNavigator({
   };
 
   return (
-    <div className="flex justify-between items-center mt-4">
+    <div className="flex justify-between items-center mx-4 sm:mx-0 mt-4">
       <button
         onClick={handlePrevious}
         disabled={firstLesson && firstChapter}

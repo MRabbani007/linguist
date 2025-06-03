@@ -13,10 +13,9 @@ export default function AdminGotoLesson({ id }: { id: string }) {
   return (
     <Link
       to={`/admin/lessonEdit?id=${id}`}
-      className="flex items-center gap-2 p-2 rounded-md bg-white ml-auto"
+      className="flex items-center gap-2 p-1 fixed bottom-6 lg:bottom-20 right-10 md:right-20 rounded-md bg-accent text-white ml-auto z-[100] opacity-30 hover:opacity-100 duration-200"
     >
-      <CiEdit size={20} />
-      <span>Edit</span>
+      <CiEdit size={20} className="size-6 lg:size-8" />
     </Link>
   );
 }

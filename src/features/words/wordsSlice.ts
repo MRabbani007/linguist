@@ -58,7 +58,7 @@ export const wordsSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: { word },
       }),
-      invalidatesTags: (result, error, { id }) => {
+      invalidatesTags: (_, __, { id }) => {
         return [{ type: "Word", id }];
       },
     }),
@@ -68,7 +68,15 @@ export const wordsSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         body: { id },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "Word", id }],
+      invalidatesTags: (_, __, { id }) => [{ type: "Word", id }],
+    }),
+    sortWords: builder.mutation({
+      query: ({ words }: { words: { id: string; sortIndex: number }[] }) => ({
+        url: "/admin/words/bulk/sort",
+        method: "PATCH",
+        body: { words },
+      }),
+      invalidatesTags: [{ type: "Word", id: "WORDLIST" }],
     }),
   }),
 });
@@ -80,6 +88,7 @@ export const {
   useAddWordMutation,
   useEditWordMutation,
   useRemoveWordMutation,
+  useSortWordsMutation,
 } = wordsSlice;
 
 export const selectSectionWords = (lessonID: string, sectionID: string) =>

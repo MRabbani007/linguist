@@ -40,7 +40,7 @@ export default function Section({
     .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
     .map((word, index) =>
       displayWords === "table" ? (
-        <CardWordRow word={word} index={index + 1} />
+        <CardWordRow word={word} index={index + 1} key={index} />
       ) : (
         <WordContainer word={word} key={index}>
           <div
@@ -86,24 +86,6 @@ export default function Section({
           </h3>
           {section?.subtitle && <i className="">{section?.subtitle}</i>}
         </div>
-        {/* <div className="flex items-center gap-2">
-          {hasWords && (
-            <button
-              onClick={() => setShowWords((curr) => !curr)}
-              className="py-1 px-3 font-medium rounded-md shadow-sm shadow-zinc-400 hover:shadow-md hover:shadow-zinc-400 duration-200 bg-red-100"
-            >
-              W
-            </button>
-          )}
-          {hasSentences && (
-            <button
-              onClick={() => setShowSentences((curr) => !curr)}
-              className="py-1 px-3 font-medium rounded-md shadow-sm shadow-zinc-400 hover:shadow-md hover:shadow-zinc-400 duration-200 bg-red-100"
-            >
-              S
-            </button>
-          )}
-        </div> */}
       </div>
 
       <div className={" flex flex-col gap-4 duration-200"}>
