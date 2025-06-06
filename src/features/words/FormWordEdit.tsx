@@ -13,19 +13,17 @@ import { T_WORD } from "../../data/templates";
 import InputField from "../ui/InputField";
 import SelectField from "../ui/SelectField";
 
-type Props = {
-  word: Word;
-  attributes: WordAttribute[];
-  sections: { label: string; value: string }[];
-  setViewEdit: Dispatch<SetStateAction<boolean>>;
-};
-
 export default function FormWordEdit({
   word = T_WORD,
   attributes,
-  sections,
+  // sections,
   setViewEdit,
-}: Props) {
+}: {
+  word: Word;
+  attributes: WordAttribute[];
+  // sections: { label: string; value: string }[];
+  setViewEdit: Dispatch<SetStateAction<boolean>>;
+}) {
   const [editWord, { isLoading }] = useEditWordMutation();
   const [removeWord] = useRemoveWordMutation();
 
@@ -54,7 +52,7 @@ export default function FormWordEdit({
 
   const canSave = !isLoading;
 
-  const handleSubmit = async (event: FormEvent) => {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     if (canSave) {
@@ -71,7 +69,7 @@ export default function FormWordEdit({
         toast.error("Server Error");
       }
     }
-  };
+  }
 
   const wordType =
     attributes

@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useLazyGetAllChaptersQuery } from "../../features/admin/adminApiSlice";
 import Pagination from "../../components/Pagination";
 import { CiEdit } from "react-icons/ci";
 import FormChapterEdit from "../../features/chapters/FormChapterEdit";
@@ -29,7 +28,7 @@ export default function AdminChapters() {
     content = <p>Loading...</p>;
   } else if (isSuccess) {
     count = data.count;
-    content = data.data.map((item, index) => (
+    content = data.data.map((item) => (
       <CardChapter
         chapter={item}
         key={item.id}

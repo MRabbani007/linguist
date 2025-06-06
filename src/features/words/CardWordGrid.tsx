@@ -1,35 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectDisplayLesson } from "../globals/globalsSlice";
-import { BiX } from "react-icons/bi";
-import { selectEditMode } from "../admin/adminSlice";
+import { Dispatch, SetStateAction } from "react";
 
-export default function CardWord({ word }: { word: Word }) {
-  const displayBlock = useSelector(selectDisplayLesson);
-  const editMode = useSelector(selectEditMode);
-
-  // const [viewEditImage, setViewEditImage] = useState(false);
-  const [showPronunce, setShowPronunce] = useState(false);
-  const [showNote, setShowNote] = useState(false);
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setShowNote(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const showPopup = displayBlock?.thirdLang && word?.third;
-
+export default function CardWordGrid({
+  word,
+  index,
+  isSelected = false,
+  onSelect,
+  setShowWords,
+  setDisplayIndex,
+}: {
+  word: Word;
+  index: number;
+  isSelected?: boolean;
+  onSelect?: (val: boolean, idx: number, id: string) => void;
+  setShowWords: Dispatch<SetStateAction<boolean>>;
+  setDisplayIndex: Dispatch<SetStateAction<number>>;
+}) {
   const level = word?.level ?? "";
   const levelColor =
     level.includes("A1") === true
@@ -95,24 +80,16 @@ export default function CardWord({ word }: { word: Word }) {
           <div className="font-semibold relative group w-fit">
             <p
               className="cursor-pointer text-xl space-x-1"
-              onMouseOver={() => setShowPronunce(true)}
-              onMouseOut={() => setShowPronunce(false)}
+              onClick={() => {
+                setShowWords(true);
+                setDisplayIndex(index);
+              }}
             >
               <span>{word?.first}</span>
               <span className="font-light text-sm italic ml-2">
                 {word.firstCaption}
               </span>
             </p>
-            {showPopup ? (
-              <p
-                className={
-                  (showPronunce ? "" : "invisible opacity-0 -translate-y-4 ") +
-                  " absolute top-full left-0 py-1 px-2 w-fit text-nowrap font-normal z-50 bg-white rounded-lg duration-200 text-sm"
-                }
-              >
-                {word?.third}
-              </p>
-            ) : null}
           </div>
           <p className="font-medium text-destructive_foreground text-base">
             <span>{word?.second}</span>
@@ -120,32 +97,6 @@ export default function CardWord({ word }: { word: Word }) {
               {word.secondCaption}
             </span>
           </p>
-        </div>
-        {editMode && (
-          <p className="absolute top-2 right-4 text-sm">{word.sortIndex}</p>
-        )}
-        {/* {word?.note && word.note !== "" && (
-          <button
-            className="absolute top-2 right-6"
-            onClick={() => setShowNote(true)}
-          >
-            <IoInformationCircleOutline size={20} />
-          </button>
-        )} */}
-        <div
-          ref={ref}
-          className={
-            (showNote ? "" : "invisible opacity-0 -translate-y-4 ") +
-            " absolute top-2 right-2 left-2 bg-white rounded-md p-4 text-sm flex items-start justify-between z-30 duration-200"
-          }
-        >
-          <p className="mt-2 mr-2">{word?.note}</p>
-          <button
-            onClick={() => setShowNote(false)}
-            className="absolute top-1 right-1 bg-zinc-100 rounded-full hover:bg-zinc-200 duration-150 p-1"
-          >
-            <BiX size={20} />
-          </button>
         </div>
         {wordType && (
           <div className="flex items-center mt-auto gap-2">
@@ -160,6 +111,13 @@ export default function CardWord({ word }: { word: Word }) {
                 {wordGender}
               </p>
             )}
+            <input
+              type="checkbox"
+              checked={isSelected ?? false}
+              onChange={(event) =>
+                onSelect && onSelect(event.target.checked, index, word.id)
+              }
+            />
           </div>
         )}
       </div>

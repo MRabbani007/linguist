@@ -9,14 +9,12 @@ import { BiX } from "react-icons/bi";
 import { motion } from "framer-motion";
 
 export default function WordContainer({
-  word,
   listID,
   wordData,
   children,
 }: {
   listID?: string;
   wordData?: WordData | null;
-  word: Word;
   children: ReactNode;
 }) {
   const user = useSelector(selectCurrentUser);
@@ -73,7 +71,9 @@ export default function WordContainer({
         )}
         {children}
       </motion.div>
-      {user && addToList && <FormAddtoList setAdd={setAddToList} word={word} />}
+      {user && addToList && (
+        <FormAddtoList setAdd={setAddToList} words={[]} wordLists={[]} />
+      )}
     </>
   );
 }

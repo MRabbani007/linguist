@@ -20,7 +20,7 @@ import { AnimatePresence } from "framer-motion";
 import AdminWordGrid from "../words/AdminWordGrid";
 import AdminWordRow from "../words/AdminWordRow";
 import { useSortWordsMutation } from "../words/wordsSlice";
-import { MdArrowOutward } from "react-icons/md";
+import { MdArrowOutward, MdTableRows } from "react-icons/md";
 import FormSectionMove from "../sections/FormSectionMove";
 import FormAddTextBlock from "../textBlock/FormAddTextBlock";
 import FormDefinitionAdd from "../definitions/FormDefinitionAdd";
@@ -29,9 +29,9 @@ import { BsChatLeftText, BsTextParagraph } from "react-icons/bs";
 import FormSectionEdit from "../sections/FormSectionEdit";
 import { RxTextAlignLeft } from "react-icons/rx";
 import { CiEdit, CiImageOn, CiViewTable } from "react-icons/ci";
-import { PiListBullets } from "react-icons/pi";
+import { PiListBullets, PiSelectionLight } from "react-icons/pi";
 import { VscWholeWord } from "react-icons/vsc";
-import { IoAddOutline, IoCopyOutline } from "react-icons/io5";
+import { IoAddOutline, IoCopyOutline, IoGridSharp } from "react-icons/io5";
 import FormWordAdd from "../words/FormWordAdd";
 import copy from "copy-to-clipboard";
 import AdminDropDown from "./AdminDropDown";
@@ -39,6 +39,7 @@ import { selectSectionSentences } from "../sentences/sentencesSlice";
 import { selectSectionText } from "../textBlock/textBlockSlice";
 import { selectSectionWords } from "../words/wordsSlice";
 import { useSelector } from "react-redux";
+import FormWordExamples from "../words/FormWordExamples";
 
 export default function AdminSection({
   section = null,
@@ -52,6 +53,8 @@ export default function AdminSection({
   // sentences: Sentence[];
 }) {
   if (!section) return null;
+
+  const [displayMode, setDisplayMode] = useState("table");
 
   const sectionWords =
     useSelector(
@@ -90,6 +93,7 @@ export default function AdminSection({
   };
 
   const [showEditWord, setShowEditWord] = useState(false);
+  const [showEditWordExamples, setShowEditWordExamples] = useState(false);
   const [showMoveWord, setShowMoveWord] = useState(false);
   const [editWord, setEditWord] = useState<Word | null>(null);
 
@@ -374,6 +378,21 @@ export default function AdminSection({
                 icon={<IoAddOutline size={25} />}
               />
               <AdminDropDown items={editItems} icon={<CiEdit size={25} />} />
+              <button
+                onClick={() =>
+                  setDisplayMode((prev) =>
+                    prev === "grid" ? "table" : prev === "table" ? "" : "grid"
+                  )
+                }
+              >
+                {displayMode === "table" ? (
+                  <MdTableRows size={20} />
+                ) : displayMode === "grid" ? (
+                  <IoGridSharp size={20} />
+                ) : (
+                  <PiSelectionLight size={20} />
+                )}
+              </button>
             </div>
             {section?.subtitle && <p className="italic">{section?.subtitle}</p>}
           </div>
@@ -448,7 +467,6 @@ export default function AdminSection({
               })}
             </div>
           )}
-
           {/* Words Content */}
           {showSortWords ? (
             <div className="ml-auto rounded-md p-1 flex items-center gap-2 bg-zinc-50">
@@ -478,23 +496,27 @@ export default function AdminSection({
               </button>
             )
           )}
-
           <div
             className={
-              (showSortWords || section?.display === "table"
+              (displayMode === "table" ||
+              (displayMode === "" &&
+                (showSortWords || section?.display === "table"))
                 ? "grid-cols-1 "
                 : " grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4  ") +
-              " grid"
+              " grid items-stretch"
             }
           >
             {displayWords.map((word) =>
-              showSortWords || section?.display === "table" ? (
+              displayMode === "table" ||
+              (displayMode === "" &&
+                (showSortWords || section?.display === "table")) ? (
                 <AdminWordRow
                   word={word}
                   key={word.id}
                   index={word.sortIndex}
                   setMove={setShowMoveWord}
                   setEdit={setShowEditWord}
+                  setEditExamples={setShowEditWordExamples}
                   setEditItem={setEditWord}
                   isDraggable={showSortWords}
                   handleDrag={handleDrag}
@@ -505,6 +527,7 @@ export default function AdminSection({
                   key={word.id}
                   setMove={setShowMoveWord}
                   setEdit={setShowEditWord}
+                  setEditExamples={setShowEditWordExamples}
                   setEditItem={setEditWord}
                 />
               )
@@ -550,7 +573,6 @@ export default function AdminSection({
                         ? `1 Sentence`
                         : `${selectedSentences?.length} Sentences`}
                     </button>
-
                     <button onClick={handleClear}>
                       <BiX size={20} />
                     </button>
@@ -644,8 +666,14 @@ export default function AdminSection({
         <FormWordEdit
           setViewEdit={setShowEditWord}
           word={editWord}
-          sections={[]} // TODO: provide lesson sections
+          // sections={[]} // TODO: provide lesson sections
           attributes={attributes as WordAttribute[]}
+        />
+      )}
+      {showEditWordExamples && editWord && (
+        <FormWordExamples
+          word={editWord}
+          setViewEdit={setShowEditWordExamples}
         />
       )}
       {showMoveWord && editWord && (

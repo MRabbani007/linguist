@@ -24,7 +24,7 @@ export default function LessonPage() {
     if (!displayLesson) {
       navigate("/learn");
     } else {
-      getLesson(displayLesson.id);
+      getLesson(displayLesson?.id);
     }
   }, [displayLesson]);
 
@@ -63,7 +63,9 @@ export default function LessonPage() {
       <Section
         key={item.id}
         definitions={item.definitions}
-        words={item.words}
+        words={[...item.words].sort((a, b) =>
+          a?.sortIndex > b?.sortIndex ? 1 : -1
+        )}
         section={item}
         sectionLists={item.sectionLists}
         sentences={item.sentences}

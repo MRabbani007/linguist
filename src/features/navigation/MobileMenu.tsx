@@ -11,7 +11,7 @@ import {
   IoTextOutline,
 } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selectCurrentRoles, selectCurrentUser } from "../auth/authSlice";
 import { BsBlockquoteLeft, BsTextParagraph } from "react-icons/bs";
 import { LuScrollText } from "react-icons/lu";
@@ -78,6 +78,7 @@ export default function MobileMenu() {
   const editMode = useSelector(selectEditMode);
   const user = useSelector(selectCurrentUser);
   const roles = useSelector(selectCurrentRoles);
+  const location = useLocation();
 
   const [show, setShow] = useState(false);
 
@@ -185,7 +186,8 @@ export default function MobileMenu() {
           )
         )}
         <Link
-          to={"/login"}
+          to={isLoggedIn ? "/logout" : "/login"}
+          state={{ from: location?.pathname, search: location?.search }}
           title={isLoggedIn ? "Sign Out" : "Sign In"}
           className="dropdown-item hover:bg-zinc-200 duration-150"
           onClick={() => setShow(false)}

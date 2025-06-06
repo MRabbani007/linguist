@@ -62,6 +62,16 @@ export const wordsSlice = apiSlice.injectEndpoints({
         return [{ type: "Word", id }];
       },
     }),
+    editWordExamples: builder.mutation({
+      query: (word) => ({
+        url: "/admin/words/examples",
+        method: "PATCH",
+        body: { word },
+      }),
+      invalidatesTags: (_, __, { id }) => {
+        return [{ type: "Word", id }];
+      },
+    }),
     removeWord: builder.mutation({
       query: (id) => ({
         url: "/admin/words",
@@ -87,6 +97,7 @@ export const {
   useLazyGetLessonWordsQuery,
   useAddWordMutation,
   useEditWordMutation,
+  useEditWordExamplesMutation,
   useRemoveWordMutation,
   useSortWordsMutation,
 } = wordsSlice;

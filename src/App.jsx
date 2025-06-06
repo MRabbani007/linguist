@@ -38,6 +38,7 @@ import AdminWords from "./views/admin/AdminWords";
 import AdminDialogues from "./views/admin/AdminDialogues";
 import AdminDialogueID from "./views/admin/AdminDialogueIDPage";
 import AdminWordAttributes from "./views/admin/AdminWordAttributes";
+import AdminWordListsPage from "./views/admin/AdminWordListsPage";
 import ImageUpload from "./views/admin/ImageUpload";
 // User
 import DashboardPage from "./views/user/DashboardPage";
@@ -170,6 +171,7 @@ function App() {
                 <Route path="dialogues" element={<AdminDialogues />} />
                 <Route path="dialogues/edit" element={<AdminDialogueID />} />
                 <Route path="words" element={<AdminWords />} />
+                <Route path="wordlists" element={<AdminWordListsPage />} />
                 <Route path="attributes" element={<AdminWordAttributes />} />
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="users" element={<AdminUsersPage />} />

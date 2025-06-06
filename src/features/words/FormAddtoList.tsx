@@ -1,17 +1,16 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import FormContainer from "../../components/FormContainer";
-import {
-  useAddListWordMutation,
-  useGetWordListsQuery,
-} from "../profile/profileSlice";
+import { useAddListWordMutation } from "../profile/profileSlice";
 import SelectField from "../ui/SelectField";
 import { toast } from "react-toastify";
 
 export default function FormAddtoList({
-  word,
+  words,
+  wordLists: data,
   setAdd,
 }: {
-  word: Word;
+  words: Partial<Word>[];
+  wordLists: WordList[];
   setAdd: Dispatch<SetStateAction<boolean>>;
 }) {
   const [listID, setListID] = useState("");
@@ -23,19 +22,17 @@ export default function FormAddtoList({
 
     try {
       const response = await addListWord({
-        wordID: word.id,
+        words,
         listID,
-        repeatCount: 5,
-        lastViewed: new Date(),
       });
+
+      console.log(response);
 
       toast.success("Word added");
 
       setAdd(false);
     } catch (error) {}
   };
-
-  const { data } = useGetWordListsQuery(null);
 
   const options = Array.isArray(data)
     ? data.map((item) => ({ label: item.name, value: item.id }))

@@ -4,18 +4,20 @@ import { MdArrowOutward } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { selectDisplayLesson } from "../globals/globalsSlice";
 import { selectEditMode } from "../admin/adminSlice";
-import { BiX } from "react-icons/bi";
+import { BiPlus, BiX } from "react-icons/bi";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
 export default function AdminWordGrid({
   word,
   setEdit,
+  setEditExamples,
   setMove,
   setEditItem,
 }: {
   word: Word;
   setMove: Dispatch<SetStateAction<boolean>>;
   setEdit: Dispatch<SetStateAction<boolean>>;
+  setEditExamples: Dispatch<SetStateAction<boolean>>;
   setEditItem: Dispatch<SetStateAction<Word | null>>;
 }) {
   const displayBlock = useSelector(selectDisplayLesson);
@@ -79,8 +81,8 @@ export default function AdminWordGrid({
       : null;
 
   return (
-    <div className="relative group">
-      <div className="absolute top-2 right-2 z-20 invisible group-hover:visible flex flex-col gap-1">
+    <div className="relative group h-full flex flex-col">
+      <div className="absolute top-2 right-2 z-20 invisible group-hover:visible flex items-center gap-1">
         <button
           onClick={() => {
             setEdit(true);
@@ -88,6 +90,14 @@ export default function AdminWordGrid({
           }}
         >
           <CiEdit size={20} />
+        </button>
+        <button
+          onClick={() => {
+            setEditExamples(true);
+            setEditItem(word);
+          }}
+        >
+          <BiPlus size={20} />
         </button>
         <button
           onClick={() => {

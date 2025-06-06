@@ -46,7 +46,7 @@ export default function AdminPage() {
     {
       icon: <VscWholeWord size={25} />,
       label: "Word Lists",
-      url: "/admin/words",
+      url: "/admin/wordlists",
       count: 0,
     },
     {

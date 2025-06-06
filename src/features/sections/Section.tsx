@@ -3,14 +3,19 @@ import Definition from "../definitions/Definition";
 import ListSection from "../sectionList/ListSection";
 import Sentence from "../sentences/Sentence";
 import { Link } from "react-router-dom";
-import CardWord from "../words/CardWord";
 import CardConjTable from "../tables/CardConjTable";
-import WordContainer from "../words/WordContainer";
 import CardTextBlock from "../textBlock/CardTextBlock";
 import { motion } from "framer-motion";
 import FormDisplaySentence from "../sentences/FormDisplaySentence";
 import FormDisplayWord from "../sentences/FormDisplayWord";
 import CardWordRow from "../words/CardWordRow";
+import { BiX } from "react-icons/bi";
+import FormAddtoList from "../words/FormAddtoList";
+import { useGetWordListsQuery } from "../profile/profileSlice";
+import { MdTableRows } from "react-icons/md";
+import { IoGridSharp } from "react-icons/io5";
+import { PiSelectionLight } from "react-icons/pi";
+import CardWordGrid from "../words/CardWordGrid";
 
 export default function Section({
   section = null,
@@ -28,33 +33,85 @@ export default function Section({
   tables: (ConjTable & { tableWords: TableWord[] })[];
 }) {
   const [expandSentences, setExpandSentences] = useState(true);
+
+  const { data } = useGetWordListsQuery(null);
+
   const [showWords, setShowWords] = useState(false);
   const [showSentences, setShowSentences] = useState(false);
-  const displayWords = section?.display?.trim() ?? "grid";
+  const [displayMode, setDisplayMode] = useState("grid");
 
   const [dispalayIndex, setDisplayIndex] = useState(-1);
 
+  const [addToList, setAddToList] = useState(false);
+  const [selectedWords, setSelectedWords] = useState<Partial<Word>[]>([]);
+
+  function handleWordSelect(val: boolean, idx: number, id: string) {
+    setSelectedWords((prev) => {
+      const foundWord = words.splice(idx, 1)[0];
+
+      if (!foundWord) {
+        return prev;
+      }
+
+      const index = prev.findIndex((item) => item.id === id);
+
+      if (index < 0 && val === false) {
+        return prev;
+      } else if (index < 0 && val === true) {
+        return [...prev, { id: foundWord.id }];
+      }
+
+      const temp = [...prev];
+      if (val === true) {
+        temp.splice(index, 1, { id: foundWord.id });
+      } else {
+        temp.splice(index, 1);
+      }
+
+      return temp;
+    });
+  }
+
+  function checkIsSelected(id: string) {
+    const idx = selectedWords.findIndex((item) => item.id === id);
+
+    if (idx >= 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function handleClearSelectedWords() {
+    if (confirm("Clear word selection?")) {
+      setSelectedWords([]);
+    }
+  }
+
   if (!section) return null;
 
-  let wordsContent = [...words]
-    .sort((a, b) => (a?.sortIndex > b?.sortIndex ? 1 : -1))
-    .map((word, index) =>
-      displayWords === "table" ? (
-        <CardWordRow word={word} index={index + 1} key={index} />
-      ) : (
-        <WordContainer word={word} key={index}>
-          <div
-            onClick={() => {
-              setShowWords(true);
-              setDisplayIndex(index);
-            }}
-            className="cursor-pointer flex items-stretch h-full"
-          >
-            <CardWord word={word} />
-          </div>
-        </WordContainer>
-      )
-    );
+  let wordsContent = words.map((word, index) =>
+    displayMode === "table" ||
+    (displayMode === "" && section?.display === "table") ? (
+      <CardWordRow
+        key={index}
+        word={word}
+        index={index}
+        isSelected={checkIsSelected(word.id)}
+        onSelect={handleWordSelect}
+      />
+    ) : (
+      <CardWordGrid
+        word={word}
+        key={index}
+        index={index}
+        isSelected={checkIsSelected(word.id)}
+        onSelect={handleWordSelect}
+        setShowWords={setShowWords}
+        setDisplayIndex={setDisplayIndex}
+      />
+    )
+  );
 
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
@@ -152,14 +209,44 @@ export default function Section({
             })}
           </div>
         )}
+
+        {selectedWords.length > 0 && (
+          <div className="flex items-center bg-zinc-100 rounded-md p-2 w-fit">
+            <button onClick={() => setAddToList(true)}>
+              {selectedWords?.length === 1
+                ? `1 Word Selected`
+                : `${selectedWords?.length} Words Selected`}
+            </button>
+            <button onClick={handleClearSelectedWords}>
+              <BiX size={20} />
+            </button>
+          </div>
+        )}
+
+        <button
+          onClick={() =>
+            setDisplayMode((prev) =>
+              prev === "grid" ? "table" : prev === "table" ? "" : "grid"
+            )
+          }
+        >
+          {displayMode === "table" ? (
+            <MdTableRows size={20} />
+          ) : displayMode === "grid" ? (
+            <IoGridSharp size={20} />
+          ) : (
+            <PiSelectionLight size={20} />
+          )}
+        </button>
         {/* Words */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           transition={{ staggerChildren: 0.1, delay: 0.1 }}
-          viewport={{ once: true, amount: 0.1 }} // Triggers when 20% is in view
+          viewport={{ once: true, amount: 0.02 }} // Triggers when 20% is in view
           className={
-            (displayWords === "table"
+            (displayMode === "table" ||
+            (displayMode === "" && section?.display === "table")
               ? "grid-cols-1 "
               : " grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ") + " grid"
           }
@@ -193,7 +280,6 @@ export default function Section({
               <button onClick={() => setExpandSentences((curr) => !curr)}>
                 {expandSentences ? "Show Less" : "Show more"}
               </button>
-
               <Link
                 to={`/sentences/${section?.lessonID}`}
                 className="text-blue-500 font-medium"
@@ -217,6 +303,13 @@ export default function Section({
           setShowForm={setShowWords}
           initialIndex={dispalayIndex}
         />
+        {addToList && (
+          <FormAddtoList
+            setAdd={setAddToList}
+            words={selectedWords}
+            wordLists={data ?? []}
+          />
+        )}
       </div>
     </motion.section>
   );

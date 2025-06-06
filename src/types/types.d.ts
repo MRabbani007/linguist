@@ -316,6 +316,8 @@ declare global {
     name: string;
     userID: string;
     id: string;
+    visible: boolean;
+    shared: boolean;
   };
 
   type WordData = {

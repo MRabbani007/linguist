@@ -97,10 +97,10 @@ export const profileApiSlice = apiSlice.injectEndpoints({
       providesTags: ["UserWordList"],
     }),
     addListWord: builder.mutation({
-      query: (word) => ({
-        url: "/user/lists/items",
+      query: ({ words, listID }) => ({
+        url: "/user/lists/items/bulk",
         method: "POST",
-        body: { word },
+        body: { words, listID },
       }),
       invalidatesTags: ["UserWordList"],
     }),

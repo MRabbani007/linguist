@@ -8,18 +8,23 @@ import {
 import FormContainer from "../../components/FormContainer";
 import InputField from "../ui/InputField";
 import { toast } from "react-toastify";
-import { useCreateWordListMutation } from "../profile/profileSlice";
-import CheckboxField from "../ui/CheckboxField";
+import { useEditWordListMutation } from "../profile/profileSlice";
 import { T_WORDLIST } from "@/data/templates";
+import CheckboxField from "../ui/CheckboxField";
 
-export default function FormCreateWordList({
-  setAdd,
+export default function FormEditWordList({
+  wordList,
+  setEdit,
 }: {
-  setAdd: Dispatch<SetStateAction<boolean>>;
+  wordList: WordList;
+  setEdit: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [createList] = useCreateWordListMutation();
+  const [editWordList] = useEditWordListMutation();
 
-  const [state, setState] = useState(T_WORDLIST);
+  const [state, setState] = useState({
+    ...T_WORDLIST,
+    ...wordList,
+  });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -33,31 +38,27 @@ export default function FormCreateWordList({
     event.preventDefault();
 
     try {
-      const response = await createList({ id: "", name }).unwrap();
+      await editWordList(state).unwrap();
 
-      if (response?.status === 200) {
-        toast.success("Word List Created");
-        setAdd(false);
-      } else {
-        toast.error("Error creating word list");
-      }
+      toast.success("Word List Updated");
+      setEdit(false);
     } catch (error) {
-      toast.error("Error creating word list");
+      toast.error("Error saving word list");
     }
   };
 
   return (
     <FormContainer
-      title="Create Word List"
-      type="add"
+      title="Edit Word List"
+      type="edit"
       onSubmit={onSubmit}
-      closeForm={setAdd}
+      closeForm={setEdit}
     >
       <InputField
         label="List Name"
         name="name"
         type="text"
-        value={state.name}
+        value={state?.name}
         handleChange={handleChange}
       />
       <CheckboxField

@@ -10,8 +10,10 @@ import useToggle from "../../hooks/useToggle";
 
 export default function SigninPage() {
   const navigate = useNavigate();
+
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from || "/";
+  const search = location.state?.search || "";
 
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
@@ -56,7 +58,10 @@ export default function SigninPage() {
         resetUser();
         setPwd("");
         setSuccess(true);
-        navigate(from, { replace: true });
+        navigate({
+          pathname: from,
+          search: search,
+        });
       }
     } catch (err: any) {
       if (err?.status === "FETCH_ERROR") {

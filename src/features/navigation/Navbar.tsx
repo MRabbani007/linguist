@@ -86,7 +86,12 @@ export default function Navbar() {
       <div className="flex items-center sm:gap-4 gap-2">
         {!user ? (
           <div className="hidden lg:flex items-center gap-4">
-            <Link to="/login" title="Sign In" className="">
+            <Link
+              to="/login"
+              state={{ from: location.pathname, search: location?.search }}
+              title="Sign In"
+              className=""
+            >
               {/* <AiOutlineUser size={30} /> */}
               Sign In
             </Link>

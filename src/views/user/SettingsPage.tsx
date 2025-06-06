@@ -60,14 +60,14 @@ export default function SettingsPage() {
           <RadioGroup
             label="Display Mode"
             name="sentenceDisplay"
-            value={state.sentenceDisplay}
+            value={state?.sentenceDisplay}
             onChange={handleChange}
             options={sentenceDisplayOptions}
           />
           <RadioGroup
             label="Display Language"
             name="sentenceMain"
-            value={state.sentenceMain}
+            value={state?.sentenceMain}
             onChange={handleChange}
             options={sentenceMainOptions}
           />

@@ -183,6 +183,14 @@ export const T_VALUE: AttributeValue = {
   shortHand: "",
 };
 
+export const T_WORDLIST: WordList = {
+  name: "",
+  visible: true,
+  shared: false,
+  userID: "",
+  id: "",
+};
+
 export const T_ADMINUSER: AdminUser = {
   id: "",
   rolesAdmin: 0,

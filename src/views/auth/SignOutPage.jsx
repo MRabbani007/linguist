@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut, selectCurrentAuth } from "../../features/auth/authSlice";
 import { useLogoutMutation } from "../../features/auth/authApiSlice";
-import { genDate } from "../../data/utils";
 import { clearState } from "../../features/globals/globalsSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +11,6 @@ export default function SignOutPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const today = genDate();
-
   const handleLogout = async (e) => {
     e.preventDefault();
     // logout from server
@@ -21,7 +18,7 @@ export default function SignOutPage() {
     // clear auth state
     dispatch(logOut());
     // clear user data
-    dispatch(clearState());
+    // dispatch(clearState());
     navigate("/login");
   };
 
