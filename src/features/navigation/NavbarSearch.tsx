@@ -39,6 +39,8 @@ export default function NavbarSearch() {
     };
   }, []);
 
+  useEffect(() => {}, [viewSearch]);
+
   return (
     <div ref={dropdownRef} className="h-full">
       {/* Search Button */}

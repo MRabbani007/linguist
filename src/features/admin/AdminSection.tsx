@@ -43,14 +43,8 @@ import FormWordExamples from "../words/FormWordExamples";
 
 export default function AdminSection({
   section = null,
-}: // sectionIntroduction,
-// sectionWords,
-// sentences: sectionSentences,
-{
+}: {
   section: ContentSection | null;
-  // sectionIntroduction: TextBlock[];
-  // sectionWords: Word[];
-  // sentences: Sentence[];
 }) {
   if (!section) return null;
 

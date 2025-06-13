@@ -1,19 +1,25 @@
 import AdminLessonHeader from "@/features/admin/AdminLessonHeader";
 import AdminLessonNav from "@/features/admin/AdminLessonNav";
 import AdminSection from "@/features/admin/AdminSection";
+import { useLazyGetAllSectionsQuery } from "@/features/admin/adminApiSlice";
 import { useLazyGetLessonByIDQuery } from "@/features/globals/globalsApiSlice";
-import { selectChapters, selectLessons } from "@/features/globals/globalsSlice";
+import {
+  selectChapters,
+  selectLessons,
+  setSections,
+} from "@/features/globals/globalsSlice";
 import LessonIntroEdit from "@/features/lessons/LessonIntroEdit";
 import { useLazyGetAdminSentencesQuery } from "@/features/sentences/sentencesSlice";
 import { useLazyGetLessonTextBlocksQuery } from "@/features/textBlock/textBlockSlice";
 import { useLazyGetLessonWordsQuery } from "@/features/words/wordsSlice";
 import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 export default function AdminLessonEditor() {
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const id = searchParams.get("id") ?? "";
 
@@ -23,6 +29,19 @@ export default function AdminLessonEditor() {
   const [getSentences] = useLazyGetAdminSentencesQuery();
   const [getLessonTextBlocks] = useLazyGetLessonTextBlocksQuery();
   const [getLessonWords] = useLazyGetLessonWordsQuery();
+
+  const [getAllSections, { data: sections, isSuccess: isSuccessSections }] =
+    useLazyGetAllSectionsQuery();
+
+  useEffect(() => {
+    getAllSections(1);
+  }, []);
+
+  useEffect(() => {
+    if (isSuccessSections && Array.isArray(sections.data)) {
+      dispatch(setSections(sections.data));
+    }
+  }, [sections]);
 
   useEffect(() => {
     if (id && id !== "") {

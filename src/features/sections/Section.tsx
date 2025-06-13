@@ -90,29 +90,6 @@ export default function Section({
 
   if (!section) return null;
 
-  let wordsContent = words.map((word, index) =>
-    displayMode === "table" ||
-    (displayMode === "" && section?.display === "table") ? (
-      <CardWordRow
-        key={index}
-        word={word}
-        index={index}
-        isSelected={checkIsSelected(word.id)}
-        onSelect={handleWordSelect}
-      />
-    ) : (
-      <CardWordGrid
-        word={word}
-        key={index}
-        index={index}
-        isSelected={checkIsSelected(word.id)}
-        onSelect={handleWordSelect}
-        setShowWords={setShowWords}
-        setDisplayIndex={setDisplayIndex}
-      />
-    )
-  );
-
   const temp = expandSentences ? sentences : sentences.slice(0, 2);
 
   // const hasWords = Array.isArray(words) && words.length !== 0;
@@ -251,7 +228,28 @@ export default function Section({
               : " grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ") + " grid"
           }
         >
-          {wordsContent}
+          {words.map((word, index) =>
+            displayMode === "table" ||
+            (displayMode === "" && section?.display === "table") ? (
+              <CardWordRow
+                key={index}
+                word={word}
+                index={index}
+                isSelected={checkIsSelected(word.id)}
+                onSelect={handleWordSelect}
+              />
+            ) : (
+              <CardWordGrid
+                word={word}
+                key={index}
+                index={index}
+                isSelected={checkIsSelected(word.id)}
+                onSelect={handleWordSelect}
+                setShowWords={setShowWords}
+                setDisplayIndex={setDisplayIndex}
+              />
+            )
+          )}
         </motion.div>
 
         {Array.isArray(sentences) && sentences.length !== 0 && (

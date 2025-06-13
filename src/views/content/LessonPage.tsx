@@ -68,7 +68,9 @@ export default function LessonPage() {
         )}
         section={item}
         sectionLists={item.sectionLists}
-        sentences={item.sentences}
+        sentences={[...item.sentences].sort((a, b) =>
+          a.sortIndex > b.sortIndex ? 1 : -1
+        )}
         tables={item.tables}
       />
     ));

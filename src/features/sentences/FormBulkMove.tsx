@@ -26,14 +26,15 @@ export default function FormBulkMove({
   }));
 
   const sections = useSelector(selectSections);
-  const sectionOptions = Array.isArray(sections)
-    ? sections
-        .filter((item) => item.lessonID === state?.lessonID)
-        .map((item) => ({
-          label: item.title,
-          value: item.id,
-        }))
-    : [];
+  const sectionOptions =
+    sections && Array.isArray(sections)
+      ? sections
+          .filter((item) => item.lessonID === state?.lessonID)
+          .map((item) => ({
+            label: item.title,
+            value: item.id,
+          }))
+      : [];
 
   const canSave = true && !isLoading;
 
@@ -43,7 +44,7 @@ export default function FormBulkMove({
       try {
         const response = await moveSentences({ sentences, ...state }).unwrap();
         if (response) {
-          toast.success("Sentence Saved");
+          toast.success("Sentences Saved");
           setSelected([]);
           setEdit(false);
         }
@@ -55,9 +56,9 @@ export default function FormBulkMove({
 
   return (
     <FormContainer
-      title="Move Sentence"
+      title="Move Sentences"
       type="edit"
-      submitButton="Save Sentence"
+      submitButton="Save"
       deleteButton={false}
       onSubmit={handleSubmit}
       closeForm={setEdit}

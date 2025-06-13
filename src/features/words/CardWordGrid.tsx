@@ -85,7 +85,7 @@ export default function CardWordGrid({
                 setDisplayIndex(index);
               }}
             >
-              <span>{word?.first}</span>
+              <span className="text-sky-600">{word?.first}</span>
               <span className="font-light text-sm italic ml-2">
                 {word.firstCaption}
               </span>

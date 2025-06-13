@@ -1,4 +1,3 @@
-import ToolTip from "@/components/ToolTip";
 import { Dispatch, SetStateAction, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { CiEdit } from "react-icons/ci";
@@ -82,7 +81,7 @@ export default function AdminWordRow({
               {wordType?.short}
             </span>
             {/* <ToolTip text={word?.third}> */}
-            <span className="text-blue-700 w-fit text-lg md:text-xl">
+            <span className="text-sky-600 w-fit text-lg md:text-xl">
               {word.first}
             </span>
             <span className="text-gray-600 mx-2">
@@ -93,9 +92,11 @@ export default function AdminWordRow({
             <span className="italic text-xs ml-1 text-zinc-900">
               {word.firstCaption}
             </span>
-            <span className="text-xs font-medium italic text-zinc-600">
-              {word?.form}
-            </span>
+            {word?.form && word?.form !== "" && (
+              <span className="text-xs font-medium italic text-zinc-600 bg-yellow-50 py-1 px-2 rounded-md">
+                {word?.form}
+              </span>
+            )}
           </div>
           {/* Second */}
           <div className="flex-1 pr-2 text-base md:text-lg ml-8">

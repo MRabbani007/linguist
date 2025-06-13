@@ -27,7 +27,6 @@ import {
 } from "../globals/globalsApiSlice";
 
 export default function Layout() {
-  // const location = useLocation();
   const dispatch = useDispatch();
 
   const [getLanguages, { data: languages }] = useLazyGetLanguagesQuery();
